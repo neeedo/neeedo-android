@@ -16,6 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
+        <activity android:name=".RestService.HttpGetActivity" />
+        <activity android:name=".RestService.HttpGetByIDActivity" />
+     </application>
 
 </manifest>
