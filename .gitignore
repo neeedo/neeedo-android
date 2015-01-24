@@ -1,5 +1,6 @@
 .gradle
 /local.properties
+/.idea
 /.idea/.name
 /.idea/gradle.xml
 /.idea/modules.xml
