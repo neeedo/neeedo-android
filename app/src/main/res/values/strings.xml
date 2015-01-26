@@ -9,5 +9,9 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
     <string name="action_settings">Settings</string>
+    <string name="new_card_form_hint_title">Name deiner Karte</string>
+    <string name="new_card_form_hint_description">Kurzbeschreibung</string>
+    <string name="new_card_form_hint_price">Preis</string>
+    <string name="new_card_form_hint_continue">weiter</string>
 
 </resources>
