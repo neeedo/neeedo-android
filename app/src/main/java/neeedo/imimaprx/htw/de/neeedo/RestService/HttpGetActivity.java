@@ -28,7 +28,6 @@ import neeedo.imimaprx.htw.de.neeedo.R;
 
 public class HttpGetActivity extends Activity {
 
-    private volatile boolean destroyed = false;
     protected static final String TAG = HttpGetActivity.class.getSimpleName();
 
     @Override
@@ -47,18 +46,6 @@ public class HttpGetActivity extends Activity {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        this.destroyed = true;
     }
 
     private class DownloadDemandsTask extends AsyncTask<Void, Void, String> {

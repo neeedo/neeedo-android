@@ -23,12 +23,7 @@ import neeedo.imimaprx.htw.de.neeedo.Entities.Demand;
 import neeedo.imimaprx.htw.de.neeedo.Entities.LocalDemands;
 import neeedo.imimaprx.htw.de.neeedo.R;
 
-
-/**
- * Created by Admin on 14.01.2015.
- */
 public class HttpPostActivity extends Activity {
-
 
     protected static final String TAG = HttpPostActivity.class.getSimpleName();
 
@@ -48,18 +43,6 @@ public class HttpPostActivity extends Activity {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 
     private class PostDemandTask extends AsyncTask<Void, Void, String> {
@@ -67,32 +50,21 @@ public class HttpPostActivity extends Activity {
         @Override
         protected String doInBackground(Void... params) {
             try {
-
-
-                // The URL for making the GET request
                 final String url = getString(R.string.base_uri) + "demands";
 
-                HttpHeaders requestHeaders = new HttpHeaders();
-
-                // Sending a JSON object i.e. "application/json"
+                HttpHeaders requestHeaders;
+                requestHeaders = new HttpHeaders();
                 requestHeaders.setContentType(MediaType.APPLICATION_JSON);
 
-                // Populate the JsonManagerAnswers object to serialize and headers in an
-                // HttpEntity object to use for the request
                 HttpEntity<Demand> requestEntity = new HttpEntity<Demand>(LocalDemands.getInstance().getPostDemand(), requestHeaders);
 
-                // Create a new RestTemplate instance
-                RestTemplate restTemplate = new RestTemplate(clientHttpRequestFactory());
-
+                RestTemplate restTemplate;
+                restTemplate = new RestTemplate(clientHttpRequestFactory());
                 restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-
                 restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 
-                // Make the network request, posting the message, expecting a String in response from the server
-                ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity,
-                        String.class);
+                ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
 
-                // Return the response body to display to the user
                 return response.getBody();
             } catch (Exception e) {
                 Log.e(TAG, e.getMessage(), e);
@@ -108,5 +80,4 @@ public class HttpPostActivity extends Activity {
         factory.setConnectTimeout(5000);
         return factory;
     }
-
 }

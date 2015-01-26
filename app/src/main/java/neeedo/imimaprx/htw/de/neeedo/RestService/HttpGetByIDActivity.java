@@ -28,7 +28,6 @@ import neeedo.imimaprx.htw.de.neeedo.R;
 
 public class HttpGetByIDActivity extends Activity {
 
-    private volatile boolean destroyed = false;
     protected static final String TAG = HttpGetByIDActivity.class.getSimpleName();
 
     @Override
@@ -47,18 +46,6 @@ public class HttpGetByIDActivity extends Activity {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        this.destroyed = true;
     }
 
     private class DownloadDemandsTask extends AsyncTask<Void, Void, String> {
@@ -92,12 +79,12 @@ public class HttpGetByIDActivity extends Activity {
                     }
                 });
 
-                return "Success";
+                return "Success"; //TODO use proper entities
             } catch (Exception e) {
                 Log.e(TAG, e.getMessage(), e);
             }
 
-            return "Failed";
+            return "Failed"; //TODO use proper entities
         }
     }
 
@@ -107,5 +94,4 @@ public class HttpGetByIDActivity extends Activity {
         factory.setConnectTimeout(5000);
         return factory;
     }
-
 }
