@@ -41,10 +41,10 @@ public class MainActivity extends ActionBarActivity
                 fragment = new MainFragment();
                 break;
             case 1:
-                fragment = new NewCardFragment();
+                fragment = new NewOfferCardFragment();
                 break;
             case 2:
-                fragment = new MainFragment();
+                fragment = new NewDemandCardFragment();
                 break;
             default:
                 fragment = new MainFragment();

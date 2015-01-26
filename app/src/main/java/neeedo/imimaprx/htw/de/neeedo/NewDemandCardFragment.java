@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class NewCardFragment extends Fragment {
+public class NewDemandCardFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -16,7 +16,7 @@ public class NewCardFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.new_card_form, container, false);
+        View view = inflater.inflate(R.layout.new_demand_card_form, container, false);
         return view;
     }
 }
