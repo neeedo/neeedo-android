@@ -37,6 +37,8 @@ public class ListCardsFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        // TODO fill list with card objects
+
         // arraylist with dummy items
         List<String> list = new ArrayList<String>();
         for(int i = 1; i <= 10; i++) {
@@ -47,6 +49,8 @@ public class ListCardsFragment extends Fragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_list_item_1, list);
         listView.setAdapter(adapter);
+
+        // TODO set item listeners for single view
 
     }
 }
