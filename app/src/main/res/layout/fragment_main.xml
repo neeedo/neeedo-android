@@ -12,14 +12,14 @@
         android:layout_height="match_parent" >
 
         <Button
-            android:layout_width="100dp"
+            android:layout_width="107dp"
             android:layout_height="60dp"
             android:text="Get Operation"
             android:id="@+id/BtnGet"
             android:layout_gravity="left|top" />
 
         <Button
-            android:layout_width="100dp"
+            android:layout_width="107dp"
             android:layout_height="60dp"
             android:text="Push Operation"
             android:id="@+id/BtnPost"
@@ -32,7 +32,7 @@
             android:layout_gravity="center" />
 
         <Button
-            android:layout_width="100dp"
+            android:layout_width="107dp"
             android:layout_height="60dp"
             android:text="Get by ID Operation"
             android:id="@+id/BtnGetSingle"
