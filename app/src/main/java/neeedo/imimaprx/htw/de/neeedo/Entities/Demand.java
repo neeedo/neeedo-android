@@ -1,10 +1,13 @@
 package neeedo.imimaprx.htw.de.neeedo.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 import java.io.Serializable;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Root(name = "demand")
 public class Demand implements Serializable {
 
