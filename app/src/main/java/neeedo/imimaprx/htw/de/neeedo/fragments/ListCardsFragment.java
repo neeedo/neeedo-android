@@ -1,4 +1,4 @@
-package neeedo.imimaprx.htw.de.neeedo;
+package neeedo.imimaprx.htw.de.neeedo.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -10,6 +10,8 @@ import android.widget.*;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import neeedo.imimaprx.htw.de.neeedo.R;
 
 public class ListCardsFragment extends Fragment {
 

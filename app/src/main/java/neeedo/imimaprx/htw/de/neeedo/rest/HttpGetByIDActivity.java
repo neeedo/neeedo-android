@@ -1,4 +1,4 @@
-package neeedo.imimaprx.htw.de.neeedo.RestService;
+package neeedo.imimaprx.htw.de.neeedo.rest;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import neeedo.imimaprx.htw.de.neeedo.LocalDemands;
-import neeedo.imimaprx.htw.de.neeedo.Entities.SingleDemand;
+import neeedo.imimaprx.htw.de.neeedo.entities.SingleDemand;
 import neeedo.imimaprx.htw.de.neeedo.R;
 
 public class HttpGetByIDActivity extends Activity {

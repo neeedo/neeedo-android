@@ -10,6 +10,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
 
+import neeedo.imimaprx.htw.de.neeedo.fragments.ListCardsFragment;
+import neeedo.imimaprx.htw.de.neeedo.fragments.NavigationDrawerFragment;
+import neeedo.imimaprx.htw.de.neeedo.fragments.NewDemandCardFragment;
+import neeedo.imimaprx.htw.de.neeedo.fragments.NewOfferCardFragment;
+
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {

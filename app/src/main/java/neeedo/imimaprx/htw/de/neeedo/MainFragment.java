@@ -12,13 +12,13 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import neeedo.imimaprx.htw.de.neeedo.Entities.Demand;
-import neeedo.imimaprx.htw.de.neeedo.Entities.Demands;
-import neeedo.imimaprx.htw.de.neeedo.Entities.Location;
-import neeedo.imimaprx.htw.de.neeedo.Entities.Price;
-import neeedo.imimaprx.htw.de.neeedo.Entities.SingleDemand;
-import neeedo.imimaprx.htw.de.neeedo.RestService.HttpGetActivity;
-import neeedo.imimaprx.htw.de.neeedo.RestService.HttpGetByIDActivity;
+import neeedo.imimaprx.htw.de.neeedo.entities.Demand;
+import neeedo.imimaprx.htw.de.neeedo.entities.Demands;
+import neeedo.imimaprx.htw.de.neeedo.entities.Location;
+import neeedo.imimaprx.htw.de.neeedo.entities.Price;
+import neeedo.imimaprx.htw.de.neeedo.entities.SingleDemand;
+import neeedo.imimaprx.htw.de.neeedo.rest.HttpGetActivity;
+import neeedo.imimaprx.htw.de.neeedo.rest.HttpGetByIDActivity;
 
 public class MainFragment extends Fragment implements View.OnClickListener {
 

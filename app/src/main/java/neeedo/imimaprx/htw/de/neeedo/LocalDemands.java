@@ -1,8 +1,8 @@
 package neeedo.imimaprx.htw.de.neeedo;
 
-import neeedo.imimaprx.htw.de.neeedo.Entities.Demand;
-import neeedo.imimaprx.htw.de.neeedo.Entities.Demands;
-import neeedo.imimaprx.htw.de.neeedo.Entities.SingleDemand;
+import neeedo.imimaprx.htw.de.neeedo.entities.Demand;
+import neeedo.imimaprx.htw.de.neeedo.entities.Demands;
+import neeedo.imimaprx.htw.de.neeedo.entities.SingleDemand;
 
 
 public class LocalDemands {
