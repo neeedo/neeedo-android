@@ -2,7 +2,6 @@ package neeedo.imimaprx.htw.de.neeedo;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,13 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import neeedo.imimaprx.htw.de.neeedo.Entities.Demand;
 import neeedo.imimaprx.htw.de.neeedo.Entities.Demands;
-import neeedo.imimaprx.htw.de.neeedo.Entities.LocalDemands;
 import neeedo.imimaprx.htw.de.neeedo.Entities.Location;
 import neeedo.imimaprx.htw.de.neeedo.Entities.Price;
+import neeedo.imimaprx.htw.de.neeedo.Entities.SingleDemand;
 import neeedo.imimaprx.htw.de.neeedo.RestService.HttpGetActivity;
 import neeedo.imimaprx.htw.de.neeedo.RestService.HttpGetByIDActivity;
 
@@ -35,10 +35,8 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     private ProgressDialog progressDialog;
 
 
-
     public MainFragment() {
     }
-
 
 
     @Override
@@ -108,14 +106,24 @@ public class MainFragment extends Fragment implements View.OnClickListener {
             if (data.getStringExtra("result") != null)
                 result = data.getStringExtra("result");
 
+            Demands demands = LocalDemands.getInstance().getDemands();
+            TextView textView = (TextView) getActivity().findViewById(R.id.demandTextView);
+            textView.setText("");
+            for (Demand demand : demands.getDemands()) {
+                textView.append(demand.toString());
             }
+
+        }
+
 
         if (resultCode == Activity.RESULT_OK && requestCode == GET_SINGLE_BY_ID_OPERATION) {
 
             if (data.getStringExtra("result") != null)
                 result = data.getStringExtra("result");
 
-
+            SingleDemand singleDemand = LocalDemands.getInstance().getSingleDemand();
+            TextView textView = (TextView) getActivity().findViewById(R.id.demandTextView);
+            textView.setText(singleDemand.getDemand().toString());
 
         }
 
@@ -123,7 +131,8 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
             if (data.getStringExtra("result") != null)
                 result = data.getStringExtra("result");
-
+            TextView textView = (TextView) getActivity().findViewById(R.id.demandTextView);
+            textView.setText("");
 
         }
 

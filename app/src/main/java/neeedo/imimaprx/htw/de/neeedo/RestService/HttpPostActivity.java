@@ -20,7 +20,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.concurrent.ExecutionException;
 
 import neeedo.imimaprx.htw.de.neeedo.Entities.Demand;
-import neeedo.imimaprx.htw.de.neeedo.Entities.LocalDemands;
+import neeedo.imimaprx.htw.de.neeedo.LocalDemands;
 import neeedo.imimaprx.htw.de.neeedo.R;
 
 public class HttpPostActivity extends Activity {

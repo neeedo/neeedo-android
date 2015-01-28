@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import neeedo.imimaprx.htw.de.neeedo.Entities.Demands;
-import neeedo.imimaprx.htw.de.neeedo.Entities.LocalDemands;
+import neeedo.imimaprx.htw.de.neeedo.LocalDemands;
 import neeedo.imimaprx.htw.de.neeedo.R;
 
 public class HttpGetActivity extends Activity {
