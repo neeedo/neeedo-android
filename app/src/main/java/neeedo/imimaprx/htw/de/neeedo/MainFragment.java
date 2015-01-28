@@ -2,6 +2,7 @@ package neeedo.imimaprx.htw.de.neeedo;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,8 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import neeedo.imimaprx.htw.de.neeedo.Entities.Demand;
+import neeedo.imimaprx.htw.de.neeedo.Entities.Demands;
 import neeedo.imimaprx.htw.de.neeedo.Entities.LocalDemands;
 import neeedo.imimaprx.htw.de.neeedo.Entities.Location;
 import neeedo.imimaprx.htw.de.neeedo.Entities.Price;
@@ -23,6 +26,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     public static final int POST_OPERATION = 2;
     public static final int GET_SINGLE_BY_ID_OPERATION = 3;
 
+
     private Button btnGetOperation;
     private Button btnPostOperation;
     private Button btnGetSingleOperation;
@@ -30,8 +34,12 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     private Activity activity;
     private ProgressDialog progressDialog;
 
+
+
     public MainFragment() {
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -87,6 +95,40 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                 startActivityForResult(intent, GET_SINGLE_BY_ID_OPERATION);
                 break;
         }
+    }
+
+    @Override
+    public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+
+        dismissProgressDialog();
+        String result = "Server not available";
+
+        if (resultCode == Activity.RESULT_OK && requestCode == GET_OPERATION) {
+
+            if (data.getStringExtra("result") != null)
+                result = data.getStringExtra("result");
+
+            }
+
+        if (resultCode == Activity.RESULT_OK && requestCode == GET_SINGLE_BY_ID_OPERATION) {
+
+            if (data.getStringExtra("result") != null)
+                result = data.getStringExtra("result");
+
+
+
+        }
+
+        if (resultCode == Activity.RESULT_OK && requestCode == POST_OPERATION) {
+
+            if (data.getStringExtra("result") != null)
+                result = data.getStringExtra("result");
+
+
+        }
+
+        Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
+
     }
 
     public void showLoadingProgressDialog() {

@@ -1,5 +1,6 @@
 package neeedo.imimaprx.htw.de.neeedo;
 
+import android.content.Context;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -37,9 +38,13 @@ public class MainActivity extends ActionBarActivity
         Fragment fragment = null;
 
         switch (position) {
-            case 0:
+            case 0: {
+                Context context = this;
                 fragment = new MainFragment();
+
+
                 break;
+            }
             case 1:
                 fragment = new NewOfferCardFragment();
                 break;

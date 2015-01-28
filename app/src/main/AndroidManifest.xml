@@ -19,6 +19,7 @@
         </activity>
         <activity android:name=".RestService.HttpGetActivity" />
         <activity android:name=".RestService.HttpGetByIDActivity" />
+        <activity android:name=".RestService.HttpPostActivity" />
      </application>
 
 </manifest>
