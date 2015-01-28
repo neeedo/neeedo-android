@@ -1,5 +1,6 @@
 package neeedo.imimaprx.htw.de.neeedo.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import org.simpleframework.xml.Element;
@@ -33,6 +34,7 @@ public class Demand implements Serializable {
 
     }
 
+    @JsonIgnore
     public long getId() {
         return id;
     }
