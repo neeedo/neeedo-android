@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
 
 import neeedo.imimaprx.htw.de.neeedo.fragments.ListCardsFragment;
+import neeedo.imimaprx.htw.de.neeedo.fragments.MainFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.NavigationDrawerFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.NewDemandCardFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.NewOfferCardFragment;
@@ -43,13 +44,9 @@ public class MainActivity extends ActionBarActivity
         Fragment fragment = null;
 
         switch (position) {
-            case 0: {
-                Context context = this;
+            case 0:
                 fragment = new MainFragment();
-
-
                 break;
-            }
             case 1:
                 fragment = new NewOfferCardFragment();
                 break;

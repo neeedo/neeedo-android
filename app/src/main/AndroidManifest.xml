@@ -18,8 +18,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".rest.HttpGetActivity" />
-        <activity android:name=".rest.HttpGetByIDActivity" />
-        <activity android:name=".rest.HttpPostActivity" />
+        <activity android:name=".rest.HttpGetByIDAsyncTask" />
+        <activity android:name=".rest.HttpPostAsyncTask" />
      </application>
 
 </manifest>

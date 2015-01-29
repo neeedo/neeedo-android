@@ -1,4 +1,4 @@
-package neeedo.imimaprx.htw.de.neeedo;
+package neeedo.imimaprx.htw.de.neeedo.fragments;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -9,23 +9,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
+import com.squareup.otto.Subscribe;
+
+import neeedo.imimaprx.htw.de.neeedo.entities.LocalDemands;
+import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.Demand;
-import neeedo.imimaprx.htw.de.neeedo.entities.Demands;
 import neeedo.imimaprx.htw.de.neeedo.entities.Location;
 import neeedo.imimaprx.htw.de.neeedo.entities.Price;
-import neeedo.imimaprx.htw.de.neeedo.entities.SingleDemand;
-import neeedo.imimaprx.htw.de.neeedo.rest.HttpGetActivity;
-import neeedo.imimaprx.htw.de.neeedo.rest.HttpGetByIDActivity;
+import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
+import neeedo.imimaprx.htw.de.neeedo.rest.HttpGetAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.HttpGetByIDAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.HttpPostAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.SuperHttpAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.service.EventService;
 
 public class MainFragment extends Fragment implements View.OnClickListener {
-
-    public static final int GET_OPERATION = 1;
-    public static final int POST_OPERATION = 2;
-    public static final int GET_SINGLE_BY_ID_OPERATION = 3;
-
 
     private Button btnGetOperation;
     private Button btnPostOperation;
@@ -34,10 +33,10 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     private Activity activity;
     private ProgressDialog progressDialog;
 
+    private EventService eventService = EventService.getInstance();
 
     public MainFragment() {
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,14 +61,30 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public void onClick(View v) {
+    public void onResume() {
+        super.onResume();
+        eventService.register(this);
+    }
 
-        Intent intent;
+    @Override
+    public void onPause() {
+        super.onPause();
+        eventService.unregister(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        //TODO extract whole function into proper controller
+
+        SuperHttpAsyncTask asyncTask;
+
         switch (v.getId()) {
             case R.id.BtnGet:
                 showLoadingProgressDialog();
-                intent = new Intent(activity, HttpGetActivity.class);
-                startActivityForResult(intent, GET_OPERATION);
+
+                asyncTask = new HttpGetAsyncTask();
+                asyncTask.execute();
+
                 break;
 
             case R.id.BtnPost:
@@ -83,61 +98,67 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                 demand.setTags("Whatever");
                 LocalDemands.getInstance().setPostDemand(demand);
 
-                intent = new Intent(activity, HttpGetByIDActivity.class);
-                startActivityForResult(intent, POST_OPERATION);
+                asyncTask = new HttpGetByIDAsyncTask();
+                asyncTask.execute();
 
                 break;
+
             case R.id.BtnGetSingle:
                 showLoadingProgressDialog();
-                intent = new Intent(activity, HttpGetByIDActivity.class);
-                startActivityForResult(intent, GET_SINGLE_BY_ID_OPERATION);
+
+                asyncTask = new HttpPostAsyncTask();
+                asyncTask.execute();
+
                 break;
         }
+    }
+
+    @Subscribe
+    public void handleNewServerData(ServerResponseEvent e) {
+        System.out.println();
     }
 
     @Override
     public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
 
-        dismissProgressDialog();
-        String result = "Server not available";
-
-        if (resultCode == Activity.RESULT_OK && requestCode == GET_OPERATION) {
-
-            if (data.getStringExtra("result") != null)
-                result = data.getStringExtra("result");
-
-            Demands demands = LocalDemands.getInstance().getDemands();
-            TextView textView = (TextView) getActivity().findViewById(R.id.demandTextView);
-            textView.setText("");
-            for (Demand demand : demands.getDemands()) {
-                textView.append(demand.toString());
-            }
-
-        }
-
-
-        if (resultCode == Activity.RESULT_OK && requestCode == GET_SINGLE_BY_ID_OPERATION) {
-
-            if (data.getStringExtra("result") != null)
-                result = data.getStringExtra("result");
-
-            SingleDemand singleDemand = LocalDemands.getInstance().getSingleDemand();
-            TextView textView = (TextView) getActivity().findViewById(R.id.demandTextView);
-            textView.setText(singleDemand.getDemand().toString());
-
-        }
-
-        if (resultCode == Activity.RESULT_OK && requestCode == POST_OPERATION) {
-
-            if (data.getStringExtra("result") != null)
-                result = data.getStringExtra("result");
-            TextView textView = (TextView) getActivity().findViewById(R.id.demandTextView);
-            textView.setText("");
-
-        }
-
-        Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
-
+//        dismissProgressDialog();
+//        String result = "Server not available";
+//
+//        if (resultCode == Activity.RESULT_OK && requestCode == GET_OPERATION) {
+//
+//            if (data.getStringExtra("result") != null)
+//                result = data.getStringExtra("result");
+//
+//            Demands demands = LocalDemands.getInstance().getDemands();
+//            TextView textView = (TextView) getActivity().findViewById(R.id.demandTextView);
+//            textView.setText("");
+//            for (Demand demand : demands.getDemands()) {
+//                textView.append(demand.toString());
+//            }
+//
+//        }
+//
+//        if (resultCode == Activity.RESULT_OK && requestCode == GET_SINGLE_BY_ID_OPERATION) {
+//
+//            if (data.getStringExtra("result") != null)
+//                result = data.getStringExtra("result");
+//
+//            SingleDemand singleDemand = LocalDemands.getInstance().getSingleDemand();
+//            TextView textView = (TextView) getActivity().findViewById(R.id.demandTextView);
+//            textView.setText(singleDemand.getDemand().toString());
+//
+//        }
+//
+//        if (resultCode == Activity.RESULT_OK && requestCode == POST_OPERATION) {
+//
+//            if (data.getStringExtra("result") != null)
+//                result = data.getStringExtra("result");
+//            TextView textView = (TextView) getActivity().findViewById(R.id.demandTextView);
+//            textView.setText("");
+//
+//        }
+//
+//        Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
     }
 
     public void showLoadingProgressDialog() {
