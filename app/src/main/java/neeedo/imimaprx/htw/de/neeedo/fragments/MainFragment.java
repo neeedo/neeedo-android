@@ -116,12 +116,13 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     @Subscribe
     public void handleNewServerData(ServerResponseEvent e) {
         System.out.println();
+        dismissProgressDialog();
     }
 
     @Override
     public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        //TODO make DRY, pull code into handle...() function and make use of proper entities
 
-//        dismissProgressDialog();
 //        String result = "Server not available";
 //
 //        if (resultCode == Activity.RESULT_OK && requestCode == GET_OPERATION) {
