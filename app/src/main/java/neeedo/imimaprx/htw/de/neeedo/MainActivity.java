@@ -15,6 +15,7 @@ import neeedo.imimaprx.htw.de.neeedo.fragments.MainFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.NavigationDrawerFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.NewDemandCardFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.NewOfferCardFragment;
+import neeedo.imimaprx.htw.de.neeedo.fragments.TinderFragment;
 
 
 public class MainActivity extends ActionBarActivity
@@ -56,6 +57,9 @@ public class MainActivity extends ActionBarActivity
             case 3:
                 fragment = new ListCardsFragment();
                 break;
+            case 4:
+                fragment = new TinderFragment();
+                break;
             default:
                 fragment = new MainFragment();
                 break;
@@ -65,19 +69,23 @@ public class MainActivity extends ActionBarActivity
                 .commit();
     }
 
-    public void onSectionAttached(int number) {
-        switch (number) {
-            case 1:
-                mTitle = getString(R.string.title_section1);
-                break;
-            case 2:
-                mTitle = getString(R.string.title_section2);
-                break;
-            case 3:
-                mTitle = getString(R.string.title_section3);
-                break;
-        }
-    }
+    //TODO delete? where is this being used?
+    //    public void onSectionAttached(int number) {
+    //        switch (number) {
+    //            case 1:
+    //                mTitle = getString(R.string.title_section1);
+    //                break;
+    //            case 2:
+    //                mTitle = getString(R.string.title_section2);
+    //                break;
+    //            case 3:
+    //                mTitle = getString(R.string.title_section3);
+    //                break;
+    //            case 4:
+    //                mTitle = getString(R.string.title_section4);
+    //                break;
+    //        }
+    //    }
 
     public void restoreActionBar() {
         ActionBar actionBar = getSupportActionBar();

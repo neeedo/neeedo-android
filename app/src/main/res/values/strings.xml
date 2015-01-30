@@ -20,5 +20,6 @@
     <string name="new_card_form_hint_description">Kurzbeschreibung</string>
     <string name="new_card_form_hint_price">Preis</string>
     <string name="new_card_form_hint_continue">weiter</string>
+    <string name="title_section5">tinder</string>
 
 </resources>
