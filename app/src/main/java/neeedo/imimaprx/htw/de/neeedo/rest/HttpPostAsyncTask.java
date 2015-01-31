@@ -20,7 +20,7 @@ public class HttpPostAsyncTask extends SuperHttpAsyncTask {
     @Override
     protected Object doInBackground(Object[] params) {
         try {
-            final String url = R.string.base_uri + "demands";
+            final String url = ServerConstants.LOCALHOST_ADDRESS + "demands";
 
             HttpHeaders requestHeaders;
             requestHeaders = new HttpHeaders();

@@ -2,8 +2,8 @@
 <resources>
 
     <!-- localhost api -->
-    <!-- <string name="base_uri">http://10.0.2.2:9000/</string> -->
+     <string name="base_uri">http://10.0.2.2:9000/stub/</string>
 
     <!-- live api -->
-    <string name="base_uri">http://dry-depths-2035.herokuapp.com/stub/</string>
+    <!-- <string name="base_uri">http://dry-depths-2035.herokuapp.com/stub/</string> -->
 </resources>

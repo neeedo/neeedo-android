@@ -12,9 +12,9 @@ import android.widget.Button;
 
 import com.squareup.otto.Subscribe;
 
-import neeedo.imimaprx.htw.de.neeedo.entities.LocalDemands;
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.Demand;
+import neeedo.imimaprx.htw.de.neeedo.entities.LocalDemands;
 import neeedo.imimaprx.htw.de.neeedo.entities.Location;
 import neeedo.imimaprx.htw.de.neeedo.entities.Price;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
@@ -98,15 +98,16 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                 demand.setTags("Whatever");
                 LocalDemands.getInstance().setPostDemand(demand);
 
-                asyncTask = new HttpGetByIDAsyncTask();
+                asyncTask = new HttpPostAsyncTask();
+
                 asyncTask.execute();
 
                 break;
 
             case R.id.BtnGetSingle:
                 showLoadingProgressDialog();
+                asyncTask = new HttpGetByIDAsyncTask();
 
-                asyncTask = new HttpPostAsyncTask();
                 asyncTask.execute();
 
                 break;
@@ -115,7 +116,8 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
     @Subscribe
     public void handleNewServerData(ServerResponseEvent e) {
-        System.out.println();
+        System.out.println(e.toString());
+
         dismissProgressDialog();
     }
 

@@ -25,7 +25,7 @@ public class HttpGetByIDAsyncTask extends SuperHttpAsyncTask {
     protected Object doInBackground(Object[] params) {
         try {
             Handler mHandler = new Handler(Looper.getMainLooper());
-            final String url = R.string.base_uri + "demands/1";
+            final String url = ServerConstants.LOCALHOST_ADDRESS  + "demands/1";
 
             HttpHeaders requestHeaders = new HttpHeaders();
             List<MediaType> acceptableMediaTypes = new ArrayList<>();

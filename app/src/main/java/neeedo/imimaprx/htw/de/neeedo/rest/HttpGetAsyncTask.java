@@ -27,7 +27,7 @@ public class HttpGetAsyncTask extends SuperHttpAsyncTask {
         try {
             Handler mHandler = new Handler(Looper.getMainLooper());
 
-            final String url = R.string.base_uri + "demands";
+            final String url = ServerConstants.LOCALHOST_ADDRESS  + "demands";
 
             HttpHeaders requestHeaders = new HttpHeaders();
             List<MediaType> acceptableMediaTypes = new ArrayList<>();
