@@ -9,10 +9,10 @@ import java.io.Serializable;
 public class Location implements Serializable {
 
     @Element
-    private long lat;
+    private double lat;
 
     @Element
-    private long lon;
+    private double lon;
 
     public Location() {
     }
@@ -22,19 +22,19 @@ public class Location implements Serializable {
         this.lon = lon;
     }
 
-    public long getLat() {
+    public double getLat() {
         return lat;
     }
 
-    public void setLat(long lat) {
+    public void setLat(double lat) {
         this.lat = lat;
     }
 
-    public long getLon() {
+    public double getLon() {
         return lon;
     }
 
-    public void setLon(long lon) {
+    public void setLon(double lon) {
         this.lon = lon;
     }
 

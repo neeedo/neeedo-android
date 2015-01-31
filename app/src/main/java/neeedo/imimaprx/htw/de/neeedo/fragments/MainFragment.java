@@ -92,9 +92,9 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
                 Demand demand = new Demand();
                 demand.setDistance(100);
-                demand.setLocation(new Location(55l, 33l));
+                demand.setLocation(new Location(55, 33));
                 demand.setPrice(new Price(100, 500));
-                demand.setUserId(1l);
+                demand.setUserId("1");
                 demand.setTags("Whatever");
                 LocalDemands.getInstance().setPostDemand(demand);
 

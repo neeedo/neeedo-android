@@ -6,10 +6,10 @@ import org.springframework.http.client.SimpleClientHttpRequestFactory;
 //TODO rename class to something sane
 public class ClientHttpRequestFactoryProvider {
 
-    public static ClientHttpRequestFactory getClientHttpRequestFactory() {
+    public static ClientHttpRequestFactory getClientHttpRequestFactory(final int millisecondsToTimeout) {
         SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
-        factory.setReadTimeout(5000);
-        factory.setConnectTimeout(5000);
+        factory.setReadTimeout(millisecondsToTimeout);
+        factory.setConnectTimeout(millisecondsToTimeout);
         return factory;
     }
 }

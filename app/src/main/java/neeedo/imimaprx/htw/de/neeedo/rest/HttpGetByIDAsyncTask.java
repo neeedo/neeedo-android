@@ -34,7 +34,7 @@ public class HttpGetByIDAsyncTask extends SuperHttpAsyncTask {
 
             HttpEntity<?> requestEntity = new HttpEntity<Object>(requestHeaders);
 
-            RestTemplate restTemplate = new RestTemplate(ClientHttpRequestFactoryProvider.getClientHttpRequestFactory());
+            RestTemplate restTemplate = new RestTemplate(ClientHttpRequestFactoryProvider.getClientHttpRequestFactory(5000));
 
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 

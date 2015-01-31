@@ -2,6 +2,8 @@ package neeedo.imimaprx.htw.de.neeedo.rest;
 
 import android.util.Log;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -28,14 +30,21 @@ public class HttpPostAsyncTask extends SuperHttpAsyncTask {
 
             HttpEntity<Demand> requestEntity = new HttpEntity<Demand>(LocalDemands.getInstance().getPostDemand(), requestHeaders);
 
-            RestTemplate restTemplate;
-            restTemplate = new RestTemplate(ClientHttpRequestFactoryProvider.getClientHttpRequestFactory());
+
+            RestTemplate restTemplate = new RestTemplate(ClientHttpRequestFactoryProvider.getClientHttpRequestFactory(9000));
+           // RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 
-            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
 
-            return response.getBody();//TODO use proper entities
+
+            ResponseEntity<Demand> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, Demand.class);
+
+            Demand demand = response.getBody();
+
+            System.out.println(demand);
+
+            return demand;
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
             return "Failed";//TODO use proper entities
