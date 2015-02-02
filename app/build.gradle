@@ -26,6 +26,12 @@ android {
     }
 }
 
+repositories {
+    maven {
+        url "https://mint.splunk.com/gradle/"
+    }
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:21.0.3'
@@ -37,9 +43,11 @@ dependencies {
     compile 'com.github.kikoso:SwipeableCards:1.0-RELEASE@aar'
     compile 'org.osmdroid:osmdroid-android:4.2'
     compile 'org.slf4j:slf4j-simple:1.6.1'
-    compile('org.simpleframework:simple-xml:2.7.+'){
+    compile('org.simpleframework:simple-xml:2.7.+') {
         exclude module: 'stax'
         exclude module: 'stax-api'
         exclude module: 'xpp3'
     }
+    compile "com.splunk.mint:mint:4.0.8"
+
 }
