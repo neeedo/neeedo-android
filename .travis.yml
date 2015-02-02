@@ -8,5 +8,7 @@ env:
 android:
   components:
     - build-tools-21.0.3
+    - android-21
+    - extra-android-support
 
 script: ./gradlew connectedAndroidTest
