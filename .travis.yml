@@ -1,8 +1,12 @@
 language: android
+jdk: oraclejdk7
+
+env:
+  matrix:
+    - ANDROID_TARGET=android-19  ANDROID_ABI=armeabi-v7a
 
 android:
   components:
     - build-tools-19.1.0
 
-
-install: ./gradlew clean build
+script: ./gradlew connectedAndroidTest
