@@ -27,6 +27,7 @@ android {
 }
 
 repositories {
+    mavenCentral()
     maven {
         url "https://mint.splunk.com/gradle/"
 
