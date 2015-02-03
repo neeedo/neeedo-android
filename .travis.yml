@@ -22,4 +22,5 @@ before_install:
     - sudo tar -C /opt -jxf ndk.tar.bz2
     - export NDK_PROJECT_PATH=$PWD
 
-script: ./gradlew connectedAndroidTest
+script: ./gradlew build
+#./gradlew connectedAndroidTest
