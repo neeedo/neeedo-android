@@ -1,12 +1,13 @@
+# Gradle and build files
 .gradle
-/local.properties
-/.idea
-/.idea/.name
-/.idea/gradle.xml
-/.idea/modules.xml
-/.idea/libraries/*
-/.idea/workspace.xml
-.DS_Store
-/build
+local.properties
+.idea
+build
 neeedo-android.iml
-/app/app.iml
+app/app.iml
+
+# Other
+.DS_Store
+
+# Distribution files
+app/src/main/java/neeedo/imimaprx/htw/de/neeedo/rest/ServerConstants.java
