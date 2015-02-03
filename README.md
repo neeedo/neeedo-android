@@ -2,11 +2,3 @@
 
 NEEEDO Android App
 ==================
-
-Before start
-------------
-
-### Server addresses
-
-* Copy file `app/src/main/java/neeedo/imimaprx/htw/de/neeedo/rest/ServerConstants.java.dist` to `ServerConstants.java`
-* modify local (and remote) IP adresses in `ServerConstants.java` file

@@ -8,6 +8,3 @@ app/app.iml
 
 # Other
 .DS_Store
-
-# Distribution files
-app/src/main/java/neeedo/imimaprx/htw/de/neeedo/rest/ServerConstants.java
