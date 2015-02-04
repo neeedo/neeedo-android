@@ -14,7 +14,7 @@ import com.squareup.otto.Subscribe;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.Demand;
-import neeedo.imimaprx.htw.de.neeedo.entities.LocalDemands;
+import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.entities.Location;
 import neeedo.imimaprx.htw.de.neeedo.entities.Price;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
@@ -96,7 +96,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                 demand.setPrice(new Price(100, 500));
                 demand.setUserId("1");
                 demand.setTags("Whatever");
-                LocalDemands.getInstance().setPostDemand(demand);
+                DemandsModel.getInstance().setPostDemand(demand);
 
                 asyncTask = new HttpPostAsyncTask();
 
@@ -117,7 +117,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     @Subscribe
     public void handleNewServerData(ServerResponseEvent e) {
         System.out.println(e.toString());
-
+        System.out.println(DemandsModel.getInstance().getDemands());
         dismissProgressDialog();
     }
 

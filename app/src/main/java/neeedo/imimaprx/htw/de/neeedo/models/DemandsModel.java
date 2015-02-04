@@ -1,22 +1,26 @@
-package neeedo.imimaprx.htw.de.neeedo.entities;
+package neeedo.imimaprx.htw.de.neeedo.models;
 
 
-public class LocalDemands {
+import neeedo.imimaprx.htw.de.neeedo.entities.Demand;
+import neeedo.imimaprx.htw.de.neeedo.entities.Demands;
+import neeedo.imimaprx.htw.de.neeedo.entities.SingleDemand;
+
+public class DemandsModel {
 
     private Demands demands;
     private SingleDemand singleDemand;
     private Demand postDemand;
 
-    public static LocalDemands getInstance() {
-        if (localDemands == null)
-            localDemands = new LocalDemands();
-        return localDemands;
+    public static DemandsModel getInstance() {
+        if (demandsModel == null)
+            demandsModel = new DemandsModel();
+        return demandsModel;
     }
 
-    private LocalDemands() {
+    private DemandsModel() {
     }
 
-    private static LocalDemands localDemands;
+    private static DemandsModel demandsModel;
 
     public Demands getDemands() {
         return demands;

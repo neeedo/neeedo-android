@@ -15,8 +15,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-import neeedo.imimaprx.htw.de.neeedo.entities.LocalDemands;
-import neeedo.imimaprx.htw.de.neeedo.R;
+import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.entities.SingleDemand;
 import neeedo.imimaprx.htw.de.neeedo.factory.ClientHttpRequestFactoryProvider;
 
@@ -25,7 +24,7 @@ public class HttpGetByIDAsyncTask extends SuperHttpAsyncTask {
     protected Object doInBackground(Object[] params) {
         try {
             Handler mHandler = new Handler(Looper.getMainLooper());
-            final String url = ServerConstants.LOCALHOST_ADDRESS  + "demands/1";
+            final String url = ServerConstants.ACTIVE_SERVER  + "demands/1";
 
             HttpHeaders requestHeaders = new HttpHeaders();
             List<MediaType> acceptableMediaTypes = new ArrayList<>();
@@ -46,7 +45,7 @@ public class HttpGetByIDAsyncTask extends SuperHttpAsyncTask {
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    LocalDemands.getInstance().setSingleDemand(singleDemand);
+                    DemandsModel.getInstance().setSingleDemand(singleDemand);
                 }
             });
 

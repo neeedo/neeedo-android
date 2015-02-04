@@ -15,8 +15,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-import neeedo.imimaprx.htw.de.neeedo.entities.LocalDemands;
-import neeedo.imimaprx.htw.de.neeedo.R;
+import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.entities.Demands;
 import neeedo.imimaprx.htw.de.neeedo.factory.ClientHttpRequestFactoryProvider;
 
@@ -27,7 +26,7 @@ public class HttpGetAsyncTask extends SuperHttpAsyncTask {
         try {
             Handler mHandler = new Handler(Looper.getMainLooper());
 
-            final String url = ServerConstants.LOCALHOST_ADDRESS  + "demands";
+            final String url = ServerConstants.ACTIVE_SERVER  + "demands";
 
             HttpHeaders requestHeaders = new HttpHeaders();
             List<MediaType> acceptableMediaTypes = new ArrayList<>();
@@ -45,12 +44,7 @@ public class HttpGetAsyncTask extends SuperHttpAsyncTask {
 
             final Demands demands = responseEntity.getBody();
 
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    LocalDemands.getInstance().setDemands(demands);
-                }
-            });
+            DemandsModel.getInstance().setDemands(demands);
 
             return "Success";//TODO use proper entities
 
