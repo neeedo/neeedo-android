@@ -6,6 +6,7 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 
 @Root(name = "demand")
@@ -22,7 +23,10 @@ public class Demand implements Serializable {
     private String userId;
 
     @Element
-    private String tags;
+    private ArrayList<String> mustTags;
+
+    @Element
+    private ArrayList<String> shouldTags;
 
     @Element
     private Location location;
@@ -43,14 +47,6 @@ public class Demand implements Serializable {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getTags() {
-        return tags;
-    }
-
-    public void setTags(String tags) {
-        this.tags = tags;
     }
 
     public Location getLocation() {
@@ -94,6 +90,35 @@ public class Demand implements Serializable {
         this.version = version;
     }
 
+    public ArrayList<String> getMustTags() {
+        return mustTags;
+    }
+
+    public void setMustTags(ArrayList<String> mustTags) {
+        this.mustTags = mustTags;
+    }
+
+    public ArrayList<String> getShouldTags() {
+        return shouldTags;
+    }
+
+    public void setShouldTags(ArrayList<String> shouldTags) {
+        this.shouldTags = shouldTags;
+    }
+
+    @Override
+    public String toString() {
+        return "Demand{" +
+                "id='" + id + '\'' +
+                ", version=" + version +
+                ", userId='" + userId + '\'' +
+                ", mustTags=" + mustTags +
+                ", shouldTags=" + shouldTags +
+                ", location=" + location +
+                ", distance=" + distance +
+                ", price=" + price +
+                '}';
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -107,8 +132,11 @@ public class Demand implements Serializable {
         if (id != null ? !id.equals(demand.id) : demand.id != null) return false;
         if (location != null ? !location.equals(demand.location) : demand.location != null)
             return false;
+        if (mustTags != null ? !mustTags.equals(demand.mustTags) : demand.mustTags != null)
+            return false;
         if (price != null ? !price.equals(demand.price) : demand.price != null) return false;
-        if (tags != null ? !tags.equals(demand.tags) : demand.tags != null) return false;
+        if (shouldTags != null ? !shouldTags.equals(demand.shouldTags) : demand.shouldTags != null)
+            return false;
         if (userId != null ? !userId.equals(demand.userId) : demand.userId != null) return false;
 
         return true;
@@ -119,7 +147,8 @@ public class Demand implements Serializable {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (int) (version ^ (version >>> 32));
         result = 31 * result + (userId != null ? userId.hashCode() : 0);
-        result = 31 * result + (tags != null ? tags.hashCode() : 0);
+        result = 31 * result + (mustTags != null ? mustTags.hashCode() : 0);
+        result = 31 * result + (shouldTags != null ? shouldTags.hashCode() : 0);
         result = 31 * result + (location != null ? location.hashCode() : 0);
         result = 31 * result + distance;
         result = 31 * result + (price != null ? price.hashCode() : 0);
