@@ -1,16 +1,17 @@
 package neeedo.imimaprx.htw.de.neeedo;
 
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.support.v4.widget.DrawerLayout;
 
 import com.splunk.mint.Mint;
 
+import neeedo.imimaprx.htw.de.neeedo.fragments.AndSwipeFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.DiolorSwipeFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.ListCardsFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.MainFragment;
@@ -62,6 +63,9 @@ public class MainActivity extends ActionBarActivity
                 fragment = new ListCardsFragment();
                 break;
             case 4:
+                fragment = new AndSwipeFragment();
+                break;
+            case 5:
                 fragment = new DiolorSwipeFragment();
                 break;
             default:
