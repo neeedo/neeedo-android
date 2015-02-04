@@ -17,6 +17,10 @@ android:
     - sys-img-x86-android-tv-l
     - add-on
     - extra
+  licenses:
+    - 'android-sdk-preview-license-52d11cd2'
+    - 'android-sdk-license-.+'
+    - 'google-gdk-license-.+'
 
 before_install:
     - sudo apt-get update -qq
