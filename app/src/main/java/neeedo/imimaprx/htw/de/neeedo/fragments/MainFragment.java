@@ -12,6 +12,8 @@ import android.widget.Button;
 
 import com.squareup.otto.Subscribe;
 
+import java.util.ArrayList;
+
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.Demand;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
@@ -90,11 +92,18 @@ public class MainFragment extends Fragment implements View.OnClickListener {
             case R.id.BtnPost:
                 showLoadingProgressDialog();
 
+                ArrayList<String> list = new ArrayList<String>();
+                list.add("Kekse");
+                list.add("more Kekse");
+                list.add("still more Kekse");
+
                 Demand demand = new Demand();
                 demand.setDistance(100);
                 demand.setLocation(new Location(55, 33));
                 demand.setPrice(new Price(100, 500));
                 demand.setUserId("1");
+                demand.setMustTags(list);
+                demand.setShouldTags(list);
                 DemandsModel.getInstance().setPostDemand(demand);
 
                 asyncTask = new HttpPostAsyncTask();
