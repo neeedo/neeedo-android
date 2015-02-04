@@ -5,15 +5,32 @@
     android:layout_width="250dp"
     android:layout_height="170dp">
 
-    <TextView
-        android:id="@+id/helloText"
-        android:textSize="40sp"
-        android:textColor="@android:color/white"
-        android:background="#E339"
-        android:gravity="center"
-        tools:text="@string/hello_world"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+     <LinearLayout
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:orientation="vertical"
+         android:background="#ff009842">
+
+         <TextView
+             android:id="@+id/helloText"
+             android:layout_marginTop="10dp"
+             android:layout_marginLeft="10dp"
+             android:layout_marginRight="10dp"
+             android:textSize="40sp"
+             android:textColor="@android:color/white"
+             android:background="#E39"
+             android:gravity="center"
+             tools:text="@string/hello_world"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent" />
+
+         <ImageView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:src="@drawable/new_card_form_image_placeholder"/>
+
+         </LinearLayout>
+
 
     <View
         android:id="@+id/item_swipe_left_indicator"
