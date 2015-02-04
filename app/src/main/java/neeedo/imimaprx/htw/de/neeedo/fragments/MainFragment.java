@@ -95,7 +95,6 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                 demand.setLocation(new Location(55, 33));
                 demand.setPrice(new Price(100, 500));
                 demand.setUserId("1");
-                demand.setTags("Whatever");
                 DemandsModel.getInstance().setPostDemand(demand);
 
                 asyncTask = new HttpPostAsyncTask();
