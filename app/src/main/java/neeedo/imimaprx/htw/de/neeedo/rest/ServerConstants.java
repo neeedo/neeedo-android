@@ -1,12 +1,13 @@
 package neeedo.imimaprx.htw.de.neeedo.rest;
 
-/**
- * Created by Admin on 31.01.2015.
- */
 public abstract class ServerConstants {
     public static final String LOCALHOST_ADDRESS_STUB = "http://10.0.2.2:9000/stub/";
     public static final String LOCALHOST_ADDRESS = "http://10.0.2.2:9000/";
+<<<<<<< HEAD
     public static final String LIVE_SERVER_ADDRESS = "http://178.62.252.23:9000/";
     public static final String ACTIVE_SERVER = LOCALHOST_ADDRESS;
 
+=======
+    public static final String LIVE_SERVER_ADDRESS = "http://dry-depths-2035.herokuapp.com/stub/";
+>>>>>>> 7412e63111887dfa827dff19c31175f177dbc301
 }
