@@ -13,7 +13,7 @@ import java.util.List;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
 
-public class ListCardsFragment extends Fragment {
+public class ListCardsFragment extends SuperFragment {
 
     ListView listView;
 

@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
 
-public class NewDemandCardFragment extends Fragment {
+public class NewDemandCardFragment extends SuperFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

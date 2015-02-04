@@ -26,7 +26,7 @@ import neeedo.imimaprx.htw.de.neeedo.rest.HttpPostAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.SuperHttpAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.service.EventService;
 
-public class MainFragment extends Fragment implements View.OnClickListener {
+public class MainFragment extends SuperFragment implements View.OnClickListener {
 
     private Button btnGetOperation;
     private Button btnPostOperation;
@@ -34,8 +34,6 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
     private Activity activity;
     private ProgressDialog progressDialog;
-
-    private EventService eventService = EventService.getInstance();
 
     public MainFragment() {
     }
@@ -60,18 +58,6 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         btnGetOperation.setOnClickListener(this);
         btnPostOperation.setOnClickListener(this);
         btnGetSingleOperation.setOnClickListener(this);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        eventService.register(this);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        eventService.unregister(this);
     }
 
     @Override

@@ -24,7 +24,7 @@ import android.widget.Toast;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
 
-public class NavigationDrawerFragment extends Fragment {
+public class NavigationDrawerFragment extends SuperFragment {
 
     private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
 

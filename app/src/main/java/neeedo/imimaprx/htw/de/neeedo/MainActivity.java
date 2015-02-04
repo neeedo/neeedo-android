@@ -1,6 +1,5 @@
 package neeedo.imimaprx.htw.de.neeedo;
 
-import android.content.Context;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -12,12 +11,12 @@ import android.support.v4.widget.DrawerLayout;
 
 import com.splunk.mint.Mint;
 
+import neeedo.imimaprx.htw.de.neeedo.fragments.DiolorSwipeFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.ListCardsFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.MainFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.NavigationDrawerFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.NewDemandCardFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.NewOfferCardFragment;
-import neeedo.imimaprx.htw.de.neeedo.fragments.TinderFragment;
 
 
 public class MainActivity extends ActionBarActivity
@@ -63,7 +62,7 @@ public class MainActivity extends ActionBarActivity
                 fragment = new ListCardsFragment();
                 break;
             case 4:
-                fragment = new TinderFragment();
+                fragment = new DiolorSwipeFragment();
                 break;
             default:
                 fragment = new MainFragment();
