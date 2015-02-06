@@ -2,6 +2,8 @@ package neeedo.imimaprx.htw.de.neeedo.fragments;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +48,9 @@ public class ListCardsFragment extends SuperFragment {
 
     @Subscribe
     public void fillList(ServerResponseEvent e) {
+
+        // TODO also for Offers
+
         // get demands out of demands model singleton
         Demands demands = DemandsModel.getInstance().getDemands();
 
@@ -66,9 +71,18 @@ public class ListCardsFragment extends SuperFragment {
                 // get clicked item
                 Demand demand = (Demand) listView.getItemAtPosition(position);
 
-                // TODO show single view of this demand
+                // load SingleCardFragment
+                FragmentManager fragmentManager = getFragmentManager();
+                Fragment fragment = new SingleCardFragment();
 
-                System.out.println(demand.getId());
+                // pass arguments to fragment
+                Bundle args = new Bundle();
+                args.putString("id", demand.getId()); // pass current item id
+                fragment.setArguments(args);
+
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, fragment)
+                        .commit();
             }
         });
     }
