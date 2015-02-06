@@ -48,6 +48,9 @@ public class ListCardsFragment extends SuperFragment {
 
     @Subscribe
     public void fillList(ServerResponseEvent e) {
+
+        // TODO also for Offers
+
         // get demands out of demands model singleton
         Demands demands = DemandsModel.getInstance().getDemands();
 
@@ -68,13 +71,15 @@ public class ListCardsFragment extends SuperFragment {
                 // get clicked item
                 Demand demand = (Demand) listView.getItemAtPosition(position);
 
-                // TODO show single view of this demand
-
-                // System.out.println(demand.getId());
-
                 // load SingleCardFragment
                 FragmentManager fragmentManager = getFragmentManager();
                 Fragment fragment = new SingleCardFragment();
+
+                // pass arguments to fragment
+                Bundle args = new Bundle();
+                args.putString("id", demand.getId()); // pass current item id
+                fragment.setArguments(args);
+
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, fragment)
                         .commit();

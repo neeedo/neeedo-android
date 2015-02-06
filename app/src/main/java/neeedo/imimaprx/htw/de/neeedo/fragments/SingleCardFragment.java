@@ -44,6 +44,8 @@ public class SingleCardFragment extends SuperFragment {
 
         // TODO show card content
 
+        System.out.println(getArguments());
+
         textView.setText("foobar");
 
     }
