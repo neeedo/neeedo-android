@@ -8,8 +8,13 @@ import android.widget.TextView;
 
 import com.squareup.otto.Subscribe;
 
+import java.util.ArrayList;
+
 import neeedo.imimaprx.htw.de.neeedo.R;
+import neeedo.imimaprx.htw.de.neeedo.entities.Demand;
+import neeedo.imimaprx.htw.de.neeedo.entities.Demands;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
+import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.HttpGetAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.SuperHttpAsyncTask;
 
@@ -42,11 +47,30 @@ public class SingleCardFragment extends SuperFragment {
     @Subscribe
     public void fillText(ServerResponseEvent e) {
 
-        // TODO show card content
+        // TODO for Offers
 
-        System.out.println(getArguments());
+        // get card id out of arguments
+        String demandId = getArguments().getString("id");
 
-        textView.setText("foobar");
+        // get demands out of demands model singleton
+        Demands demands = DemandsModel.getInstance().getDemands();
+
+        // get array list of demands
+        ArrayList<Demand> demandList = demands.getDemands();
+        Demand currentDemand = null;
+
+        // find card in model
+        for(Demand demand : demandList) {
+            if(demand.getId().equals(demandId)) {
+                currentDemand = demand;
+                break;
+            }
+        }
+
+        // set output
+        textView.setText(currentDemand.toString());
+
+        // TODO handle exception if demand not found
 
     }
 }
