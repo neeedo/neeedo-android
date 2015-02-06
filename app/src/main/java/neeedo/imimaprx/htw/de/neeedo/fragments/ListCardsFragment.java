@@ -1,5 +1,6 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,18 +52,24 @@ public class ListCardsFragment extends SuperFragment {
         // get array list of demands
         ArrayList<Demand> demandList = demands.getDemands();
 
-        // list items
-        List<String> list = new ArrayList<String>();
-        for(int i = 0; i < demandList.size(); i++) {
-            // TODO nice output format
-            list.add(demandList.get(i).toString()); // fill with demands
-        }
-
         // array adapter shows items in list view
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_list_item_1, list);
+        ArrayAdapter<Demand> adapter = new ArrayAdapter<Demand>(getActivity(),
+                android.R.layout.simple_list_item_1, demandList);
         listView.setAdapter(adapter);
 
-        // TODO set item listeners for single view
+        // item click listener
+        listView.setClickable(true);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                // get clicked item
+                Demand demand = (Demand) listView.getItemAtPosition(position);
+
+                // TODO show single view of this demand
+
+                System.out.println(demand.getId());
+            }
+        });
     }
 }
