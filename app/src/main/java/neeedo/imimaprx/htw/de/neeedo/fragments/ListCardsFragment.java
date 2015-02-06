@@ -1,17 +1,22 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments;
 
-import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
-
+import com.squareup.otto.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
-
 import neeedo.imimaprx.htw.de.neeedo.R;
+import neeedo.imimaprx.htw.de.neeedo.entities.Demand;
+import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
+import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
+import neeedo.imimaprx.htw.de.neeedo.rest.HttpGetAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.SuperHttpAsyncTask;
+
+import neeedo.imimaprx.htw.de.neeedo.entities.Demands;
 
 public class ListCardsFragment extends SuperFragment {
 
@@ -32,20 +37,39 @@ public class ListCardsFragment extends SuperFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        // TODO fill list with card objects
+        SuperHttpAsyncTask asyncTask;
 
-        // arraylist with dummy items
-        List<String> list = new ArrayList<String>();
-        for(int i = 1; i <= 10; i++) {
-            list.add("Card " + i); // fill dummy items
-        }
+        // execute async task @Subscribe
+        asyncTask = new HttpGetAsyncTask();
+        asyncTask.execute();
+    }
+
+    @Subscribe
+    public void fillList(ServerResponseEvent e) {
+        // get demands out of demands model singleton
+        Demands demands = DemandsModel.getInstance().getDemands();
+
+        // get array list of demands
+        ArrayList<Demand> demandList = demands.getDemands();
 
         // array adapter shows items in list view
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_list_item_1, list);
+        ArrayAdapter<Demand> adapter = new ArrayAdapter<Demand>(getActivity(),
+                android.R.layout.simple_list_item_1, demandList);
         listView.setAdapter(adapter);
 
-        // TODO set item listeners for single view
+        // item click listener
+        listView.setClickable(true);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                // get clicked item
+                Demand demand = (Demand) listView.getItemAtPosition(position);
+
+                // TODO show single view of this demand
+
+                System.out.println(demand.getId());
+            }
+        });
     }
 }
