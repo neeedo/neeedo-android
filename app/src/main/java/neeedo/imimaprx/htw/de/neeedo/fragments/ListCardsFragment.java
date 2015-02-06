@@ -2,6 +2,8 @@ package neeedo.imimaprx.htw.de.neeedo.fragments;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,7 +70,14 @@ public class ListCardsFragment extends SuperFragment {
 
                 // TODO show single view of this demand
 
-                System.out.println(demand.getId());
+                // System.out.println(demand.getId());
+
+                // load SingleCardFragment
+                FragmentManager fragmentManager = getFragmentManager();
+                Fragment fragment = new SingleCardFragment();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, fragment)
+                        .commit();
             }
         });
     }
