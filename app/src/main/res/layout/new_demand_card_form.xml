@@ -31,8 +31,14 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/new_card_location"
-        android:id="@+id/etLocation" />
+        android:hint="@string/new_card_location_lat"
+        android:id="@+id/etLocationLat" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/new_card_location_lon"
+        android:id="@+id/etLocationLon" />
 
     <EditText
         android:layout_width="match_parent"
@@ -59,7 +65,8 @@
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/new_card_submit"/>
+        android:text="@string/new_card_submit"
+        android:id="@+id/btnSubmit" />
 
 
 </LinearLayout>
