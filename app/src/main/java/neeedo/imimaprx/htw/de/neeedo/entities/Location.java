@@ -17,7 +17,7 @@ public class Location implements Serializable {
     public Location() {
     }
 
-    public Location(long lat, long lon) {
+    public Location(double lat, double lon) {
         this.lat = lat;
         this.lon = lon;
     }

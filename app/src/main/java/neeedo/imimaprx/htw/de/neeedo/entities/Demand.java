@@ -1,5 +1,7 @@
 package neeedo.imimaprx.htw.de.neeedo.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import org.simpleframework.xml.Element;
@@ -36,6 +38,9 @@ public class Demand implements Serializable {
 
     @Element
     private Price price;
+
+    @Element
+    private Demand demand;
 
     public Demand() {
 
@@ -104,6 +109,14 @@ public class Demand implements Serializable {
 
     public void setShouldTags(ArrayList<String> shouldTags) {
         this.shouldTags = shouldTags;
+    }
+
+    public Demand getDemand() {
+        return this.demand;
+    }
+
+    public void setDemand(Demand demand) {
+        this.demand = demand;
     }
 
     @Override
