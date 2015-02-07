@@ -1,17 +1,14 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.Demand;
 
@@ -63,10 +60,12 @@ public class NewDemandCardFragment extends SuperFragment {
                 String etPriceMinText = etPriceMin.getText().toString();
                 String etPriceMaxText = etPriceMax.getText().toString();
 
+                // TODO handle wrong formats and exceptions
+
                 // convert fields
                 ArrayList<String> mustTags = new ArrayList<String>(Arrays.asList(etMustTagsText.split(",")));
                 ArrayList<String> shouldTags = new ArrayList<String>(Arrays.asList(etShouldTagsText.split(",")));
-                Location location = new Location(Long.parseLong(etLocationLatText), Long.parseLong(etLocationLonText)); // TODO use double instead of long
+                Location location = new Location(Double.parseDouble(etLocationLatText), Double.parseDouble(etLocationLonText));
                 int distance = Integer.parseInt(etDistanceText);
                 Price price = new Price(Double.parseDouble(etPriceMinText), Double.parseDouble(etPriceMaxText));
 
@@ -77,6 +76,7 @@ public class NewDemandCardFragment extends SuperFragment {
                 demand.setLocation(location);
                 demand.setDistance(distance);
                 demand.setPrice(price);
+                demand.setUserId("1"); // TODO use user id if implemented
 
                 System.out.println(demand);
 
