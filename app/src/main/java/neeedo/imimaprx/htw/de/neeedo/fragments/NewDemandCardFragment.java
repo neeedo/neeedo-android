@@ -15,6 +15,9 @@ import neeedo.imimaprx.htw.de.neeedo.entities.Demand;
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.Location;
 import neeedo.imimaprx.htw.de.neeedo.entities.Price;
+import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
+import neeedo.imimaprx.htw.de.neeedo.rest.HttpPostAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.SuperHttpAsyncTask;
 
 public class NewDemandCardFragment extends SuperFragment {
 
@@ -81,6 +84,11 @@ public class NewDemandCardFragment extends SuperFragment {
                 System.out.println(demand);
 
                 // TODO send data
+
+                DemandsModel.getInstance().setPostDemand(demand);
+
+                SuperHttpAsyncTask asyncTask = new HttpPostAsyncTask();
+                asyncTask.execute();
             }
         });
 

@@ -1,5 +1,6 @@
 package neeedo.imimaprx.htw.de.neeedo.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import org.simpleframework.xml.Element;
