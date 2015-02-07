@@ -1,11 +1,16 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,6 +20,7 @@ import neeedo.imimaprx.htw.de.neeedo.entities.Demand;
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.Location;
 import neeedo.imimaprx.htw.de.neeedo.entities.Price;
+import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.HttpPostAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.SuperHttpAsyncTask;
@@ -63,34 +69,53 @@ public class NewDemandCardFragment extends SuperFragment {
                 String etPriceMinText = etPriceMin.getText().toString();
                 String etPriceMaxText = etPriceMax.getText().toString();
 
-                // TODO handle wrong formats and exceptions
+                try {
+                    // convert fields
+                    ArrayList<String> mustTags = new ArrayList<String>(Arrays.asList(etMustTagsText.split(",")));
+                    ArrayList<String> shouldTags = new ArrayList<String>(Arrays.asList(etShouldTagsText.split(",")));
+                    Location location = new Location(Double.parseDouble(etLocationLatText), Double.parseDouble(etLocationLonText));
+                    int distance = Integer.parseInt(etDistanceText);
+                    Price price = new Price(Double.parseDouble(etPriceMinText), Double.parseDouble(etPriceMaxText));
 
-                // convert fields
-                ArrayList<String> mustTags = new ArrayList<String>(Arrays.asList(etMustTagsText.split(",")));
-                ArrayList<String> shouldTags = new ArrayList<String>(Arrays.asList(etShouldTagsText.split(",")));
-                Location location = new Location(Double.parseDouble(etLocationLatText), Double.parseDouble(etLocationLonText));
-                int distance = Integer.parseInt(etDistanceText);
-                Price price = new Price(Double.parseDouble(etPriceMinText), Double.parseDouble(etPriceMaxText));
+                    // create new demand
+                    Demand demand = new Demand();
+                    demand.setMustTags(mustTags);
+                    demand.setShouldTags(shouldTags);
+                    demand.setLocation(location);
+                    demand.setDistance(distance);
+                    demand.setPrice(price);
+                    demand.setUserId("1"); // TODO use user id if implemented
 
-                // create new demand
-                Demand demand = new Demand();
-                demand.setMustTags(mustTags);
-                demand.setShouldTags(shouldTags);
-                demand.setLocation(location);
-                demand.setDistance(distance);
-                demand.setPrice(price);
-                demand.setUserId("1"); // TODO use user id if implemented
+                    System.out.println(demand);
 
-                System.out.println(demand);
+                    // send data
+                    DemandsModel.getInstance().setPostDemand(demand);
+                    SuperHttpAsyncTask asyncTask = new HttpPostAsyncTask();
+                    asyncTask.execute();
 
-                // send data
-                DemandsModel.getInstance().setPostDemand(demand);
-                SuperHttpAsyncTask asyncTask = new HttpPostAsyncTask();
-                asyncTask.execute();
+                    // TODO redirect to other view
+
+                } catch (Exception e) {
+                    // show error
+                    Toast.makeText(getActivity(), getString(R.string.error_empty_or_wrong_format), Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
-        // TODO redirect to other view
         return view;
+    }
+
+    @Subscribe
+    public void sendData(ServerResponseEvent e) {
+        // show message
+        Toast.makeText(getActivity(), getString(R.string.new_card_submit_successful_demand), Toast.LENGTH_SHORT).show();
+
+        // go to list cards view
+        FragmentManager fragmentManager = getFragmentManager();
+        Fragment fragment = new ListCardsFragment();
+
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, fragment)
+                .commit();
     }
 }

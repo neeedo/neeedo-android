@@ -33,5 +33,9 @@
     <string name="new_card_demand">New Demand</string>
     <string name="new_card_offer">New Offer</string>
     <string name="new_card_submit">Submit</string>
+    <string name="new_card_submit_successful_demand">Demand sent succesfully</string>
+
+    <!-- Error messages -->
+    <string name="error_empty_or_wrong_format">Wrong format or emtpy field(s)</string>
 
 </resources>
