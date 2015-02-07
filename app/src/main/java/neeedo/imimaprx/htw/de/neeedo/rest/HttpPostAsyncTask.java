@@ -31,7 +31,8 @@ public class HttpPostAsyncTask extends SuperHttpAsyncTask {
 
 
             RestTemplate restTemplate = new RestTemplate(ClientHttpRequestFactoryProvider.getClientHttpRequestFactory(9000));
-           // RestTemplate restTemplate = new RestTemplate();
+
+            // RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 
@@ -39,7 +40,7 @@ public class HttpPostAsyncTask extends SuperHttpAsyncTask {
 
             ResponseEntity<Demand> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, Demand.class);
 
-            Demand demand = response.getBody();
+            Demand demand = response.getBody(); // TODO not correct response
 
             System.out.println(demand);
 

@@ -13,7 +13,6 @@ import java.util.ArrayList;
 
 @Root(name = "demand")
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class Demand implements Serializable {
 
     @Element
@@ -39,6 +38,9 @@ public class Demand implements Serializable {
 
     @Element
     private Price price;
+
+    @Element
+    private Demand demand;
 
     public Demand() {
 
@@ -107,6 +109,14 @@ public class Demand implements Serializable {
 
     public void setShouldTags(ArrayList<String> shouldTags) {
         this.shouldTags = shouldTags;
+    }
+
+    public Demand getDemand() {
+        return this.demand;
+    }
+
+    public void setDemand(Demand demand) {
+        this.demand = demand;
     }
 
     @Override
