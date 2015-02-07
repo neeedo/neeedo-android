@@ -13,11 +13,11 @@ import com.splunk.mint.Mint;
 
 import neeedo.imimaprx.htw.de.neeedo.fragments.AndSwipeFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.DiolorSwipeFragment;
-import neeedo.imimaprx.htw.de.neeedo.fragments.ListCardsFragment;
+import neeedo.imimaprx.htw.de.neeedo.fragments.ListDemandsFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.MainFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.NavigationDrawerFragment;
-import neeedo.imimaprx.htw.de.neeedo.fragments.NewDemandCardFragment;
-import neeedo.imimaprx.htw.de.neeedo.fragments.NewOfferCardFragment;
+import neeedo.imimaprx.htw.de.neeedo.fragments.NewDemandFragment;
+import neeedo.imimaprx.htw.de.neeedo.fragments.NewOfferFragment;
 
 
 public class MainActivity extends ActionBarActivity
@@ -54,13 +54,13 @@ public class MainActivity extends ActionBarActivity
                 fragment = new MainFragment();
                 break;
             case 1:
-                fragment = new NewOfferCardFragment();
+                fragment = new NewOfferFragment();
                 break;
             case 2:
-                fragment = new NewDemandCardFragment();
+                fragment = new NewDemandFragment();
                 break;
             case 3:
-                fragment = new ListCardsFragment();
+                fragment = new ListDemandsFragment();
                 break;
             case 4:
                 fragment = new AndSwipeFragment();

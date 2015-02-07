@@ -1,6 +1,5 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.*;
 import com.squareup.otto.Subscribe;
 import java.util.ArrayList;
-import java.util.List;
+
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.Demand;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
@@ -20,7 +19,7 @@ import neeedo.imimaprx.htw.de.neeedo.rest.SuperHttpAsyncTask;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.Demands;
 
-public class ListCardsFragment extends SuperFragment {
+public class ListDemandsFragment extends SuperFragment {
 
     ListView listView;
 
@@ -28,7 +27,7 @@ public class ListCardsFragment extends SuperFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        View view = inflater.inflate(R.layout.list_cards_view, container, false);
+        View view = inflater.inflate(R.layout.list_demands_view, container, false);
 
         listView = (ListView) view.findViewById(R.id.listview);
 
@@ -48,8 +47,6 @@ public class ListCardsFragment extends SuperFragment {
 
     @Subscribe
     public void fillList(ServerResponseEvent e) {
-
-        // TODO also for Offers
 
         // get demands out of demands model singleton
         Demands demands = DemandsModel.getInstance().getDemands();
@@ -71,9 +68,9 @@ public class ListCardsFragment extends SuperFragment {
                 // get clicked item
                 Demand demand = (Demand) listView.getItemAtPosition(position);
 
-                // load SingleCardFragment
+                // load SingleDemandFragment
                 FragmentManager fragmentManager = getFragmentManager();
-                Fragment fragment = new SingleCardFragment();
+                Fragment fragment = new SingleDemandFragment();
 
                 // pass arguments to fragment
                 Bundle args = new Bundle();

@@ -25,7 +25,7 @@ import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.HttpPostAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.SuperHttpAsyncTask;
 
-public class NewDemandCardFragment extends SuperFragment {
+public class NewDemandFragment extends SuperFragment {
 
     // fields
     private EditText etMustTags;
@@ -45,7 +45,7 @@ public class NewDemandCardFragment extends SuperFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.new_demand_card_form, container, false);
+        View view = inflater.inflate(R.layout.new_demand_form, container, false);
 
         // initalize fields
         etMustTags = (EditText) view.findViewById(R.id.etMustTags);
@@ -110,7 +110,7 @@ public class NewDemandCardFragment extends SuperFragment {
 
         // go to list cards view
         FragmentManager fragmentManager = getFragmentManager();
-        Fragment fragment = new ListCardsFragment();
+        Fragment fragment = new ListDemandsFragment();
 
         fragmentManager.beginTransaction()
                 .replace(R.id.container, fragment)

@@ -18,7 +18,7 @@ import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.HttpGetAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.SuperHttpAsyncTask;
 
-public class SingleCardFragment extends SuperFragment {
+public class SingleDemandFragment extends SuperFragment {
 
     TextView textView;
 
@@ -26,7 +26,7 @@ public class SingleCardFragment extends SuperFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        View view = inflater.inflate(R.layout.single_card_view, container, false);
+        View view = inflater.inflate(R.layout.single_demand_view, container, false);
 
         textView = (TextView) view.findViewById(R.id.singleview);
 
