@@ -4,11 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:hint="@string/new_card_form_hint_title"
-        android:inputType="text" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/new_card_demand"
+        android:id="@+id/tvHeader" />
 
     <ImageButton
         android:layout_width="fill_parent"
@@ -16,27 +17,49 @@
         android:src="@drawable/new_card_form_image_placeholder" />
 
     <EditText
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:hint="@string/new_card_form_hint_description"
-        android:inputType="textMultiLine"
-        android:lines="5" />
+        android:hint="@string/new_card_must_tags"
+        android:id="@+id/etMustTags" />
 
     <EditText
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:hint="@string/new_card_form_hint_price"
-        android:inputType="text"
-        android:lines="5" />
+        android:hint="@string/new_card_should_tags"
+        android:id="@+id/etShouldTags" />
 
-    <CheckBox
-        android:layout_width="fill_parent"
+    <EditText
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="VB?"/>
+        android:hint="@string/new_card_location"
+        android:id="@+id/etLocation" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/new_card_distance"
+        android:id="@+id/etDistance" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:hint="@string/new_card_price_min"
+        android:id="@+id/etPriceMin" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:hint="@string/new_card_price_max"
+        android:id="@+id/etPriceMax" />
+
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/new_card_form_hint_continue"/>
+        android:text="@string/new_card_submit"/>
 
 
 </LinearLayout>

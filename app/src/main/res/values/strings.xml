@@ -8,7 +8,7 @@
     <string name="title_section1">REST</string>
     <string name="title_section2">Angebot</string>
     <string name="title_section3">Nachfrage</string>
-    <string name="title_section4">List</string>
+    <string name="title_section4">List of Demands</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -16,10 +16,17 @@
     <string name="action_settings">Settings</string>
 
     <!-- Cards -->
-    <string name="new_card_form_hint_title">Name deiner Karte</string>
-    <string name="new_card_form_hint_description">Kurzbeschreibung</string>
-    <string name="new_card_form_hint_price">Preis</string>
-    <string name="new_card_form_hint_continue">weiter</string>
     <string name="title_section5">tinder</string>
+
+    <!-- Forms -->
+    <string name="new_card_must_tags">Must tags</string>
+    <string name="new_card_should_tags">Should tags</string>
+    <string name="new_card_location">Location</string>
+    <string name="new_card_distance">Distance</string>
+    <string name="new_card_price_min">Price min.</string>
+    <string name="new_card_price_max">Price max.</string>
+    <string name="new_card_demand">New Demand</string>
+    <string name="new_card_offer">New Offer</string>
+    <string name="new_card_submit">Submit</string>
 
 </resources>
