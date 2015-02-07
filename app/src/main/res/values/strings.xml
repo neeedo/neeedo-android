@@ -6,8 +6,8 @@
 
     <!-- Drawer -->
     <string name="title_section1">REST</string>
-    <string name="title_section2">Angebot</string>
-    <string name="title_section3">Nachfrage</string>
+    <string name="title_section2">New Offer</string>
+    <string name="title_section3">New Demand</string>
     <string name="title_section4">List of Demands</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>

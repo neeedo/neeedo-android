@@ -93,8 +93,6 @@ public class NewDemandCardFragment extends SuperFragment {
                     SuperHttpAsyncTask asyncTask = new HttpPostAsyncTask();
                     asyncTask.execute();
 
-                    // TODO redirect to other view
-
                 } catch (Exception e) {
                     // show error
                     Toast.makeText(getActivity(), getString(R.string.error_empty_or_wrong_format), Toast.LENGTH_SHORT).show();
@@ -106,7 +104,7 @@ public class NewDemandCardFragment extends SuperFragment {
     }
 
     @Subscribe
-    public void sendData(ServerResponseEvent e) {
+    public void redirectToList(ServerResponseEvent e) {
         // show message
         Toast.makeText(getActivity(), getString(R.string.new_card_submit_successful_demand), Toast.LENGTH_SHORT).show();
 
