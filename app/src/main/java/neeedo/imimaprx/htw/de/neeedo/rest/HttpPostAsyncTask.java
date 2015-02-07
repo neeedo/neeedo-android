@@ -19,6 +19,8 @@ public class HttpPostAsyncTask extends SuperHttpAsyncTask {
     @Override
     protected Object doInBackground(Object[] params) {
         try {
+            // TODO for offers
+
             final String url = ServerConstants.ACTIVE_SERVER + "demands";
 
             HttpHeaders requestHeaders;

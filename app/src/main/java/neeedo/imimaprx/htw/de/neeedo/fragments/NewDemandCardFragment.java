@@ -83,15 +83,14 @@ public class NewDemandCardFragment extends SuperFragment {
 
                 System.out.println(demand);
 
-                // TODO send data
-
+                // send data
                 DemandsModel.getInstance().setPostDemand(demand);
-
                 SuperHttpAsyncTask asyncTask = new HttpPostAsyncTask();
                 asyncTask.execute();
             }
         });
 
+        // TODO redirect to other view
         return view;
     }
 }

@@ -1,6 +1,7 @@
 package neeedo.imimaprx.htw.de.neeedo.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import org.simpleframework.xml.Element;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 
 @Root(name = "demand")
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Demand implements Serializable {
 
     @Element
