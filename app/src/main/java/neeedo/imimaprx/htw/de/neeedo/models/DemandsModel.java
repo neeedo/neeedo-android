@@ -10,7 +10,6 @@ public class DemandsModel {
     private Demands demands;
     private SingleDemand singleDemand;
     private Demand postDemand;
-    private static DemandsModel demandsModel;
 
     public static DemandsModel getInstance() {
         if (demandsModel == null)
@@ -21,11 +20,7 @@ public class DemandsModel {
     private DemandsModel() {
     }
 
-
-    public neeedo.imimaprx.htw.de.neeedo.entities.SingleDemand createNewSingleDemand(){
-        singleDemand = new SingleDemand();
-        return singleDemand;
-    }
+    private static DemandsModel demandsModel;
 
     public Demands getDemands() {
         return demands;

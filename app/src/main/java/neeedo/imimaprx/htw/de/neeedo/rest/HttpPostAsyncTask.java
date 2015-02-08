@@ -11,7 +11,6 @@ import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
-import neeedo.imimaprx.htw.de.neeedo.entities.SingleDemand;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.entities.Demand;
 import neeedo.imimaprx.htw.de.neeedo.factory.ClientHttpRequestFactoryProvider;
@@ -24,12 +23,11 @@ public class HttpPostAsyncTask extends SuperHttpAsyncTask {
 
             final String url = ServerConstants.ACTIVE_SERVER + "demands";
 
-            DemandsModel demandsModel = DemandsModel.getInstance();
             HttpHeaders requestHeaders;
             requestHeaders = new HttpHeaders();
             requestHeaders.setContentType(MediaType.APPLICATION_JSON);
 
-            HttpEntity<Demand> requestEntity = new HttpEntity<Demand>(demandsModel.getPostDemand(), requestHeaders);
+            HttpEntity<Demand> requestEntity = new HttpEntity<Demand>(DemandsModel.getInstance().getPostDemand(), requestHeaders);
 
 
             RestTemplate restTemplate = new RestTemplate(ClientHttpRequestFactoryProvider.getClientHttpRequestFactory(9000));
@@ -40,17 +38,16 @@ public class HttpPostAsyncTask extends SuperHttpAsyncTask {
 
 
 
-            ResponseEntity<SingleDemand> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, SingleDemand.class);
+            ResponseEntity<Demand> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, Demand.class);
 
-            SingleDemand singleDemand = response.getBody();
+            Demand demand = response.getBody(); // TODO not correct response
 
-           // SingleDemand singleDemand = demandsModel.createNewSingleDemand();
-            demandsModel.setSingleDemand(singleDemand);
+            System.out.println(demand);
 
-            return "Success";
+            return demand;
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
-            return "Failed";
+            return "Failed";//TODO use proper entities
         }
     }
 }
