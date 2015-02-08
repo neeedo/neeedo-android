@@ -40,13 +40,12 @@ public class HttpPostAsyncTask extends SuperHttpAsyncTask {
 
 
 
-            ResponseEntity<Demand> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, Demand.class);
+            ResponseEntity<SingleDemand> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, SingleDemand.class);
 
-            Demand demand = response.getBody();
+            SingleDemand singleDemand = response.getBody();
 
-            SingleDemand singleDemand = demandsModel.createNewSingleDemand();
-            singleDemand.setDemand(demand);
-
+           // SingleDemand singleDemand = demandsModel.createNewSingleDemand();
+            demandsModel.setSingleDemand(singleDemand);
 
             return "Success";
         } catch (Exception e) {
