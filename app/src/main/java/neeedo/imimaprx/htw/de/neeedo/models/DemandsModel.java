@@ -1,6 +1,8 @@
 package neeedo.imimaprx.htw.de.neeedo.models;
 
 
+import java.util.ArrayList;
+
 import neeedo.imimaprx.htw.de.neeedo.entities.Demand;
 import neeedo.imimaprx.htw.de.neeedo.entities.Demands;
 import neeedo.imimaprx.htw.de.neeedo.entities.SingleDemand;
@@ -23,6 +25,10 @@ public class DemandsModel {
     private static DemandsModel demandsModel;
 
     public Demands getDemands() {
+        if(demands == null){
+            demands = new Demands();
+            demands.setDemands(new ArrayList<Demand>());
+        }
         return demands;
     }
 

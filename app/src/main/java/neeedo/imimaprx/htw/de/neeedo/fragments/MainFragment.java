@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,15 +15,14 @@ import java.util.ArrayList;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.Demand;
-import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.entities.Location;
 import neeedo.imimaprx.htw.de.neeedo.entities.Price;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
+import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.HttpGetAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.HttpGetByIDAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.HttpPostAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.SuperHttpAsyncTask;
-import neeedo.imimaprx.htw.de.neeedo.service.EventService;
 
 public class MainFragment extends SuperFragment implements View.OnClickListener {
 
@@ -110,8 +108,9 @@ public class MainFragment extends SuperFragment implements View.OnClickListener 
 
     @Subscribe
     public void handleNewServerData(ServerResponseEvent e) {
-        System.out.println(e.toString());
+
         System.out.println(DemandsModel.getInstance().getDemands());
+
         dismissProgressDialog();
     }
 
