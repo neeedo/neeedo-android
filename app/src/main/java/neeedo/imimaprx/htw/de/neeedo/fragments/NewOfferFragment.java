@@ -6,8 +6,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
+import neeedo.imimaprx.htw.de.neeedo.entities.Location;
+import neeedo.imimaprx.htw.de.neeedo.entities.Offer;
+import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
+import neeedo.imimaprx.htw.de.neeedo.rest.HttpPostOfferAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.SuperHttpAsyncTask;
 
 public class NewOfferFragment extends SuperFragment {
 
@@ -36,7 +45,43 @@ public class NewOfferFragment extends SuperFragment {
         btnSubmit = (Button) view.findViewById(R.id.btnSubmit);
 
         // TODO create new offer
-        btnSubmit.setEnabled(false); // TODO enable button
+        // btnSubmit.setEnabled(false); // TODO enable button
+
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // get form values
+                String etTagsText = etTags.getText().toString();
+                String etLocationLatText = etLocationLat.getText().toString();
+                String etLocationLonText = etLocationLon.getText().toString();
+                String etPriceText = etPrice.getText().toString();
+
+                try {
+                    // convert fields
+                    ArrayList<String> tags = new ArrayList<String>(Arrays.asList(etTagsText.split(",")));
+                    Location location = new Location(Double.parseDouble(etLocationLatText), Double.parseDouble(etLocationLonText));
+                    Double price = Double.parseDouble(etPriceText);
+
+                    // create new demand
+                    Offer offer = new Offer();
+                    offer.setTags(tags);
+                    offer.setLocation(location);
+                    offer.setPrice(price);
+                    offer.setUserId("1"); // TODO use user id if implemented
+
+                    System.out.println(offer);
+
+                    // send data
+                    OffersModel.getInstance().setPostOffer(offer);
+                    SuperHttpAsyncTask asyncTask = new HttpPostOfferAsyncTask();
+                    asyncTask.execute();
+
+                } catch (Exception e) {
+                    // show error
+                    Toast.makeText(getActivity(), getString(R.string.error_empty_or_wrong_format), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         return view;
     }

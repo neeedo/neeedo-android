@@ -21,7 +21,7 @@ import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.HttpGetAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.HttpGetByIDAsyncTask;
-import neeedo.imimaprx.htw.de.neeedo.rest.HttpPostAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.HttpPostDemandAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.SuperHttpAsyncTask;
 
 public class MainFragment extends SuperFragment implements View.OnClickListener {
@@ -90,7 +90,7 @@ public class MainFragment extends SuperFragment implements View.OnClickListener 
                 demand.setShouldTags(list);
                 DemandsModel.getInstance().setPostDemand(demand);
 
-                asyncTask = new HttpPostAsyncTask();
+                asyncTask = new HttpPostDemandAsyncTask();
 
                 asyncTask.execute();
 

@@ -16,7 +16,7 @@ import neeedo.imimaprx.htw.de.neeedo.entities.SingleDemand;
 import neeedo.imimaprx.htw.de.neeedo.factory.ClientHttpRequestFactoryProvider;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 
-public class HttpPostAsyncTask extends SuperHttpAsyncTask {
+public class HttpPostDemandAsyncTask extends SuperHttpAsyncTask {
     @Override
     protected Object doInBackground(Object[] params) {
         try {

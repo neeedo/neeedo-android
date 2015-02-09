@@ -11,11 +11,11 @@ public class SingleOffer implements Serializable {
     @Element
     private Offer offer;
 
-    public Offer getDemand() {
+    public Offer getOffer() {
         return offer;
     }
 
-    public void setDemand(Offer offer) {
+    public void setOffer(Offer offer) {
         this.offer = offer;
     }
 
