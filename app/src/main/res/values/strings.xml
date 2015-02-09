@@ -25,11 +25,13 @@
     <!-- Forms -->
     <string name="new_card_must_tags">Must tags</string>
     <string name="new_card_should_tags">Should tags</string>
+    <string name="new_card_tags">Tags</string>
     <string name="new_card_location_lat">Location lat.</string>
     <string name="new_card_location_lon">Location lon.</string>
     <string name="new_card_distance">Distance</string>
     <string name="new_card_price_min">Price min.</string>
     <string name="new_card_price_max">Price max.</string>
+    <string name="new_card_price">Price</string>
     <string name="new_card_demand">New Demand</string>
     <string name="new_card_offer">New Offer</string>
     <string name="new_card_submit">Submit</string>

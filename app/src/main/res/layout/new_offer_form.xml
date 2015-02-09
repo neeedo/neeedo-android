@@ -4,11 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:hint="@string/new_card_form_hint_title"
-        android:inputType="text" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/new_card_offer"
+        android:id="@+id/tvHeader" />
 
     <ImageButton
         android:layout_width="fill_parent"
@@ -16,27 +17,35 @@
         android:src="@drawable/new_card_form_image_placeholder" />
 
     <EditText
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:hint="@string/new_card_form_hint_description"
-        android:inputType="textMultiLine"
-        android:lines="5" />
+        android:hint="@string/new_card_tags"
+        android:id="@+id/etTags" />
 
     <EditText
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:hint="@string/new_card_form_hint_price"
-        android:inputType="text"
-        android:lines="5" />
+        android:hint="@string/new_card_location_lat"
+        android:id="@+id/etLocationLat" />
 
-    <CheckBox
-        android:layout_width="fill_parent"
+    <EditText
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="VB?"/>
+        android:hint="@string/new_card_location_lon"
+        android:id="@+id/etLocationLon" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:hint="@string/new_card_price"
+        android:id="@+id/etPrice" />
+
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/new_card_form_hint_continue"/>
-
+        android:text="@string/new_card_submit"
+        android:id="@+id/btnSubmit" />
 
 </LinearLayout>
