@@ -22,7 +22,7 @@ import neeedo.imimaprx.htw.de.neeedo.entities.Location;
 import neeedo.imimaprx.htw.de.neeedo.entities.Price;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
-import neeedo.imimaprx.htw.de.neeedo.rest.HttpPostAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.HttpPostDemandAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.SuperHttpAsyncTask;
 
 public class NewDemandFragment extends SuperFragment {
@@ -90,7 +90,7 @@ public class NewDemandFragment extends SuperFragment {
 
                     // send data
                     DemandsModel.getInstance().setPostDemand(demand);
-                    SuperHttpAsyncTask asyncTask = new HttpPostAsyncTask();
+                    SuperHttpAsyncTask asyncTask = new HttpPostDemandAsyncTask();
                     asyncTask.execute();
 
                 } catch (Exception e) {
