@@ -8,7 +8,8 @@
     <string name="title_section1">REST</string>
     <string name="title_section2">New Offer</string>
     <string name="title_section3">New Demand</string>
-    <string name="title_section4">List of Demands</string>
+    <string name="title_section4">List of Offers</string>
+    <string name="title_section5">List of Demands</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -20,7 +21,7 @@
     <string name="new_card_form_hint_description">Kurzbeschreibung</string>
     <string name="new_card_form_hint_price">Preis</string>
     <string name="new_card_form_hint_continue">weiter</string>
-    <string name="title_section5">tinder</string>
+
 
     <!-- Forms -->
     <string name="new_card_must_tags">Must tags</string>
@@ -36,6 +37,7 @@
     <string name="new_card_offer">New Offer</string>
     <string name="new_card_submit">Submit</string>
     <string name="new_card_submit_successful_demand">Demand sent succesfully</string>
+    <string name="new_card_submit_successful_offer">Offer sent succesfully</string>
 
     <!-- Error messages -->
     <string name="error_empty_or_wrong_format">Wrong format or emtpy field(s)</string>

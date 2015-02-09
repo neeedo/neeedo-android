@@ -86,6 +86,7 @@ public class NavigationDrawerFragment extends SuperFragment {
                         getString(R.string.title_section2),
                         getString(R.string.title_section3),
                         getString(R.string.title_section4),
+                        getString(R.string.title_section5),
                         "And",
                         "Diolor"
                 }));
