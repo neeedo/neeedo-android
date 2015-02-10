@@ -11,38 +11,59 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-        <Button
-            android:layout_width="107dp"
-            android:layout_height="60dp"
-            android:text="Get Operation"
-            android:id="@+id/BtnGet"
-            android:layout_gravity="left|top" />
+        <!--<Button-->
+            <!--android:layout_width="107dp"-->
+            <!--android:layout_height="60dp"-->
+            <!--android:text="Get Operation"-->
+            <!--android:id="@+id/BtnGet"-->
+            <!--android:layout_gravity="left|top" />-->
+
+        <!--<Button-->
+            <!--android:layout_width="107dp"-->
+            <!--android:layout_height="60dp"-->
+            <!--android:text="Push Operation"-->
+            <!--android:id="@+id/BtnPost"-->
+            <!--android:layout_gravity="right|top" />-->
+
+        <!--<TextView-->
+            <!--android:layout_width="350dp"-->
+            <!--android:layout_height="399dp"-->
+            <!--android:id="@+id/textView"-->
+            <!--android:layout_gravity="center" />-->
+
+        <!--<Button-->
+            <!--android:layout_width="107dp"-->
+            <!--android:layout_height="60dp"-->
+            <!--android:text="Get by ID Operation"-->
+            <!--android:id="@+id/BtnGetSingle"-->
+            <!--android:layout_gravity="center_horizontal|top" />-->
+
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="344dp"-->
+            <!--android:id="@+id/demandTextView"-->
+            <!--android:layout_gravity="center" />-->
+
+        <ImageView
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:id="@+id/ivLogo"
+            android:layout_gravity="top|center_horizontal"
+            android:background="@drawable/home_logo" />
 
         <Button
-            android:layout_width="107dp"
-            android:layout_height="60dp"
-            android:text="Push Operation"
-            android:id="@+id/BtnPost"
-            android:layout_gravity="right|top" />
-
-        <TextView
-            android:layout_width="350dp"
-            android:layout_height="399dp"
-            android:id="@+id/textView"
-            android:layout_gravity="center" />
+            android:layout_width="170dp"
+            android:layout_height="70dp"
+            android:text="@string/new_card_demand"
+            android:id="@+id/btnNewDemand"
+            android:layout_gravity="center|right" />
 
         <Button
-            android:layout_width="107dp"
-            android:layout_height="60dp"
-            android:text="Get by ID Operation"
-            android:id="@+id/BtnGetSingle"
-            android:layout_gravity="center_horizontal|top" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="344dp"
-            android:id="@+id/demandTextView"
-            android:layout_gravity="center" />
+            android:layout_width="170dp"
+            android:layout_height="70dp"
+            android:text="@string/new_card_offer"
+            android:id="@+id/btnNewOffer"
+            android:layout_gravity="left|center" />
 
     </FrameLayout>
 

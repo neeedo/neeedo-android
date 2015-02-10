@@ -5,7 +5,7 @@
     <string name="app_name">Neeedo</string>
 
     <!-- Drawer -->
-    <string name="title_section1">REST</string>
+    <string name="title_section1">Home</string>
     <string name="title_section2">New Offer</string>
     <string name="title_section3">New Demand</string>
     <string name="title_section4">List of Offers</string>

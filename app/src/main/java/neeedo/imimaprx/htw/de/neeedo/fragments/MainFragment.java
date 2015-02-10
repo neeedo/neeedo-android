@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,9 +28,11 @@ import neeedo.imimaprx.htw.de.neeedo.rest.SuperHttpAsyncTask;
 
 public class MainFragment extends SuperFragment implements View.OnClickListener {
 
-    private Button btnGetOperation;
-    private Button btnPostOperation;
-    private Button btnGetSingleOperation;
+//    private Button btnGetOperation;
+//    private Button btnPostOperation;
+//    private Button btnGetSingleOperation;
+    private Button btnNewOfferOperation;
+    private Button btnNewDemandOperation;
 
     private Activity activity;
     private ProgressDialog progressDialog;
@@ -49,13 +53,17 @@ public class MainFragment extends SuperFragment implements View.OnClickListener 
 
         activity = getActivity();
 
-        btnGetOperation = (Button) activity.findViewById(R.id.BtnGet);
-        btnPostOperation = (Button) activity.findViewById(R.id.BtnPost);
-        btnGetSingleOperation = (Button) activity.findViewById(R.id.BtnGetSingle);
+//        btnGetOperation = (Button) activity.findViewById(R.id.BtnGet);
+//        btnPostOperation = (Button) activity.findViewById(R.id.BtnPost);
+//        btnGetSingleOperation = (Button) activity.findViewById(R.id.BtnGetSingle);
+        btnNewOfferOperation = (Button) activity.findViewById(R.id.btnNewOffer);
+        btnNewDemandOperation = (Button) activity.findViewById(R.id.btnNewDemand);
 
-        btnGetOperation.setOnClickListener(this);
-        btnPostOperation.setOnClickListener(this);
-        btnGetSingleOperation.setOnClickListener(this);
+//        btnGetOperation.setOnClickListener(this);
+//        btnPostOperation.setOnClickListener(this);
+//        btnGetSingleOperation.setOnClickListener(this);
+        btnNewOfferOperation.setOnClickListener(this);
+        btnNewDemandOperation.setOnClickListener(this);
     }
 
     @Override
@@ -64,44 +72,61 @@ public class MainFragment extends SuperFragment implements View.OnClickListener 
 
         SuperHttpAsyncTask asyncTask;
 
+        FragmentManager fragmentManager = getFragmentManager();
+        Fragment fragment = null;
+
         switch (v.getId()) {
-            case R.id.BtnGet:
-                showLoadingProgressDialog();
+//            case R.id.BtnGet:
+//                showLoadingProgressDialog();
+//
+//                asyncTask = new HttpGetAsyncTask();
+//                asyncTask.execute();
+//
+//                break;
+//
+//            case R.id.BtnPost:
+//                showLoadingProgressDialog();
+//
+//                ArrayList<String> list = new ArrayList<String>();
+//                list.add("Kekse");
+//                list.add("more Kekse");
+//                list.add("still more Kekse");
+//
+//                Demand demand = new Demand();
+//                demand.setDistance(100);
+//                demand.setLocation(new Location(55, 33));
+//                demand.setPrice(new Price(100, 500));
+//                demand.setUserId("1");
+//                demand.setMustTags(list);
+//                demand.setShouldTags(list);
+//                DemandsModel.getInstance().setPostDemand(demand);
+//
+//                asyncTask = new HttpPostDemandAsyncTask();
+//
+//                asyncTask.execute();
+//
+//                break;
+//
+//            case R.id.BtnGetSingle:
+//                showLoadingProgressDialog();
+//                asyncTask = new HttpGetByIDAsyncTask();
+//
+//                asyncTask.execute();
+//
+//                break;
 
-                asyncTask = new HttpGetAsyncTask();
-                asyncTask.execute();
-
+            case R.id.btnNewDemand:
+                fragment = new NewDemandFragment();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, fragment)
+                        .commit();
                 break;
 
-            case R.id.BtnPost:
-                showLoadingProgressDialog();
-
-                ArrayList<String> list = new ArrayList<String>();
-                list.add("Kekse");
-                list.add("more Kekse");
-                list.add("still more Kekse");
-
-                Demand demand = new Demand();
-                demand.setDistance(100);
-                demand.setLocation(new Location(55, 33));
-                demand.setPrice(new Price(100, 500));
-                demand.setUserId("1");
-                demand.setMustTags(list);
-                demand.setShouldTags(list);
-                DemandsModel.getInstance().setPostDemand(demand);
-
-                asyncTask = new HttpPostDemandAsyncTask();
-
-                asyncTask.execute();
-
-                break;
-
-            case R.id.BtnGetSingle:
-                showLoadingProgressDialog();
-                asyncTask = new HttpGetByIDAsyncTask();
-
-                asyncTask.execute();
-
+            case R.id.btnNewOffer:
+                fragment = new NewOfferFragment();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, fragment)
+                        .commit();
                 break;
         }
     }
