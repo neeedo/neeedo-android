@@ -49,6 +49,6 @@ public class Price implements Serializable {
 
         DecimalFormat format = new DecimalFormat("#0.00");
 
-        return format.format(min) + " - " + format.format(min) + " €";
+        return format.format(min) + " - " + format.format(max) + " €";
     }
 }

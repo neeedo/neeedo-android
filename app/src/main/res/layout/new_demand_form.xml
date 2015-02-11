@@ -36,24 +36,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/new_card_location_lat"
+            android:inputType="numberDecimal"
             android:id="@+id/etLocationLat" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/new_card_location_lon"
+            android:inputType="numberDecimal"
             android:id="@+id/etLocationLon" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="number"
             android:hint="@string/new_card_distance"
             android:id="@+id/etDistance" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:ems="10"
             android:hint="@string/new_card_price_min"
             android:id="@+id/etPriceMin" />
@@ -61,7 +64,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:ems="10"
             android:hint="@string/new_card_price_max"
             android:id="@+id/etPriceMax" />

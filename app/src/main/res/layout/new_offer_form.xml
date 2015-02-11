@@ -29,19 +29,21 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
             android:hint="@string/new_card_location_lat"
             android:id="@+id/etLocationLat" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
             android:hint="@string/new_card_location_lon"
             android:id="@+id/etLocationLon" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:ems="10"
             android:hint="@string/new_card_price"
             android:id="@+id/etPrice" />
