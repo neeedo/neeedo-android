@@ -6,6 +6,7 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 
@@ -97,14 +98,19 @@ public class Offer implements Serializable {
 
     @Override
     public String toString() {
-        return "Offer{" +
-                "id='" + id + '\'' +
-                ", version=" + version +
-                ", userId='" + userId + '\'' +
-                ", tags=" + tags +
-                ", location=" + location +
-                ", price=" + price +
-                '}';
+//        return "Offer{" +
+//                "id='" + id + '\'' +
+//                ", version=" + version +
+//                ", userId='" + userId + '\'' +
+//                ", tags=" + tags +
+//                ", location=" + location +
+//                ", price=" + price +
+//                '}';
+
+        DecimalFormat format = new DecimalFormat("#0.00");
+
+        return "Search:\n" + tags +
+                "\n\nPrice: " + format.format(price);
     }
 
     @Override

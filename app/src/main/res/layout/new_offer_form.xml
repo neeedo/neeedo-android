@@ -1,51 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/new_card_offer"
-        android:id="@+id/tvHeader" />
-
-    <ImageButton
-        android:layout_width="fill_parent"
-        android:layout_height="120dp"
-        android:src="@drawable/new_card_form_image_placeholder" />
-
-    <EditText
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/new_card_tags"
-        android:id="@+id/etTags" />
+        android:layout_height="match_parent">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/new_card_location_lat"
-        android:id="@+id/etLocationLat" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/new_card_offer"
+            android:id="@+id/tvHeader" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/new_card_location_lon"
-        android:id="@+id/etLocationLon" />
+        <ImageButton
+            android:layout_width="fill_parent"
+            android:layout_height="120dp"
+            android:src="@drawable/new_card_form_image_placeholder" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:hint="@string/new_card_price"
-        android:id="@+id/etPrice" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/new_card_tags"
+            android:id="@+id/etTags" />
 
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/new_card_submit"
-        android:id="@+id/btnSubmit" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:hint="@string/new_card_location_lat"
+            android:id="@+id/etLocationLat" />
 
-</LinearLayout>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:hint="@string/new_card_location_lon"
+            android:id="@+id/etLocationLon" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:ems="10"
+            android:hint="@string/new_card_price"
+            android:id="@+id/etPrice" />
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/new_card_submit"
+            android:id="@+id/btnSubmit" />
+
+    </LinearLayout>
+</ScrollView>

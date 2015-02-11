@@ -121,16 +121,20 @@ public class Demand implements Serializable {
 
     @Override
     public String toString() {
-        return "Demand{" +
-                "id='" + id + '\'' +
-                ", version=" + version +
-                ", userId='" + userId + '\'' +
-                ", mustTags=" + mustTags +
-                ", shouldTags=" + shouldTags +
-                ", location=" + location +
-                ", distance=" + distance +
-                ", price=" + price +
-                '}';
+//        return "Demand{" +
+//                "id='" + id + '\'' +
+//                ", version=" + version +
+//                ", userId='" + userId + '\'' +
+//                ", mustTags=" + mustTags +
+//                ", shouldTags=" + shouldTags +
+//                ", location=" + location +
+//                ", distance=" + distance +
+//                ", price=" + price +
+//                '}';
+
+        return "Must have:\n" + mustTags +
+                "\nShould have:\n" + shouldTags +
+                "\n\nPrice: " + price;
     }
 
     @Override

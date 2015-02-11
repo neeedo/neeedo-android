@@ -17,7 +17,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Coming soon...."
+        android:text="Nothing to see in this list\n\nOffers will be visible after matching of demands in the future."
         android:id="@+id/textView2"
         android:layout_gravity="center_horizontal" />
 </LinearLayout>
