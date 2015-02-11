@@ -4,6 +4,7 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 
 @Root(name = "price")
 public class Price implements Serializable {
@@ -41,9 +42,13 @@ public class Price implements Serializable {
 
     @Override
     public String toString() {
-        return "Price{" +
-                "min=" + min +
-                ", max=" + max +
-                '}';
+//        return "Price{" +
+//                "min=" + min +
+//                ", max=" + max +
+//                '}';
+
+        DecimalFormat format = new DecimalFormat("#0.00");
+
+        return format.format(min) + " - " + format.format(min) + " €";
     }
 }
