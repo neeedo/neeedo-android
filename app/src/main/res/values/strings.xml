@@ -10,6 +10,7 @@
     <string name="title_section3">New Demand</string>
     <string name="title_section4">List of Offers</string>
     <string name="title_section5">List of Demands</string>
+    <string name="title_section6">Swiper</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -41,5 +42,10 @@
 
     <!-- Error messages -->
     <string name="error_empty_or_wrong_format">Wrong format or emtpy field(s)</string>
+    <string name="sample_title">Gebrauchtes Kinderfahrrad</string>
+    <string name="sample_describtion">ich biete ein 2,5 Jahre altes Kinderrad. Es ist optisch und
+        technisch in einem sehr gutem Zustand. Wurde regelmäßig gepflegt mit natürlich kleinen
+        Gebrauchsspuren.
+    </string>
 
 </resources>

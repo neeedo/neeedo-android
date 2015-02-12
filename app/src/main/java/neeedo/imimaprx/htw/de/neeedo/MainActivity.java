@@ -11,7 +11,6 @@ import android.view.MenuItem;
 
 import com.splunk.mint.Mint;
 
-import neeedo.imimaprx.htw.de.neeedo.fragments.AndSwipeFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.DiolorSwipeFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.ListDemandsFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.ListOffersFragment;
@@ -67,9 +66,6 @@ public class MainActivity extends ActionBarActivity
                 fragment = new ListDemandsFragment();
                 break;
             case 5:
-                fragment = new AndSwipeFragment();
-                break;
-            case 6:
                 fragment = new DiolorSwipeFragment();
                 break;
             default:

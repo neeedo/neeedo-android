@@ -47,7 +47,6 @@ dependencies {
     compile 'com.squareup:otto:1.3.6'
     compile 'com.lorentzos.swipecards:library:1.0.8@aar'
     compile 'com.github.kikoso:SwipeableCards:1.0-RELEASE@aar'
-    compile 'org.osmdroid:osmdroid-android:4.2'
     compile 'org.slf4j:slf4j-simple:1.6.1'
     compile "com.splunk.mint:mint:4.0.8"
     compile('org.simpleframework:simple-xml:2.7.+') {

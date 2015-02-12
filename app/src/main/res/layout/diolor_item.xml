@@ -1,36 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_gravity="center"
-    android:layout_width="250dp"
-    android:layout_height="170dp">
-
-     <LinearLayout
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:orientation="vertical"
-         android:background="#ff009842">
-
-         <TextView
-             android:id="@+id/helloText"
-             android:layout_marginTop="10dp"
-             android:layout_marginLeft="10dp"
-             android:layout_marginRight="10dp"
-             android:textSize="40sp"
-             android:textColor="@android:color/white"
-             android:background="#E39"
-             android:gravity="center"
-             tools:text="@string/hello_world"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent" />
-
-         <ImageView
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:src="@drawable/new_card_form_image_placeholder"/>
-
-         </LinearLayout>
-
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_margin="30dp">
 
     <View
         android:id="@+id/item_swipe_left_indicator"
@@ -48,5 +21,46 @@
         android:layout_margin="10dp"
         android:layout_gravity="right"
         android:background="#5AF" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:background="#88BEB1"
+        android:id="@+id/asdf">
+
+        <TextView
+            android:id="@+id/card_title"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textSize="40sp"
+            android:textColor="@android:color/white"
+            android:background="#FF006D"
+            android:gravity="center"
+            android:text="@string/sample_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:scaleType="centerCrop"
+            android:layout_margin="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="240dp"
+            android:gravity="top"
+            android:src="@drawable/sample_bike" />
+
+        <TextView
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textSize="13dp"
+            android:textColor="@android:color/black"
+            android:background="#fff"
+            android:text="@string/sample_describtion"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+
+    </LinearLayout>
 
 </FrameLayout>
