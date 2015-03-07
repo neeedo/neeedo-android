@@ -1,9 +1,8 @@
 package neeedo.imimaprx.htw.de.neeedo;
 
+import android.graphics.Point;
 import android.test.ActivityInstrumentationTestCase2;
-import android.view.View;
 
-import com.robotium.solo.Condition;
 import com.robotium.solo.Solo;
 
 public class TestCase extends ActivityInstrumentationTestCase2<MainActivity> {
@@ -24,7 +23,7 @@ public class TestCase extends ActivityInstrumentationTestCase2<MainActivity> {
     }
 
     public void testRun() {
-        int shortDelay = 5000;
+        int shortDelay = 1000;
         int longDelay = 10000;
 
         // Wait for activity:
@@ -34,20 +33,23 @@ public class TestCase extends ActivityInstrumentationTestCase2<MainActivity> {
 
         solo.clickOnActionBarHomeButton();
 
-        solo.waitForView(R.layout.activity_main);
-
-        solo.waitForFragmentById(R.id.navigation_drawer);
-
-        solo.waitForActivity(MainActivity.class,
-                shortDelay);
-
-        solo.waitForView(android.R.id.list);
-
-//        solo.setNavigationDrawer(3);
+        solo.waitForView(R.layout.activity_main, 0, shortDelay, true);
 
 
-        final View listView = solo.getView(R.id.listview);
+        // solo.waitForFragmentById(R.id.navigation_drawer);
 
+        // solo.waitForActivity(MainActivity.class,
+        //         shortDelay);
+
+
+        //solo.waitForView(R.id.navigation_drawer);
+
+        clickOnScreen(3, 5);
+
+
+
+
+        /*
         solo.waitForCondition(new Condition() {
             @Override
             public boolean isSatisfied() {
@@ -57,8 +59,9 @@ public class TestCase extends ActivityInstrumentationTestCase2<MainActivity> {
 
         assertTrue(listView.isActivated());
 
+*/
         // Click on taylorswift13
-       // solo.clickOnView(solo.getView(android.R.id.text1));
+        // solo.clickOnView(solo.getView(android.R.id.text1));
 
         // Assert that: 'feed_view' is shown
         //     assertTrue("feed_view not shown!", solo.waitForView(solo
@@ -73,4 +76,17 @@ public class TestCase extends ActivityInstrumentationTestCase2<MainActivity> {
     protected void clickOnHome() {
         solo.clickOnScreen(50, 50); //usually hits Home button
     }
+
+    private void clickOnScreen(int xFac, int yFac) {
+        Point deviceSize = new Point();
+        solo.getCurrentActivity().getWindowManager().getDefaultDisplay().getSize(deviceSize);
+        int screenWidth = deviceSize.x;
+        int screenHeight = deviceSize.y;
+
+        int y = screenHeight / 10;
+        int x = screenWidth / 10;
+
+        solo.clickLongOnScreen(x * xFac, y * yFac);
+    }
+
 }
