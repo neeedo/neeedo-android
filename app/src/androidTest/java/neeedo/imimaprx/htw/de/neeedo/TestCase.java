@@ -2,11 +2,15 @@ package neeedo.imimaprx.htw.de.neeedo;
 
 import android.graphics.Point;
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.suitebuilder.annotation.MediumTest;
+import android.util.Log;
 
 import com.robotium.solo.Solo;
 
 public class TestCase extends ActivityInstrumentationTestCase2<MainActivity> {
     private Solo solo;
+    private int shortDelay = 1000;
+    private int longDelay = 5000;
 
     public TestCase() {
         super(MainActivity.class);
@@ -22,12 +26,11 @@ public class TestCase extends ActivityInstrumentationTestCase2<MainActivity> {
         solo.finishOpenedActivities();
     }
 
-    public void testRun() {
-        int shortDelay = 1000;
-        int longDelay = 10000;
 
-        // Wait for activity:
-        // 'course.labs.threadslab.TestFrontEndActivity'
+    @MediumTest
+    public void testNewDemand() {
+
+        Log.i("Test", "New Demand");
         solo.waitForActivity(MainActivity.class,
                 shortDelay);
 
@@ -36,41 +39,128 @@ public class TestCase extends ActivityInstrumentationTestCase2<MainActivity> {
         solo.waitForView(R.layout.activity_main, 0, shortDelay, true);
 
 
-        // solo.waitForFragmentById(R.id.navigation_drawer);
+        clickOnScreen(3, 6);
 
-        // solo.waitForActivity(MainActivity.class,
-        //         shortDelay);
+        solo.waitForDialogToOpen(longDelay);
 
 
-        //solo.waitForView(R.id.navigation_drawer);
+    }
+
+    @MediumTest
+    public void testListDemands() {
+
+        Log.i("Test", "List Demands");
+        solo.waitForActivity(MainActivity.class,
+                shortDelay);
+
+        solo.clickOnActionBarHomeButton();
+
+        solo.waitForView(R.layout.activity_main, 0, shortDelay, true);
+
+
+        clickOnScreen(3, 10);
+
+        solo.waitForDialogToOpen(longDelay);
+
+
+    }
+
+    @MediumTest
+    public void testHome() {
+
+        Log.i("Test", "Home");
+        solo.waitForActivity(MainActivity.class,
+                shortDelay);
+
+        solo.clickOnActionBarHomeButton();
+
+        solo.waitForView(R.layout.activity_main, 0, shortDelay, true);
+
+        clickOnScreen(3, 3);
+
+        solo.waitForDialogToOpen(longDelay);
+
+
+    }
+
+    @MediumTest
+    public void testNewOffer() {
+
+        Log.i("Test", "New Offer");
+        solo.waitForActivity(MainActivity.class,
+                shortDelay);
+
+        solo.clickOnActionBarHomeButton();
+
+        solo.waitForView(R.layout.activity_main, 0, shortDelay, true);
 
         clickOnScreen(3, 5);
 
+        solo.waitForDialogToOpen(longDelay);
 
 
+    }
 
-        /*
-        solo.waitForCondition(new Condition() {
-            @Override
-            public boolean isSatisfied() {
-                return listView.isEnabled();
-            }
-        }, longDelay);
+    @MediumTest
+    public void testListOffers() {
 
-        assertTrue(listView.isActivated());
+        Log.i("Test", "List Offers");
+        solo.waitForActivity(MainActivity.class,
+                shortDelay);
 
-*/
-        // Click on taylorswift13
-        // solo.clickOnView(solo.getView(android.R.id.text1));
+        solo.clickOnActionBarHomeButton();
 
-        // Assert that: 'feed_view' is shown
-        //     assertTrue("feed_view not shown!", solo.waitForView(solo
-//                .getView(R.id.feed_view)));
+        solo.waitForView(R.layout.activity_main, 0, shortDelay, true);
 
-        // Assert that: 'Taylor Swift' is shown
-        //assertTrue("'Taylor Swift' is not shown!",
-        //        solo.searchText("Taylor Swift"));
+        clickOnScreen(3, 8);
 
+        solo.waitForDialogToOpen(longDelay);
+
+
+    }
+
+    @MediumTest
+    public void testSwiper() {
+
+        Log.i("Test", "Swiper");
+        solo.waitForActivity(MainActivity.class,
+                shortDelay);
+
+        solo.clickOnActionBarHomeButton();
+
+        solo.waitForView(R.layout.activity_main, 0, shortDelay, true);
+
+        clickOnScreen(3, 12);
+
+        solo.waitForDialogToOpen(longDelay);
+
+        swipe();
+
+        solo.waitForDialogToOpen(shortDelay);
+
+        swipe();
+
+        solo.waitForDialogToOpen(shortDelay);
+
+        swipe();
+
+        solo.waitForDialogToOpen(shortDelay);
+
+
+    }
+
+    public void swipe() {
+        Point deviceSize = new Point();
+        solo.getCurrentActivity().getWindowManager().getDefaultDisplay().getSize(deviceSize);
+
+        int screenWidth = deviceSize.x;
+        int screenHeight = deviceSize.y;
+        int fromX = deviceSize.x / 4;
+        int toX = screenWidth;
+        int fromY = deviceSize.y / 2;
+        int toY = fromY;
+
+        solo.drag(fromX, toX, fromY, toY, 50);
     }
 
     protected void clickOnHome() {
@@ -83,7 +173,7 @@ public class TestCase extends ActivityInstrumentationTestCase2<MainActivity> {
         int screenWidth = deviceSize.x;
         int screenHeight = deviceSize.y;
 
-        int y = screenHeight / 10;
+        int y = screenHeight / 20;
         int x = screenWidth / 10;
 
         solo.clickLongOnScreen(x * xFac, y * yFac);
