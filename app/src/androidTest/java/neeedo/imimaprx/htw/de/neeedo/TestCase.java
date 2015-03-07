@@ -32,16 +32,19 @@ public class TestCase extends ActivityInstrumentationTestCase2<MainActivity> {
         solo.waitForActivity(MainActivity.class,
                 shortDelay);
 
-        solo.waitForView(android.R.id.list);
+        solo.waitForView(R.layout.activity_main);
 
-        solo.setActivityOrientation(Solo.LANDSCAPE);
+        solo.waitForFragmentById(R.id.navigation_drawer);
 
         solo.waitForActivity(MainActivity.class,
                 shortDelay);
 
         solo.waitForView(android.R.id.list);
 
-        final View listView = solo.getView(android.R.id.list);
+        solo.setNavigationDrawer(4);
+
+        final View listView = solo.getView(R.id.listview);
+
         solo.waitForCondition(new Condition() {
             @Override
             public boolean isSatisfied() {
@@ -49,16 +52,18 @@ public class TestCase extends ActivityInstrumentationTestCase2<MainActivity> {
             }
         }, longDelay);
 
+        assertTrue(listView.isActivated());
+
         // Click on taylorswift13
-        solo.clickOnView(solo.getView(android.R.id.text1));
+       // solo.clickOnView(solo.getView(android.R.id.text1));
 
         // Assert that: 'feed_view' is shown
         //     assertTrue("feed_view not shown!", solo.waitForView(solo
 //                .getView(R.id.feed_view)));
 
         // Assert that: 'Taylor Swift' is shown
-        assertTrue("'Taylor Swift' is not shown!",
-                solo.searchText("Taylor Swift"));
+        //assertTrue("'Taylor Swift' is not shown!",
+        //        solo.searchText("Taylor Swift"));
 
     }
 }
