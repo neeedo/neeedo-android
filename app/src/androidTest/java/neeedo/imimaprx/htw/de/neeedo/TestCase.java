@@ -4,6 +4,7 @@ import android.graphics.Point;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.suitebuilder.annotation.MediumTest;
 import android.util.Log;
+import android.view.WindowManager;
 
 import com.robotium.solo.Solo;
 
@@ -19,6 +20,13 @@ public class TestCase extends ActivityInstrumentationTestCase2<MainActivity> {
     public void setUp() throws Exception {
         solo = new Solo(getInstrumentation(), getActivity());
         solo.setActivityOrientation(Solo.PORTRAIT);
+
+        getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+            }
+        });
     }
 
     @Override
