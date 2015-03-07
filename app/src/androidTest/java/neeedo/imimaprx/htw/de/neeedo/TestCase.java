@@ -32,6 +32,8 @@ public class TestCase extends ActivityInstrumentationTestCase2<MainActivity> {
         solo.waitForActivity(MainActivity.class,
                 shortDelay);
 
+        solo.clickOnActionBarHomeButton();
+
         solo.waitForView(R.layout.activity_main);
 
         solo.waitForFragmentById(R.id.navigation_drawer);
@@ -41,7 +43,8 @@ public class TestCase extends ActivityInstrumentationTestCase2<MainActivity> {
 
         solo.waitForView(android.R.id.list);
 
-        solo.setNavigationDrawer(4);
+//        solo.setNavigationDrawer(3);
+
 
         final View listView = solo.getView(R.id.listview);
 
@@ -65,5 +68,9 @@ public class TestCase extends ActivityInstrumentationTestCase2<MainActivity> {
         //assertTrue("'Taylor Swift' is not shown!",
         //        solo.searchText("Taylor Swift"));
 
+    }
+
+    protected void clickOnHome() {
+        solo.clickOnScreen(50, 50); //usually hits Home button
     }
 }
