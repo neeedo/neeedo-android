@@ -38,13 +38,46 @@ public class TestCase extends ActivityInstrumentationTestCase2<MainActivity> {
 
         solo.waitForView(R.layout.activity_main, 0, shortDelay, true);
 
-
         clickOnScreen(3, 6);
 
         solo.waitForDialogToOpen(longDelay);
 
 
     }
+
+    @MediumTest
+    public void testButtonNewDemand() {
+
+        Log.i("Test", "Button New Demand");
+        solo.waitForActivity(MainActivity.class,
+                shortDelay);
+
+        solo.waitForView(R.layout.activity_main, 0, shortDelay, true);
+
+        solo.clickOnView(solo.getView(R.id.btnNewDemand));
+
+        solo.waitForDialogToOpen(longDelay);
+
+
+    }
+
+    @MediumTest
+    public void testButtonNewOffer() {
+
+        Log.i("Test", "Button New Offer");
+        solo.waitForActivity(MainActivity.class,
+                shortDelay);
+
+        solo.waitForView(R.layout.activity_main, 0, shortDelay, true);
+
+        solo.clickOnView(solo.getView(R.id.btnNewOffer));
+
+
+        solo.waitForDialogToOpen(longDelay);
+
+
+    }
+
 
     @MediumTest
     public void testListDemands() {
@@ -174,7 +207,7 @@ public class TestCase extends ActivityInstrumentationTestCase2<MainActivity> {
         int screenHeight = deviceSize.y;
 
         int y = screenHeight / 20;
-        int x = screenWidth / 10;
+        int x = screenWidth / 20;
 
         solo.clickLongOnScreen(x * xFac, y * yFac);
     }
