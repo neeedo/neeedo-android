@@ -54,5 +54,8 @@ dependencies {
         exclude module: 'stax-api'
         exclude module: 'xpp3'
     }
+    // Test dependencies. Notice that all I have to include is robotium
+    // because the rest just works using the instrumentTest configuration
+    compile 'com.jayway.android.robotium:robotium-solo:5.3.1'
 
 }
