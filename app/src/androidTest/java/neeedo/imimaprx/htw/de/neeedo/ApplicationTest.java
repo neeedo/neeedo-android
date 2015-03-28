@@ -13,5 +13,5 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
 
     public void testExample() throws Exception {
         assertTrue("miau", true);
-    }
+    } 
 }
