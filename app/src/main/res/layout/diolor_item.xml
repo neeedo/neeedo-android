@@ -51,6 +51,7 @@
             android:src="@drawable/sample_bike" />
 
         <TextView
+            android:id="@+id/card_description"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"

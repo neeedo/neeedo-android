@@ -14,14 +14,14 @@ import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 import java.util.ArrayList;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
+import neeedo.imimaprx.htw.de.neeedo.fragments.adapters.OfferSwipeArrayListAdapter;
+import neeedo.imimaprx.htw.de.neeedo.fragments.adapters.SwipeCardViewItem;
 
 public class DiolorSwipeFragment extends SuperFragment {
 
     private ArrayAdapter<String> titleArrayAdapter;
-//    private ArrayAdapter<String> descriptionArrayAdapter;
 
-    private ArrayList<String> titleAdapter;
-//    private ArrayList<String> descriptionAdapter;
+    private ArrayList<SwipeCardViewItem> swipeCardViewItems;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -37,29 +37,22 @@ public class DiolorSwipeFragment extends SuperFragment {
         super.onActivityCreated(savedInstanceState);
         SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) getActivity().findViewById(R.id.frame);
 
-        titleAdapter = new ArrayList<String>();
-        titleAdapter.add(getActivity().getString(R.string.sample_title));
-        titleAdapter.add(getActivity().getString(R.string.sample_title));
-        titleArrayAdapter = new ArrayAdapter<String>(getActivity(), R.layout.diolor_item, R.id.card_title, titleAdapter);
+        swipeCardViewItems = new ArrayList<SwipeCardViewItem>();
+        swipeCardViewItems.add(new SwipeCardViewItem(getActivity().getString(R.string.sample_title) + "1", getActivity().getString(R.string.sample_describtion) + "1"));
+        swipeCardViewItems.add(new SwipeCardViewItem(getActivity().getString(R.string.sample_title) + "2", getActivity().getString(R.string.sample_describtion) + "2"));
+        swipeCardViewItems.add(new SwipeCardViewItem(getActivity().getString(R.string.sample_title) + "3", getActivity().getString(R.string.sample_describtion) + "3"));
+        swipeCardViewItems.add(new SwipeCardViewItem(getActivity().getString(R.string.sample_title) + "4", getActivity().getString(R.string.sample_describtion) + "4"));
 
-
-
-//        descriptionAdapter = new ArrayList<String>();
-//        descriptionAdapter.add(getActivity().getString(R.string.sample_describtion));
-//        descriptionAdapter.add(getActivity().getString(R.string.sample_describtion));
-//        descriptionArrayAdapter = new ArrayAdapter<String>(getActivity(), R.layout.diolor_item, R.id.card_description, descriptionAdapter);
+        titleArrayAdapter = new OfferSwipeArrayListAdapter(getActivity(), R.layout.diolor_item, swipeCardViewItems);
 
         flingContainer.setAdapter(titleArrayAdapter);
-//        flingContainer.setAdapter(descriptionArrayAdapter);
 
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
             public void removeFirstObjectInAdapter() {
                 Log.d("LIST", "removed object!");
-                titleAdapter.remove(0);
-//                descriptionAdapter.remove(0);
+                swipeCardViewItems.remove(0);
                 titleArrayAdapter.notifyDataSetChanged();
-//                descriptionArrayAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -74,10 +67,8 @@ public class DiolorSwipeFragment extends SuperFragment {
 
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
-                titleAdapter.add(getActivity().getString(R.string.sample_title));
-//                descriptionAdapter.add(getActivity().getString(R.string.sample_describtion));
+                swipeCardViewItems.add(new SwipeCardViewItem("", ""));
                 titleArrayAdapter.notifyDataSetChanged();
-//                descriptionArrayAdapter.notifyDataSetChanged();
                 Log.d("LIST", "notified");
             }
 
