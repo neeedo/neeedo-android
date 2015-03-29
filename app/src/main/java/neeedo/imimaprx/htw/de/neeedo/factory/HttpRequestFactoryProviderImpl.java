@@ -26,7 +26,7 @@ public class HttpRequestFactoryProviderImpl {
 
     /**
      * Return an instance of {@link org.springframework.http.client.HttpComponentsClientHttpRequestFactory} with the given timeout set and
-     * an Instance of {@link neeedo.imimaprx.htw.de.neeedo.factory.HttpClientFactoryBean} as {@link org.apache.http.client.HttpClient} for SSL support.
+     * an Instance of {@link HttpClientSSLFactoryBean} as {@link org.apache.http.client.HttpClient} for SSL support.
      * Uses {@link java.security.cert.X509Certificate} and {@link org.apache.http.conn.ssl.SSLConnectionSocketFactory.BROWSER_COMPATIBLE_HOSTNAME_VERIFIER}.
      *
      * @param millisecondsToTimeout
@@ -36,7 +36,7 @@ public class HttpRequestFactoryProviderImpl {
         // SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
         HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
 
-        factory.setHttpClient(new HttpClientFactoryBean().createInstance());
+        factory.setHttpClient(new HttpClientSSLFactoryBean().createInstance());
 
         factory.setReadTimeout(millisecondsToTimeout);
         factory.setConnectTimeout(millisecondsToTimeout);

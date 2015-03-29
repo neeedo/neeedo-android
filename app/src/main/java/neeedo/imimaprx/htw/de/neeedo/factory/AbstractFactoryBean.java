@@ -7,7 +7,7 @@ import org.apache.http.client.HttpClient;
  */
 public abstract class AbstractFactoryBean<T> {
 
-        public Class<?> getObjectType() {
+    public Class<?> getObjectType() {
         return HttpClient.class;
     }
 

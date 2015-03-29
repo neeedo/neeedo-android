@@ -14,7 +14,7 @@ import javax.net.ssl.SSLContext;
 /**
  * Created by Admin on 29.03.2015.
  */
-public class HttpClientFactoryBean extends AbstractFactoryBean<HttpClient> {
+public class HttpClientSSLFactoryBean extends AbstractFactoryBean<HttpClient> {
 
     @Override
     protected HttpClient createInstance() throws Exception {
