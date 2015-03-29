@@ -31,7 +31,7 @@ public class HttpPostOfferAsyncTask extends SuperHttpAsyncTask {
 
             HttpEntity<Offer> requestEntity = new HttpEntity<Offer>(offersModel.getPostOffer(), requestHeaders);
 
-
+            //Change to {@link HttpRequestFactoryProviderImpl.getClientHttpRequestFactorySSLSupport} for SSL support.
             RestTemplate restTemplate = new RestTemplate(HttpRequestFactoryProviderImpl.getClientHttpRequestFactory(9000));
 
 

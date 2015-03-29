@@ -35,6 +35,7 @@ public class HttpGetAsyncTask extends SuperHttpAsyncTask {
 
             HttpEntity<?> requestEntity = new HttpEntity<Object>(requestHeaders);
 
+            //Change to {@link HttpRequestFactoryProviderImpl.getClientHttpRequestFactorySSLSupport} for SSL support.
             RestTemplate restTemplate = new RestTemplate(HttpRequestFactoryProviderImpl.getClientHttpRequestFactory(5000));
 
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
