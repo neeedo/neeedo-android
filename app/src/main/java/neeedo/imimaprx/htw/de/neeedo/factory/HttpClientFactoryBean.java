@@ -29,7 +29,7 @@ public class HttpClientFactoryBean extends AbstractFactoryBean<HttpClient> {
         };
 
         SSLContext sslcontext =
-                SSLContexts.custom().useTLS().loadTrustMaterial(trustStore).build();
+                SSLContexts.custom().useTLS().loadTrustMaterial(trustStore, allTrust).build();
 
         SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslcontext, SSLConnectionSocketFactory.BROWSER_COMPATIBLE_HOSTNAME_VERIFIER);
         CloseableHttpClient httpClient = HttpClients.custom().setSSLSocketFactory(sslsf).build();
