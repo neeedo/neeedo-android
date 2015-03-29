@@ -17,7 +17,7 @@ import java.util.List;
 
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.entities.SingleDemand;
-import neeedo.imimaprx.htw.de.neeedo.factory.ClientHttpRequestFactoryProvider;
+import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 
 public class HttpGetByIDAsyncTask extends SuperHttpAsyncTask {
     @Override
@@ -33,7 +33,7 @@ public class HttpGetByIDAsyncTask extends SuperHttpAsyncTask {
 
             HttpEntity<?> requestEntity = new HttpEntity<Object>(requestHeaders);
 
-            RestTemplate restTemplate = new RestTemplate(ClientHttpRequestFactoryProvider.getClientHttpRequestFactory(5000));
+            RestTemplate restTemplate = new RestTemplate(HttpRequestFactoryProviderImpl.getClientHttpRequestFactory(5000));
 
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 

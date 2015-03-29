@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.Offer;
 import neeedo.imimaprx.htw.de.neeedo.entities.SingleOffer;
-import neeedo.imimaprx.htw.de.neeedo.factory.ClientHttpRequestFactoryProvider;
+import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
 
 public class HttpPostOfferAsyncTask extends SuperHttpAsyncTask {
@@ -32,7 +32,7 @@ public class HttpPostOfferAsyncTask extends SuperHttpAsyncTask {
             HttpEntity<Offer> requestEntity = new HttpEntity<Offer>(offersModel.getPostOffer(), requestHeaders);
 
 
-            RestTemplate restTemplate = new RestTemplate(ClientHttpRequestFactoryProvider.getClientHttpRequestFactory(9000));
+            RestTemplate restTemplate = new RestTemplate(HttpRequestFactoryProviderImpl.getClientHttpRequestFactory(9000));
 
 
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());

@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.Demand;
 import neeedo.imimaprx.htw.de.neeedo.entities.SingleDemand;
-import neeedo.imimaprx.htw.de.neeedo.factory.ClientHttpRequestFactoryProvider;
+import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 
 public class HttpPostDemandAsyncTask extends SuperHttpAsyncTask {
@@ -32,7 +32,7 @@ public class HttpPostDemandAsyncTask extends SuperHttpAsyncTask {
             HttpEntity<Demand> requestEntity = new HttpEntity<Demand>(demandsModel.getPostDemand(), requestHeaders);
 
 
-            RestTemplate restTemplate = new RestTemplate(ClientHttpRequestFactoryProvider.getClientHttpRequestFactory(9000));
+            RestTemplate restTemplate = new RestTemplate(HttpRequestFactoryProviderImpl.getClientHttpRequestFactory(9000));
 
 
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
