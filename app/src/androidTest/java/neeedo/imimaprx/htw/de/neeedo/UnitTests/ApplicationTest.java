@@ -1,4 +1,4 @@
-package neeedo.imimaprx.htw.de.neeedo;
+package neeedo.imimaprx.htw.de.neeedo.UnitTests;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

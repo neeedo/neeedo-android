@@ -1,5 +1,3 @@
-package neeedo.imimaprx.htw.de.neeedo;
-
 import android.graphics.Point;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.suitebuilder.annotation.MediumTest;
@@ -8,12 +6,12 @@ import android.view.WindowManager;
 
 import com.robotium.solo.Solo;
 
-public class TestCase extends ActivityInstrumentationTestCase2<MainActivity> {
+public class FunctionalTests extends ActivityInstrumentationTestCase2<MainActivity> {
     private Solo solo;
     private int shortDelay = 1000;
     private int longDelay = 5000;
 
-    public TestCase() {
+    public FunctionalTests() {
         super(MainActivity.class);
     }
 
