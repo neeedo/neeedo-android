@@ -60,8 +60,8 @@ dependencies {
     // Test dependencies. Notice that all I have to include is robotium
     // because the rest just works using the instrumentTest configuration
     compile 'com.jayway.android.robotium:robotium-solo:5.3.1'
-    androidTestCompile 'junit:junit:4.12'
-    androidTestCompile "org.mockito:mockito-core:1.9.5"
+    compile 'junit:junit:4.12'
+    compile "org.mockito:mockito-core:1.9.5"
 
     compile files('libs/httpclient-4.3.6.jar')
 }
