@@ -1,4 +1,4 @@
-package neeedo.imimaprx.htw.de.neeedo.rest;
+package neeedo.imimaprx.htw.de.neeedo.entity;
 
 public abstract class ServerConstants {
     public static final String LOCALHOST_ADDRESS_STUB = "http://10.0.2.2:9000/stub/";

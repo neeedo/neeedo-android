@@ -15,8 +15,8 @@ import neeedo.imimaprx.htw.de.neeedo.entities.Demand;
 import neeedo.imimaprx.htw.de.neeedo.entities.Demands;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
-import neeedo.imimaprx.htw.de.neeedo.rest.HttpGetAsyncTask;
-import neeedo.imimaprx.htw.de.neeedo.rest.SuperHttpAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.entity.HttpGetAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.entity.SuperHttpAsyncTask;
 
 public class SingleDemandFragment extends SuperFragment {
 

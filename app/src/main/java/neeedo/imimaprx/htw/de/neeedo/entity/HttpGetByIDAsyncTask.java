@@ -1,4 +1,4 @@
-package neeedo.imimaprx.htw.de.neeedo.rest;
+package neeedo.imimaprx.htw.de.neeedo.entity;
 
 import android.os.Handler;
 import android.os.Looper;

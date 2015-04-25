@@ -20,8 +20,8 @@ import neeedo.imimaprx.htw.de.neeedo.entities.Location;
 import neeedo.imimaprx.htw.de.neeedo.entities.Offer;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
-import neeedo.imimaprx.htw.de.neeedo.rest.HttpPostOfferAsyncTask;
-import neeedo.imimaprx.htw.de.neeedo.rest.SuperHttpAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.entity.HttpPostOfferAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.entity.SuperHttpAsyncTask;
 
 public class NewOfferFragment extends SuperFragment {
 
