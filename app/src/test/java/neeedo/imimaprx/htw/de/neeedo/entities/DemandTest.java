@@ -86,7 +86,7 @@ public class DemandTest extends Assert {
 
     @Test
     public void testSetPrice() throws Exception {
-        demand.setPrice(new Price(5, 5));
+        demand.setPrice(new Price(85, 85));
         assertFalse(demand.getPrice().getMax() == original.getPrice().getMax());
 
     }
@@ -126,7 +126,7 @@ public class DemandTest extends Assert {
 
     @Test
     public void testGetShouldTags() throws Exception {
-        assertFalse(demand.getShouldTags().get(0).equals(original.getShouldTags().get(0)));
+        assertTrue(demand.getShouldTags().get(0).equals(original.getShouldTags().get(0)));
 
     }
 
