@@ -1,4 +1,4 @@
-package neeedo.imimaprx.htw.de.neeedo.entity;
+package neeedo.imimaprx.htw.de.neeedo.rest;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -15,16 +15,16 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.entities.SingleDemand;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
+import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 
 public class HttpGetByIDAsyncTask extends SuperHttpAsyncTask {
     @Override
     protected Object doInBackground(Object[] params) {
         try {
             Handler mHandler = new Handler(Looper.getMainLooper());
-            final String url = ServerConstants.ACTIVE_SERVER  + "demands/1";
+            final String url = ServerConstants.ACTIVE_SERVER + "demands/1";
 
             HttpHeaders requestHeaders = new HttpHeaders();
             List<MediaType> acceptableMediaTypes = new ArrayList<>();

@@ -1,4 +1,4 @@
-package neeedo.imimaprx.htw.de.neeedo.entity;
+package neeedo.imimaprx.htw.de.neeedo.rest;
 
 import android.util.Log;
 
