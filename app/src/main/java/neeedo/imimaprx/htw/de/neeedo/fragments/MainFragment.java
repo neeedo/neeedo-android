@@ -16,7 +16,8 @@ import com.squareup.otto.Subscribe;
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
-import neeedo.imimaprx.htw.de.neeedo.entity.SuperHttpAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.SuperHttpAsyncTask;
+
 
 public class MainFragment extends SuperFragment implements View.OnClickListener {
 

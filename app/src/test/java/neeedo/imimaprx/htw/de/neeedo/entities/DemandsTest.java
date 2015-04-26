@@ -1,13 +1,12 @@
 package neeedo.imimaprx.htw.de.neeedo.entities;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.Assert;
 
 import java.util.ArrayList;
 
-public class DemandsTest {
+public class DemandsTest extends Assert{
 
     private Demands demands;
     private boolean setUpIsDone = false;
@@ -49,20 +48,23 @@ public class DemandsTest {
 
         demands.setDemands(list);
 
+        assertTrue(demands.getDemands().get(0).getId().equals("Something else"));
+
+
     }
 
     @Test
     public void testGetDemands() throws Exception {
         ArrayList<Demand> list = demands.getDemands();
 
-        Assert.assertTrue(list.get(0).getId().equals("Something else"));
+        assertTrue(list.get(0).getId().equals("Bla"));
     }
 
 
     @Test
     public void testToString() throws Exception {
 
-        Assert.assertFalse(demands.getDemands().isEmpty());
+        assertFalse(demands.getDemands().isEmpty());
 
     }
 }
