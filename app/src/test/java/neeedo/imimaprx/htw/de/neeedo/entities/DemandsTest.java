@@ -6,6 +6,10 @@ import org.junit.Assert;
 
 import java.util.ArrayList;
 
+import neeedo.imimaprx.htw.de.neeedo.entities.Demand;
+import neeedo.imimaprx.htw.de.neeedo.entities.Demands;
+import neeedo.imimaprx.htw.de.neeedo.entities.Price;
+
 public class DemandsTest extends Assert{
 
     private Demands demands;

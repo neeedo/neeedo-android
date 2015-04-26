@@ -1,4 +1,4 @@
-package neeedo.imimaprx.htw.de.neeedo.rest;
+package neeedo.imimaprx.htw.de.neeedo.entities;
 
 import org.junit.Test;
 
