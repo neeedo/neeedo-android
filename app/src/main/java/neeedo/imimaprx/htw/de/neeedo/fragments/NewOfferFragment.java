@@ -1,8 +1,13 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -20,6 +25,7 @@ import android.widget.Toast;
 import com.squareup.otto.Subscribe;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,6 +41,10 @@ import neeedo.imimaprx.htw.de.neeedo.rest.HttpPostOfferAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.SuperHttpAsyncTask;
 
 public class NewOfferFragment extends SuperFragment {
+
+    private static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE = 12345;
+
+    private File photoFile;
 
     // fields
     private EditText etTags;
@@ -65,8 +75,7 @@ public class NewOfferFragment extends SuperFragment {
 
         //TODO extract
         addImageButton.setOnClickListener(new View.OnClickListener() {
-            public static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE = 12345;
-            public File photoFile;
+
 
             @Override
             public void onClick(View v) {
@@ -146,6 +155,50 @@ public class NewOfferFragment extends SuperFragment {
 
 
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == Activity.RESULT_OK || requestCode == CAMERA_CAPTURE_IMAGE_REQUEST_CODE) {
+
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inSampleSize = 8;
+
+            Bitmap bitmap = BitmapFactory.decodeFile(photoFile.getPath(), options);
+
+            bitmap = rotateBitmap(bitmap, photoFile);
+
+            addImageButton.setImageBitmap(bitmap);
+
+        } else {
+            Toast.makeText(getActivity(), R.string.camera_failed
+                    , Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    //extract into utils
+    private Bitmap rotateBitmap(Bitmap bitmap, File file) {
+        ExifInterface exif = null;
+        try {
+            exif = new ExifInterface(photoFile.getPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String orientString = exif.getAttribute(ExifInterface.TAG_ORIENTATION);
+        int orientation = orientString != null ? Integer.parseInt(orientString) : ExifInterface.ORIENTATION_NORMAL;
+        int rotationAngle = 0;
+
+        if (orientation == ExifInterface.ORIENTATION_ROTATE_90) rotationAngle = 90;
+        if (orientation == ExifInterface.ORIENTATION_ROTATE_180) rotationAngle = 180;
+        if (orientation == ExifInterface.ORIENTATION_ROTATE_270) rotationAngle = 270;
+
+        Matrix matrix = new Matrix();
+        matrix.setRotate(rotationAngle, (float) bitmap.getWidth() / 2, (float) bitmap.getHeight() / 2);
+        Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+
+        return rotatedBitmap;
     }
 
     @Subscribe

@@ -48,5 +48,6 @@
         Gebrauchsspuren.
     </string>
     <string name="no_camera">no camera available</string>
+    <string name="camera_failed">something went wrong when taking a picture</string>
 
 </resources>
