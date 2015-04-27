@@ -20,7 +20,8 @@
             android:background="#6897c8"
             android:layout_width="fill_parent"
             android:layout_height="120dp"
-            android:src="@drawable/add_offer_image" />
+            android:src="@drawable/add_offer_image"
+            android:id="@+id/addImageButton"/>
 
         <EditText
             android:layout_width="match_parent"

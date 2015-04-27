@@ -1,6 +1,12 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
@@ -8,12 +14,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.Locale;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.Location;
@@ -31,6 +42,7 @@ public class NewOfferFragment extends SuperFragment {
     private EditText etLocationLon;
     private EditText etPrice;
     private Button btnSubmit;
+    private ImageButton addImageButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,6 +60,53 @@ public class NewOfferFragment extends SuperFragment {
         etLocationLon = (EditText) view.findViewById(R.id.etLocationLon);
         etPrice = (EditText) view.findViewById(R.id.etPrice);
         btnSubmit = (Button) view.findViewById(R.id.btnSubmit);
+        addImageButton = (ImageButton) view.findViewById(R.id.addImageButton);
+
+
+        //TODO extract
+        addImageButton.setOnClickListener(new View.OnClickListener() {
+            public static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE = 12345;
+            public File photoFile;
+
+            @Override
+            public void onClick(View v) {
+                Context context = getActivity();
+                PackageManager packageManager = context.getPackageManager();
+
+                if (packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA) == false) {
+                    Toast.makeText(getActivity(), R.string.no_camera, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                File path = new File(Environment.getExternalStorageDirectory(), "foo/bar");
+                if (!path.exists()) path.mkdirs();
+                photoFile = getOutputMediaFile();
+
+                Uri mImageCaptureUri1 = Uri.fromFile(getOutputMediaFile());
+
+                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, mImageCaptureUri1);
+//        cameraIntent.putExtra("return-data", true);
+                startActivityForResult(cameraIntent, CAMERA_CAPTURE_IMAGE_REQUEST_CODE);
+            }
+
+            private File getOutputMediaFile() {
+                File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "bla");
+
+                if (!mediaStorageDir.exists()) {
+                    if (!mediaStorageDir.mkdirs()) {
+                        return null;
+                    }
+                }
+
+                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+                File mediaFile;
+                mediaFile = new File(mediaStorageDir.getPath() + File.separator + "IMG_" + timeStamp + ".jpg");
+
+
+                return mediaFile;
+            }
+        });
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,6 +143,7 @@ public class NewOfferFragment extends SuperFragment {
                 }
             }
         });
+
 
         return view;
     }
