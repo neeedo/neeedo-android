@@ -30,21 +30,6 @@ public class OfferSwipeArrayListAdapter extends ArrayAdapter {
     }
 
     @Override
-    public int getCount() {
-        return swipeCardViewItems.size();
-    }
-
-    @Override
-    public Context getContext() {
-        return activity;
-    }
-
-    @Override
-    public SwipeCardViewItem getItem(int position) {
-        return swipeCardViewItems.get(position);
-    }
-
-    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
         View view = inflater.inflate(layoutId, parent, false);
@@ -58,5 +43,23 @@ public class OfferSwipeArrayListAdapter extends ArrayAdapter {
         descriptionTextView.setText(item.getDescription());
 
         return view;
+    }
+
+    // the following methods are a bit of a hack due to the fact that swipe lib doesn't expose
+    // a proper interface or super class
+
+    @Override
+    public int getCount() {
+        return swipeCardViewItems.size();
+    }
+
+    @Override
+    public Context getContext() {
+        return activity;
+    }
+
+    @Override
+    public SwipeCardViewItem getItem(int position) {
+        return swipeCardViewItems.get(position);
     }
 }
