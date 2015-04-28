@@ -25,6 +25,7 @@ import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.HttpPostDemandAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.SuperHttpAsyncTask;
 
+
 public class NewDemandFragment extends SuperFragment {
 
     // fields

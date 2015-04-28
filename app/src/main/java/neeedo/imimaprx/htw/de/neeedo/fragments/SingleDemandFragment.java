@@ -18,6 +18,7 @@ import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.HttpGetAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.SuperHttpAsyncTask;
 
+
 public class SingleDemandFragment extends SuperFragment {
 
     TextView textView;

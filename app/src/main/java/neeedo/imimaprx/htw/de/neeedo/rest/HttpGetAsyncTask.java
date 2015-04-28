@@ -15,9 +15,9 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.entities.Demands;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
+import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 
 public class HttpGetAsyncTask extends SuperHttpAsyncTask {
 
@@ -26,7 +26,7 @@ public class HttpGetAsyncTask extends SuperHttpAsyncTask {
         try {
             Handler mHandler = new Handler(Looper.getMainLooper());
 
-            final String url = ServerConstants.ACTIVE_SERVER  + "matching/demands";
+            final String url = ServerConstants.ACTIVE_SERVER + "matching/demands";
 
             HttpHeaders requestHeaders = new HttpHeaders();
             List<MediaType> acceptableMediaTypes = new ArrayList<>();

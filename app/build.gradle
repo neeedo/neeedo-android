@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: "jacoco"
 
+
 android {
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
@@ -59,5 +60,8 @@ dependencies {
     // Test dependencies. Notice that all I have to include is robotium
     // because the rest just works using the instrumentTest configuration
     compile 'com.jayway.android.robotium:robotium-solo:5.3.1'
+    compile 'junit:junit:4.12'
+    compile "org.mockito:mockito-core:1.9.5"
+
     compile files('libs/httpclient-4.3.6.jar')
 }

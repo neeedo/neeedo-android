@@ -13,18 +13,11 @@ import android.widget.Button;
 
 import com.squareup.otto.Subscribe;
 
-import java.util.ArrayList;
-
 import neeedo.imimaprx.htw.de.neeedo.R;
-import neeedo.imimaprx.htw.de.neeedo.entities.Demand;
-import neeedo.imimaprx.htw.de.neeedo.entities.Location;
-import neeedo.imimaprx.htw.de.neeedo.entities.Price;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
-import neeedo.imimaprx.htw.de.neeedo.rest.HttpGetAsyncTask;
-import neeedo.imimaprx.htw.de.neeedo.rest.HttpGetByIDAsyncTask;
-import neeedo.imimaprx.htw.de.neeedo.rest.HttpPostDemandAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.SuperHttpAsyncTask;
+
 
 public class MainFragment extends SuperFragment implements View.OnClickListener {
 

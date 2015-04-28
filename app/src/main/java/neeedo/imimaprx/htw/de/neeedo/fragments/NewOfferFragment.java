@@ -40,6 +40,7 @@ import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.HttpPostOfferAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.SuperHttpAsyncTask;
 
+
 public class NewOfferFragment extends SuperFragment {
 
     private static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE = 12345;
