@@ -163,12 +163,12 @@ public class Demand implements Serializable {
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (int) (version ^ (version >>> 32));
-        result = 31 * result + (userId != null ? userId.hashCode() : 0);
-        result = 31 * result + (mustTags != null ? mustTags.hashCode() : 0);
-        result = 31 * result + (shouldTags != null ? shouldTags.hashCode() : 0);
-        result = 31 * result + (location != null ? location.hashCode() : 0);
-        result = 31 * result + distance;
-        result = 31 * result + (price != null ? price.hashCode() : 0);
+        result = 41 * result + (userId != null ? userId.hashCode() : 0);
+        result = 47 * result + (mustTags != null ? mustTags.hashCode() : 0);
+        result = 73 * result + (shouldTags != null ? shouldTags.hashCode() : 0);
+        result = 113 * result + (location != null ? location.hashCode() : 0);
+        result = 137 * result + distance;
+        result = 149 * result + (price != null ? price.hashCode() : 0);
         return result;
     }
 }

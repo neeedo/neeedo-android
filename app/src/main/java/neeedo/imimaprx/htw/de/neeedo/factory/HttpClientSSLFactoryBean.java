@@ -11,9 +11,6 @@ import java.security.KeyStore;
 
 import javax.net.ssl.SSLContext;
 
-/**
- * Created by Admin on 29.03.2015.
- */
 public class HttpClientSSLFactoryBean extends AbstractFactoryBean<HttpClient> {
 
     @Override
