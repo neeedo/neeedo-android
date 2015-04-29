@@ -36,6 +36,7 @@ import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.Location;
 import neeedo.imimaprx.htw.de.neeedo.entities.Offer;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
+import neeedo.imimaprx.htw.de.neeedo.helpers.LocationHelper;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.HttpPostOfferAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.SuperHttpAsyncTask;
@@ -47,17 +48,27 @@ public class NewOfferFragment extends SuperFragment {
 
     private File photoFile;
 
-    // fields
     private EditText etTags;
     private EditText etLocationLat;
     private EditText etLocationLon;
     private EditText etPrice;
     private Button btnSubmit;
     private ImageButton addImageButton;
+    private LocationHelper locationHelper;
+    private Location currentLocation;
+    private double locationLatitude;
+    private double locationLongitude;
+    private boolean locationAvailable;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {        
         super.onCreate(savedInstanceState);
+
+        locationHelper = new LocationHelper(getActivity());
+        currentLocation = locationHelper.getLocation();
+        locationLatitude = currentLocation.getLat();
+        locationLongitude = currentLocation.getLon();
+        locationAvailable = locationHelper.isLocationAvailable();
     }
 
     @Override
@@ -65,7 +76,6 @@ public class NewOfferFragment extends SuperFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.new_offer_form, container, false);
 
-        // initalize fields
         etTags = (EditText) view.findViewById(R.id.etTags);
         etLocationLat = (EditText) view.findViewById(R.id.etLocationLat);
         etLocationLon = (EditText) view.findViewById(R.id.etLocationLon);
@@ -73,6 +83,10 @@ public class NewOfferFragment extends SuperFragment {
         btnSubmit = (Button) view.findViewById(R.id.btnSubmit);
         addImageButton = (ImageButton) view.findViewById(R.id.addImageButton);
 
+        if(locationAvailable) {
+            etLocationLat.setText(String.valueOf(locationLatitude));
+            etLocationLon.setText(String.valueOf(locationLongitude));
+        }
 
         //TODO extract
         addImageButton.setOnClickListener(new View.OnClickListener() {

@@ -1,9 +1,5 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments;
 
-import android.content.Context;
-import android.location.Criteria;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -25,6 +21,7 @@ import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.Location;
 import neeedo.imimaprx.htw.de.neeedo.entities.Price;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
+import neeedo.imimaprx.htw.de.neeedo.helpers.LocationHelper;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.HttpPostDemandAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.SuperHttpAsyncTask;
@@ -32,7 +29,6 @@ import neeedo.imimaprx.htw.de.neeedo.rest.SuperHttpAsyncTask;
 
 public class NewDemandFragment extends SuperFragment {
 
-    // fields
     private EditText etMustTags;
     private EditText etShouldTags;
     private EditText etLocationLat;
@@ -41,46 +37,21 @@ public class NewDemandFragment extends SuperFragment {
     private EditText etPriceMin;
     private EditText etPriceMax;
     private Button btnSubmit;
-    private LocationManager locationManager;
-    private String locationProvider;
-    private android.location.Location lastKnownLocation;
     private double locationLatitude;
     private double locationLongitude;
     private boolean locationAvailable;
+    private LocationHelper locationHelper;
+    private Location currentLocation;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // TODO put location stuff into helper class
-
-        // location
-        locationManager = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
-        locationProvider = locationManager.getBestProvider(new Criteria(), false); // GPS or network provider
-
-        locationManager.requestLocationUpdates(locationProvider, 0, 0, new LocationListener() {
-            @Override
-            public void onLocationChanged(android.location.Location location) {}
-
-            @Override
-            public void onStatusChanged(String s, int i, Bundle bundle) {}
-
-            @Override
-            public void onProviderEnabled(String s) {}
-
-            @Override
-            public void onProviderDisabled(String s) {}
-        });
-
-        lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
-        try {
-            locationLatitude = lastKnownLocation.getLatitude();
-            locationLongitude = lastKnownLocation.getLongitude();
-            locationAvailable = true;
-        } catch(NullPointerException e) {
-            // TODO show message that no data is available
-            locationAvailable = false;
-        }
+        locationHelper = new LocationHelper(getActivity());
+        currentLocation = locationHelper.getLocation();
+        locationLatitude = currentLocation.getLat();
+        locationLongitude = currentLocation.getLon();
+        locationAvailable = locationHelper.isLocationAvailable();
 
     }
 
