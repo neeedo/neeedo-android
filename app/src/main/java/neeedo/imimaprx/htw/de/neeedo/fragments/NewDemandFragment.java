@@ -1,5 +1,9 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments;
 
+import android.content.Context;
+import android.location.Criteria;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -37,10 +41,47 @@ public class NewDemandFragment extends SuperFragment {
     private EditText etPriceMin;
     private EditText etPriceMax;
     private Button btnSubmit;
+    private LocationManager locationManager;
+    private String locationProvider;
+    private android.location.Location lastKnownLocation;
+    private double locationLatitude;
+    private double locationLongitude;
+    private boolean locationAvailable;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // TODO put location stuff into helper class
+
+        // location
+        locationManager = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
+        locationProvider = locationManager.getBestProvider(new Criteria(), false); // GPS or network provider
+
+        locationManager.requestLocationUpdates(locationProvider, 0, 0, new LocationListener() {
+            @Override
+            public void onLocationChanged(android.location.Location location) {}
+
+            @Override
+            public void onStatusChanged(String s, int i, Bundle bundle) {}
+
+            @Override
+            public void onProviderEnabled(String s) {}
+
+            @Override
+            public void onProviderDisabled(String s) {}
+        });
+
+        lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
+        try {
+            locationLatitude = lastKnownLocation.getLatitude();
+            locationLongitude = lastKnownLocation.getLongitude();
+            locationAvailable = true;
+        } catch(NullPointerException e) {
+            // TODO show message that no data is available
+            locationAvailable = false;
+        }
+
     }
 
     @Override
@@ -48,7 +89,6 @@ public class NewDemandFragment extends SuperFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.new_demand_form, container, false);
 
-        // initalize fields
         etMustTags = (EditText) view.findViewById(R.id.etMustTags);
         etShouldTags = (EditText) view.findViewById(R.id.etShouldTags);
         etLocationLat = (EditText) view.findViewById(R.id.etLocationLat);
@@ -57,6 +97,11 @@ public class NewDemandFragment extends SuperFragment {
         etPriceMin = (EditText) view.findViewById(R.id.etPriceMin);
         etPriceMax = (EditText) view.findViewById(R.id.etPriceMax);
         btnSubmit = (Button) view.findViewById(R.id.btnSubmit);
+
+        if(locationAvailable) {
+            etLocationLat.setText(String.valueOf(locationLatitude));
+            etLocationLon.setText(String.valueOf(locationLongitude));
+        }
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
