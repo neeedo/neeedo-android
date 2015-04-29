@@ -1,7 +1,5 @@
 package neeedo.imimaprx.htw.de.neeedo.rest;
 
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 
 import org.springframework.http.HttpEntity;
@@ -15,19 +13,30 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-import neeedo.imimaprx.htw.de.neeedo.entities.Demands;
+import neeedo.imimaprx.htw.de.neeedo.entities.SingleUser;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
-import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
+import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
 
-public class HttpGetAsyncTask extends SuperHttpAsyncTask {
+/**
+ * Collects User information by the given E-Mail in {@link neeedo.imimaprx.htw.de.neeedo.models.UserModel}.
+ */
+public class HttpGetUserAsyncTask extends SuperHttpAsyncTask {
 
 
     @Override
     protected Object doInBackground(Object[] params) {
         try {
-            Handler mHandler = new Handler(Looper.getMainLooper());
 
-            final String url = ServerConstants.ACTIVE_SERVER + "matching/demands";
+
+            String url = ServerConstants.ACTIVE_SERVER + "users/mail/";
+
+            String email = UserModel.getInstance().getUser().getEmail();
+
+            if (email == null) {
+                return "Failed, no E-Mail is given";
+            }
+
+            url += email;
 
             HttpHeaders requestHeaders = new HttpHeaders();
             List<MediaType> acceptableMediaTypes = new ArrayList<>();
@@ -41,12 +50,12 @@ public class HttpGetAsyncTask extends SuperHttpAsyncTask {
 
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 
-            ResponseEntity<Demands> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity,
-                    Demands.class);
+            ResponseEntity<SingleUser> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity,
+                    SingleUser.class);
 
-            Demands demands = responseEntity.getBody();
+            SingleUser user = responseEntity.getBody();
 
-            DemandsModel.getInstance().setDemands(demands);
+            UserModel.getInstance().setUser(user.getUser());
 
             return "Success";//TODO use proper entities
 

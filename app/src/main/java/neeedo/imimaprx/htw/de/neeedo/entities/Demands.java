@@ -23,6 +23,21 @@ public class Demands implements Serializable {
         this.demands = demands;
     }
 
+    public boolean isEmpty() {
+        if (demands == null || demands.size() == 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public void addSingleDemand(Demand demand) {
+        if (demands == null) {
+            demands = new ArrayList<>();
+        }
+        demands.add(demand);
+
+    }
+
     @Override
     public String toString() {
         return "Demands{" +
