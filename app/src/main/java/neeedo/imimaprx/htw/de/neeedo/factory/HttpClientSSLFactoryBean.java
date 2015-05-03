@@ -1,6 +1,7 @@
 package neeedo.imimaprx.htw.de.neeedo.factory;
 
 import org.apache.http.client.HttpClient;
+import org.apache.http.conn.ssl.AllowAllHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLContexts;
 import org.apache.http.conn.ssl.TrustStrategy;
@@ -28,8 +29,12 @@ public class HttpClientSSLFactoryBean extends AbstractFactoryBean<HttpClient> {
         SSLContext sslcontext =
                 SSLContexts.custom().useTLS().loadTrustMaterial(trustStore, allTrust).build();
 
-        SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslcontext, SSLConnectionSocketFactory.BROWSER_COMPATIBLE_HOSTNAME_VERIFIER);
+        SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslcontext);
+
+
         CloseableHttpClient httpClient = HttpClients.custom().setSSLSocketFactory(sslsf).build();
+
+
 
         return httpClient;
     }

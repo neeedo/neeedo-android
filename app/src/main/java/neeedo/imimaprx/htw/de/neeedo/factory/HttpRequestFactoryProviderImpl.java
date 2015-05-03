@@ -27,7 +27,7 @@ public class HttpRequestFactoryProviderImpl {
     /**
      * Return an instance of {@link org.springframework.http.client.HttpComponentsClientHttpRequestFactory} with the given timeout set and
      * an Instance of {@link HttpClientSSLFactoryBean} as {@link org.apache.http.client.HttpClient} for SSL support.
-     * Uses {@link java.security.cert.X509Certificate} and {@link org.apache.http.conn.ssl.SSLConnectionSocketFactory.BROWSER_COMPATIBLE_HOSTNAME_VERIFIER}.
+     * Uses {@link java.security.cert.X509Certificate}.
      *
      * @param millisecondsToTimeout
      * @return
@@ -38,8 +38,9 @@ public class HttpRequestFactoryProviderImpl {
 
         factory.setHttpClient(new HttpClientSSLFactoryBean().createInstance());
 
-        factory.setReadTimeout(millisecondsToTimeout);
-        factory.setConnectTimeout(millisecondsToTimeout);
+        //Option is not supported by httpclient-android:4.3.5.1
+        //factory.setReadTimeout(millisecondsToTimeout);
+        //factory.setConnectTimeout(millisecondsToTimeout);
         return factory;
     }
 

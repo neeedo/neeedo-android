@@ -25,8 +25,9 @@ android {
         exclude 'META-INF/license.txt'
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/NOTICE'
+        exclude 'META-INF/DEPENDENCIES'
     }
-    
+
     lintOptions {
         abortOnError false
     }
@@ -51,7 +52,9 @@ dependencies {
     compile 'com.github.kikoso:SwipeableCards:1.0-RELEASE@aar'
     compile 'org.slf4j:slf4j-simple:1.6.1'
     compile 'com.splunk.mint:mint:4.0.8'
-    compile 'org.apache.httpcomponents:httpclient:4.3.6'
+    compile 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
+
+
     compile('org.simpleframework:simple-xml:2.7.+') {
         exclude module: 'stax'
         exclude module: 'stax-api'
@@ -63,5 +66,4 @@ dependencies {
     compile 'junit:junit:4.12'
     compile "org.mockito:mockito-core:1.9.5"
 
-    compile files('libs/httpclient-4.3.6.jar')
 }
