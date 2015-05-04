@@ -1,61 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
+    android:layout_height="fill_parent">
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tvHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/new_card_offer"
-            android:id="@+id/tvHeader" />
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <ImageButton
-            android:scaleType="centerInside"
-            android:background="#6897c8"
+            android:id="@+id/addImageButton"
             android:layout_width="fill_parent"
             android:layout_height="120dp"
-            android:src="@drawable/add_offer_image"
-            android:id="@+id/addImageButton"/>
+            android:background="#6897c8"
+            android:scaleType="centerInside"
+            android:src="@drawable/add_offer_image" />
 
         <EditText
+            android:id="@+id/etTags"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/new_card_tags"
-            android:id="@+id/etTags" />
+            android:hint="@string/new_card_tags" />
 
         <EditText
+            android:id="@+id/etLocationLat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
             android:hint="@string/new_card_location_lat"
-            android:id="@+id/etLocationLat" />
+            android:inputType="numberDecimal" />
 
         <EditText
+            android:id="@+id/etLocationLon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
             android:hint="@string/new_card_location_lon"
-            android:id="@+id/etLocationLon" />
+            android:inputType="numberDecimal" />
 
         <EditText
+            android:id="@+id/etPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
             android:ems="10"
             android:hint="@string/new_card_price"
-            android:id="@+id/etPrice" />
+            android:inputType="numberDecimal" />
+
+        <RelativeLayout
+            android:id="@+id/mapContainer"
+            android:layout_width="fill_parent"
+            android:layout_height="120dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:gravity="center"></RelativeLayout>
 
         <Button
+            android:id="@+id/btnSubmit"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/new_card_submit"
-            android:id="@+id/btnSubmit" />
+            android:text="@string/new_card_submit" />
 
     </LinearLayout>
 </ScrollView>

@@ -4,6 +4,30 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Bundle;
+import android.os.Handler;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.RelativeLayout;
+
+import com.squareup.otto.Subscribe;
+
+import org.osmdroid.DefaultResourceProxyImpl;
+import org.osmdroid.bonuspack.overlays.Polyline;
+import org.osmdroid.bonuspack.routing.OSRMRoadManager;
+import org.osmdroid.bonuspack.routing.Road;
+import org.osmdroid.bonuspack.routing.RoadManager;
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.ItemizedIconOverlay;
+import org.osmdroid.views.overlay.Overlay;
+import org.osmdroid.views.overlay.OverlayItem;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -24,6 +48,10 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
+
+import org.osmdroid.DefaultResourceProxyImpl;
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.views.MapView;
 
 import java.io.File;
 import java.io.IOException;
@@ -58,6 +86,7 @@ public class NewOfferFragment extends SuperFragment {
     private ImageButton addImageButton;
     private LocationHelper locationHelper;
     private Location currentLocation;
+    private MapView mapView;
     private double locationLatitude;
     private double locationLongitude;
     private boolean locationAvailable;
@@ -171,6 +200,32 @@ public class NewOfferFragment extends SuperFragment {
 
 
         return view;
+    }
+
+
+    @Override
+    public void onActivityCreated(final Bundle savedState) {
+        super.onActivityCreated(savedState);
+
+        mapView = new MapView(getActivity(), null);
+        mapView.setTileSource(TileSourceFactory.MAPNIK);
+        mapView.setBuiltInZoomControls(true);
+        mapView.setMultiTouchControls(true);
+        mapView.getController().setZoom(12);
+        mapView.setClickable(true);
+        mapView.setBuiltInZoomControls(true);
+        mapView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+
+        RelativeLayout mapCountainer = (RelativeLayout) getActivity().findViewById(R.id.mapContainer);
+        mapCountainer.addView(mapView);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mapView.getController().animateTo(new GeoPoint(52468277, 13425979));
+            }
+        }, 200);
+
     }
 
     @Override
