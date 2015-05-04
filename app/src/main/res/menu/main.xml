@@ -3,13 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
     <item
-        android:id="@+id/login"
+        android:id="@+id/action_bar_login"
         android:title="@string/login"
         app:showAsAction="always" />
     <item
-        android:visible="false"
-        android:id="@+id/user_name"
-        android:title=""
+        android:id="@+id/action_bar_logged_in"
+        android:title="bla"
         app:showAsAction="always" />
 
     <item

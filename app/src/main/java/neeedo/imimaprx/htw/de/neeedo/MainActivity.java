@@ -1,5 +1,7 @@
 package neeedo.imimaprx.htw.de.neeedo;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,6 +10,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import com.splunk.mint.Mint;
 
@@ -19,12 +23,15 @@ import neeedo.imimaprx.htw.de.neeedo.fragments.NavigationDrawerFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.NewDemandFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.NewOfferFragment;
 
-
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
+    private View actionBarLoggedIn;
+    private View actionBarLogin;
+
+    private static final int LOGIN_REQUEST_CODE = 8945;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,15 +41,11 @@ public class MainActivity extends ActionBarActivity
 
         setContentView(R.layout.activity_main);
 
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+        mNavigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
+        mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
 
 
-        mNavigationDrawerFragment.setUp(
-                R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
-        
     }
 
     @Override
@@ -79,31 +82,13 @@ public class MainActivity extends ActionBarActivity
                 .commit();
     }
 
-    //TODO delete? where is this being used?
-    //    public void onSectionAttached(int number) {
-    //        switch (number) {
-    //            case 1:
-    //                mTitle = getString(R.string.title_section1);
-    //                break;
-    //            case 2:
-    //                mTitle = getString(R.string.title_section2);
-    //                break;
-    //            case 3:
-    //                mTitle = getString(R.string.title_section3);
-    //                break;
-    //            case 4:
-    //                mTitle = getString(R.string.title_section4);
-    //                break;
-    //        }
-    //    }
-
     public void restoreActionBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
+        setLoginButtonState();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -113,5 +98,43 @@ public class MainActivity extends ActionBarActivity
             return true;
         }
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == Activity.RESULT_OK || requestCode == LOGIN_REQUEST_CODE) {
+            Toast.makeText(this, "login returned!", Toast.LENGTH_SHORT).show();
+            setLoginButtonState();
+        }
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        if (id == R.id.action_settings) {
+            return super.onOptionsItemSelected(item);
+        } else if (id == R.id.action_bar_login) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivityForResult(intent, LOGIN_REQUEST_CODE);
+
+            Toast.makeText(this, "Example action.", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void setLoginButtonState() {
+        actionBarLogin = findViewById(R.id.action_bar_login);
+        actionBarLoggedIn = findViewById(R.id.action_bar_logged_in);
+        if (actionBarLoggedIn == null || actionBarLogin == null)
+            return;
+        actionBarLogin.setVisibility(View.GONE);
+        actionBarLoggedIn.setVisibility(View.VISIBLE);
     }
 }
