@@ -53,7 +53,7 @@ dependencies {
     compile 'org.slf4j:slf4j-simple:1.6.1'
     compile 'com.splunk.mint:mint:4.0.8'
     compile 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
-
+    compile 'com.google.android.gms:play-services:6.5.87'
 
     compile('org.simpleframework:simple-xml:2.7.+') {
         exclude module: 'stax'
