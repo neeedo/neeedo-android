@@ -52,5 +52,6 @@
     <string name="login">login</string>
 
     <string name="hello_world">Hello world!</string>
+    <string name="or">or</string>
 
 </resources>
