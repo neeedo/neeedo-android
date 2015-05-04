@@ -41,6 +41,7 @@ import neeedo.imimaprx.htw.de.neeedo.helpers.LocationHelper;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.HttpPostOfferAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.SuperHttpAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.utils.ImageUtils;
 
 
 public class NewOfferFragment extends SuperFragment {
@@ -184,48 +185,14 @@ public class NewOfferFragment extends SuperFragment {
 
             Bitmap bitmap = BitmapFactory.decodeFile(photoFile.getPath(), options);
 
-            bitmap = rotateBitmap(bitmap, photoFile);
-            bitmap = scaleBitmapKeepingAspectRatio(bitmap);
+            bitmap = ImageUtils.rotateBitmap(bitmap, photoFile);
+            bitmap = ImageUtils.scaleBitmapKeepingAspectRatio(bitmap);
 
             addImageButton.setImageBitmap(bitmap);
-
-
         } else {
             Toast.makeText(getActivity(), R.string.camera_failed
                     , Toast.LENGTH_SHORT).show();
         }
-    }
-
-
-    private Bitmap scaleBitmapKeepingAspectRatio(Bitmap bitmap) {
-        float ratio = Math.min((float) 502 / bitmap.getWidth(), (float) 375 / bitmap.getHeight());
-        int width = Math.round(ratio * bitmap.getWidth());
-        int height = Math.round(ratio * bitmap.getHeight());
-
-        return Bitmap.createScaledBitmap(bitmap, width, height, true);
-    }
-
-    //extract into utils
-    private Bitmap rotateBitmap(Bitmap bitmap, File file) {
-        ExifInterface exif = null;
-        try {
-            exif = new ExifInterface(photoFile.getPath());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        String orientString = exif.getAttribute(ExifInterface.TAG_ORIENTATION);
-        int orientation = orientString != null ? Integer.parseInt(orientString) : ExifInterface.ORIENTATION_NORMAL;
-        int rotationAngle = 0;
-
-        if (orientation == ExifInterface.ORIENTATION_ROTATE_90) rotationAngle = 90;
-        if (orientation == ExifInterface.ORIENTATION_ROTATE_180) rotationAngle = 180;
-        if (orientation == ExifInterface.ORIENTATION_ROTATE_270) rotationAngle = 270;
-
-        Matrix matrix = new Matrix();
-        matrix.setRotate(rotationAngle, (float) bitmap.getWidth() / 2, (float) bitmap.getHeight() / 2);
-        Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-
-        return rotatedBitmap;
     }
 
     @Subscribe
