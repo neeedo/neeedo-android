@@ -42,7 +42,7 @@ public class MainFragment extends SuperFragment implements View.OnClickListener 
 
     @Override
     public void onActivityCreated(final Bundle savedState) {
-        super.onCreate(savedState);
+        super.onActivityCreated(savedState);
 
         activity = getActivity();
 
