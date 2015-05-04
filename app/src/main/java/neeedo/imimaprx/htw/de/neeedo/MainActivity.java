@@ -114,12 +114,4 @@ public class MainActivity extends ActionBarActivity
         }
         return super.onCreateOptionsMenu(menu);
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        return id == R.id.action_settings || super.onOptionsItemSelected(item);
-    }
-
 }
