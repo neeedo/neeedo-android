@@ -8,7 +8,6 @@ public class SuperFragment extends Fragment {
 
     private EventService eventService = EventService.getInstance();
 
-
     @Override
     public void onResume() {
         super.onResume();
@@ -20,5 +19,4 @@ public class SuperFragment extends Fragment {
         super.onPause();
         eventService.unregister(this);
     }
-
 }

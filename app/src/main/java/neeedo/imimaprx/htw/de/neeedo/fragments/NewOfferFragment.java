@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.RectF;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -61,7 +62,7 @@ public class NewOfferFragment extends SuperFragment {
     private boolean locationAvailable;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {        
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         locationHelper = new LocationHelper(getActivity());
@@ -83,7 +84,7 @@ public class NewOfferFragment extends SuperFragment {
         btnSubmit = (Button) view.findViewById(R.id.btnSubmit);
         addImageButton = (ImageButton) view.findViewById(R.id.addImageButton);
 
-        if(locationAvailable) {
+        if (locationAvailable) {
             etLocationLat.setText(String.valueOf(locationLatitude));
             etLocationLon.setText(String.valueOf(locationLongitude));
         }
@@ -106,10 +107,10 @@ public class NewOfferFragment extends SuperFragment {
                 if (!path.exists()) path.mkdirs();
                 photoFile = getOutputMediaFile();
 
-                Uri mImageCaptureUri1 = Uri.fromFile(getOutputMediaFile());
+                Uri imageCaptureUri = Uri.fromFile(getOutputMediaFile());
 
                 Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, mImageCaptureUri1);
+                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageCaptureUri);
 //        cameraIntent.putExtra("return-data", true);
                 startActivityForResult(cameraIntent, CAMERA_CAPTURE_IMAGE_REQUEST_CODE);
             }
@@ -126,7 +127,6 @@ public class NewOfferFragment extends SuperFragment {
                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
                 File mediaFile;
                 mediaFile = new File(mediaStorageDir.getPath() + File.separator + "IMG_" + timeStamp + ".jpg");
-
 
                 return mediaFile;
             }
@@ -179,18 +179,30 @@ public class NewOfferFragment extends SuperFragment {
         if (resultCode == Activity.RESULT_OK || requestCode == CAMERA_CAPTURE_IMAGE_REQUEST_CODE) {
 
             BitmapFactory.Options options = new BitmapFactory.Options();
+
             options.inSampleSize = 8;
 
             Bitmap bitmap = BitmapFactory.decodeFile(photoFile.getPath(), options);
 
             bitmap = rotateBitmap(bitmap, photoFile);
+            bitmap = scaleBitmapKeepingAspectRatio(bitmap);
 
             addImageButton.setImageBitmap(bitmap);
+
 
         } else {
             Toast.makeText(getActivity(), R.string.camera_failed
                     , Toast.LENGTH_SHORT).show();
         }
+    }
+
+
+    private Bitmap scaleBitmapKeepingAspectRatio(Bitmap bitmap) {
+        float ratio = Math.min((float) 502 / bitmap.getWidth(), (float) 375 / bitmap.getHeight());
+        int width = Math.round(ratio * bitmap.getWidth());
+        int height = Math.round(ratio * bitmap.getHeight());
+
+        return Bitmap.createScaledBitmap(bitmap, width, height, true);
     }
 
     //extract into utils
