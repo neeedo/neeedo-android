@@ -132,8 +132,8 @@ public class MainFragment extends SuperFragment implements View.OnClickListener 
         dismissProgressDialog();
     }
 
-    @Override
-    public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+//    @Override
+//    public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         //TODO make DRY, pull code into handle...() function and make use of proper entities
 
 //        String result = "Server not available";
@@ -173,7 +173,7 @@ public class MainFragment extends SuperFragment implements View.OnClickListener 
 //        }
 //
 //        Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
-    }
+//    }
 
     public void showLoadingProgressDialog() {
         this.showProgressDialog("Loading. Please wait...");
