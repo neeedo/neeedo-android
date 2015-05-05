@@ -1,6 +1,7 @@
 package neeedo.imimaprx.htw.de.neeedo.factory;
 
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.UserTokenHandler;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLContexts;
@@ -8,10 +9,13 @@ import org.apache.http.conn.ssl.TrustStrategy;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.protocol.HttpContext;
 
 import java.security.KeyStore;
 
 import javax.net.ssl.SSLContext;
+
+import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 
 public class HttpClientSSLFactoryBean extends AbstractFactoryBean<HttpClient> {
 
@@ -32,18 +36,30 @@ public class HttpClientSSLFactoryBean extends AbstractFactoryBean<HttpClient> {
 
         SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslcontext, SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
 
-
         HttpClientBuilder httpClientBuilder = HttpClients.custom().setSSLSocketFactory(sslsf);
+
+        final String userToken = ActiveUser.getInstance().getUserToken();
+
+        if (userToken != null) {
+
+            httpClientBuilder.setUserTokenHandler(new UserTokenHandler() {
+                @Override
+                public Object getUserToken(HttpContext httpContext) {
+
+                    httpContext.setAttribute("user", userToken);
+                    return httpContext.getAttribute("user");
+                }
+            });
+        }
 
         //set the Timeout
         RequestConfig.Builder requestBuilder = RequestConfig.custom();
         requestBuilder = requestBuilder.setConnectTimeout(timeout);
         requestBuilder = requestBuilder.setConnectionRequestTimeout(timeout);
         requestBuilder = requestBuilder.setSocketTimeout(timeout);
+        requestBuilder.setAuthenticationEnabled(true);
 
         httpClientBuilder.setDefaultRequestConfig(requestBuilder.build());
-
-        //httpClientBuilder.setUserTokenHandler();
 
         CloseableHttpClient httpClient = httpClientBuilder.build();
 
