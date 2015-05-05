@@ -7,7 +7,8 @@ public abstract class AbstractFactoryBean<T> {
     public Class<?> getObjectType() {
         return HttpClient.class;
     }
-    protected HttpClient createInstance() throws Exception {
+
+    protected HttpClient createInstance(int timeout) throws Exception {
         return null;
     }
 }

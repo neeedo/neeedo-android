@@ -33,14 +33,11 @@ public class HttpRequestFactoryProviderImpl {
      * @return
      */
     public static ClientHttpRequestFactory getClientHttpRequestFactorySSLSupport(final int millisecondsToTimeout) throws Exception {
-        // SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
+
         HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
 
-        factory.setHttpClient(new HttpClientSSLFactoryBean().createInstance());
+        factory.setHttpClient(new HttpClientSSLFactoryBean().createInstance(millisecondsToTimeout));
 
-        //Option is not supported by httpclient-android:4.3.5.1
-        //factory.setReadTimeout(millisecondsToTimeout);
-        //factory.setConnectTimeout(millisecondsToTimeout);
         return factory;
     }
 
