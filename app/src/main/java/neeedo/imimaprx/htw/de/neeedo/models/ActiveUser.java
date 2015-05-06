@@ -7,6 +7,12 @@ public class ActiveUser {
     private String username;
     private String userPassword;
     private String userToken;
+    private static ActiveUser activeUser;
+
+
+    private ActiveUser() {
+        activeUser = new ActiveUser();
+    }
 
     public String getUsername() {
         return username;
@@ -20,11 +26,6 @@ public class ActiveUser {
         this.userPassword = userPassword;
     }
 
-    private static ActiveUser activeUser;
-
-    private ActiveUser() {
-        new ActiveUser();
-    }
 
     public static ActiveUser getInstance() {
 
