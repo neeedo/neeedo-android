@@ -9,6 +9,12 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
+/**
+ * Use the checkForExistingCredentials to check there is a file with user credentials. If it returns true there is and was already loaded.
+ * Before setting the username and password it is needed to set the current Context of the application.
+ * When user and password is set it will be base64 encoded and saved as a file in the internal storage.
+ */
+
 
 public class ActiveUser {
 
@@ -20,7 +26,7 @@ public class ActiveUser {
 
 
     private String userEncoded;
-    private String passwordEncoded;
+    private String userPasswordEncoded;
     private static ActiveUser activeUser;
 
     private ActiveUser() {
@@ -74,7 +80,7 @@ public class ActiveUser {
         }
 
         this.userPassword = userPassword;
-        passwordEncoded = Base64Utils.encodeToString(userPassword.getBytes());
+        userPasswordEncoded = Base64Utils.encodeToString(userPassword.getBytes());
         saveCredentials();
     }
 
@@ -91,7 +97,7 @@ public class ActiveUser {
             throw new IllegalStateException("No Context is set!");
         }
 
-        if (userEncoded == null | passwordEncoded == null) {
+        if (userEncoded == null | userPasswordEncoded == null) {
             return;
         }
 
@@ -102,7 +108,7 @@ public class ActiveUser {
 
         FileOutputStream outputStream;
 
-        String toSave = userEncoded + "|" + passwordEncoded;
+        String toSave = userEncoded + "|" + userPasswordEncoded;
 
         try {
             outputStream = context.openFileOutput("image", Context.MODE_PRIVATE);
@@ -141,7 +147,7 @@ public class ActiveUser {
                 String[] temp = result.split("[|]+");
 
                 userEncoded = temp[0];
-                passwordEncoded = temp[1];
+                userPasswordEncoded = temp[1];
 
                 decodeCredentials();
 
@@ -153,6 +159,15 @@ public class ActiveUser {
             return true;
         }
         return false;
+    }
+
+    public void clearAllCredentials(){
+        userEncoded = null;
+        userPasswordEncoded = null;
+        username = "";
+        userPassword = "";
+        userID = "";
+
     }
 
 }
