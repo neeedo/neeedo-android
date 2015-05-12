@@ -20,6 +20,7 @@ public class ActiveUser {
 
     private static Context context;
 
+    //Username is the Email here
     private String username = "";
     private String userPassword = "";
     private String userID;

@@ -20,17 +20,13 @@ import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
  */
 public class HttpGetUserAsyncTask extends SuperHttpAsyncTask {
 
-    private String email;
-
-    public HttpGetUserAsyncTask(String email) {
-        this.email = email;
-    }
 
     @Override
     protected Object doInBackground(Object[] params) {
         try {
 
-
+            final ActiveUser activeUser = ActiveUser.getInstance();
+            String email = activeUser.getUsername();
             String url = ServerConstants.ACTIVE_SERVER + "users/mail/";
 
 
@@ -40,9 +36,7 @@ public class HttpGetUserAsyncTask extends SuperHttpAsyncTask {
 
             url += email;
 
-            final ActiveUser activeUser = ActiveUser.getInstance();
-
-            HttpBasicAuthentication authentication = new HttpBasicAuthentication(activeUser.getUsername(), activeUser.getUserPassword());
+            HttpBasicAuthentication authentication = new HttpBasicAuthentication(email, activeUser.getUserPassword());
 
             HttpHeaders requestHeaders = new HttpHeaders();
 
