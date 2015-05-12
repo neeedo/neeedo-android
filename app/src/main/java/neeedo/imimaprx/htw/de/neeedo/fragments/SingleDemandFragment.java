@@ -50,17 +50,13 @@ public class SingleDemandFragment extends SuperFragment {
 
         // TODO for Offers
 
-        // get card id out of arguments
         String demandId = getArguments().getString("id");
 
-        // get demands out of demands model singleton
         Demands demands = DemandsModel.getInstance().getDemands();
 
-        // get array list of demands
         ArrayList<Demand> demandList = demands.getDemands();
         Demand currentDemand = null;
 
-        // find card in model
         for(Demand demand : demandList) {
             if(demand.getId().equals(demandId)) {
                 currentDemand = demand;
@@ -68,10 +64,8 @@ public class SingleDemandFragment extends SuperFragment {
             }
         }
 
-        // set output
         textView.setText(currentDemand.toString());
 
         // TODO handle exception if demand not found
-
     }
 }
