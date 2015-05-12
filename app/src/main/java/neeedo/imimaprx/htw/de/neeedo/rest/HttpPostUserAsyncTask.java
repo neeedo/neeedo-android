@@ -35,7 +35,6 @@ public class HttpPostUserAsyncTask extends SuperHttpAsyncTask {
             HttpEntity<User> requestEntity = new HttpEntity<User>(userModel.getUser(), requestHeaders);
 
 
-            //Change to {@link HttpRequestFactoryProviderImpl.getClientHttpRequestFactorySSLSupport} for SSL support.
             RestTemplate restTemplate = new RestTemplate(HttpRequestFactoryProviderImpl.getClientHttpRequestFactorySSLSupport(9000));
 
 

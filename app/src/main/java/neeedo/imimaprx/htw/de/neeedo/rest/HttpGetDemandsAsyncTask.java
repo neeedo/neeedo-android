@@ -1,10 +1,9 @@
 package neeedo.imimaprx.htw.de.neeedo.rest;
 
-import android.os.Handler;
-import android.os.Looper;
+
 import android.util.Log;
 
-import org.springframework.http.HttpBasicAuthentication;
+
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -18,7 +17,6 @@ import java.util.List;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.Demands;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
-import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 
 public class HttpGetDemandsAsyncTask extends SuperHttpAsyncTask {
