@@ -16,7 +16,7 @@ import neeedo.imimaprx.htw.de.neeedo.utils.ImageUtils;
 
 public class SuperFragment extends Fragment {
 
-    private EventService eventService = EventService.getInstance();
+    protected EventService eventService = EventService.getInstance();
 
     @Override
     public void onResume() {
