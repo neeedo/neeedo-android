@@ -21,7 +21,7 @@ import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 
-public class HttpGetAsyncTask extends SuperHttpAsyncTask {
+public class HttpGetDemandsAsyncTask extends SuperHttpAsyncTask {
 
 
     @Override
@@ -29,13 +29,7 @@ public class HttpGetAsyncTask extends SuperHttpAsyncTask {
         try {
             final String url = ServerConstants.ACTIVE_SERVER + "matching/demands";
 
-            final String userToken = ActiveUser.getInstance().getUserToken();
-
-            HttpBasicAuthentication authentication = new HttpBasicAuthentication(userToken, "");
-
             HttpHeaders requestHeaders = new HttpHeaders();
-
-            requestHeaders.setAuthorization(authentication);
 
             List<MediaType> acceptableMediaTypes = new ArrayList<>();
             acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
