@@ -4,14 +4,19 @@ import android.util.Base64;
 
 public class ActiveUser {
 
-    private String username;
-    private String userPassword;
-    private String userToken = "";
+    private String username = "";
+    private String userPassword = "";
     private static ActiveUser activeUser;
 
 
     private ActiveUser() {
         activeUser = new ActiveUser();
+    }
+
+
+    public static ActiveUser getInstance() {
+
+        return activeUser == null ? new ActiveUser() : activeUser;
     }
 
     public String getUsername() {
@@ -22,36 +27,31 @@ public class ActiveUser {
         this.username = username;
     }
 
+    public String getUserPassword() {
+        return userPassword;
+    }
+
     public void setUserPassword(String userPassword) {
         this.userPassword = userPassword;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-    public static ActiveUser getInstance() {
+        ActiveUser that = (ActiveUser) o;
 
-        return activeUser == null ? new ActiveUser() : activeUser;
-    }
-
-    public String getUserToken() {
-        return userToken;
-    }
-
-    public void generateUserToken() throws IllegalArgumentException {
-
-        if (username == null) {
-            throw new IllegalArgumentException("No Username is set.");
-        }
-
-        if (userPassword == null) {
-            throw new IllegalArgumentException("No UserPassword is set.");
-        }
-
-        String temp = username + userPassword;
-
-        byte[] data = temp.getBytes();
-        userToken = Base64.encodeToString(data, Base64.DEFAULT);
-        userToken += ":";
+        if (username != null ? !username.equals(that.username) : that.username != null)
+            return false;
+        return !(userPassword != null ? !userPassword.equals(that.userPassword) : that.userPassword != null);
 
     }
 
+    @Override
+    public int hashCode() {
+        int result = username != null ? username.hashCode() : 0;
+        result = 31 * result + (userPassword != null ? userPassword.hashCode() : 0);
+        return result;
+    }
 }

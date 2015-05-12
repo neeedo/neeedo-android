@@ -28,9 +28,9 @@ public class HttpGetByIDAsyncTask extends SuperHttpAsyncTask {
             Handler mHandler = new Handler(Looper.getMainLooper());
             final String url = ServerConstants.ACTIVE_SERVER + "demands/1";
 
-            final String userToken = ActiveUser.getInstance().getUserToken();
+            final ActiveUser activeUser = ActiveUser.getInstance();
 
-            HttpBasicAuthentication authentication = new HttpBasicAuthentication(userToken, "");
+            HttpBasicAuthentication authentication = new HttpBasicAuthentication(activeUser.getUsername(), activeUser.getUserPassword());
 
             HttpHeaders requestHeaders = new HttpHeaders();
 
