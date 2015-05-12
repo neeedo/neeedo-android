@@ -6,8 +6,9 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 import java.io.Serializable;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
+
+import neeedo.imimaprx.htw.de.neeedo.entities.Location;
 
 
 @Root(name = "offer")
@@ -24,13 +25,13 @@ public class Offer implements Serializable {
     private String userId;
 
     @Element
-    private ArrayList<String> tags;
+    private ArrayList<String> tags = new ArrayList<>();
 
     @Element
     private Location location;
 
     @Element
-    private Double price; // TODO price entity without min and max?
+    private Double price = 0d; // TODO price entity without min and max?
 
     @Element
     private Offer offer;
@@ -98,19 +99,15 @@ public class Offer implements Serializable {
 
     @Override
     public String toString() {
-//        return "Offer{" +
-//                "id='" + id + '\'' +
-//                ", version=" + version +
-//                ", userId='" + userId + '\'' +
-//                ", tags=" + tags +
-//                ", location=" + location +
-//                ", price=" + price +
-//                '}';
-
-        DecimalFormat format = new DecimalFormat("#0.00");
-
-        return "Search:\n" + tags +
-                "\n\nPrice: " + format.format(price);
+        return "Offer{" +
+                "id='" + id + '\'' +
+                ", version=" + version +
+                ", userId='" + userId + '\'' +
+                ", tags=" + tags +
+                ", location=" + location +
+                ", price=" + price +
+                ", offer=" + offer +
+                '}';
     }
 
     @Override
