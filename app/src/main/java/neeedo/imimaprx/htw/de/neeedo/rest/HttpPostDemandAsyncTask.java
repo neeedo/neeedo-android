@@ -2,6 +2,7 @@ package neeedo.imimaprx.htw.de.neeedo.rest;
 
 import android.util.Log;
 
+import org.springframework.http.HttpBasicAuthentication;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -14,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 import neeedo.imimaprx.htw.de.neeedo.entities.Demand;
 import neeedo.imimaprx.htw.de.neeedo.entities.SingleDemand;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
+import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 
 public class HttpPostDemandAsyncTask extends SuperHttpAsyncTask {
@@ -25,8 +27,13 @@ public class HttpPostDemandAsyncTask extends SuperHttpAsyncTask {
             final String url = ServerConstants.ACTIVE_SERVER + "demands";
 
             DemandsModel demandsModel = DemandsModel.getInstance();
-            HttpHeaders requestHeaders;
-            requestHeaders = new HttpHeaders();
+            final String userToken = ActiveUser.getInstance().getUserToken();
+
+            HttpBasicAuthentication authentication = new HttpBasicAuthentication(userToken, "");
+
+            HttpHeaders requestHeaders = new HttpHeaders();
+
+            requestHeaders.setAuthorization(authentication);
             requestHeaders.setContentType(MediaType.APPLICATION_JSON);
 
             HttpEntity<Demand> requestEntity = new HttpEntity<Demand>(demandsModel.getPostDemand(), requestHeaders);

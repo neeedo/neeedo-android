@@ -50,6 +50,7 @@ public class ActiveUser {
 
         byte[] data = temp.getBytes();
         userToken = Base64.encodeToString(data, Base64.DEFAULT);
+        userToken += ":";
 
     }
 

@@ -2,6 +2,7 @@ package neeedo.imimaprx.htw.de.neeedo.rest;
 
 import android.util.Log;
 
+import org.springframework.http.HttpBasicAuthentication;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -14,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 import neeedo.imimaprx.htw.de.neeedo.entities.Offer;
 import neeedo.imimaprx.htw.de.neeedo.entities.SingleOffer;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
+import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
 
 public class HttpPostOfferAsyncTask extends SuperHttpAsyncTask {
@@ -25,8 +27,13 @@ public class HttpPostOfferAsyncTask extends SuperHttpAsyncTask {
             final String url = ServerConstants.ACTIVE_SERVER + "offers";
 
             OffersModel offersModel = OffersModel.getInstance();
-            HttpHeaders requestHeaders;
-            requestHeaders = new HttpHeaders();
+            final String userToken = ActiveUser.getInstance().getUserToken();
+
+            HttpBasicAuthentication authentication = new HttpBasicAuthentication(userToken, "");
+
+            HttpHeaders requestHeaders = new HttpHeaders();
+
+            requestHeaders.setAuthorization(authentication);
             requestHeaders.setContentType(MediaType.APPLICATION_JSON);
 
             HttpEntity<Offer> requestEntity = new HttpEntity<Offer>(offersModel.getPostOffer(), requestHeaders);

@@ -38,6 +38,7 @@ public class HttpClientSSLFactoryBean extends AbstractFactoryBean<HttpClient> {
 
         HttpClientBuilder httpClientBuilder = HttpClients.custom().setSSLSocketFactory(sslsf);
 
+       /*
         final String userToken = ActiveUser.getInstance().getUserToken();
 
         if (userToken != null) {
@@ -52,6 +53,7 @@ public class HttpClientSSLFactoryBean extends AbstractFactoryBean<HttpClient> {
             });
         }
 
+        */
         //set the Timeout
         RequestConfig.Builder requestBuilder = RequestConfig.custom();
         requestBuilder = requestBuilder.setConnectTimeout(timeout);

@@ -29,8 +29,7 @@ public class HttpPostUserAsyncTask extends SuperHttpAsyncTask {
             final String url = ServerConstants.ACTIVE_SERVER + "users";
 
             UserModel userModel = UserModel.getInstance();
-            HttpHeaders requestHeaders;
-            requestHeaders = new HttpHeaders();
+            HttpHeaders requestHeaders = new HttpHeaders();
             requestHeaders.setContentType(MediaType.APPLICATION_JSON);
 
             HttpEntity<User> requestEntity = new HttpEntity<User>(userModel.getUser(), requestHeaders);
