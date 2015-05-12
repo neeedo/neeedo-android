@@ -187,12 +187,12 @@ public class NewOfferFragment extends SuperFragment {
 
             options.inSampleSize = 8;
 
-            Bitmap bitmap = BitmapFactory.decodeFile(photoFile.getPath(), options);
-
-            bitmap = ImageUtils.rotateBitmap(bitmap, photoFile);
-            bitmap = ImageUtils.scaleBitmapKeepingAspectRatio(bitmap);
-
-            addImageButton.setImageBitmap(bitmap);
+//            Bitmap bitmap = BitmapFactory.decodeFile(photoFile.getPath(), options);
+//
+//            bitmap = ImageUtils.rotateBitmap(bitmap, photoFile);
+//            bitmap = ImageUtils.scaleBitmapKeepingAspectRatio(bitmap);
+//
+//            addImageButton.setImageBitmap(bitmap);
         } else {
             Toast.makeText(getActivity(), R.string.camera_failed
                     , Toast.LENGTH_SHORT).show();
@@ -201,7 +201,6 @@ public class NewOfferFragment extends SuperFragment {
 
     @Subscribe
     public void redirectToList(ServerResponseEvent e) {
-        // show message
         Toast.makeText(getActivity(), getString(R.string.new_card_submit_successful_offer), Toast.LENGTH_SHORT).show();
 
         // go to list cards view
