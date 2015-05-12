@@ -6,7 +6,7 @@ public class ActiveUser {
 
     private String username;
     private String userPassword;
-    private String userToken;
+    private String userToken = "";
     private static ActiveUser activeUser;
 
 
