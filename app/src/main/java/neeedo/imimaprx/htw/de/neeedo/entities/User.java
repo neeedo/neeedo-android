@@ -12,16 +12,19 @@ import java.io.Serializable;
 public class User implements Serializable {
 
     @Element
-    private String id;
+    private String id = "";
 
     @Element
-    private int version;
+    private int version = 0;
 
     @Element
     private String username;
 
     @Element
     private String email;
+
+    @Element
+    private String password = "";
 
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     public String getId() {
@@ -32,6 +35,7 @@ public class User implements Serializable {
         this.id = id;
     }
 
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     public int getVersion() {
         return version;
     }
@@ -54,6 +58,15 @@ public class User implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 }
