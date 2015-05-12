@@ -65,19 +65,16 @@ import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.Location;
 import neeedo.imimaprx.htw.de.neeedo.entities.Offer;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
+import neeedo.imimaprx.htw.de.neeedo.fragments.handler.StartCameraHandler;
 import neeedo.imimaprx.htw.de.neeedo.helpers.LocationHelper;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.HttpPostOfferAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.SuperHttpAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.utils.ImageUtils;
+import neeedo.imimaprx.htw.de.neeedo.vo.RequestCodes;
 
 
 public class NewOfferFragment extends SuperFragment {
-
-    private static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE = 12345;
-
-    private File photoFile;
-
     private EditText etTags;
     private EditText etLocationLat;
     private EditText etLocationLon;
@@ -94,8 +91,9 @@ public class NewOfferFragment extends SuperFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         locationHelper = new LocationHelper(getActivity());
+
+        //TODO extract and make async
         currentLocation = locationHelper.getLocation();
         locationLatitude = currentLocation.getLat();
         locationLongitude = currentLocation.getLon();
@@ -119,65 +117,20 @@ public class NewOfferFragment extends SuperFragment {
             etLocationLon.setText(String.valueOf(locationLongitude));
         }
 
-        //TODO extract
-        addImageButton.setOnClickListener(new View.OnClickListener() {
-
-
-            @Override
-            public void onClick(View v) {
-                Context context = getActivity();
-                PackageManager packageManager = context.getPackageManager();
-
-                if (packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA) == false) {
-                    Toast.makeText(getActivity(), R.string.no_camera, Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                File path = new File(Environment.getExternalStorageDirectory(), "foo/bar");
-                if (!path.exists()) path.mkdirs();
-                photoFile = getOutputMediaFile();
-
-                Uri imageCaptureUri = Uri.fromFile(getOutputMediaFile());
-
-                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageCaptureUri);
-//        cameraIntent.putExtra("return-data", true);
-                startActivityForResult(cameraIntent, CAMERA_CAPTURE_IMAGE_REQUEST_CODE);
-            }
-
-            private File getOutputMediaFile() {
-                File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "bla");
-
-                if (!mediaStorageDir.exists()) {
-                    if (!mediaStorageDir.mkdirs()) {
-                        return null;
-                    }
-                }
-
-                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
-                File mediaFile;
-                mediaFile = new File(mediaStorageDir.getPath() + File.separator + "IMG_" + timeStamp + ".jpg");
-
-                return mediaFile;
-            }
-        });
-
+        addImageButton.setOnClickListener(new StartCameraHandler(getActivity()));
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // get form values
                 String etTagsText = etTags.getText().toString();
                 String etLocationLatText = etLocationLat.getText().toString();
                 String etLocationLonText = etLocationLon.getText().toString();
                 String etPriceText = etPrice.getText().toString();
 
                 try {
-                    // convert fields
                     ArrayList<String> tags = new ArrayList<String>(Arrays.asList(etTagsText.split(",")));
                     Location location = new Location(Double.parseDouble(etLocationLatText), Double.parseDouble(etLocationLonText));
                     Double price = Double.parseDouble(etPriceText);
 
-                    // create new demand
                     Offer offer = new Offer();
                     offer.setTags(tags);
                     offer.setLocation(location);
@@ -186,22 +139,18 @@ public class NewOfferFragment extends SuperFragment {
 
                     System.out.println(offer);
 
-                    // send data
                     OffersModel.getInstance().setPostOffer(offer);
                     SuperHttpAsyncTask asyncTask = new HttpPostOfferAsyncTask();
                     asyncTask.execute();
 
                 } catch (Exception e) {
-                    // show error
                     Toast.makeText(getActivity(), getString(R.string.error_empty_or_wrong_format), Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-
         return view;
     }
-
 
     @Override
     public void onActivityCreated(final Bundle savedState) {
@@ -219,20 +168,20 @@ public class NewOfferFragment extends SuperFragment {
         RelativeLayout mapCountainer = (RelativeLayout) getActivity().findViewById(R.id.mapContainer);
         mapCountainer.addView(mapView);
 
+        //this is a hack to get around one of the osmdroid bugs
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 mapView.getController().animateTo(new GeoPoint(52468277, 13425979));
             }
         }, 200);
-
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == Activity.RESULT_OK || requestCode == CAMERA_CAPTURE_IMAGE_REQUEST_CODE) {
+        if (resultCode == Activity.RESULT_OK || requestCode == RequestCodes.CAMERA_CAPTURE_IMAGE_REQUEST_CODE) {
 
             BitmapFactory.Options options = new BitmapFactory.Options();
 

@@ -53,5 +53,6 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="or">or</string>
+    <string name="start_barcode_scan">barcode scannen</string>
 
 </resources>
