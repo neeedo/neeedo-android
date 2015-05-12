@@ -2,19 +2,17 @@ package neeedo.imimaprx.htw.de.neeedo.rest;
 
 import android.util.Log;
 
+import org.springframework.http.HttpBasicAuthentication;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import neeedo.imimaprx.htw.de.neeedo.entities.SingleUser;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
+import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
 
 /**
@@ -22,6 +20,11 @@ import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
  */
 public class HttpGetUserAsyncTask extends SuperHttpAsyncTask {
 
+    private String email;
+
+    public HttpGetUserAsyncTask(String email) {
+        this.email = email;
+    }
 
     @Override
     protected Object doInBackground(Object[] params) {
@@ -30,7 +33,6 @@ public class HttpGetUserAsyncTask extends SuperHttpAsyncTask {
 
             String url = ServerConstants.ACTIVE_SERVER + "users/mail/";
 
-            String email = UserModel.getInstance().getUser().getEmail();
 
             if (email == null) {
                 return "Failed, no E-Mail is given";
@@ -38,11 +40,13 @@ public class HttpGetUserAsyncTask extends SuperHttpAsyncTask {
 
             url += email;
 
-            HttpHeaders requestHeaders = new HttpHeaders();
-            List<MediaType> acceptableMediaTypes = new ArrayList<>();
-            acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
-            requestHeaders.setAccept(acceptableMediaTypes);
+            final ActiveUser activeUser = ActiveUser.getInstance();
 
+            HttpBasicAuthentication authentication = new HttpBasicAuthentication(activeUser.getUsername(), activeUser.getUserPassword());
+
+            HttpHeaders requestHeaders = new HttpHeaders();
+
+            requestHeaders.setAuthorization(authentication);
             HttpEntity<?> requestEntity = new HttpEntity<Object>(requestHeaders);
 
             RestTemplate restTemplate = new RestTemplate(HttpRequestFactoryProviderImpl.getClientHttpRequestFactorySSLSupport(5000));
@@ -52,9 +56,9 @@ public class HttpGetUserAsyncTask extends SuperHttpAsyncTask {
             ResponseEntity<SingleUser> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity,
                     SingleUser.class);
 
-            SingleUser user = responseEntity.getBody();
+            SingleUser singleUser = responseEntity.getBody();
 
-            UserModel.getInstance().setUser(user.getUser());
+            UserModel.getInstance().setUser(singleUser.getUser());
 
             return "Success";//TODO use proper entities
 
