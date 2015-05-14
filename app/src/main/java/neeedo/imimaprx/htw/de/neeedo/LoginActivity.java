@@ -121,13 +121,6 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
         activeUser.setContext(getApplicationContext());
         activeUser.loadValuesFromPreferences();
 
-        //@TODO find the right postion for this check
-        //true if information were loaded from Sharedpref otherwise false
-        if (activeUser.userinformationLoaded()) {
-            //Userinfos were loaded from Prefs so now get other infos from the api like id - available with UserModel.getUser()
-            new HttpGetUserAsyncTask().execute();
-        }
-
     }
 
     private void populateAutoComplete() {
@@ -141,9 +134,21 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
      * errors are presented and no actual login attempt is made.
      */
     public void attemptLogin() {
+
         if (mAuthTask != null) {
             return;
         }
+
+        //Skip login dialog if infos are available
+        //@TODO find the right position for this check
+        if (activeUser.userinformationLoaded()) {
+            //Userinfos were loaded from Prefs so now get other infos from the api like id - available with UserModel.getUser()
+            new HttpGetUserAsyncTask().execute();
+            mAuthTask = new UserLoginTask(activeUser.getUsername(), activeUser.getUserPassword());
+            mAuthTask.execute((Void) null);
+            return;
+        }
+        //else start the usual login formula
 
         // Reset errors.
         mEmailView.setError(null);
@@ -184,6 +189,10 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
             showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
+
+            //make current userinfos persist in sharedprefs
+            activeUser.setUsername(email);
+            activeUser.setUserPassword(password);
         }
     }
 
