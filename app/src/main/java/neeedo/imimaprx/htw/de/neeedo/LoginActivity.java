@@ -3,15 +3,12 @@ package neeedo.imimaprx.htw.de.neeedo;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-
 import android.app.LoaderManager.LoaderCallbacks;
-import android.content.ContentResolver;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
-
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -32,6 +29,9 @@ import com.google.android.gms.common.SignInButton;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
+import neeedo.imimaprx.htw.de.neeedo.rest.HttpGetUserAsyncTask;
 
 
 /**
@@ -64,6 +64,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
     private SignInButton mPlusSignInButton;
     private View mSignOutButtons;
     private View mLoginFormView;
+    private ActiveUser activeUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +116,18 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
         mProgressView = findViewById(R.id.login_progress);
         mEmailLoginFormView = findViewById(R.id.email_login_form);
         mSignOutButtons = findViewById(R.id.plus_sign_out_buttons);
+
+        activeUser = ActiveUser.getInstance();
+        activeUser.setContext(getApplicationContext());
+        activeUser.loadValuesFromPreferences();
+
+        //@TODO find the right postion for this check
+        //true if information were loaded from Sharedpref otherwise false
+        if (activeUser.userinformationLoaded()) {
+            //Userinfos were loaded from Prefs so now get other infos from the api like id - available with UserModel.getUser()
+            new HttpGetUserAsyncTask().execute();
+        }
+
     }
 
     private void populateAutoComplete() {

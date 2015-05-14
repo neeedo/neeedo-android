@@ -1,13 +1,7 @@
 package neeedo.imimaprx.htw.de.neeedo.models;
 
 import android.content.Context;
-
-import org.springframework.util.Base64Utils;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
+import android.content.SharedPreferences;
 
 /**
  * Use the checkForExistingCredentials to check there is a file with user credentials. If it returns true there is and was already loaded.
@@ -18,16 +12,13 @@ import java.io.InputStream;
 
 public class ActiveUser {
 
+    public static final String PREFS_FILE = "PrefsFile";
     private static Context context;
 
     //Username is the Email here
     private String username = "";
     private String userPassword = "";
-    private String userID;
 
-
-    private String userEncoded;
-    private String userPasswordEncoded;
     private static ActiveUser activeUser;
 
     private ActiveUser() {
@@ -59,21 +50,13 @@ public class ActiveUser {
         }
 
         this.username = username;
-        userEncoded = Base64Utils.encodeToString(username.getBytes());
-        saveCredentials();
+        saveValuesInPreferences();
     }
 
     public String getUserPassword() {
         return userPassword;
     }
 
-    public String getUserID() {
-        return userID;
-    }
-
-    public void setUserID(String userID) {
-        this.userID = userID;
-    }
 
     public void setUserPassword(String userPassword) {
         if (context == null) {
@@ -81,94 +64,50 @@ public class ActiveUser {
         }
 
         this.userPassword = userPassword;
-        userPasswordEncoded = Base64Utils.encodeToString(userPassword.getBytes());
-        saveCredentials();
-    }
-
-    private void decodeCredentials() {
-
-        username = Base64Utils.decode(username.getBytes()).toString();
-        userPassword = Base64Utils.decode(userPassword.getBytes()).toString();
+        saveValuesInPreferences();
 
     }
 
-    private void saveCredentials() {
+    public void clearUserinformation() {
+        username = "";
+        userPassword = "";
+
+    }
+
+    private void saveValuesInPreferences() {
+
 
         if (context == null) {
             throw new IllegalStateException("No Context is set!");
         }
 
-        if (userEncoded == null | userPasswordEncoded == null) {
+        if (username == null | userPassword == null) {
             return;
         }
 
-        File file = new File(context.getApplicationContext().getFilesDir(), "image");
-        if (file.exists()) {
-            file.delete();
-        }
+        SharedPreferences.Editor editor = context.getSharedPreferences(PREFS_FILE, context.MODE_PRIVATE).edit();
+        editor.putString("name", username);
+        editor.putString("password", userPassword);
+        editor.commit();
 
-        FileOutputStream outputStream;
+    }
 
-        String toSave = userEncoded + "|" + userPasswordEncoded;
-
-        try {
-            outputStream = context.openFileOutput("image", Context.MODE_PRIVATE);
-            outputStream.write(toSave.getBytes());
-            outputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+    public void loadValuesFromPreferences() {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_FILE, context.MODE_PRIVATE);
+        username = prefs.getString("name", null);
+        userPassword = prefs.getString("password", null);
+        if (username != null & userPassword != null) {
+            username = "";
+            userPassword = "";
         }
     }
 
-    public boolean checkForExistingCredentials() {
-
-        if (context == null) {
-            throw new IllegalStateException("No Context is set!");
+    public boolean userinformationLoaded() {
+        if (userPassword.equals("") | username.equals("")) {
+            return false;
         }
-
-        File file = new File(context.getApplicationContext().getFilesDir(), "image");
-        if (file.exists()) {
-            InputStream in;
-            try {
-
-                in = new FileInputStream(file);
-
-                StringBuffer fileContent = new StringBuffer("");
-
-                byte[] buffer = new byte[1024];
-
-                int n;
-
-                while ((n = in.read(buffer)) != -1) {
-                    fileContent.append(new String(buffer, 0, n));
-                }
-
-                String result = fileContent.toString();
-
-                String[] temp = result.split("[|]+");
-
-                userEncoded = temp[0];
-                userPasswordEncoded = temp[1];
-
-                decodeCredentials();
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                return false;
-            }
-
-            return true;
-        }
-        return false;
-    }
-
-    public void clearAllCredentials(){
-        userEncoded = null;
-        userPasswordEncoded = null;
-        username = "";
-        userPassword = "";
-        userID = "";
-
+        return true;
     }
 
 }
+
