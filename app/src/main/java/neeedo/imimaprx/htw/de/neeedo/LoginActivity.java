@@ -143,6 +143,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
         //@TODO find the right position for this check
         if (activeUser.userinformationLoaded()) {
             //Userinfos were loaded from Prefs so now get other infos from the api like id - available with UserModel.getUser()
+            showProgress(true);
             new HttpGetUserAsyncTask().execute();
             mAuthTask = new UserLoginTask(activeUser.getUsername(), activeUser.getUserPassword());
             mAuthTask.execute((Void) null);
