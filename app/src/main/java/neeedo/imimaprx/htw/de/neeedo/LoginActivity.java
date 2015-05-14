@@ -194,6 +194,8 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
             //make current userinfos persist in sharedprefs
             activeUser.setUsername(email);
             activeUser.setUserPassword(password);
+            //Get available userinfos from the api
+            new HttpGetUserAsyncTask().execute();
         }
     }
 
