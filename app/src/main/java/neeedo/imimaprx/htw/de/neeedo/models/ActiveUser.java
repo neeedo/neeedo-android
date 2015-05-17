@@ -27,7 +27,10 @@ public class ActiveUser {
 
     public static ActiveUser getInstance() {
 
-        return activeUser == null ? new ActiveUser() : activeUser;
+        if (activeUser == null) {
+            activeUser = new ActiveUser();
+        }
+        return activeUser;
     }
 
 

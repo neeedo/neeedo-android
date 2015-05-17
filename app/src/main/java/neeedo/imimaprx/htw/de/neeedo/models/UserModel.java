@@ -8,12 +8,15 @@ public class UserModel {
     private User user;
 
     private UserModel() {
-        userModel = new UserModel();
+
     }
 
     public static UserModel getInstance() {
 
-        return userModel != null ? userModel : new UserModel();
+        if (userModel == null) {
+            userModel = new UserModel();
+        }
+        return userModel;
 
     }
 
@@ -28,6 +31,5 @@ public class UserModel {
     public boolean userAvailable() {
         return user == null ? false : true;
     }
-
 
 }
