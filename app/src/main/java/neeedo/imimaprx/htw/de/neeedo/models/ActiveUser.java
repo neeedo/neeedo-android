@@ -22,7 +22,6 @@ public class ActiveUser {
     private static ActiveUser activeUser;
 
     private ActiveUser() {
-        activeUser = new ActiveUser();
 
     }
 
