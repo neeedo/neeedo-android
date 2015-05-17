@@ -29,8 +29,7 @@ public class HttpGetUserAsyncTask extends SuperHttpAsyncTask {
             String email = activeUser.getUsername();
             String url = ServerConstants.ACTIVE_SERVER + "users/mail/";
 
-
-            if (email == null) {
+            if (email == null || email == "") {
                 return "Failed, no E-Mail is given";
             }
 
@@ -54,12 +53,12 @@ public class HttpGetUserAsyncTask extends SuperHttpAsyncTask {
 
             UserModel.getInstance().setUser(singleUser.getUser());
 
-            return "Success";//TODO use proper entities
+            return "Success"; // TODO use proper entities
 
 
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
-            return "Failed";//TODO use proper entities
+            return "Failed"; // TODO use proper entities
         }
     }
 }

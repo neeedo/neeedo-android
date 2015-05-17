@@ -23,6 +23,7 @@ import neeedo.imimaprx.htw.de.neeedo.entities.Price;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.helpers.LocationHelper;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
+import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.HttpPostDemandAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.SuperHttpAsyncTask;
 
@@ -101,7 +102,7 @@ public class NewDemandFragment extends SuperFragment {
                     demand.setLocation(location);
                     demand.setDistance(distance);
                     demand.setPrice(price);
-                    demand.setUserId("1"); // TODO use user id if implemented
+                    demand.setUserId(UserModel.getInstance().getUser().getId());
 
                     System.out.println(demand);
 

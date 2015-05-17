@@ -11,6 +11,7 @@ import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.Location;
 import neeedo.imimaprx.htw.de.neeedo.entities.Offer;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
+import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.HttpPostOfferAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.SuperHttpAsyncTask;
 
@@ -45,7 +46,7 @@ public class SendNewOfferHandler implements View.OnClickListener {
             offer.setTags(tags);
             offer.setLocation(location);
             offer.setPrice(price);
-            offer.setUserId("1"); // TODO use user id if implemented
+            offer.setUserId(UserModel.getInstance().getUser().getId());
 
             System.out.println(offer);
 
