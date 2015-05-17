@@ -35,16 +35,16 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/new_card_location_lat"
+            android:hint="@string/new_card_location_lon"
             android:inputType="numberDecimal"
-            android:id="@+id/etLocationLat" />
+            android:id="@+id/etLocationLon" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/new_card_location_lon"
+            android:hint="@string/new_card_location_lat"
             android:inputType="numberDecimal"
-            android:id="@+id/etLocationLon" />
+            android:id="@+id/etLocationLat" />
 
         <EditText
             android:layout_width="match_parent"
