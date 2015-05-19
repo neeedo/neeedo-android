@@ -112,6 +112,17 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
             }
         });
 
+        Button registerBtn = (Button) findViewById(R.id.btn_register);
+        registerBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                openRegisterForm();
+
+            }
+        });
+
+
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
         mEmailLoginFormView = findViewById(R.id.email_login_form);
@@ -123,7 +134,6 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
 
 
         //Skip login dialog if infos are available
-        //@TODO find the right position for this check
         if (activeUser.userinformationLoaded()) {
             //Userinfos were loaded from Prefs so now get other infos from the api like id - available with UserModel.getUser()
             showProgress(true);
@@ -199,6 +209,12 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
             new HttpGetUserAsyncTask().execute();
         }
     }
+
+    //@TODO at best open a new form with formular possibilities
+    private void openRegisterForm() {
+
+    }
+
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
