@@ -64,6 +64,13 @@
             android:id="@+id/btnNewOffer"
             android:layout_gravity="left|center" />
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Logout"
+            android:id="@+id/btnLogout"
+            android:layout_gravity="center_horizontal|bottom" />
+
     </FrameLayout>
 
 </RelativeLayout>

@@ -73,6 +73,7 @@ public class ActiveUser {
     public void clearUserinformation() {
         username = "";
         userPassword = "";
+        saveValuesInPreferences();
 
     }
 
@@ -98,7 +99,7 @@ public class ActiveUser {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_FILE, context.MODE_PRIVATE);
         username = prefs.getString("name", null);
         userPassword = prefs.getString("password", null);
-        if (username != null & userPassword != null) {
+        if (username == null & userPassword == null) {
             username = "";
             userPassword = "";
         }

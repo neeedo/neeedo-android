@@ -15,6 +15,7 @@ import com.squareup.otto.Subscribe;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
+import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.SuperHttpAsyncTask;
 
@@ -23,6 +24,7 @@ public class MainFragment extends SuperFragment implements View.OnClickListener 
 
     private Button btnNewOfferOperation;
     private Button btnNewDemandOperation;
+    private Button btnLogout;
 
     private Activity activity;
     private ProgressDialog progressDialog;
@@ -46,8 +48,11 @@ public class MainFragment extends SuperFragment implements View.OnClickListener 
         btnNewOfferOperation = (Button) activity.findViewById(R.id.btnNewOffer);
         btnNewDemandOperation = (Button) activity.findViewById(R.id.btnNewDemand);
 
+        btnLogout = (Button) activity.findViewById(R.id.btnLogout);
+
         btnNewOfferOperation.setOnClickListener(this);
         btnNewDemandOperation.setOnClickListener(this);
+        btnLogout.setOnClickListener(this);
     }
 
     @Override
@@ -72,6 +77,10 @@ public class MainFragment extends SuperFragment implements View.OnClickListener 
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, fragment)
                         .commit();
+                break;
+
+            case R.id.btnLogout:
+                ActiveUser.getInstance().clearUserinformation();
                 break;
         }
     }

@@ -121,6 +121,18 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
         activeUser.setContext(getApplicationContext());
         activeUser.loadValuesFromPreferences();
 
+
+        //Skip login dialog if infos are available
+        //@TODO find the right position for this check
+        if (activeUser.userinformationLoaded()) {
+            //Userinfos were loaded from Prefs so now get other infos from the api like id - available with UserModel.getUser()
+            showProgress(true);
+            new HttpGetUserAsyncTask().execute();
+            mAuthTask = new UserLoginTask(activeUser.getUsername(), activeUser.getUserPassword());
+            mAuthTask.execute((Void) null);
+            return;
+        }
+
     }
 
     private void populateAutoComplete() {
@@ -139,17 +151,6 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
             return;
         }
 
-        //Skip login dialog if infos are available
-        //@TODO find the right position for this check
-        if (activeUser.userinformationLoaded()) {
-            //Userinfos were loaded from Prefs so now get other infos from the api like id - available with UserModel.getUser()
-            showProgress(true);
-            new HttpGetUserAsyncTask().execute();
-            mAuthTask = new UserLoginTask(activeUser.getUsername(), activeUser.getUserPassword());
-            mAuthTask.execute((Void) null);
-            return;
-        }
-        //else start the usual login formula
 
         // Reset errors.
         mEmailView.setError(null);
