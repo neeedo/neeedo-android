@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 
@@ -81,6 +82,7 @@ public class MainFragment extends SuperFragment implements View.OnClickListener 
 
             case R.id.btnLogout:
                 ActiveUser.getInstance().clearUserinformation();
+                Toast.makeText(getActivity(),"Logout finished.", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
