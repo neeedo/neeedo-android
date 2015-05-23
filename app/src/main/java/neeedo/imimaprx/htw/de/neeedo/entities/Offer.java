@@ -8,8 +8,6 @@ import org.simpleframework.xml.Root;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import neeedo.imimaprx.htw.de.neeedo.entities.Location;
-
 
 @Root(name = "offer")
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -35,6 +33,9 @@ public class Offer implements Serializable {
 
     @Element
     private Offer offer;
+
+    @Element
+    private ArrayList<String> images;
 
     public Offer() {
 
@@ -97,6 +98,15 @@ public class Offer implements Serializable {
         this.offer = offer;
     }
 
+    public void setImages(ArrayList<String> images) {
+        this.images = images;
+    }
+
+    public ArrayList<String> getImages() {
+        return images;
+    }
+
+
     @Override
     public String toString() {
         return "Offer{" +
@@ -107,6 +117,7 @@ public class Offer implements Serializable {
                 ", location=" + location +
                 ", price=" + price +
                 ", offer=" + offer +
+                ", images=" + images +
                 '}';
     }
 
@@ -115,18 +126,18 @@ public class Offer implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Offer offer = (Offer) o;
+        Offer offer1 = (Offer) o;
 
-        if (version != offer.version) return false;
-        if (id != null ? !id.equals(offer.id) : offer.id != null) return false;
-        if (location != null ? !location.equals(offer.location) : offer.location != null)
+        if (version != offer1.version) return false;
+        if (id != null ? !id.equals(offer1.id) : offer1.id != null) return false;
+        if (userId != null ? !userId.equals(offer1.userId) : offer1.userId != null) return false;
+        if (tags != null ? !tags.equals(offer1.tags) : offer1.tags != null) return false;
+        if (location != null ? !location.equals(offer1.location) : offer1.location != null)
             return false;
-        if (tags != null ? !tags.equals(offer.tags) : offer.tags != null)
-            return false;
-        if (price != null ? !price.equals(offer.price) : offer.price != null) return false;
-        if (userId != null ? !userId.equals(offer.userId) : offer.userId != null) return false;
+        if (price != null ? !price.equals(offer1.price) : offer1.price != null) return false;
+        if (offer != null ? !offer.equals(offer1.offer) : offer1.offer != null) return false;
+        return !(images != null ? !images.equals(offer1.images) : offer1.images != null);
 
-        return true;
     }
 
     @Override
@@ -137,6 +148,8 @@ public class Offer implements Serializable {
         result = 31 * result + (tags != null ? tags.hashCode() : 0);
         result = 31 * result + (location != null ? location.hashCode() : 0);
         result = 31 * result + (price != null ? price.hashCode() : 0);
+        result = 31 * result + (offer != null ? offer.hashCode() : 0);
+        result = 31 * result + (images != null ? images.hashCode() : 0);
         return result;
     }
 }
