@@ -106,6 +106,15 @@ public class Offer implements Serializable {
         return images;
     }
 
+    public void addSingleImageURL(String url) {
+        //@TODO url validity check?
+
+        if (images == null) {
+            images = new ArrayList<>();
+        }
+        images.add(url);
+    }
+
 
     @Override
     public String toString() {
