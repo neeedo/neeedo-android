@@ -3,7 +3,10 @@ package neeedo.imimaprx.htw.de.neeedo;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.method.KeyListener;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
@@ -16,7 +19,7 @@ import neeedo.imimaprx.htw.de.neeedo.rest.HttpGetRefreshUserAsyncTask;
 
 public class LoginActivity extends Activity {
 
-    private AutoCompleteTextView mEmailView;
+    private EditText mEmailView;
     public EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
@@ -27,33 +30,39 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        mEmailView = (EditText) findViewById(R.id.email);
         mPasswordView = (EditText) findViewById(R.id.password);
+
         mLoginFormView = findViewById(R.id.login_login);
         mProgressView = findViewById(R.id.login_progress);
         mLoginError = findViewById(R.id.login_error);
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+        Button mSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        mSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptLogin();
             }
         });
 
-
-
-        Button registerBtn = (Button) findViewById(R.id.btn_register);
-        registerBtn.setOnClickListener(new OnClickListener() {
+        Button registerButton = (Button) findViewById(R.id.btn_register);
+        registerButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 openRegisterForm();
             }
         });
+
     }
 
-    private void clearErrorMessages() {
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        handleFormDataChanged();
+        return true;
+    }
 
+
+    private void handleFormDataChanged() {
+        mLoginError.setVisibility(View.GONE);
     }
 
     public void attemptLogin() {
