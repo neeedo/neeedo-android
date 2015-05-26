@@ -35,7 +35,7 @@ public class Offer implements Serializable {
     private Offer offer;
 
     @Element
-    private ArrayList<String> images;
+    private ArrayList<String> images = new ArrayList<>();
 
     public Offer() {
 
@@ -107,11 +107,7 @@ public class Offer implements Serializable {
     }
 
     public void addSingleImageURL(String url) {
-        //@TODO url validity check?
 
-        if (images == null) {
-            images = new ArrayList<>();
-        }
         images.add(url);
     }
 
