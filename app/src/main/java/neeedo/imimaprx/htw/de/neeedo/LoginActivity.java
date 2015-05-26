@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
@@ -18,6 +19,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -41,14 +43,12 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             "foo@example.com:hello", "bar@example.com:world"
     };
 
-
     private UserLoginTask mAuthTask = null;
 
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
     private View mProgressView;
     private View mEmailLoginFormView;
-    private SignInButton mPlusSignInButton;
     private View mSignOutButtons;
     private View mLoginFormView;
     private ActiveUser activeUser;
@@ -94,12 +94,10 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
         mEmailLoginFormView = findViewById(R.id.email_login_form);
-        mSignOutButtons = findViewById(R.id.plus_sign_out_buttons);
 
         activeUser = ActiveUser.getInstance();
         activeUser.setContext(getApplicationContext());
         activeUser.loadValuesFromPreferences();
-
 
         //Skip login dialog if infos are available
         if (activeUser.userinformationLoaded()) {
@@ -110,7 +108,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             mAuthTask.execute((Void) null);
             return;
         }
-
     }
 
     private void populateAutoComplete() {
@@ -156,18 +153,25 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             // form field with an error.
             focusView.requestFocus();
         } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
+            hideKeyboard(true);
             showProgress(true);
+
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
 
-            //make current userinfos persist in sharedprefs
             activeUser.setUsername(email);
             activeUser.setUserPassword(password);
-            //Get available userinfos from the api
+
             new HttpGetUserAsyncTask().execute();
         }
+    }
+
+    private void hideKeyboard(boolean b) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(
+                Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(mPasswordView.getWindowToken(), 0);
+        inputMethodManager.hideSoftInputFromWindow(mEmailView.getWindowToken(), 0);
+
     }
 
     //@TODO at best open a new form with formular possibilities
@@ -186,40 +190,9 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         return password.length() > 4;
     }
 
-    /**
-     * Shows the progress UI and hides the login form.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     public void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mLoginFormView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
-
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
+        mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+        mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
     @Override
