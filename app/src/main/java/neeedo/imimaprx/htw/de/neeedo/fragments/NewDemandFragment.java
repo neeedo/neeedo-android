@@ -70,7 +70,7 @@ public class NewDemandFragment extends SuperFragment {
         etPriceMax = (EditText) view.findViewById(R.id.etPriceMax);
         btnSubmit = (Button) view.findViewById(R.id.btnSubmit);
 
-        if(locationAvailable) {
+        if (locationAvailable) {
             etLocationLat.setText(String.valueOf(locationLatitude));
             etLocationLon.setText(String.valueOf(locationLongitude));
         }
@@ -122,16 +122,7 @@ public class NewDemandFragment extends SuperFragment {
     }
 
     @Subscribe
-    public void redirectToList(ServerResponseEvent e) {
-        // show message
-        Toast.makeText(getActivity(), getString(R.string.new_card_submit_successful_demand), Toast.LENGTH_SHORT).show();
-
-        // go to list cards view
-        FragmentManager fragmentManager = getFragmentManager();
-        Fragment fragment = new ListDemandsFragment();
-
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, fragment)
-                .commit();
+    public void handleServerResponse(ServerResponseEvent e) {
+        redirectToListFragment();
     }
 }

@@ -90,8 +90,8 @@ public class NewOfferFragment extends SuperFragment {
 
         photoFile = ImageUtils.getNewOutputImageFile();
 
-        addImageButton.setOnClickListener(new StartCameraHandler( this, photoFile));
-        btnSubmit.setOnClickListener(new SendNewOfferHandler(etTags,etLocationLat,etLocationLon,etPrice));
+        addImageButton.setOnClickListener(new StartCameraHandler(this, photoFile));
+        btnSubmit.setOnClickListener(new SendNewOfferHandler(etTags, etLocationLat, etLocationLon, etPrice));
 
         return view;
     }
@@ -144,15 +144,7 @@ public class NewOfferFragment extends SuperFragment {
     }
 
     @Subscribe
-    public void redirectToList(ServerResponseEvent e) {
-        Toast.makeText(getActivity(), getString(R.string.new_card_submit_successful_offer), Toast.LENGTH_SHORT).show();
-
-        // go to list cards view
-        FragmentManager fragmentManager = getFragmentManager();
-        Fragment fragment = new ListOffersFragment();
-
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, fragment)
-                .commit();
+    public void handleServerResponse(ServerResponseEvent e) {
+        redirectToListFragment();
     }
 }

@@ -1,5 +1,7 @@
 package neeedo.imimaprx.htw.de.neeedo.rest;
 
+import android.app.Activity;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import org.springframework.http.HttpBasicAuthentication;
@@ -10,32 +12,35 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
+import javax.xml.transform.Result;
+
+import neeedo.imimaprx.htw.de.neeedo.LoginActivity;
+import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.SingleUser;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
 
-/**
- * Collects User information by the given E-Mail in {@link neeedo.imimaprx.htw.de.neeedo.models.UserModel}.
- */
-public class HttpGetUserAsyncTask extends SuperHttpAsyncTask {
+public class HttpGetUserAsyncTask extends AsyncTask {
 
+    private final String username;
+    private final String password;
+    private final LoginActivity loginActivity;
+
+    public HttpGetUserAsyncTask(String username, String password, LoginActivity loginActivity) {
+        this.username = username;
+        this.password = password;
+        this.loginActivity = loginActivity;
+    }
 
     @Override
     protected Object doInBackground(Object[] params) {
         try {
-
-            final ActiveUser activeUser = ActiveUser.getInstance();
-            String email = activeUser.getUsername();
             String url = ServerConstants.ACTIVE_SERVER + "users/mail/";
 
-            if (email == null || email == "") {
-                return "Failed, no E-Mail is given";
-            }
+            url += username;
 
-            url += email;
-
-            HttpBasicAuthentication authentication = new HttpBasicAuthentication(email, activeUser.getUserPassword());
+            HttpBasicAuthentication authentication = new HttpBasicAuthentication(username, password);
 
             HttpHeaders requestHeaders = new HttpHeaders();
 
@@ -51,14 +56,25 @@ public class HttpGetUserAsyncTask extends SuperHttpAsyncTask {
 
             SingleUser singleUser = responseEntity.getBody();
 
+            final ActiveUser activeUser = ActiveUser.getInstance();
+            activeUser.setUsername(username);
+            activeUser.setUserPassword(password);
+
             UserModel.getInstance().setUser(singleUser.getUser());
 
-            return "Success"; // TODO use proper entities
-
+            return true;
 
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
-            return "Failed"; // TODO use proper entities
+
+            loginActivity.setWrongCredentials();
+
+            return false;
         }
+    }
+
+    @Override
+    protected void onPostExecute(Object o) {
+        super.onPostExecute(o);
     }
 }
