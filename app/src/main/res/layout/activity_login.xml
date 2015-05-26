@@ -37,12 +37,6 @@
                 android:layout_marginBottom="32dp"
                 android:background="@drawable/home_logo" />
 
-            <com.google.android.gms.common.SignInButton
-                android:id="@+id/plus_sign_in_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="22dp" />
-
             <LinearLayout
                 android:id="@+id/plus_sign_out_buttons"
                 android:layout_width="match_parent"

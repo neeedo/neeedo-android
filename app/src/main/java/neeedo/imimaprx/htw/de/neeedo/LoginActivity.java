@@ -3,6 +3,7 @@ package neeedo.imimaprx.htw.de.neeedo;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
 import android.content.Loader;
@@ -34,29 +35,15 @@ import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.rest.HttpGetUserAsyncTask;
 
 
-/**
- * A login screen that offers login via email/password and via Google+ sign in.
- * <p/>
- * ************ IMPORTANT SETUP NOTES: ************
- * In order for Google+ sign in to work with your app, you must first go to:
- * https://developers.google.com/+/mobile/android/getting-started#step_1_enable_the_google_api
- * and follow the steps in "Step 1" to create an OAuth 2.0 client for your package.
- */
-public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<Cursor> {
+public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
-    /**
-     * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
-     */
     private static final String[] DUMMY_CREDENTIALS = new String[]{
             "foo@example.com:hello", "bar@example.com:world"
     };
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     */
+
+
     private UserLoginTask mAuthTask = null;
 
-    // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
     private View mProgressView;
@@ -71,38 +58,21 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Find the Google+ sign in button.
-        mPlusSignInButton = (SignInButton) findViewById(R.id.plus_sign_in_button);
-        if (supportsGooglePlayServices()) {
-            // Set a listener to connect the user when the G+ button is clicked.
-            mPlusSignInButton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    signIn();
-                }
-            });
-        } else {
-            // Don't offer G+ sign in if the app's version is too low to support Google Play
-            // Services.
-            mPlusSignInButton.setVisibility(View.GONE);
-            return;
-        }
-
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.password);
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
-                    return true;
-                }
-                return false;
-            }
-        });
+//        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+//                if (id == R.id.login || id == EditorInfo.IME_NULL) {
+//                    attemptLogin();
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
@@ -116,9 +86,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
         registerBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 openRegisterForm();
-
             }
         });
 
@@ -149,18 +117,10 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
         getLoaderManager().initLoader(0, null, this);
     }
 
-
-    /**
-     * Attempts to sign in or register the account specified by the login form.
-     * If there are form errors (invalid email, missing fields, etc.), the
-     * errors are presented and no actual login attempt is made.
-     */
     public void attemptLogin() {
-
         if (mAuthTask != null) {
             return;
         }
-
 
         // Reset errors.
         mEmailView.setError(null);
@@ -260,62 +220,6 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
-    }
-
-    @Override
-    protected void onPlusClientSignIn() {
-        //Set up sign out and disconnect buttons.
-        Button signOutButton = (Button) findViewById(R.id.plus_sign_out_button);
-        signOutButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signOut();
-            }
-        });
-        Button disconnectButton = (Button) findViewById(R.id.plus_disconnect_button);
-        disconnectButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                revokeAccess();
-            }
-        });
-    }
-
-    @Override
-    protected void onPlusClientBlockingUI(boolean show) {
-        showProgress(show);
-    }
-
-    @Override
-    protected void updateConnectButtonState() {
-        //TODO: Update this logic to also handle the user logged in by email.
-        boolean connected = getPlusClient().isConnected();
-
-        mSignOutButtons.setVisibility(connected ? View.VISIBLE : View.GONE);
-        mPlusSignInButton.setVisibility(connected ? View.GONE : View.VISIBLE);
-        mEmailLoginFormView.setVisibility(connected ? View.GONE : View.VISIBLE);
-    }
-
-    @Override
-    protected void onPlusClientRevokeAccess() {
-        // TODO: Access to the user's G+ account has been revoked.  Per the developer terms, delete
-        // any stored user data here.
-    }
-
-    @Override
-    protected void onPlusClientSignOut() {
-
-    }
-
-    /**
-     * Check if the device supports Google Play Services.  It's best
-     * practice to check first rather than handling this as an error case.
-     *
-     * @return whether the device supports Google Play Services
-     */
-    private boolean supportsGooglePlayServices() {
-        return GooglePlayServicesUtil.isGooglePlayServicesAvailable(this) ==
-                ConnectionResult.SUCCESS;
     }
 
     @Override
