@@ -16,11 +16,13 @@ import neeedo.imimaprx.htw.de.neeedo.fragments.NavigationDrawerFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.NewDemandFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.NewOfferFragment;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
+import neeedo.imimaprx.htw.de.neeedo.rest.HttpGetUserInfosAsyncTask;
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
+    private final ActiveUser activeUser = ActiveUser.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +36,18 @@ public class MainActivity extends ActionBarActivity
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
 
         initSingletons();
+        attempLogin();
+    }
+
+    private void attempLogin() {
+        if (activeUser.userinformationLoaded()) {
+            new HttpGetUserInfosAsyncTask().execute();
+
+        }
     }
 
     private void initSingletons() {
-        ActiveUser.getInstance().setContext(getApplicationContext());
+        activeUser.setContext(getApplicationContext());
     }
 
     @Override

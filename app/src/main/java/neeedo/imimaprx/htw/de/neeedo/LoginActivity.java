@@ -11,8 +11,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 
-import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
-import neeedo.imimaprx.htw.de.neeedo.rest.HttpGetUserAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.HttpGetRefreshUserAsyncTask;
 
 
 public class LoginActivity extends Activity {
@@ -90,7 +89,7 @@ public class LoginActivity extends Activity {
             hideKeyboard();
             showProgress(true);
 
-            new HttpGetUserAsyncTask(email, password, this).execute();
+            new HttpGetRefreshUserAsyncTask(email, password, this).execute();
         }
     }
 
