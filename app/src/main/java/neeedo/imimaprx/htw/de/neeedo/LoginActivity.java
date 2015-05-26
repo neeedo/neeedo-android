@@ -55,11 +55,16 @@ public class LoginActivity extends Activity {
 
     }
 
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if ((keyCode == KeyEvent.KEYCODE_BACK))
+        {
+            finish();
+        }
         handleFormDataChanged();
-        return true;
+        return super.onKeyDown(keyCode, event);
     }
-
 
     private void handleFormDataChanged() {
         mLoginError.setVisibility(View.GONE);
