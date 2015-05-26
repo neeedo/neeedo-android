@@ -22,7 +22,7 @@ public class HttpPostUserAsyncTask extends SuperHttpAsyncTask {
     protected Object doInBackground(Object[] params) {
         try {
 
-            final String url = ServerConstants.ACTIVE_SERVER + "users";
+            final String url = ServerConstants.getActiveServer() + "users";
 
             UserModel userModel = UserModel.getInstance();
             HttpHeaders requestHeaders = new HttpHeaders();

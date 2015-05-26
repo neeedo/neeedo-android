@@ -22,6 +22,7 @@ import neeedo.imimaprx.htw.de.neeedo.fragments.MainFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.NavigationDrawerFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.NewDemandFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.NewOfferFragment;
+import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.vo.RequestCodes;
 
 public class MainActivity extends ActionBarActivity
@@ -39,6 +40,12 @@ public class MainActivity extends ActionBarActivity
 
         mNavigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        initSingletons();
+    }
+
+    private void initSingletons() {
+        ActiveUser.getInstance().setContext(getApplicationContext());
     }
 
     @Override

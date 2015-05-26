@@ -36,7 +36,7 @@ public class HttpGetUserAsyncTask extends AsyncTask {
     @Override
     protected Object doInBackground(Object[] params) {
         try {
-            String url = ServerConstants.ACTIVE_SERVER + "users/mail/";
+            String url = ServerConstants.getActiveServer() + "users/mail/";
 
             url += username;
 

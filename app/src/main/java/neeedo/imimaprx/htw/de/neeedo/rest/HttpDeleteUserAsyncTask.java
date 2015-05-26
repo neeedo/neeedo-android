@@ -19,7 +19,7 @@ public class HttpDeleteUserAsyncTask extends SuperHttpAsyncTask {
             UserModel userModel = UserModel.getInstance();
             User user = userModel.getUser();
 
-            final String url = ServerConstants.ACTIVE_SERVER + "usersd/" + user.getId() + "/" + user.getVersion();
+            final String url = ServerConstants.getActiveServer() + "usersd/" + user.getId() + "/" + user.getVersion();
 
             HttpHeaders requestHeaders = new HttpHeaders();
             requestHeaders.setContentType(MediaType.APPLICATION_JSON);

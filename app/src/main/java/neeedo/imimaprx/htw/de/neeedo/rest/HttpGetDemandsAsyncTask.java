@@ -25,7 +25,7 @@ public class HttpGetDemandsAsyncTask extends SuperHttpAsyncTask {
     @Override
     protected Object doInBackground(Object[] params) {
         try {
-            final String url = ServerConstants.ACTIVE_SERVER + "matching/demands";
+            final String url = ServerConstants.getActiveServer() + "matching/demands";
 
             HttpHeaders requestHeaders = new HttpHeaders();
 

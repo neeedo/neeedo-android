@@ -1,14 +1,19 @@
 package neeedo.imimaprx.htw.de.neeedo.rest;
 
-public abstract class ServerConstants {
-    public static final String LOCALHOST_ADDRESS_STUB = "http://10.0.2.2:9000/stub/";
-    public static final String LOCALHOST_ADDRESS = "http://10.0.2.2:9000/";
-    public static final String LOCALHOST_ADDRESS_SSL = "https://10.0.2.2:9443/";
-    public static final String LIVE_SERVER_ADDRESS = "http://46.101.162.213/";
-    public static final String LIVE_SERVER_ADDRESS_SSL = "http://46.101.162.213/";
-    public static final String OUTPAN_SERVER = "https://api.outpan.com/v1/products/";
-    //public static final String ACTIVE_SERVER = LOCALHOST_ADDRESS;
-    //public static final String ACTIVE_SERVER = LIVE_SERVER_ADDRESS;
-    public static final String ACTIVE_SERVER = LOCALHOST_ADDRESS_SSL;
+public class ServerConstants {
+    private static final String OUTPAN_SERVER = "https://api.outpan.com/v1/products/";
 
+    private static final String LOCALHOST = "http://10.0.2.2:9000/";
+    private static final String LOCALHOST_SSL = "https://10.0.2.2:9443/";
+
+    private static final String LIVE_SERVER = "http://46.101.162.213/";
+    private static final String LIVE_SERVER_SSL = "https://46.101.162.213/";
+
+    public static String getActiveServer() {
+        return LIVE_SERVER_SSL;
+    }
+
+    public static String getOutpanServer() {
+        return OUTPAN_SERVER;
+    }
 }

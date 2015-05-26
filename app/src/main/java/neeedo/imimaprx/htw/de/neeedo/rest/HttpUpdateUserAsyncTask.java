@@ -21,20 +21,17 @@ public class HttpUpdateUserAsyncTask extends SuperHttpAsyncTask {
     @Override
     protected Object doInBackground(Object[] params) {
         try {
-
             UserModel userModel = UserModel.getInstance();
             User user = userModel.getUser();
 
-            final String url = ServerConstants.ACTIVE_SERVER + "users/" + user.getId() + "/" + user.getVersion();
+            final String url = ServerConstants.getActiveServer() + "users/" + user.getId() + "/" + user.getVersion();
 
             HttpHeaders requestHeaders = new HttpHeaders();
             requestHeaders.setContentType(MediaType.APPLICATION_JSON);
 
             HttpEntity<User> requestEntity = new HttpEntity<User>(userModel.getUser(), requestHeaders);
 
-
             RestTemplate restTemplate = new RestTemplate(HttpRequestFactoryProviderImpl.getClientHttpRequestFactorySSLSupport(9000));
-
 
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());

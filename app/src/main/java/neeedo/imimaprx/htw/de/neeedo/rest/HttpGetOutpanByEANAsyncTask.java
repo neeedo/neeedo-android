@@ -37,7 +37,7 @@ public class HttpGetOutpanByEANAsyncTask extends SuperHttpAsyncTask {
     protected Object doInBackground(Object[] params) {
         try {
 
-            final String url = ServerConstants.OUTPAN_SERVER + ean;
+            final String url = ServerConstants.getOutpanServer() + ean;
 
             HttpBasicAuthentication authentication = new HttpBasicAuthentication("e9e42347c7677fede70a1761c1737de1:", "");
 

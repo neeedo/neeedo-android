@@ -50,10 +50,10 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-
         mPasswordView = (EditText) findViewById(R.id.password);
+        mLoginFormView = findViewById(R.id.login_login);
+        mProgressView = findViewById(R.id.login_progress);
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
@@ -70,14 +70,6 @@ public class LoginActivity extends Activity {
                 openRegisterForm();
             }
         });
-
-        mLoginFormView = findViewById(R.id.login_login);
-        mProgressView = findViewById(R.id.login_progress);
-
-        activeUser = ActiveUser.getInstance();
-        activeUser.setContext(getApplicationContext());
-        activeUser.loadValuesFromPreferences();
-
     }
 
     public void attemptLogin() {
@@ -97,7 +89,6 @@ public class LoginActivity extends Activity {
             cancel = true;
         }
 
-        // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
             mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
@@ -109,8 +100,6 @@ public class LoginActivity extends Activity {
         }
 
         if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
             focusView.requestFocus();
         } else {
             hideKeyboard();
@@ -125,13 +114,10 @@ public class LoginActivity extends Activity {
                 Context.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(mPasswordView.getWindowToken(), 0);
         inputMethodManager.hideSoftInputFromWindow(mEmailView.getWindowToken(), 0);
-
     }
 
     private void openRegisterForm() {
-
     }
-
 
     private boolean isEmailValid(String email) {
         //TODO remove "true" for release
@@ -148,17 +134,8 @@ public class LoginActivity extends Activity {
     }
 
     public void setWrongCredentials() {
-
-
-    }
-
-    private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
-        //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
-        ArrayAdapter<String> adapter =
-                new ArrayAdapter<String>(LoginActivity.this,
-                        android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
-
-        mEmailView.setAdapter(adapter);
+        showProgress(false);
+        mPasswordView.requestFocus();
     }
 }
 

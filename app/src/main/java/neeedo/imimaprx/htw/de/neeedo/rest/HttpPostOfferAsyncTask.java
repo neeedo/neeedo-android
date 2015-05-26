@@ -22,9 +22,7 @@ public class HttpPostOfferAsyncTask extends SuperHttpAsyncTask {
     @Override
     protected Object doInBackground(Object[] params) {
         try {
-
-
-            final String url = ServerConstants.ACTIVE_SERVER + "offers";
+            final String url = ServerConstants.getActiveServer() + "offers";
 
             OffersModel offersModel = OffersModel.getInstance();
             final ActiveUser activeUser = ActiveUser.getInstance();

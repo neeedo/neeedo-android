@@ -33,7 +33,7 @@ public class HttpGetOffersToDemandAsyncTask extends SuperHttpAsyncTask {
 
             final ActiveUser activeUser = ActiveUser.getInstance();
             String email = activeUser.getUsername();
-            String url = ServerConstants.ACTIVE_SERVER + "users/mail/";
+            String url = ServerConstants.getActiveServer() + "users/mail/";
 
             if (email == null || email == "") {
                 return "Failed, no E-Mail is given";
