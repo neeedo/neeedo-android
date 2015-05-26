@@ -42,7 +42,7 @@ public class MainActivity extends ActionBarActivity
     private void attempLogin() {
         if (activeUser.userinformationLoaded()) {
             new HttpGetUserInfosAsyncTask().execute();
-
+            //@TODO if success replace login button with logout
         }
     }
 
