@@ -40,6 +40,7 @@ public class HttpPostUserAsyncTask extends SuperHttpAsyncTask {
             ResponseEntity<SingleUser> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, SingleUser.class);
 
             SingleUser singleUser = response.getBody();
+            userModel.putCurrentLoginInformationInActiveUser();
             userModel.setUser(singleUser.getUser());
 
             return "Success";

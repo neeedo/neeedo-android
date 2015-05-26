@@ -74,6 +74,7 @@ public class ActiveUser {
         username = "";
         userPassword = "";
         saveValuesInPreferences();
+        UserModel.getInstance().setUser(null);
 
     }
 
