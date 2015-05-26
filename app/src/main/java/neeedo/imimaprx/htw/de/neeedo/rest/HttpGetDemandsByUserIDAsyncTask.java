@@ -16,17 +16,19 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
+import neeedo.imimaprx.htw.de.neeedo.entities.Demands;
 import neeedo.imimaprx.htw.de.neeedo.entities.SingleDemand;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
+import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
 
 public class HttpGetDemandsByUserIDAsyncTask extends SuperHttpAsyncTask {
     @Override
     protected Object doInBackground(Object[] params) {
         try {
-            Handler mHandler = new Handler(Looper.getMainLooper());
-            final String url = ServerConstants.ACTIVE_SERVER + "demands/1";
+
+            final String url = ServerConstants.ACTIVE_SERVER + "demands/user/" + UserModel.getInstance().getUser().getId();;
 
             final ActiveUser activeUser = ActiveUser.getInstance();
 
@@ -45,17 +47,13 @@ public class HttpGetDemandsByUserIDAsyncTask extends SuperHttpAsyncTask {
 
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 
-            ResponseEntity<SingleDemand> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity,
-                    SingleDemand.class);
+            ResponseEntity<Demands> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity,
+                    Demands.class);
 
-            final SingleDemand singleDemand = responseEntity.getBody();
+            final Demands demands = responseEntity.getBody();
 
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    DemandsModel.getInstance().setSingleDemand(singleDemand);
-                }
-            });
+            DemandsModel.getInstance().setDemands(demands);
+
 
             return "Success"; //TODO use proper entities
         } catch (Exception e) {
