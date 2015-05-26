@@ -36,6 +36,18 @@
                 android:layout_marginBottom="32dp"
                 android:background="@drawable/home_logo" />
 
+            <TextView
+                android:layout_width="224dp"
+                android:layout_height="wrap_content"
+                android:text="@string/login_error_text"
+                android:id="@+id/login_error"
+                android:layout_gravity="center_horizontal"
+                android:autoText="false"
+                android:gravity="center_horizontal"
+                android:enabled="false"
+                android:textColor="#ffff0400"
+                android:visibility="invisible" />
+
             <AutoCompleteTextView
                 android:id="@+id/email"
                 android:layout_width="match_parent"

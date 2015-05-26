@@ -53,5 +53,6 @@
     <string name="or">or</string>
     <string name="start_barcode_scan">barcode scannen</string>
     <string name="action_register_new" />
+    <string name="login_error_text">The email and password you entered don\'t match.</string>
 
 </resources>
