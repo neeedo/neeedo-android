@@ -1,7 +1,6 @@
 package neeedo.imimaprx.htw.de.neeedo.factory;
 
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.UserTokenHandler;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLContexts;
@@ -9,13 +8,10 @@ import org.apache.http.conn.ssl.TrustStrategy;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.protocol.HttpContext;
 
 import java.security.KeyStore;
 
 import javax.net.ssl.SSLContext;
-
-import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 
 public class HttpClientSSLFactoryBean extends AbstractFactoryBean<HttpClient> {
 

@@ -3,7 +3,6 @@ package neeedo.imimaprx.htw.de.neeedo.rest;
 
 import android.util.Log;
 
-
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;

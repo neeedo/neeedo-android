@@ -1,6 +1,5 @@
 package neeedo.imimaprx.htw.de.neeedo.rest;
 
-import android.os.AsyncTask;
 import android.util.Log;
 
 import org.springframework.http.HttpBasicAuthentication;

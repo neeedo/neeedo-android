@@ -1,7 +1,5 @@
 package neeedo.imimaprx.htw.de.neeedo.rest;
 
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 
 import org.springframework.http.HttpBasicAuthentication;
@@ -17,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.Demands;
-import neeedo.imimaprx.htw.de.neeedo.entities.SingleDemand;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
