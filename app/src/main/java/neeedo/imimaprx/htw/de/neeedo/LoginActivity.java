@@ -48,8 +48,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
     private View mProgressView;
-    private View mEmailLoginFormView;
-    private View mSignOutButtons;
     private View mLoginFormView;
     private ActiveUser activeUser;
 
@@ -90,10 +88,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             }
         });
 
-
-        mLoginFormView = findViewById(R.id.login_form);
+        mLoginFormView = findViewById(R.id.login_login);
         mProgressView = findViewById(R.id.login_progress);
-        mEmailLoginFormView = findViewById(R.id.email_login_form);
 
         activeUser = ActiveUser.getInstance();
         activeUser.setContext(getApplicationContext());
@@ -103,9 +99,11 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         if (activeUser.userinformationLoaded()) {
             //Userinfos were loaded from Prefs so now get other infos from the api like id - available with UserModel.getUser()
             showProgress(true);
+
             new HttpGetUserAsyncTask().execute();
             mAuthTask = new UserLoginTask(activeUser.getUsername(), activeUser.getUserPassword());
             mAuthTask.execute((Void) null);
+
             return;
         }
     }
@@ -119,7 +117,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             return;
         }
 
-        // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);
 
@@ -153,8 +150,9 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             // form field with an error.
             focusView.requestFocus();
         } else {
-            hideKeyboard(true);
+            hideKeyboard();
             showProgress(true);
+
 
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
@@ -166,7 +164,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         }
     }
 
-    private void hideKeyboard(boolean b) {
+    private void hideKeyboard() {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(
                 Context.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(mPasswordView.getWindowToken(), 0);
