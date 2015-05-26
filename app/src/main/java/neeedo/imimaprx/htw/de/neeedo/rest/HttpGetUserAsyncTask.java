@@ -3,6 +3,8 @@ package neeedo.imimaprx.htw.de.neeedo.rest;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.splunk.mint.Mint;
+
 import org.springframework.http.HttpBasicAuthentication;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -22,6 +24,8 @@ public class HttpGetUserAsyncTask extends AsyncTask {
     private final String username;
     private final String password;
     private final LoginActivity loginActivity;
+
+    final ActiveUser activeUser = ActiveUser.getInstance();
 
     public HttpGetUserAsyncTask(String username, String password, LoginActivity loginActivity) {
         this.username = username;
@@ -52,7 +56,6 @@ public class HttpGetUserAsyncTask extends AsyncTask {
 
             SingleUser singleUser = responseEntity.getBody();
 
-            final ActiveUser activeUser = ActiveUser.getInstance();
             activeUser.setUsername(username);
             activeUser.setUserPassword(password);
 
@@ -63,7 +66,14 @@ public class HttpGetUserAsyncTask extends AsyncTask {
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
 
-            loginActivity.setWrongCredentials();
+            activeUser.clearUserinformation();
+
+            loginActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    loginActivity.setWrongCredentials();
+                }
+            });
 
             return false;
         }

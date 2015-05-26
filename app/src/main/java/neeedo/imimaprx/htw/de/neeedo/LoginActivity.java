@@ -21,7 +21,7 @@ public class LoginActivity extends Activity {
     public EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-    private ActiveUser activeUser;
+    private View mLoginError;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +32,7 @@ public class LoginActivity extends Activity {
         mPasswordView = (EditText) findViewById(R.id.password);
         mLoginFormView = findViewById(R.id.login_login);
         mProgressView = findViewById(R.id.login_progress);
+        mLoginError = findViewById(R.id.login_error);
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
@@ -41,6 +42,8 @@ public class LoginActivity extends Activity {
             }
         });
 
+
+
         Button registerBtn = (Button) findViewById(R.id.btn_register);
         registerBtn.setOnClickListener(new OnClickListener() {
             @Override
@@ -48,6 +51,10 @@ public class LoginActivity extends Activity {
                 openRegisterForm();
             }
         });
+    }
+
+    private void clearErrorMessages() {
+
     }
 
     public void attemptLogin() {
@@ -113,6 +120,7 @@ public class LoginActivity extends Activity {
 
     public void setWrongCredentials() {
         showProgress(false);
+        mLoginError.setVisibility(View.VISIBLE);
         mPasswordView.requestFocus();
     }
 }
