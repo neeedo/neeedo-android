@@ -26,6 +26,7 @@ public class LoginActivity extends Activity {
     private View mProgressView;
     private View mLoginFormView;
     private View mLoginError;
+    private View mLoginRegisterFromView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,8 @@ public class LoginActivity extends Activity {
 
         mEmailView = (EditText) findViewById(R.id.email);
         mPasswordView = (EditText) findViewById(R.id.password);
+
+        mLoginRegisterFromView  = (LinearLayout) findViewById(R.id.login_register);
 
         mLoginFormView = findViewById(R.id.login_login);
         mProgressView = findViewById(R.id.login_progress);
@@ -124,11 +127,9 @@ public class LoginActivity extends Activity {
     }
 
     private void openRegisterForm() {
-        LinearLayout loginLayout = (LinearLayout) findViewById(R.id.login_login);
-        LinearLayout loginRegister = (LinearLayout) findViewById(R.id.login_register);
 
-        loginLayout.setVisibility(View.GONE);
-        loginRegister.setVisibility(View.VISIBLE);
+        mLoginFormView.setVisibility(View.GONE);
+        mLoginRegisterFromView.setVisibility(View.VISIBLE);
 
     }
 
@@ -174,7 +175,11 @@ public class LoginActivity extends Activity {
 
         UserModel.getInstance().setUser(user);
 
+        hideKeyboard();
+        showProgress(true);
+
         new HttpPostUserAsyncTask().execute();
+
 
     }
 
@@ -190,6 +195,7 @@ public class LoginActivity extends Activity {
 
     public void showProgress(final boolean show) {
         mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+        mLoginRegisterFromView.setVisibility(show ? View.GONE : View.VISIBLE);
         mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 

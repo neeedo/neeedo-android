@@ -127,6 +127,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:hint="@string/prompt_password"
+            android:inputType="textPassword"
             android:maxLines="1"
             android:singleLine="true" />
 
@@ -136,6 +137,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:hint="@string/prompt_password"
+            android:inputType="textPassword"
             android:maxLines="1"
             android:singleLine="true" />
 
