@@ -10,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.User;
@@ -123,6 +124,12 @@ public class LoginActivity extends Activity {
     }
 
     private void openRegisterForm() {
+        LinearLayout loginLayout = (LinearLayout) findViewById(R.id.login_login);
+        LinearLayout loginRegister = (LinearLayout) findViewById(R.id.login_register);
+
+        loginLayout.setVisibility(View.GONE);
+        loginRegister.setVisibility(View.VISIBLE);
+
     }
 
     private void sendRegister() {
@@ -148,7 +155,6 @@ public class LoginActivity extends Activity {
         password = temp.getText().toString();
         temp = (TextView) findViewById(R.id.login_register_password_confirm);
         passwordConfirm = temp.getText().toString();
-
 
 
         if (name.isEmpty() | email.isEmpty() | password.isEmpty() | passwordConfirm.isEmpty()) {
