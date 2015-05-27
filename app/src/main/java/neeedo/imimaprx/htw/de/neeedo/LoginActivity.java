@@ -36,7 +36,7 @@ public class LoginActivity extends Activity {
         mEmailView = (EditText) findViewById(R.id.email);
         mPasswordView = (EditText) findViewById(R.id.password);
 
-        mLoginRegisterFromView  = (LinearLayout) findViewById(R.id.login_register);
+        mLoginRegisterFromView = (LinearLayout) findViewById(R.id.login_register);
 
         mLoginFormView = findViewById(R.id.login_login);
         mProgressView = findViewById(R.id.login_progress);
@@ -159,6 +159,12 @@ public class LoginActivity extends Activity {
 
 
         if (name.isEmpty() | email.isEmpty() | password.isEmpty() | passwordConfirm.isEmpty()) {
+            fieldsError.setVisibility(View.VISIBLE);
+            return;
+        }
+
+        if (!isEmailValid(email)) {
+            fieldsError.setText(mEmailView.getText());
             fieldsError.setVisibility(View.VISIBLE);
             return;
         }

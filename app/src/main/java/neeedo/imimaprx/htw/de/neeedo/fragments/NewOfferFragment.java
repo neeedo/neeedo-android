@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.google.zxing.integration.android.IntentIntegrator;
 import com.squareup.otto.Subscribe;
 
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
@@ -26,10 +27,15 @@ import java.io.File;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.Location;
+import neeedo.imimaprx.htw.de.neeedo.entities.SingleOffer;
+import neeedo.imimaprx.htw.de.neeedo.events.NewEanNumberScannedEvent;
+import neeedo.imimaprx.htw.de.neeedo.events.NewProductInfosRequestedEvent;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.SendNewOfferHandler;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.StartCameraHandler;
 import neeedo.imimaprx.htw.de.neeedo.helpers.LocationHelper;
+import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
+import neeedo.imimaprx.htw.de.neeedo.rest.HttpGetOutpanByEANAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.utils.ImageUtils;
 import neeedo.imimaprx.htw.de.neeedo.vo.RequestCodes;
 
@@ -40,6 +46,7 @@ public class NewOfferFragment extends SuperFragment {
     private EditText etLocationLon;
     private EditText etPrice;
     private Button btnSubmit;
+    private Button btnBarcode;
     private ImageButton addImageButton;
     private LocationHelper locationHelper;
     private Location currentLocation;
@@ -81,8 +88,27 @@ public class NewOfferFragment extends SuperFragment {
 
         photoFile = ImageUtils.getNewOutputImageFile();
 
+        btnBarcode = (Button) view.findViewById(R.id.newOffer_Barcode_Button);
+
         addImageButton.setOnClickListener(new StartCameraHandler(this, photoFile));
         btnSubmit.setOnClickListener(new SendNewOfferHandler(etTags, etLocationLat, etLocationLon, etPrice));
+
+
+        btnBarcode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                IntentIntegrator integrator = new IntentIntegrator(getActivity());
+                integrator.setDesiredBarcodeFormats(IntentIntegrator.PRODUCT_CODE_TYPES);
+                integrator.setPrompt("Scan a barcode");
+                integrator.setResultDisplayDuration(0);
+                integrator.setWide();  // Wide scanning rectangle, may work better for 1D barcodes
+                integrator.setCameraId(0);  // Use a specific camera of the device
+                integrator.initiateScan();
+
+            }
+        });
+
 
         return view;
     }
@@ -137,5 +163,37 @@ public class NewOfferFragment extends SuperFragment {
     @Subscribe
     public void handleServerResponse(ServerResponseEvent e) {
         redirectToListFragment();
+    }
+
+    @Subscribe
+    public void handleNewEanNumberScanned(NewEanNumberScannedEvent e) {
+
+
+        String eanNumber = e.getEanNumber();
+
+        HttpGetOutpanByEANAsyncTask eanAsyncTask = new HttpGetOutpanByEANAsyncTask(eanNumber);
+        eanAsyncTask.execute();
+
+    }
+
+    @Subscribe
+    public void handleNewProductInfos(NewProductInfosRequestedEvent e) {
+        OffersModel offersModel = OffersModel.getInstance();
+        SingleOffer singleOffer = offersModel.getSingleOffer();
+
+        String tags = "";
+
+
+        if (!(singleOffer.getOffer() == null)) {
+            for (String s : singleOffer.getOffer().getTags()) {
+                tags += s + ", ";
+            }
+
+
+            tags = tags.substring(0, tags.length() - 2);
+            etTags.setText(tags);
+
+        }
+
     }
 }

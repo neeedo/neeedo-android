@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/start_barcode_scan"
-            android:id="@+id/button"
+            android:id="@+id/newOffer_Barcode_Button"
             android:layout_gravity="center_horizontal" />
 
         <EditText
