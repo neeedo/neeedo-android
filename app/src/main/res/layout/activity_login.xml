@@ -157,8 +157,21 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/login_email_error"
+            android:text="@string/login_no_valid_email_error"
             android:id="@+id/login_email_error_text"
+            android:layout_marginBottom="6dp"
+            android:autoText="false"
+            android:enabled="false"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#ffff0400"
+            android:visibility="gone" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_email_error"
+            android:id="@+id/login_register_email_error_text"
             android:layout_marginBottom="6dp"
             android:autoText="false"
             android:enabled="false"

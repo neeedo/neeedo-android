@@ -58,5 +58,6 @@
     <string name="login_password_error">Your given passwords do not match.</string>
     <string name="login_email_error">Your given email is already in use.</string>
     <string name="login_error_fields_empty">All fields are necessary.</string>
+    <string name="login_no_valid_email_error">Your given email isn\'t valid.</string>
 
 </resources>

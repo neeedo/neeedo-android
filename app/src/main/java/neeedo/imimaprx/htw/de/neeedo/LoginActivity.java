@@ -139,10 +139,12 @@ public class LoginActivity extends Activity {
         TextView passwordError = (TextView) findViewById(R.id.login_password_error_text);
         TextView fieldsError = (TextView) findViewById(R.id.login_error_fields_empty_text);
         emailError = (TextView) findViewById(R.id.login_email_error_text);
+        TextView emailInvalidError = (TextView) findViewById(R.id.login_email_error_text);
 
         passwordError.setVisibility(View.GONE);
         fieldsError.setVisibility(View.GONE);
         emailError.setVisibility(View.GONE);
+        emailInvalidError.setVisibility(View.GONE);
 
         String name;
         String email;
@@ -164,6 +166,10 @@ public class LoginActivity extends Activity {
             return;
         }
 
+        if (!isEmailValid(email)) {
+            emailInvalidError.setVisibility(View.VISIBLE);
+            return;
+        }
 
         if (!(password.equals(passwordConfirm))) {
             passwordError.setVisibility(View.VISIBLE);
