@@ -10,7 +10,7 @@ public class ServerConstants {
     private static final String LIVE_SERVER_SSL = "https://46.101.162.213/";
 
     public static String getActiveServer() {
-        return LIVE_SERVER_SSL;
+        return LOCALHOST_SSL;
     }
 
     public static String getOutpanServer() {
