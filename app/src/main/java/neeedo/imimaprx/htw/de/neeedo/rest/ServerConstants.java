@@ -6,8 +6,8 @@ public class ServerConstants {
     private static final String LOCALHOST = "http://10.0.2.2:9000/";
     private static final String LOCALHOST_SSL = "https://10.0.2.2:9443/";
 
-    private static final String LIVE_SERVER = "http://46.101.162.213/";
-    private static final String LIVE_SERVER_SSL = "https://46.101.162.213/";
+    private static final String LIVE_SERVER = "http://api.neeedo.com/";
+    private static final String LIVE_SERVER_SSL = "https://api.neeedo.com/";
 
     public static String getActiveServer() {
         return LIVE_SERVER_SSL;
