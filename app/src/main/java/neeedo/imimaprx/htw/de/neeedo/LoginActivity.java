@@ -3,18 +3,19 @@ package neeedo.imimaprx.htw.de.neeedo;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.method.KeyListener;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import neeedo.imimaprx.htw.de.neeedo.entities.User;
+import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.HttpGetRefreshUserAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.HttpPostUserAsyncTask;
 
 
 public class LoginActivity extends Activity {
@@ -53,13 +54,20 @@ public class LoginActivity extends Activity {
             }
         });
 
+        Button sendRegisterButton = (Button) findViewById(R.id.login_register_send);
+        sendRegisterButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendRegister();
+            }
+        });
+
     }
 
+
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event)
-    {
-        if ((keyCode == KeyEvent.KEYCODE_BACK))
-        {
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
             finish();
         }
         handleFormDataChanged();
@@ -116,6 +124,54 @@ public class LoginActivity extends Activity {
 
     private void openRegisterForm() {
     }
+
+    private void sendRegister() {
+
+        TextView passwordError = (TextView) findViewById(R.id.login_password_error_text);
+        TextView fieldsError = (TextView) findViewById(R.id.login_error_fields_empty_text);
+        TextView emailError = (TextView) findViewById(R.id.login_email_error_text);
+
+        passwordError.setVisibility(View.GONE);
+        fieldsError.setVisibility(View.GONE);
+        emailError.setVisibility(View.GONE);
+
+        String name;
+        String email;
+        String password;
+        String passwordConfirm;
+
+        TextView temp = (TextView) findViewById(R.id.login_name_text);
+        name = temp.getText().toString();
+        temp = (TextView) findViewById(R.id.login_register_email);
+        email = temp.getText().toString();
+        temp = (TextView) findViewById(R.id.login_register_password);
+        password = temp.getText().toString();
+        temp = (TextView) findViewById(R.id.login_register_password_confirm);
+        passwordConfirm = temp.getText().toString();
+
+
+
+        if (name.isEmpty() | email.isEmpty() | password.isEmpty() | passwordConfirm.isEmpty()) {
+            fieldsError.setVisibility(View.VISIBLE);
+            return;
+        }
+
+        if (!(password.equals(passwordConfirm))) {
+            passwordError.setVisibility(View.VISIBLE);
+            return;
+        }
+
+        User user = new User();
+        user.setUsername(name);
+        user.setEmail(email);
+        user.setPassword(password);
+
+        UserModel.getInstance().setUser(user);
+
+        new HttpPostUserAsyncTask().execute();
+
+    }
+
 
     private boolean isEmailValid(String email) {
         //TODO remove "true" for release

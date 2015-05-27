@@ -55,5 +55,8 @@
     <string name="action_register_new" />
     <string name="login_error_text">The email and password you entered don\'t match.</string>
     <string name="prompt_name">Your name</string>
+    <string name="login_password_error">Your given passwords do not match.</string>
+    <string name="login_email_error">Your given email is already in use.</string>
+    <string name="login_error_fields_empty">All fields are necessary.</string>
 
 </resources>

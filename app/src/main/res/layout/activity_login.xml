@@ -108,11 +108,12 @@
             android:hint="@string/prompt_name"
             android:inputType="text"
             android:maxLines="1"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:id="@+id/login_name_text" />
 
 
         <EditText
-            android:id="@+id/login_register_name"
+            android:id="@+id/login_register_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/prompt_email"
@@ -137,6 +138,45 @@
             android:hint="@string/prompt_password"
             android:maxLines="1"
             android:singleLine="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_password_error"
+            android:id="@+id/login_password_error_text"
+            android:layout_marginBottom="6dp"
+            android:autoText="false"
+            android:enabled="false"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#ffff0400"
+            android:visibility="gone"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_email_error"
+            android:id="@+id/login_email_error_text"
+            android:layout_marginBottom="6dp"
+            android:autoText="false"
+            android:enabled="false"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#ffff0400"
+            android:visibility="gone" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_error_fields_empty"
+            android:id="@+id/login_error_fields_empty_text"
+            android:layout_marginBottom="6dp"
+            android:autoText="false"
+            android:enabled="false"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#ffff0400"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/login_register_send"
