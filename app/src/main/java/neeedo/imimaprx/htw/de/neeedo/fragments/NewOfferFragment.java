@@ -102,7 +102,7 @@ public class NewOfferFragment extends SuperFragment {
                 integrator.setDesiredBarcodeFormats(IntentIntegrator.PRODUCT_CODE_TYPES);
                 integrator.setPrompt("Scan a barcode");
                 integrator.setResultDisplayDuration(0);
-                integrator.setWide();  // Wide scanning rectangle, may work better for 1D barcodes
+                //integrator.setWide();  // Wide scanning rectangle, may work better for 1D barcodes
                 integrator.setCameraId(0);  // Use a specific camera of the device
                 integrator.initiateScan();
 
