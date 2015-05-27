@@ -180,7 +180,6 @@ public class LoginActivity extends Activity {
 
         new HttpPostUserAsyncTask().execute();
 
-
     }
 
 
