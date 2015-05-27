@@ -66,7 +66,7 @@ public class HttpPostUserAsyncTask extends AsyncTask {
             loginActivity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    loginActivity.setWrongCredentials();
+                    loginActivity.setEmailAlreadyInUse();
                 }
             });
 

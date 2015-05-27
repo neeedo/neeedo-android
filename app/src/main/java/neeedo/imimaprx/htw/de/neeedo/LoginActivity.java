@@ -27,6 +27,7 @@ public class LoginActivity extends Activity {
     private View mLoginFormView;
     private View mLoginError;
     private View mLoginRegisterFromView;
+    private TextView fieldsError;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,7 +137,7 @@ public class LoginActivity extends Activity {
     private void sendRegister() {
 
         TextView passwordError = (TextView) findViewById(R.id.login_password_error_text);
-        TextView fieldsError = (TextView) findViewById(R.id.login_error_fields_empty_text);
+        fieldsError = (TextView) findViewById(R.id.login_error_fields_empty_text);
         TextView emailError = (TextView) findViewById(R.id.login_email_error_text);
 
         passwordError.setVisibility(View.GONE);
@@ -163,11 +164,6 @@ public class LoginActivity extends Activity {
             return;
         }
 
-        if (!isEmailValid(email)) {
-            fieldsError.setText(mEmailView.getText());
-            fieldsError.setVisibility(View.VISIBLE);
-            return;
-        }
 
         if (!(password.equals(passwordConfirm))) {
             passwordError.setVisibility(View.VISIBLE);
@@ -208,6 +204,16 @@ public class LoginActivity extends Activity {
         showProgress(false);
         mLoginError.setVisibility(View.VISIBLE);
         mPasswordView.requestFocus();
+    }
+
+    public void setEmailAlreadyInUse(){
+       {
+           showProgress(false);
+           fieldsError.setText(mEmailView.getText());
+           fieldsError.setVisibility(View.VISIBLE);
+
+        }
+
     }
 }
 
