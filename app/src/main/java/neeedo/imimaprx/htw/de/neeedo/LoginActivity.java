@@ -184,7 +184,7 @@ public class LoginActivity extends Activity {
         hideKeyboard();
         showProgress(true);
 
-        new HttpPostUserAsyncTask().execute();
+        new HttpPostUserAsyncTask(this).execute();
 
     }
 

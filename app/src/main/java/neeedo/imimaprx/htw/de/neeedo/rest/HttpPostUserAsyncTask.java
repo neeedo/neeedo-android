@@ -1,5 +1,6 @@
 package neeedo.imimaprx.htw.de.neeedo.rest;
 
+import android.os.AsyncTask;
 import android.util.Log;
 
 import org.springframework.http.HttpEntity;
@@ -11,13 +12,26 @@ import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
+import neeedo.imimaprx.htw.de.neeedo.LoginActivity;
 import neeedo.imimaprx.htw.de.neeedo.entities.SingleUser;
 import neeedo.imimaprx.htw.de.neeedo.entities.User;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
+import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
 
 
-public class HttpPostUserAsyncTask extends SuperHttpAsyncTask {
+public class HttpPostUserAsyncTask extends AsyncTask {
+
+
+    private final LoginActivity loginActivity;
+
+    final ActiveUser activeUser = ActiveUser.getInstance();
+
+    public HttpPostUserAsyncTask(LoginActivity loginActivity) {
+
+        this.loginActivity = loginActivity;
+    }
+
     @Override
     protected Object doInBackground(Object[] params) {
         try {
@@ -30,9 +44,7 @@ public class HttpPostUserAsyncTask extends SuperHttpAsyncTask {
 
             HttpEntity<User> requestEntity = new HttpEntity<User>(userModel.getUser(), requestHeaders);
 
-
             RestTemplate restTemplate = new RestTemplate(HttpRequestFactoryProviderImpl.getClientHttpRequestFactorySSLSupport(9000));
-
 
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
@@ -43,10 +55,23 @@ public class HttpPostUserAsyncTask extends SuperHttpAsyncTask {
             userModel.putCurrentLoginInformationInActiveUser();
             userModel.setUser(singleUser.getUser());
 
-            return "Success";
+            loginActivity.finish();
+
+            return true;
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
-            return "Failed";
+
+            activeUser.clearUserinformation();
+
+            loginActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    loginActivity.setWrongCredentials();
+                }
+            });
+
+            return false;
         }
     }
+
 }

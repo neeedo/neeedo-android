@@ -61,6 +61,8 @@ public class HttpGetRefreshUserAsyncTask extends AsyncTask {
 
             UserModel.getInstance().setUser(singleUser.getUser());
 
+            loginActivity.finish();
+
             return true;
 
         } catch (Exception e) {
