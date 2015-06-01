@@ -25,7 +25,7 @@ public class HttpGetDemandsByUserIDAsyncTask extends SuperHttpAsyncTask {
     protected Object doInBackground(Object[] params) {
         try {
 
-            final String url = ServerConstants.getActiveServer() + "demands/user/" + UserModel.getInstance().getUser().getId();;
+            final String url = ServerConstants.getActiveServer() + "demands/users/" + UserModel.getInstance().getUser().getId();;
 
             final ActiveUser activeUser = ActiveUser.getInstance();
 

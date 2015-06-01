@@ -8,8 +8,8 @@
     <string name="title_section1">Home</string>
     <string name="title_section2">New Offer</string>
     <string name="title_section3">New Demand</string>
-    <string name="title_section4">List of Offers</string>
-    <string name="title_section5">List of Demands</string>
+    <string name="title_section4">My Offers</string>
+    <string name="title_section5">My Demands</string>
     <string name="title_section6">Swiper</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
