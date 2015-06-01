@@ -10,13 +10,13 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="neeedo.imimaprx.htw.de.neeedo.LoginActivity">
 
-    <ProgressBar
-        android:id="@+id/login_progress"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:visibility="gone" />
+    <ImageView
+        android:id="@+id/login_logo"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/home_logo" />
 
     <LinearLayout
         android:id="@+id/login_login"
@@ -24,14 +24,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:visibility="visible">
-
-        <ImageView
-            android:layout_width="160dp"
-            android:layout_height="160dp"
-            android:layout_gravity="top|center_horizontal"
-            android:layout_marginBottom="32dp"
-            android:background="@drawable/home_logo" />
-
 
         <EditText
             android:id="@+id/email"
@@ -102,14 +94,14 @@
         android:visibility="gone">
 
         <EditText
+            android:id="@+id/login_name_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:hint="@string/prompt_name"
             android:inputType="text"
             android:maxLines="1"
-            android:singleLine="true"
-            android:id="@+id/login_name_text" />
+            android:singleLine="true" />
 
 
         <EditText
@@ -142,54 +134,54 @@
             android:singleLine="true" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/login_password_error"
             android:id="@+id/login_password_error_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_marginBottom="6dp"
             android:autoText="false"
             android:enabled="false"
             android:gravity="center_horizontal"
-            android:layout_gravity="center_horizontal"
+            android:text="@string/login_password_error"
             android:textColor="#ffff0400"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/login_no_valid_email_error"
             android:id="@+id/login_email_error_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_marginBottom="6dp"
             android:autoText="false"
             android:enabled="false"
             android:gravity="center_horizontal"
-            android:layout_gravity="center_horizontal"
+            android:text="@string/login_no_valid_email_error"
             android:textColor="#ffff0400"
             android:visibility="gone" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/login_email_error"
             android:id="@+id/login_register_email_error_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_marginBottom="6dp"
             android:autoText="false"
             android:enabled="false"
             android:gravity="center_horizontal"
-            android:layout_gravity="center_horizontal"
+            android:text="@string/login_email_error"
             android:textColor="#ffff0400"
             android:visibility="gone" />
 
         <TextView
+            android:id="@+id/login_error_fields_empty_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/login_error_fields_empty"
-            android:id="@+id/login_error_fields_empty_text"
+            android:layout_gravity="center_horizontal"
             android:layout_marginBottom="6dp"
             android:autoText="false"
             android:enabled="false"
             android:gravity="center_horizontal"
-            android:layout_gravity="center_horizontal"
+            android:text="@string/login_error_fields_empty"
             android:textColor="#ffff0400"
             android:visibility="gone" />
 

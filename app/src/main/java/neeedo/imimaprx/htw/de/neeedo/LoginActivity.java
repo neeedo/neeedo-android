@@ -7,9 +7,13 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -23,7 +27,7 @@ public class LoginActivity extends Activity {
 
     private EditText mEmailView;
     public EditText mPasswordView;
-    private View mProgressView;
+    private ImageView mLogo;
     private View mLoginFormView;
     private View mLoginError;
     private View mLoginRegisterFromView;
@@ -40,7 +44,7 @@ public class LoginActivity extends Activity {
         mLoginRegisterFromView = (LinearLayout) findViewById(R.id.login_register);
 
         mLoginFormView = findViewById(R.id.login_login);
-        mProgressView = findViewById(R.id.login_progress);
+        mLogo = (ImageView) findViewById(R.id.login_logo);
         mLoginError = findViewById(R.id.login_error);
 
         Button mSignInButton = (Button) findViewById(R.id.email_sign_in_button);
@@ -66,9 +70,7 @@ public class LoginActivity extends Activity {
                 sendRegister();
             }
         });
-
     }
-
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -128,10 +130,8 @@ public class LoginActivity extends Activity {
     }
 
     private void openRegisterForm() {
-
         mLoginFormView.setVisibility(View.GONE);
         mLoginRegisterFromView.setVisibility(View.VISIBLE);
-
     }
 
     private void sendRegister() {
@@ -187,7 +187,6 @@ public class LoginActivity extends Activity {
         showProgress(true);
 
         new HttpPostUserAsyncTask(this).execute();
-
     }
 
 
@@ -203,7 +202,16 @@ public class LoginActivity extends Activity {
     public void showProgress(final boolean show) {
         mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         mLoginRegisterFromView.setVisibility(show ? View.GONE : View.VISIBLE);
-        mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+
+        if (show) {
+            RotateAnimation anim = new RotateAnimation(0.0f, 360.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+            anim.setInterpolator(new LinearInterpolator());
+            anim.setRepeatCount(Animation.INFINITE);
+            anim.setDuration(700);
+            mLogo.startAnimation(anim);
+        } else {
+            mLogo.setAnimation(null);
+        }
     }
 
     public void setWrongCredentials() {
@@ -213,23 +221,17 @@ public class LoginActivity extends Activity {
     }
 
     public void setEmailAlreadyInUse() {
-
         showProgress(false);
         openRegisterForm();
         clearPassword();
         emailError.setVisibility(View.VISIBLE);
-
     }
 
     private void clearPassword() {
-
         TextView temp = (TextView) findViewById(R.id.login_register_password);
         temp.setText("");
         temp = (TextView) findViewById(R.id.login_register_password_confirm);
         temp.setText("");
-
     }
-
-
 }
 
