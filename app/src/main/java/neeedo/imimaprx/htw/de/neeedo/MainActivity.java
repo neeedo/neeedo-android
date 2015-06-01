@@ -32,6 +32,8 @@ public class MainActivity extends ActionBarActivity
 
         setContentView(R.layout.activity_main);
 
+        onNavigationDrawerItemSelected(0);
+
         mNavigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
 
@@ -80,6 +82,7 @@ public class MainActivity extends ActionBarActivity
                 break;
         }
         fragmentManager.beginTransaction()
+                .addToBackStack(null)
                 .replace(R.id.container, fragment)
                 .commit();
     }
