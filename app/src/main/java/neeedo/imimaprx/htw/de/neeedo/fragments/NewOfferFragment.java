@@ -167,7 +167,7 @@ public class NewOfferFragment extends SuperFragment {
 
     @Subscribe
     public void handleServerResponse(ServerResponseEvent e) {
-        redirectToListFragment();
+        redirectToListFragment(super.OFFERS_LIST_KEY);
     }
 
     @Subscribe

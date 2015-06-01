@@ -124,6 +124,6 @@ public class NewDemandFragment extends SuperFragment {
 
     @Subscribe
     public void handleServerResponse(ServerResponseEvent e) {
-        redirectToListFragment();
+        redirectToListFragment(super.DEMANDS_LIST_KEY);
     }
 }

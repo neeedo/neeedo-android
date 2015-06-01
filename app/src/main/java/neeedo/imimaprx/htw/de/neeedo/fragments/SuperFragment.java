@@ -26,6 +26,9 @@ public class SuperFragment extends Fragment {
 
     private Menu menu;
 
+    protected static final String OFFERS_LIST_KEY = "offers";
+    protected static final String DEMANDS_LIST_KEY = "demands";
+
 
     @Override
     public void onResume() {
@@ -62,7 +65,7 @@ public class SuperFragment extends Fragment {
     }
 
     private void setLoginButtonState() {
-        if(menu==null)
+        if (menu == null)
             return;
 
         boolean isUserLoggedIn = ActiveUser.getInstance().hasActiveUser();
@@ -97,9 +100,20 @@ public class SuperFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    public void redirectToListFragment() {
+    public void redirectToListFragment(String type) {
         FragmentManager fragmentManager = getFragmentManager();
-        Fragment fragment = new ListDemandsFragment();
+        Fragment fragment = null;
+
+        // TODO redirect to detail view instead of list
+
+        if (type.equals(DEMANDS_LIST_KEY)) {
+            fragment = new ListDemandsFragment();
+        } else if (type.equals(OFFERS_LIST_KEY)) {
+            fragment = new ListOffersFragment();
+        } else {
+            return;
+        }
+
         fragmentManager.beginTransaction()
                 .replace(R.id.container, fragment)
                 .commit();
