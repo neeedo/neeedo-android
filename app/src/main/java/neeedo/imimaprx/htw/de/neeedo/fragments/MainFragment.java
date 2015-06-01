@@ -20,7 +20,6 @@ public class MainFragment extends SuperFragment implements View.OnClickListener 
 
     private Button btnNewOfferOperation;
     private Button btnNewDemandOperation;
-    private Button btnLogout;
 
     private Activity activity;
     private ProgressDialog progressDialog;
@@ -44,11 +43,8 @@ public class MainFragment extends SuperFragment implements View.OnClickListener 
         btnNewOfferOperation = (Button) activity.findViewById(R.id.btnNewOffer);
         btnNewDemandOperation = (Button) activity.findViewById(R.id.btnNewDemand);
 
-        btnLogout = (Button) activity.findViewById(R.id.btnLogout);
-
         btnNewOfferOperation.setOnClickListener(this);
         btnNewDemandOperation.setOnClickListener(this);
-        btnLogout.setOnClickListener(this);
     }
 
     @Override
@@ -75,11 +71,6 @@ public class MainFragment extends SuperFragment implements View.OnClickListener 
                         .addToBackStack("1") // 1 = position of new offer menu item
                         .replace(R.id.container, fragment)
                         .commit();
-                break;
-
-            case R.id.btnLogout:
-                ActiveUser.getInstance().clearUserinformation();
-                Toast.makeText(getActivity(),"Logout finished.", Toast.LENGTH_SHORT).show();
                 break;
         }
     }

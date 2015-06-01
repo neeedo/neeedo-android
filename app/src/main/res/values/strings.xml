@@ -48,6 +48,7 @@
     <string name="no_camera">no camera available</string>
     <string name="camera_failed">something went wrong when taking a picture</string>
     <string name="login">login</string>
+    <string name="logout">logout</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="or">or</string>
@@ -59,5 +60,6 @@
     <string name="login_email_error">Your given email is already in use.</string>
     <string name="login_error_fields_empty">All fields are necessary.</string>
     <string name="login_no_valid_email_error">Your given email isn\'t valid.</string>
+    <string name="login_returned">Login returned</string>
 
 </resources>

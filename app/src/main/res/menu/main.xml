@@ -6,6 +6,12 @@
         android:id="@+id/action_bar_login"
         android:title="@string/login"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_bar_logout"
+        android:title="@string/logout"
+        app:showAsAction="always" />
+
     <item
         android:id="@+id/action_bar_logged_in"
         android:title="bla"

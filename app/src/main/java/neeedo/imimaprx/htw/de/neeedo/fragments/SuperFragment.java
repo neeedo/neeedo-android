@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import neeedo.imimaprx.htw.de.neeedo.LoginActivity;
 import neeedo.imimaprx.htw.de.neeedo.R;
+import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.service.EventService;
 import neeedo.imimaprx.htw.de.neeedo.vo.RequestCodes;
 
@@ -67,6 +68,9 @@ public class SuperFragment extends Fragment {
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             startActivityForResult(intent, RequestCodes.LOGIN_REQUEST_CODE);
             return true;
+        } else if(id == R.id.action_bar_logout) {
+            ActiveUser.getInstance().clearUserinformation();
+            Toast.makeText(getActivity(),"Logout finished.", Toast.LENGTH_SHORT).show();
         }
 
         return super.onOptionsItemSelected(item);
