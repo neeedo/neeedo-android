@@ -44,11 +44,9 @@ public class SuperFragment extends Fragment {
 
     private void setLoginButtonState() {
         View actionBarLogin = getActivity().findViewById(R.id.action_bar_login);
-        View actionBarLoggedIn = getActivity().findViewById(R.id.action_bar_logged_in);
-        if (actionBarLoggedIn == null || actionBarLogin == null)
+        if (actionBarLogin == null)
             return;
         actionBarLogin.setVisibility(View.GONE);
-        actionBarLoggedIn.setVisibility(View.VISIBLE);
     }
 
     @Override

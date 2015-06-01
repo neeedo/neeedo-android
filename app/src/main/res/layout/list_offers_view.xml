@@ -5,19 +5,13 @@
     android:layout_height="match_parent">
 
 
-    <!--<TableLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content" android:layout_gravity="center_horizontal">-->
-    <!--</TableLayout>-->
+    <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_gravity="center_horizontal">
+    </TableLayout>
 
-    <!--<ListView xmlns:android="http://schemas.android.com/apk/res/android"-->
-              <!--android:id="@+id/listview"-->
-              <!--android:layout_width="wrap_content"-->
-              <!--android:layout_height="wrap_content" />-->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nothing to see in this list\n\nOffers will be visible after matching of demands in the future."
-        android:id="@+id/textView2"
-        android:layout_gravity="center_horizontal" />
+    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/listview"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content" />
 </LinearLayout>
