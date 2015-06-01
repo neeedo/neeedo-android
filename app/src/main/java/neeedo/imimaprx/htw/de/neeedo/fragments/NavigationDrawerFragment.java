@@ -67,7 +67,7 @@ public class NavigationDrawerFragment extends SuperFragment {
                         int backstackIndex = fragmentManager.getBackStackEntryCount() - 1;
                         FragmentManager.BackStackEntry backstackEntry = fragmentManager.getBackStackEntryAt(backstackIndex);
                         String backstackEntryName = backstackEntry.getName();
-                        if(backstackEntryName != null) {
+                        if (backstackEntryName != null) {
                             int backStackNavigationEntry = Integer.parseInt(backstackEntryName);
                             mDrawerListView.setItemChecked(backStackNavigationEntry, true);
                         }
@@ -97,12 +97,12 @@ public class NavigationDrawerFragment extends SuperFragment {
                 android.R.layout.simple_list_item_activated_1,
                 android.R.id.text1,
                 new String[]{
-                        getString(R.string.title_section1),
-                        getString(R.string.title_section2),
-                        getString(R.string.title_section3),
-                        getString(R.string.title_section4),
-                        getString(R.string.title_section5),
-                        getString(R.string.title_section6)
+                        getString(R.string.title_section_home),
+                        getString(R.string.title_section_my_offers),
+                        getString(R.string.title_section_new_offer),
+                        getString(R.string.title_section_my_demands),
+                        getString(R.string.title_section_new_demand),
+                        getString(R.string.title_section_swiper)
                 }));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;

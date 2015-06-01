@@ -5,12 +5,12 @@
     <string name="app_name">Neeedo</string>
 
     <!-- Drawer -->
-    <string name="title_section1">Home</string>
-    <string name="title_section2">New Offer</string>
-    <string name="title_section3">New Demand</string>
-    <string name="title_section4">My Offers</string>
-    <string name="title_section5">My Demands</string>
-    <string name="title_section6">Swiper</string>
+    <string name="title_section_home">Home</string>
+    <string name="title_section_new_offer">New Offer</string>
+    <string name="title_section_new_demand">New Demand</string>
+    <string name="title_section_my_offers">My Offers</string>
+    <string name="title_section_my_demands">My Demands</string>
+    <string name="title_section_swiper">Swiper</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

@@ -77,16 +77,16 @@ public class MainActivity extends ActionBarActivity
                 fragment = new MainFragment();
                 break;
             case 1:
-                fragment = new NewOfferFragment();
-                break;
-            case 2:
-                fragment = new NewDemandFragment();
-                break;
-            case 3:
                 fragment = new ListOffersFragment();
                 break;
-            case 4:
+            case 2:
+                fragment = new NewOfferFragment();
+                break;
+            case 3:
                 fragment = new ListDemandsFragment();
+                break;
+            case 4:
+                fragment = new NewDemandFragment();
                 break;
             case 5:
                 fragment = new DiolorSwipeFragment();
