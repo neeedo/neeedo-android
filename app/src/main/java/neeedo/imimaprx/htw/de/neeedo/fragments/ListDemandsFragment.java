@@ -35,7 +35,7 @@ public class ListDemandsFragment extends SuperFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (!activeUser.userinformationLoaded()) {
+        if (!activeUser.userInformationLoaded()) {
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);
             // TODO reload view after login
