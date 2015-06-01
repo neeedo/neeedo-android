@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.squareup.otto.Subscribe;
 
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
@@ -105,11 +107,10 @@ public class NewOfferFragment extends SuperFragment {
             @Override
             public void onClick(View v) {
                 IntentIntegrator integrator = new IntentIntegrator(getActivity());
-                integrator.setDesiredBarcodeFormats(IntentIntegrator.PRODUCT_CODE_TYPES);
+                integrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
                 integrator.setPrompt("Scan a barcode");
                 integrator.setResultDisplayDuration(0);
                 integrator.setCameraId(0);  // Use a specific camera of the device
-                //integrator.setWide();  // Wide scanning rectangle, may work better for 1D barcodes
                 Intent barcodeScanIntent = integrator.createScanIntent();
                 startActivityForResult(barcodeScanIntent, RequestCodes.BARCODE_SCAN_REQUEST_CODE);
             }
@@ -144,11 +145,16 @@ public class NewOfferFragment extends SuperFragment {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 
-        if (resultCode == Activity.RESULT_OK || requestCode == RequestCodes.CAMERA_CAPTURE_IMAGE_REQUEST_CODE) {
+        super.onActivityResult(requestCode, resultCode, intent);
 
+        if (resultCode != Activity.RESULT_OK) {
+            Toast.makeText(getActivity(), R.string.fail, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (requestCode == RequestCodes.CAMERA_CAPTURE_IMAGE_REQUEST_CODE) {
             BitmapFactory.Options options = new BitmapFactory.Options();
 
             options.inSampleSize = 8;
@@ -159,9 +165,14 @@ public class NewOfferFragment extends SuperFragment {
             bitmap = ImageUtils.scaleBitmapKeepingAspectRatio(bitmap);
 
             addImageButton.setImageBitmap(bitmap);
-        } else {
-            Toast.makeText(getActivity(), R.string.camera_failed
-                    , Toast.LENGTH_SHORT).show();
+        } else if (requestCode == RequestCodes.BARCODE_SCAN_REQUEST_CODE) {
+            IntentResult scanResult = IntentIntegrator.parseActivityResult(
+                    requestCode, resultCode, intent);
+
+            if (scanResult != null) {
+                System.out.println();  // handle scan result
+            }
+            System.out.println();
         }
     }
 

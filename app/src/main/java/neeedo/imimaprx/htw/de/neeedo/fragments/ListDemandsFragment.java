@@ -40,7 +40,6 @@ public class ListDemandsFragment extends SuperFragment {
             startActivity(intent);
             // TODO reload view after login
         }
-
     }
 
     @Override
@@ -58,9 +57,7 @@ public class ListDemandsFragment extends SuperFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        SuperHttpAsyncTask asyncTask;
-
-        asyncTask = new HttpGetDemandsByUserIDAsyncTask();
+        SuperHttpAsyncTask asyncTask = new HttpGetDemandsByUserIDAsyncTask();
         asyncTask.execute();
     }
 
