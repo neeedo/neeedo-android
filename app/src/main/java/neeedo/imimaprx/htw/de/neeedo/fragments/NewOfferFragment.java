@@ -101,22 +101,19 @@ public class NewOfferFragment extends SuperFragment {
         addImageButton.setOnClickListener(new StartCameraHandler(this, photoFile));
         btnSubmit.setOnClickListener(new SendNewOfferHandler(etTags, etLocationLat, etLocationLon, etPrice));
 
-
         btnBarcode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 IntentIntegrator integrator = new IntentIntegrator(getActivity());
                 integrator.setDesiredBarcodeFormats(IntentIntegrator.PRODUCT_CODE_TYPES);
                 integrator.setPrompt("Scan a barcode");
                 integrator.setResultDisplayDuration(0);
-                //integrator.setWide();  // Wide scanning rectangle, may work better for 1D barcodes
                 integrator.setCameraId(0);  // Use a specific camera of the device
-                integrator.initiateScan();
-
+                //integrator.setWide();  // Wide scanning rectangle, may work better for 1D barcodes
+                Intent barcodeScanIntent = integrator.createScanIntent();
+                startActivityForResult(barcodeScanIntent, RequestCodes.BARCODE_SCAN_REQUEST_CODE);
             }
         });
-
 
         return view;
     }
@@ -175,13 +172,10 @@ public class NewOfferFragment extends SuperFragment {
 
     @Subscribe
     public void handleNewEanNumberScanned(NewEanNumberScannedEvent e) {
-
-
         String eanNumber = e.getEanNumber();
 
         HttpGetOutpanByEANAsyncTask eanAsyncTask = new HttpGetOutpanByEANAsyncTask(eanNumber);
         eanAsyncTask.execute();
-
     }
 
     @Subscribe
@@ -191,17 +185,13 @@ public class NewOfferFragment extends SuperFragment {
 
         String tags = "";
 
-
         if (!(singleOffer.getOffer() == null)) {
             for (String s : singleOffer.getOffer().getTags()) {
                 tags += s + ", ";
             }
 
-
             tags = tags.substring(0, tags.length() - 2);
             etTags.setText(tags);
-
         }
-
     }
 }

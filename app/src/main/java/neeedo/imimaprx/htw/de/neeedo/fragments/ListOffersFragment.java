@@ -39,7 +39,6 @@ public class ListOffersFragment extends SuperFragment {
             startActivity(intent);
             // TODO reload view after login
         }
-
     }
 
     @Override
