@@ -23,6 +23,8 @@ public class MainActivity extends ActionBarActivity
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private final ActiveUser activeUser = ActiveUser.getInstance();
+    private static final String NAVIGATION_KEY = "navigation";
+    private int curNavigation = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,15 +32,27 @@ public class MainActivity extends ActionBarActivity
 
         super.onCreate(savedInstanceState);
 
+        if (savedInstanceState != null) {
+            curNavigation = savedInstanceState.getInt(NAVIGATION_KEY);
+        }
+
         setContentView(R.layout.activity_main);
 
-        onNavigationDrawerItemSelected(0);
+        onNavigationDrawerItemSelected(curNavigation);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
 
         initSingletons();
         attempLogin();
+
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+
+        savedInstanceState.putInt(NAVIGATION_KEY, curNavigation);
     }
 
     private void attempLogin() {
@@ -85,5 +99,7 @@ public class MainActivity extends ActionBarActivity
                 .addToBackStack(null)
                 .replace(R.id.container, fragment)
                 .commit();
+
+        curNavigation = position;
     }
 }
