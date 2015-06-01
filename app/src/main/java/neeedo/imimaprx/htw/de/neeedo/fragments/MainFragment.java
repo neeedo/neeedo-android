@@ -64,7 +64,7 @@ public class MainFragment extends SuperFragment implements View.OnClickListener 
             case R.id.btnNewDemand:
                 fragment = new NewDemandFragment();
                 fragmentManager.beginTransaction()
-                        .addToBackStack(null)
+                        .addToBackStack("2") // 2 = position of new demand menu item
                         .replace(R.id.container, fragment)
                         .commit();
                 break;
@@ -72,7 +72,7 @@ public class MainFragment extends SuperFragment implements View.OnClickListener 
             case R.id.btnNewOffer:
                 fragment = new NewOfferFragment();
                 fragmentManager.beginTransaction()
-                        .addToBackStack(null)
+                        .addToBackStack("1") // 1 = position of new offer menu item
                         .replace(R.id.container, fragment)
                         .commit();
                 break;

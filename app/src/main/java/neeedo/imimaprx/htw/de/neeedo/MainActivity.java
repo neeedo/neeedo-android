@@ -96,7 +96,7 @@ public class MainActivity extends ActionBarActivity
                 break;
         }
         fragmentManager.beginTransaction()
-                .addToBackStack(null) // TODO mark correct navigation item on back operation
+                .addToBackStack(String.valueOf(position))
                 .replace(R.id.container, fragment)
                 .commit();
 

@@ -7,6 +7,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -56,6 +57,22 @@ public class NavigationDrawerFragment extends SuperFragment {
         }
 
         selectItem(mCurrentSelectedPosition);
+
+        final FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+
+        fragmentManager.addOnBackStackChangedListener(
+                new FragmentManager.OnBackStackChangedListener() {
+                    public void onBackStackChanged() {
+                        // select correct navigation item after backstack operation (back)
+                        int backstackIndex = fragmentManager.getBackStackEntryCount() - 1;
+                        FragmentManager.BackStackEntry backstackEntry = fragmentManager.getBackStackEntryAt(backstackIndex);
+                        String backstackEntryName = backstackEntry.getName();
+                        if(backstackEntryName != null) {
+                            int backStackNavigationEntry = Integer.parseInt(backstackEntryName);
+                            mDrawerListView.setItemChecked(backStackNavigationEntry, true);
+                        }
+                    }
+                });
     }
 
     @Override
@@ -191,6 +208,8 @@ public class NavigationDrawerFragment extends SuperFragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+
+        // TODO do we need this here? It's now handled by the MainActivity and working there
         outState.putInt(STATE_SELECTED_POSITION, mCurrentSelectedPosition);
     }
 
