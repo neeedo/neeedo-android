@@ -23,8 +23,8 @@ public class MainActivity extends ActionBarActivity
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private final ActiveUser activeUser = ActiveUser.getInstance();
-    private static final String NAVIGATION_KEY = "navigation";
-    private int curNavigation = 0;
+    private static final String NAVIGATION_KEY = "current_navigation_item_selected";
+    private int mCurrentNavigationIndex = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +33,12 @@ public class MainActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
 
         if (savedInstanceState != null) {
-            curNavigation = savedInstanceState.getInt(NAVIGATION_KEY);
+            mCurrentNavigationIndex = savedInstanceState.getInt(NAVIGATION_KEY);
         }
 
         setContentView(R.layout.activity_main);
 
-        onNavigationDrawerItemSelected(curNavigation);
+        onNavigationDrawerItemSelected(mCurrentNavigationIndex);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
@@ -52,7 +52,7 @@ public class MainActivity extends ActionBarActivity
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
 
-        savedInstanceState.putInt(NAVIGATION_KEY, curNavigation);
+        savedInstanceState.putInt(NAVIGATION_KEY, mCurrentNavigationIndex);
     }
 
     private void attempLogin() {
@@ -96,10 +96,10 @@ public class MainActivity extends ActionBarActivity
                 break;
         }
         fragmentManager.beginTransaction()
-                .addToBackStack(null)
+                .addToBackStack(null) // TODO mark correct navigation item on back operation
                 .replace(R.id.container, fragment)
                 .commit();
 
-        curNavigation = position;
+        mCurrentNavigationIndex = position;
     }
 }
