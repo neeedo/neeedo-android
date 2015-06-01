@@ -68,7 +68,7 @@ public class HttpGetRefreshUserAsyncTask extends AsyncTask {
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
 
-            activeUser.clearUserinformation();
+            activeUser.clearUserInformation();
 
             loginActivity.runOnUiThread(new Runnable() {
                 @Override

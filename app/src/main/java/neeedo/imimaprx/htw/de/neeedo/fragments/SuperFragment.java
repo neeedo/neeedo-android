@@ -13,6 +13,7 @@ import android.widget.Toast;
 import neeedo.imimaprx.htw.de.neeedo.LoginActivity;
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
+import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
 import neeedo.imimaprx.htw.de.neeedo.service.EventService;
 import neeedo.imimaprx.htw.de.neeedo.vo.RequestCodes;
 
@@ -20,10 +21,17 @@ public class SuperFragment extends Fragment {
 
     protected EventService eventService = EventService.getInstance();
 
+    private MenuItem actionBarLogout;
+    private MenuItem actionBarLogin;
+
+    private Menu menu;
+
+
     @Override
     public void onResume() {
         super.onResume();
         eventService.register(this);
+        setLoginButtonState();
     }
 
     @Override
@@ -38,37 +46,52 @@ public class SuperFragment extends Fragment {
 
         if (resultCode == Activity.RESULT_OK || requestCode == RequestCodes.LOGIN_REQUEST_CODE) {
             Toast.makeText(getActivity(), "login returned!", Toast.LENGTH_SHORT).show();
-            setLoginButtonState();
         }
-    }
-
-    private void setLoginButtonState() {
-        View actionBarLogin = getActivity().findViewById(R.id.action_bar_login);
-        if (actionBarLogin == null)
-            return;
-        actionBarLogin.setVisibility(View.GONE);
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+
         inflater.inflate(R.menu.main, menu);
+
+        this.menu = menu;
+
+
+        setLoginButtonState();
     }
 
+    private void setLoginButtonState() {
+        if(menu==null)
+            return;
+
+        boolean isUserLoggedIn = ActiveUser.getInstance().hasActiveUser();
+
+        actionBarLogin = menu.findItem(R.id.action_bar_login);
+        actionBarLogout = menu.findItem(R.id.action_bar_logout);
+
+        if (isUserLoggedIn) {
+            actionBarLogin.setVisible(false);
+            actionBarLogout.setVisible(true);
+        } else {
+            actionBarLogin.setVisible(true);
+            actionBarLogout.setVisible(false);
+        }
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-            return super.onOptionsItemSelected(item);
+            //do nothing for now
         } else if (id == R.id.action_bar_login) {
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             startActivityForResult(intent, RequestCodes.LOGIN_REQUEST_CODE);
             return true;
-        } else if(id == R.id.action_bar_logout) {
-            ActiveUser.getInstance().clearUserinformation();
-            Toast.makeText(getActivity(),"Logout finished.", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.action_bar_logout) {
+            ActiveUser.getInstance().clearUserInformation();
+            Toast.makeText(getActivity(), "Logout finished.", Toast.LENGTH_SHORT).show();
         }
 
         return super.onOptionsItemSelected(item);

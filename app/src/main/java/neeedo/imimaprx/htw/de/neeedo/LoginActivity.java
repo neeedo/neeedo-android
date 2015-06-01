@@ -22,7 +22,6 @@ import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.HttpGetRefreshUserAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.HttpPostUserAsyncTask;
 
-
 public class LoginActivity extends Activity {
 
     private EditText mEmailView;
@@ -159,7 +158,6 @@ public class LoginActivity extends Activity {
         password = temp.getText().toString();
         temp = (TextView) findViewById(R.id.login_register_password_confirm);
         passwordConfirm = temp.getText().toString();
-
 
         if (name.isEmpty() | email.isEmpty() | password.isEmpty() | passwordConfirm.isEmpty()) {
             fieldsError.setVisibility(View.VISIBLE);

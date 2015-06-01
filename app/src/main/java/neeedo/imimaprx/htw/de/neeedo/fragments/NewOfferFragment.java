@@ -70,7 +70,7 @@ public class NewOfferFragment extends SuperFragment {
         locationLongitude = currentLocation.getLon();
         locationAvailable = locationHelper.isLocationAvailable();
 
-        if (!activeUser.userinformationLoaded()) {
+        if (!activeUser.userInformationLoaded()) {
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);
         }

@@ -53,7 +53,7 @@ public class HttpGetUserInfosAsyncTask extends AsyncTask {
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
 
-            activeUser.clearUserinformation();
+            activeUser.clearUserInformation();
 
             return false;
         }

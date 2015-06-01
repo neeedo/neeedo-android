@@ -22,17 +22,14 @@ public class ActiveUser {
     private static ActiveUser activeUser;
 
     private ActiveUser() {
-
     }
 
     public static ActiveUser getInstance() {
-
         if (activeUser == null) {
             activeUser = new ActiveUser();
         }
         return activeUser;
     }
-
 
     public void setContext(Context context) {
         this.context = context;
@@ -55,28 +52,22 @@ public class ActiveUser {
         return userPassword;
     }
 
-
     public void setUserPassword(String userPassword) {
         if (context == null) {
             throw new IllegalStateException("No Context is set!");
         }
-
         this.userPassword = userPassword;
         saveValuesInPreferences();
-
     }
 
-    public void clearUserinformation() {
+    public void clearUserInformation() {
         username = "";
         userPassword = "";
         saveValuesInPreferences();
         UserModel.getInstance().setUser(null);
-
     }
 
     private void saveValuesInPreferences() {
-
-
         if (context == null) {
             throw new IllegalStateException("No Context is set!");
         }
@@ -89,7 +80,6 @@ public class ActiveUser {
         editor.putString("name", username);
         editor.putString("password", userPassword);
         editor.commit();
-
     }
 
     public void loadValuesFromPreferences() {
@@ -102,12 +92,15 @@ public class ActiveUser {
         }
     }
 
-    public boolean userinformationLoaded() {
+    public boolean userInformationLoaded() {
         if (userPassword.equals("") | username.equals("")) {
             return false;
         }
         return true;
     }
 
+    public boolean hasActiveUser() {
+        return ( username != null ) && (username != "");
+    }
 }
 

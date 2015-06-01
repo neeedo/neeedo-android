@@ -33,12 +33,9 @@ public class UserModel {
     }
 
     public void putCurrentLoginInformationInActiveUser(){
-
         ActiveUser activeUser = ActiveUser.getInstance();
         activeUser.setUserPassword(user.getPassword());
         activeUser.setUsername(user.getUsername());
-
-
     }
 
 
