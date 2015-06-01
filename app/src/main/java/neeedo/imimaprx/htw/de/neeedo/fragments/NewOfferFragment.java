@@ -25,6 +25,7 @@ import org.osmdroid.views.MapView;
 
 import java.io.File;
 
+import neeedo.imimaprx.htw.de.neeedo.LoginActivity;
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.Location;
 import neeedo.imimaprx.htw.de.neeedo.entities.SingleOffer;
@@ -34,6 +35,7 @@ import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.SendNewOfferHandler;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.StartCameraHandler;
 import neeedo.imimaprx.htw.de.neeedo.helpers.LocationHelper;
+import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.HttpGetOutpanByEANAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.utils.ImageUtils;
@@ -41,6 +43,7 @@ import neeedo.imimaprx.htw.de.neeedo.vo.RequestCodes;
 
 
 public class NewOfferFragment extends SuperFragment {
+    private final ActiveUser activeUser = ActiveUser.getInstance();
     private EditText etTags;
     private EditText etLocationLat;
     private EditText etLocationLon;
@@ -66,6 +69,11 @@ public class NewOfferFragment extends SuperFragment {
         locationLatitude = currentLocation.getLat();
         locationLongitude = currentLocation.getLon();
         locationAvailable = locationHelper.isLocationAvailable();
+
+        if (!activeUser.userinformationLoaded()) {
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+        }
     }
 
     @Override

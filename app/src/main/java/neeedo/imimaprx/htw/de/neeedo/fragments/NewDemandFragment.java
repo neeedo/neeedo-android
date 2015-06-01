@@ -1,5 +1,6 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,12 +14,14 @@ import com.squareup.otto.Subscribe;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import neeedo.imimaprx.htw.de.neeedo.LoginActivity;
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.Demand;
 import neeedo.imimaprx.htw.de.neeedo.entities.Location;
 import neeedo.imimaprx.htw.de.neeedo.entities.Price;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.helpers.LocationHelper;
+import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.HttpPostDemandAsyncTask;
@@ -26,7 +29,7 @@ import neeedo.imimaprx.htw.de.neeedo.rest.SuperHttpAsyncTask;
 
 
 public class NewDemandFragment extends SuperFragment {
-
+    private final ActiveUser activeUser = ActiveUser.getInstance();
     private EditText etMustTags;
     private EditText etShouldTags;
     private EditText etLocationLat;
@@ -50,6 +53,11 @@ public class NewDemandFragment extends SuperFragment {
         locationLatitude = currentLocation.getLat();
         locationLongitude = currentLocation.getLon();
         locationAvailable = locationHelper.isLocationAvailable();
+
+        if (!activeUser.userinformationLoaded()) {
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+        }
 
     }
 
@@ -75,7 +83,6 @@ public class NewDemandFragment extends SuperFragment {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // get form values
                 String etMustTagsText = etMustTags.getText().toString();
                 String etShouldTagsText = etShouldTags.getText().toString();
                 String etLocationLatText = etLocationLat.getText().toString();
@@ -85,14 +92,12 @@ public class NewDemandFragment extends SuperFragment {
                 String etPriceMaxText = etPriceMax.getText().toString();
 
                 try {
-                    // convert fields
                     ArrayList<String> mustTags = new ArrayList<String>(Arrays.asList(etMustTagsText.split(",")));
                     ArrayList<String> shouldTags = new ArrayList<String>(Arrays.asList(etShouldTagsText.split(",")));
                     Location location = new Location(Double.parseDouble(etLocationLatText), Double.parseDouble(etLocationLonText));
                     int distance = Integer.parseInt(etDistanceText);
                     Price price = new Price(Double.parseDouble(etPriceMinText), Double.parseDouble(etPriceMaxText));
 
-                    // create new demand
                     Demand demand = new Demand();
                     demand.setMustTags(mustTags);
                     demand.setShouldTags(shouldTags);
@@ -103,13 +108,12 @@ public class NewDemandFragment extends SuperFragment {
 
                     System.out.println(demand);
 
-                    // send data
                     DemandsModel.getInstance().setPostDemand(demand);
                     SuperHttpAsyncTask asyncTask = new HttpPostDemandAsyncTask();
                     asyncTask.execute();
 
                 } catch (Exception e) {
-                    // show error
+                    e.printStackTrace();
                     Toast.makeText(getActivity(), getString(R.string.error_empty_or_wrong_format), Toast.LENGTH_SHORT).show();
                 }
             }
