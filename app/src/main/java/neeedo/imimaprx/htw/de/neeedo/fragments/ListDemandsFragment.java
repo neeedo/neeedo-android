@@ -89,6 +89,7 @@ public class ListDemandsFragment extends SuperFragment {
                 fragment.setArguments(args);
 
                 fragmentManager.beginTransaction()
+                        .addToBackStack(null)
                         .replace(R.id.container, fragment)
                         .commit();
             }

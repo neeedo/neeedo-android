@@ -114,16 +114,19 @@ public class Offer implements Serializable {
 
     @Override
     public String toString() {
-        return "Offer{" +
-                "id='" + id + '\'' +
-                ", version=" + version +
-                ", userId='" + userId + '\'' +
-                ", tags=" + tags +
-                ", location=" + location +
-                ", price=" + price +
-                ", offer=" + offer +
-                ", images=" + images +
-                '}';
+//        return "Offer{" +
+//                "id='" + id + '\'' +
+//                ", version=" + version +
+//                ", userId='" + userId + '\'' +
+//                ", tags=" + tags +
+//                ", location=" + location +
+//                ", price=" + price +
+//                ", offer=" + offer +
+//                ", images=" + images +
+//                '}';
+
+        return "Searching for:\n" + tags +
+                "\n\nPrice: " + price;
     }
 
     @Override

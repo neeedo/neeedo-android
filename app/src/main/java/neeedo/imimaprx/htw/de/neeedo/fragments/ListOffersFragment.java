@@ -65,8 +65,6 @@ public class ListOffersFragment extends SuperFragment {
     @Subscribe
     public void fillList(ServerResponseEvent e) {
 
-        // TODO wait for correct API result
-
         Offers offers = OffersModel.getInstance().getOffers();
         ArrayList<Offer> offerList = offers.getOffers();
 
@@ -82,16 +80,16 @@ public class ListOffersFragment extends SuperFragment {
                 Offer offer = (Offer) listView.getItemAtPosition(position);
 
                 FragmentManager fragmentManager = getFragmentManager();
-                // TODO create SingleOfferFragment
-//                Fragment fragment = new SingleOfferFragment();
-//
-//                Bundle args = new Bundle();
-//                args.putString("id", offer.getId()); // pass current item id
-//                fragment.setArguments(args);
-//
-//                fragmentManager.beginTransaction()
-//                        .replace(R.id.container, fragment)
-//                        .commit();
+                Fragment fragment = new SingleOfferFragment();
+
+                Bundle args = new Bundle();
+                args.putString("id", offer.getId()); // pass current item id
+                fragment.setArguments(args);
+
+                fragmentManager.beginTransaction()
+                        .addToBackStack(null)
+                        .replace(R.id.container, fragment)
+                        .commit();
             }
         });
     }

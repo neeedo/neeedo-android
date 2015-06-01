@@ -11,16 +11,15 @@ import com.squareup.otto.Subscribe;
 import java.util.ArrayList;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
-import neeedo.imimaprx.htw.de.neeedo.entities.Demand;
-import neeedo.imimaprx.htw.de.neeedo.entities.Demands;
+import neeedo.imimaprx.htw.de.neeedo.entities.Offer;
+import neeedo.imimaprx.htw.de.neeedo.entities.Offers;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
-import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
-import neeedo.imimaprx.htw.de.neeedo.rest.HttpGetDemandsAsyncTask;
-import neeedo.imimaprx.htw.de.neeedo.rest.HttpGetDemandsByUserIDAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
+import neeedo.imimaprx.htw.de.neeedo.rest.HttpGetOffersByUserIDAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.SuperHttpAsyncTask;
 
 
-public class SingleDemandFragment extends SuperFragment {
+public class SingleOfferFragment extends SuperFragment {
 
     TextView textView;
 
@@ -28,7 +27,7 @@ public class SingleDemandFragment extends SuperFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        View view = inflater.inflate(R.layout.single_demand_view, container, false);
+        View view = inflater.inflate(R.layout.single_offer_view, container, false);
 
         textView = (TextView) view.findViewById(R.id.singleview);
 
@@ -41,29 +40,29 @@ public class SingleDemandFragment extends SuperFragment {
 
         SuperHttpAsyncTask asyncTask;
 
-        asyncTask = new HttpGetDemandsByUserIDAsyncTask();
+        asyncTask = new HttpGetOffersByUserIDAsyncTask();
         asyncTask.execute();
     }
 
     @Subscribe
     public void fillText(ServerResponseEvent e) {
 
-        String demandId = getArguments().getString("id");
+        String offerId = getArguments().getString("id");
 
-        Demands demands = DemandsModel.getInstance().getDemands();
+        Offers offers = OffersModel.getInstance().getOffers();
 
-        ArrayList<Demand> demandList = demands.getDemands();
-        Demand currentDemand = null;
+        ArrayList<Offer> offerList = offers.getOffers();
+        Offer currentOffer = null;
 
-        for(Demand demand : demandList) {
-            if(demand.getId().equals(demandId)) {
-                currentDemand = demand;
+        for(Offer offer : offerList) {
+            if(offer.getId().equals(offerId)) {
+                currentOffer = offer;
                 break;
             }
         }
 
-        textView.setText(currentDemand.toString());
+        textView.setText(currentOffer.toString());
 
-        // TODO handle exception if demand not found
+        // TODO handle exception if offer not found
     }
 }
