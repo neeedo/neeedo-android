@@ -56,7 +56,12 @@ public class MainActivity extends ActionBarActivity
     }
 
     private void attempLogin() {
+        ActiveUser activeUser = ActiveUser.getInstance();
+        activeUser.setContext(getApplicationContext());
+        activeUser.loadValuesFromPreferences();
+
         if (activeUser.userInformationLoaded()) {
+
             new HttpGetUserInfosAsyncTask().execute();
             //@TODO if success replace login button with logout
         }
