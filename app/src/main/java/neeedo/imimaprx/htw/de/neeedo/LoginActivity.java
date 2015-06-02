@@ -19,8 +19,8 @@ import android.widget.TextView;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.User;
 import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
-import neeedo.imimaprx.htw.de.neeedo.rest.HttpGetRefreshUserAsyncTask;
-import neeedo.imimaprx.htw.de.neeedo.rest.HttpPostUserAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.user.GetRefreshUserAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.user.PostUserAsyncTask;
 
 public class LoginActivity extends Activity {
 
@@ -117,7 +117,7 @@ public class LoginActivity extends Activity {
             hideKeyboard();
             showProgress(true);
 
-            new HttpGetRefreshUserAsyncTask(email, password, this).execute();
+            new GetRefreshUserAsyncTask(email, password, this).execute();
         }
     }
 
@@ -184,7 +184,7 @@ public class LoginActivity extends Activity {
         hideKeyboard();
         showProgress(true);
 
-        new HttpPostUserAsyncTask(this).execute();
+        new PostUserAsyncTask(this).execute();
     }
 
 

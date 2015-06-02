@@ -15,8 +15,8 @@ import neeedo.imimaprx.htw.de.neeedo.entities.Offer;
 import neeedo.imimaprx.htw.de.neeedo.entities.Offers;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
-import neeedo.imimaprx.htw.de.neeedo.rest.HttpGetOffersByUserIDAsyncTask;
-import neeedo.imimaprx.htw.de.neeedo.rest.SuperHttpAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.offer.GetOffersByUserIDAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.BaseAsyncTask;
 
 
 public class SingleOfferFragment extends SuperFragment {
@@ -38,9 +38,9 @@ public class SingleOfferFragment extends SuperFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        SuperHttpAsyncTask asyncTask;
+        BaseAsyncTask asyncTask;
 
-        asyncTask = new HttpGetOffersByUserIDAsyncTask();
+        asyncTask = new GetOffersByUserIDAsyncTask();
         asyncTask.execute();
     }
 

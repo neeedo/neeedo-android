@@ -9,11 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
-import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
-import neeedo.imimaprx.htw.de.neeedo.rest.SuperHttpAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.BaseAsyncTask;
 
 
 public class MainFragment extends SuperFragment implements View.OnClickListener {
@@ -51,7 +49,7 @@ public class MainFragment extends SuperFragment implements View.OnClickListener 
     public void onClick(View v) {
         //TODO extract whole function into proper controller
 
-        SuperHttpAsyncTask asyncTask;
+        BaseAsyncTask asyncTask;
 
         FragmentManager fragmentManager = getFragmentManager();
         Fragment fragment = null;

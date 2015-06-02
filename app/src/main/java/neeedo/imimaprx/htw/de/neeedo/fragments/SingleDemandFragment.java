@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.squareup.otto.Subscribe;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
@@ -16,9 +15,8 @@ import neeedo.imimaprx.htw.de.neeedo.entities.Demand;
 import neeedo.imimaprx.htw.de.neeedo.entities.Demands;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
-import neeedo.imimaprx.htw.de.neeedo.rest.HttpGetDemandsAsyncTask;
-import neeedo.imimaprx.htw.de.neeedo.rest.HttpGetDemandsByUserIDAsyncTask;
-import neeedo.imimaprx.htw.de.neeedo.rest.SuperHttpAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.demand.GetDemandsByUserIDAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.BaseAsyncTask;
 
 
 public class SingleDemandFragment extends SuperFragment {
@@ -40,9 +38,9 @@ public class SingleDemandFragment extends SuperFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        SuperHttpAsyncTask asyncTask;
+        BaseAsyncTask asyncTask;
 
-        asyncTask = new HttpGetDemandsByUserIDAsyncTask();
+        asyncTask = new GetDemandsByUserIDAsyncTask();
         asyncTask.execute();
     }
 

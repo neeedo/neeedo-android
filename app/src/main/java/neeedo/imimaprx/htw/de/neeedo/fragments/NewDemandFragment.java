@@ -24,8 +24,8 @@ import neeedo.imimaprx.htw.de.neeedo.helpers.LocationHelper;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
-import neeedo.imimaprx.htw.de.neeedo.rest.HttpPostDemandAsyncTask;
-import neeedo.imimaprx.htw.de.neeedo.rest.SuperHttpAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.demand.GetPostDemandAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.BaseAsyncTask;
 
 
 public class NewDemandFragment extends SuperFragment {
@@ -109,7 +109,7 @@ public class NewDemandFragment extends SuperFragment {
                     System.out.println(demand);
 
                     DemandsModel.getInstance().setPostDemand(demand);
-                    SuperHttpAsyncTask asyncTask = new HttpPostDemandAsyncTask();
+                    BaseAsyncTask asyncTask = new GetPostDemandAsyncTask();
                     asyncTask.execute();
                 } catch (Exception e) {
                     e.printStackTrace();

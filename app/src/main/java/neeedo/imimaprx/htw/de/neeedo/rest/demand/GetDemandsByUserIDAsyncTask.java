@@ -1,66 +1,64 @@
-package neeedo.imimaprx.htw.de.neeedo.rest;
+package neeedo.imimaprx.htw.de.neeedo.rest.demand;
 
-import android.os.AsyncTask;
 import android.util.Log;
 
 import org.springframework.http.HttpBasicAuthentication;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
-import neeedo.imimaprx.htw.de.neeedo.entities.SingleUser;
+import java.util.ArrayList;
+import java.util.List;
+
+import neeedo.imimaprx.htw.de.neeedo.entities.Demands;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
+import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
+import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
+import neeedo.imimaprx.htw.de.neeedo.rest.BaseAsyncTask;
 
-public class HttpGetUserInfosAsyncTask extends AsyncTask {
-
-
-    final ActiveUser activeUser = ActiveUser.getInstance();
-
+public class GetDemandsByUserIDAsyncTask extends BaseAsyncTask {
     @Override
     protected Object doInBackground(Object[] params) {
         try {
 
+            final String url = ServerConstantsUtils.getActiveServer() + "demands/users/" + UserModel.getInstance().getUser().getId();;
 
-            String url = ServerConstants.getActiveServer() + "users/mail/";
-
-            url += activeUser.getUsername();
+            final ActiveUser activeUser = ActiveUser.getInstance();
 
             HttpBasicAuthentication authentication = new HttpBasicAuthentication(activeUser.getUsername(), activeUser.getUserPassword());
 
             HttpHeaders requestHeaders = new HttpHeaders();
 
             requestHeaders.setAuthorization(authentication);
+            List<MediaType> acceptableMediaTypes = new ArrayList<>();
+            acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
+            requestHeaders.setAccept(acceptableMediaTypes);
+
             HttpEntity<?> requestEntity = new HttpEntity<Object>(requestHeaders);
 
             RestTemplate restTemplate = new RestTemplate(HttpRequestFactoryProviderImpl.getClientHttpRequestFactorySSLSupport(5000));
 
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 
-            ResponseEntity<SingleUser> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity,
-                    SingleUser.class);
+            ResponseEntity<Demands> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity,
+                    Demands.class);
 
-            SingleUser singleUser = responseEntity.getBody();
+            final Demands demands = responseEntity.getBody();
 
-            UserModel.getInstance().setUser(singleUser.getUser());
+            DemandsModel.getInstance().setDemands(demands);
 
-            return true;
 
+            return "Success"; //TODO use proper entities
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
-
-            activeUser.clearUserInformation();
-
-            return false;
+            return "Failed";//TODO use proper entities
         }
     }
 
-    @Override
-    protected void onPostExecute(Object o) {
-        super.onPostExecute(o);
-    }
 }

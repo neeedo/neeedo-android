@@ -1,4 +1,4 @@
-package neeedo.imimaprx.htw.de.neeedo.rest;
+package neeedo.imimaprx.htw.de.neeedo.rest.user;
 
 import android.util.Log;
 
@@ -15,9 +15,11 @@ import neeedo.imimaprx.htw.de.neeedo.entities.SingleUser;
 import neeedo.imimaprx.htw.de.neeedo.entities.User;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
+import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
+import neeedo.imimaprx.htw.de.neeedo.rest.BaseAsyncTask;
 
 
-public class HttpUpdateUserAsyncTask extends SuperHttpAsyncTask {
+public class HttpUpdateUserAsyncTask extends BaseAsyncTask {
     //TODO remove all the "HTTP" from class names
 
     @Override
@@ -26,7 +28,7 @@ public class HttpUpdateUserAsyncTask extends SuperHttpAsyncTask {
             UserModel userModel = UserModel.getInstance();
             User user = userModel.getUser();
 
-            final String url = ServerConstants.getActiveServer() + "users/" + user.getId() + "/" + user.getVersion();
+            final String url = ServerConstantsUtils.getActiveServer() + "users/" + user.getId() + "/" + user.getVersion();
 
             HttpHeaders requestHeaders = new HttpHeaders();
             requestHeaders.setContentType(MediaType.APPLICATION_JSON);

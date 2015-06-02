@@ -1,4 +1,4 @@
-package neeedo.imimaprx.htw.de.neeedo.rest;
+package neeedo.imimaprx.htw.de.neeedo.rest.outpan;
 
 import android.util.Log;
 
@@ -20,15 +20,17 @@ import neeedo.imimaprx.htw.de.neeedo.entities.SingleOffer;
 import neeedo.imimaprx.htw.de.neeedo.events.NewProductInfosRequestedEvent;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
+import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
+import neeedo.imimaprx.htw.de.neeedo.rest.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.service.EventService;
 
 
-public class HttpGetOutpanByEANAsyncTask extends SuperHttpAsyncTask {
+public class GetOutpanByEANAsyncTask extends BaseAsyncTask {
 
 
     private final String ean;
 
-    public HttpGetOutpanByEANAsyncTask(String ean) {
+    public GetOutpanByEANAsyncTask(String ean) {
         this.ean = ean.trim();
     }
 
@@ -36,7 +38,7 @@ public class HttpGetOutpanByEANAsyncTask extends SuperHttpAsyncTask {
     protected Object doInBackground(Object[] params) {
         try {
 
-            final String url = ServerConstants.getOutpanServer() + ean;
+            final String url = ServerConstantsUtils.getOutpanServer() + ean;
 
             HttpBasicAuthentication authentication = new HttpBasicAuthentication("e9e42347c7677fede70a1761c1737de1:", "");
 

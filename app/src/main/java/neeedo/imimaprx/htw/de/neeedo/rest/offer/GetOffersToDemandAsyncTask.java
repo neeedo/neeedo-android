@@ -1,4 +1,4 @@
-package neeedo.imimaprx.htw.de.neeedo.rest;
+package neeedo.imimaprx.htw.de.neeedo.rest.offer;
 
 
 import android.util.Log;
@@ -22,8 +22,10 @@ import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
+import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
+import neeedo.imimaprx.htw.de.neeedo.rest.BaseAsyncTask;
 
-public class HttpGetOffersToDemandAsyncTask extends SuperHttpAsyncTask {
+public class GetOffersToDemandAsyncTask extends BaseAsyncTask {
 
 
     @Override
@@ -33,7 +35,7 @@ public class HttpGetOffersToDemandAsyncTask extends SuperHttpAsyncTask {
 
             final ActiveUser activeUser = ActiveUser.getInstance();
             String email = activeUser.getUsername();
-            String url = ServerConstants.getActiveServer() + "users/mail/";
+            String url = ServerConstantsUtils.getActiveServer() + "users/mail/";
 
             if (email == null || email == "") {
                 return "Failed, no E-Mail is given";

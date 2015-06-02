@@ -1,4 +1,4 @@
-package neeedo.imimaprx.htw.de.neeedo.rest;
+package neeedo.imimaprx.htw.de.neeedo.rest.demand;
 
 
 import android.util.Log;
@@ -17,14 +17,16 @@ import java.util.List;
 import neeedo.imimaprx.htw.de.neeedo.entities.Demands;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
+import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
+import neeedo.imimaprx.htw.de.neeedo.rest.BaseAsyncTask;
 
-public class HttpGetDemandsAsyncTask extends SuperHttpAsyncTask {
+public class GetDemandsAsyncTask extends BaseAsyncTask {
 
 
     @Override
     protected Object doInBackground(Object[] params) {
         try {
-            final String url = ServerConstants.getActiveServer() + "matching/demands";
+            final String url = ServerConstantsUtils.getActiveServer() + "matching/demands";
 
             HttpHeaders requestHeaders = new HttpHeaders();
 

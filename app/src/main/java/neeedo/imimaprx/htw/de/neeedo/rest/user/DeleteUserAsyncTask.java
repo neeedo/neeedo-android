@@ -1,4 +1,4 @@
-package neeedo.imimaprx.htw.de.neeedo.rest;
+package neeedo.imimaprx.htw.de.neeedo.rest.user;
 
 import android.util.Log;
 
@@ -9,9 +9,11 @@ import org.springframework.web.client.RestTemplate;
 import neeedo.imimaprx.htw.de.neeedo.entities.User;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
+import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
+import neeedo.imimaprx.htw.de.neeedo.rest.BaseAsyncTask;
 
 
-public class HttpDeleteUserAsyncTask extends SuperHttpAsyncTask {
+public class DeleteUserAsyncTask extends BaseAsyncTask {
     @Override
     protected Object doInBackground(Object[] params) {
         try {
@@ -19,7 +21,7 @@ public class HttpDeleteUserAsyncTask extends SuperHttpAsyncTask {
             UserModel userModel = UserModel.getInstance();
             User user = userModel.getUser();
 
-            final String url = ServerConstants.getActiveServer() + "usersd/" + user.getId() + "/" + user.getVersion();
+            final String url = ServerConstantsUtils.getActiveServer() + "usersd/" + user.getId() + "/" + user.getVersion();
 
             HttpHeaders requestHeaders = new HttpHeaders();
             requestHeaders.setContentType(MediaType.APPLICATION_JSON);

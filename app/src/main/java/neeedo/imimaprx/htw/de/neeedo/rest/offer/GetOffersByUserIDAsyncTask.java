@@ -1,4 +1,4 @@
-package neeedo.imimaprx.htw.de.neeedo.rest;
+package neeedo.imimaprx.htw.de.neeedo.rest.offer;
 
 import android.util.Log;
 
@@ -19,13 +19,15 @@ import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
 import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
+import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
+import neeedo.imimaprx.htw.de.neeedo.rest.BaseAsyncTask;
 
-public class HttpGetOffersByUserIDAsyncTask extends SuperHttpAsyncTask {
+public class GetOffersByUserIDAsyncTask extends BaseAsyncTask {
     @Override
     protected Object doInBackground(Object[] params) {
         try {
 
-            final String url = ServerConstants.getActiveServer() + "offers/users/" + UserModel.getInstance().getUser().getId();;
+            final String url = ServerConstantsUtils.getActiveServer() + "offers/users/" + UserModel.getInstance().getUser().getId();;
 
             final ActiveUser activeUser = ActiveUser.getInstance();
 

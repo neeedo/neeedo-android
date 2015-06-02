@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -39,7 +38,7 @@ import neeedo.imimaprx.htw.de.neeedo.fragments.handler.StartCameraHandler;
 import neeedo.imimaprx.htw.de.neeedo.helpers.LocationHelper;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
-import neeedo.imimaprx.htw.de.neeedo.rest.HttpGetOutpanByEANAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.outpan.GetOutpanByEANAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.utils.ImageUtils;
 import neeedo.imimaprx.htw.de.neeedo.vo.RequestCodes;
 
@@ -185,7 +184,7 @@ public class NewOfferFragment extends SuperFragment {
     public void handleNewEanNumberScanned(NewEanNumberScannedEvent e) {
         String eanNumber = e.getEanNumber();
 
-        HttpGetOutpanByEANAsyncTask eanAsyncTask = new HttpGetOutpanByEANAsyncTask(eanNumber);
+        GetOutpanByEANAsyncTask eanAsyncTask = new GetOutpanByEANAsyncTask(eanNumber);
         eanAsyncTask.execute();
     }
 

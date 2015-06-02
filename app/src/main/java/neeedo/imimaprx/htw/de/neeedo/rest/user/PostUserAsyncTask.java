@@ -1,4 +1,4 @@
-package neeedo.imimaprx.htw.de.neeedo.rest;
+package neeedo.imimaprx.htw.de.neeedo.rest.user;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -18,22 +18,23 @@ import neeedo.imimaprx.htw.de.neeedo.entities.User;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
+import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
 
-public class HttpPostUserAsyncTask extends AsyncTask {
+public class PostUserAsyncTask extends AsyncTask {
 
     private final LoginActivity loginActivity;
 
     private final ActiveUser activeUser = ActiveUser.getInstance();
 
-    public HttpPostUserAsyncTask(LoginActivity loginActivity) {
+    public PostUserAsyncTask(LoginActivity loginActivity) {
         this.loginActivity = loginActivity;
     }
 
     @Override
     protected Object doInBackground(Object[] params) {
         try {
-            final String url = ServerConstants.getActiveServer() + "users";
+            final String url = ServerConstantsUtils.getActiveServer() + "users";
 
             UserModel userModel = UserModel.getInstance();
             HttpHeaders requestHeaders = new HttpHeaders();

@@ -13,7 +13,6 @@ import android.widget.ListView;
 
 import com.squareup.otto.Subscribe;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import neeedo.imimaprx.htw.de.neeedo.LoginActivity;
@@ -21,12 +20,10 @@ import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.Demand;
 import neeedo.imimaprx.htw.de.neeedo.entities.Demands;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
-import neeedo.imimaprx.htw.de.neeedo.helpers.LocationHelper;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
-import neeedo.imimaprx.htw.de.neeedo.rest.HttpGetDemandsAsyncTask;
-import neeedo.imimaprx.htw.de.neeedo.rest.HttpGetDemandsByUserIDAsyncTask;
-import neeedo.imimaprx.htw.de.neeedo.rest.SuperHttpAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.demand.GetDemandsByUserIDAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.BaseAsyncTask;
 
 public class ListDemandsFragment extends SuperFragment {
     private final ActiveUser activeUser = ActiveUser.getInstance();
@@ -58,7 +55,7 @@ public class ListDemandsFragment extends SuperFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        SuperHttpAsyncTask asyncTask = new HttpGetDemandsByUserIDAsyncTask();
+        BaseAsyncTask asyncTask = new GetDemandsByUserIDAsyncTask();
         asyncTask.execute();
     }
 

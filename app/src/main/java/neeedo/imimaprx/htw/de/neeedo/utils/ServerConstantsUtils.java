@@ -1,6 +1,6 @@
-package neeedo.imimaprx.htw.de.neeedo.rest;
+package neeedo.imimaprx.htw.de.neeedo.utils;
 
-public class ServerConstants {
+public class ServerConstantsUtils {
     private static final String OUTPAN_SERVER = "https://api.outpan.com/v1/products/";
 
     private static final String LOCALHOST = "http://10.0.2.2:9000/";

@@ -16,7 +16,7 @@ import neeedo.imimaprx.htw.de.neeedo.fragments.NavigationDrawerFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.NewDemandFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.NewOfferFragment;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
-import neeedo.imimaprx.htw.de.neeedo.rest.HttpGetUserInfosAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.user.GetUserInfosAsyncTask;
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -62,7 +62,7 @@ public class MainActivity extends ActionBarActivity
 
         if (activeUser.userInformationLoaded()) {
 
-            new HttpGetUserInfosAsyncTask().execute();
+            new GetUserInfosAsyncTask().execute();
             //@TODO if success replace login button with logout
         }
     }
