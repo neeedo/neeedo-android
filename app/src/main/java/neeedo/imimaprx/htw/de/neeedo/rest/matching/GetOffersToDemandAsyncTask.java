@@ -1,4 +1,4 @@
-package neeedo.imimaprx.htw.de.neeedo.rest.demand;
+package neeedo.imimaprx.htw.de.neeedo.rest.matching;
 
 
 import android.util.Log;
@@ -20,7 +20,7 @@ import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
-public class GetMatchingDemandsAsyncTask extends BaseAsyncTask {
+public class GetOffersToDemandAsyncTask extends BaseAsyncTask {
 
 
     @Override
