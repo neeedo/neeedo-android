@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.User;
 import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
+import neeedo.imimaprx.htw.de.neeedo.rest.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.user.GetRefreshUserAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.user.PostCreateUpdateUserAsyncTask;
 
@@ -184,7 +185,7 @@ public class LoginActivity extends Activity {
         hideKeyboard();
         showProgress(true);
 
-        new PostCreateUpdateUserAsyncTask(this).execute();
+        new PostCreateUpdateUserAsyncTask(this, BaseAsyncTask.SendMode.CREATE).execute();
     }
 
 

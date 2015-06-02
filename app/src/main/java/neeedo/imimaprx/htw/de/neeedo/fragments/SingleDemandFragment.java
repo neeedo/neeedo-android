@@ -15,8 +15,8 @@ import neeedo.imimaprx.htw.de.neeedo.entities.Demand;
 import neeedo.imimaprx.htw.de.neeedo.entities.Demands;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
-import neeedo.imimaprx.htw.de.neeedo.rest.demand.GetDemandsAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.BaseAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.demand.GetDemandsAsyncTask;
 
 
 public class SingleDemandFragment extends SuperFragment {
@@ -40,7 +40,7 @@ public class SingleDemandFragment extends SuperFragment {
 
         BaseAsyncTask asyncTask;
 
-        asyncTask = new GetDemandsAsyncTask();
+        asyncTask = new GetDemandsAsyncTask(BaseAsyncTask.GetEntitiesMode.GET_RANDOM);
         asyncTask.execute();
     }
 
@@ -54,8 +54,8 @@ public class SingleDemandFragment extends SuperFragment {
         List<Demand> demandList = demands.getDemands();
         Demand currentDemand = null;
 
-        for(Demand demand : demandList) {
-            if(demand.getId().equals(demandId)) {
+        for (Demand demand : demandList) {
+            if (demand.getId().equals(demandId)) {
                 currentDemand = demand;
                 break;
             }

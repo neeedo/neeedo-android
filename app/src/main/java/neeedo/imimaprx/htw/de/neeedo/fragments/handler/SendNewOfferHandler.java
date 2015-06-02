@@ -10,8 +10,8 @@ import neeedo.imimaprx.htw.de.neeedo.entities.Location;
 import neeedo.imimaprx.htw.de.neeedo.entities.Offer;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
 import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
-import neeedo.imimaprx.htw.de.neeedo.rest.offer.PostCreateUpdateOfferAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.BaseAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.offer.PostCreateUpdateOfferAsyncTask;
 
 public class SendNewOfferHandler implements View.OnClickListener {
 
@@ -45,7 +45,7 @@ public class SendNewOfferHandler implements View.OnClickListener {
         offer.setUserId(UserModel.getInstance().getUser().getId());
 
         OffersModel.getInstance().setPostOffer(offer);
-        BaseAsyncTask asyncTask = new PostCreateUpdateOfferAsyncTask();
+        BaseAsyncTask asyncTask = new PostCreateUpdateOfferAsyncTask(BaseAsyncTask.SendMode.CREATE);
         asyncTask.execute();
     }
 }
