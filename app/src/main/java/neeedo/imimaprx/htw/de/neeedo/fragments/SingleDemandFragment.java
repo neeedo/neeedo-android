@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.Demand;
@@ -52,7 +53,7 @@ public class SingleDemandFragment extends SuperFragment {
 
         Demands demands = DemandsModel.getInstance().getDemands();
 
-        ArrayList<Demand> demandList = demands.getDemands();
+        List<Demand> demandList = demands.getDemands();
         Demand currentDemand = null;
 
         for(Demand demand : demandList) {

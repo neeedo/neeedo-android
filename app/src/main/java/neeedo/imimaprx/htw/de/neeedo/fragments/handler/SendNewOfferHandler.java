@@ -20,7 +20,6 @@ public class SendNewOfferHandler implements View.OnClickListener {
     private final EditText etLocationLon;
     private final EditText etPrice;
 
-
     public SendNewOfferHandler(EditText etTags, EditText etLocationLat, EditText etLocationLon, EditText etPrice) {
         this.etTags = etTags;
         this.etLocationLat = etLocationLat;
@@ -35,24 +34,18 @@ public class SendNewOfferHandler implements View.OnClickListener {
         String etLocationLonText = etLocationLon.getText().toString();
         String etPriceText = etPrice.getText().toString();
 
-        try {
-            ArrayList<String> tags = new ArrayList<String>(Arrays.asList(etTagsText.split(",")));
-            Location location = new Location(Double.parseDouble(etLocationLatText), Double.parseDouble(etLocationLonText));
-            Double price = Double.parseDouble(etPriceText);
+        ArrayList<String> tags = new ArrayList<String>(Arrays.asList(etTagsText.split(",")));
+        Location location = new Location(Double.parseDouble(etLocationLatText), Double.parseDouble(etLocationLonText));
+        Double price = Double.parseDouble(etPriceText);
 
-            Offer offer = new Offer();
-            offer.setTags(tags);
-            offer.setLocation(location);
-            offer.setPrice(price);
-            offer.setUserId(UserModel.getInstance().getUser().getId());
+        Offer offer = new Offer();
+        offer.setTags(tags);
+        offer.setLocation(location);
+        offer.setPrice(price);
+        offer.setUserId(UserModel.getInstance().getUser().getId());
 
-            System.out.println(offer);
-
-            OffersModel.getInstance().setPostOffer(offer);
-            SuperHttpAsyncTask asyncTask = new HttpPostOfferAsyncTask();
-            asyncTask.execute();
-
-        } catch (Exception e) {
-        }
+        OffersModel.getInstance().setPostOffer(offer);
+        SuperHttpAsyncTask asyncTask = new HttpPostOfferAsyncTask();
+        asyncTask.execute();
     }
 }

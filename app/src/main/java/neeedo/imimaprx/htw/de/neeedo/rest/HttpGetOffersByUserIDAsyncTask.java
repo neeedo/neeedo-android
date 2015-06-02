@@ -58,5 +58,4 @@ public class HttpGetOffersByUserIDAsyncTask extends SuperHttpAsyncTask {
             return "Failed";//TODO use proper entities
         }
     }
-
 }

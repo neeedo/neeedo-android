@@ -5,6 +5,7 @@ import org.simpleframework.xml.Root;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 @Root(name = "demands")
 public class Demands implements Serializable {
@@ -15,7 +16,7 @@ public class Demands implements Serializable {
     public Demands() {
     }
 
-    public ArrayList<Demand> getDemands() {
+    public List<Demand> getDemands() {
         return demands;
     }
 
@@ -35,7 +36,6 @@ public class Demands implements Serializable {
             demands = new ArrayList<>();
         }
         demands.add(demand);
-
     }
 
     @Override

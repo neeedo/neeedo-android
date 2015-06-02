@@ -191,8 +191,7 @@ public class NewOfferFragment extends SuperFragment {
 
     @Subscribe
     public void handleNewProductInfos(NewProductInfosRequestedEvent e) {
-        OffersModel offersModel = OffersModel.getInstance();
-        SingleOffer singleOffer = offersModel.getSingleOffer();
+        SingleOffer singleOffer = OffersModel.getInstance().getSingleOffer();
 
         String tags = "";
 

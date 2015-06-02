@@ -14,6 +14,7 @@ import android.widget.ListView;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import neeedo.imimaprx.htw.de.neeedo.LoginActivity;
 import neeedo.imimaprx.htw.de.neeedo.R;
@@ -65,7 +66,7 @@ public class ListDemandsFragment extends SuperFragment {
     public void fillList(ServerResponseEvent e) {
 
         Demands demands = DemandsModel.getInstance().getDemands();
-        ArrayList<Demand> demandList = demands.getDemands();
+        List<Demand> demandList = demands.getDemands();
 
         ArrayAdapter<Demand> adapter = new ArrayAdapter<Demand>(getActivity(),
                 android.R.layout.simple_list_item_1, demandList);

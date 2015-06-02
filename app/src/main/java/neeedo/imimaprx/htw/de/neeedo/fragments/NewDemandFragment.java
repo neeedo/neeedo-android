@@ -111,7 +111,6 @@ public class NewDemandFragment extends SuperFragment {
                     DemandsModel.getInstance().setPostDemand(demand);
                     SuperHttpAsyncTask asyncTask = new HttpPostDemandAsyncTask();
                     asyncTask.execute();
-
                 } catch (Exception e) {
                     e.printStackTrace();
                     Toast.makeText(getActivity(), getString(R.string.error_empty_or_wrong_format), Toast.LENGTH_SHORT).show();
@@ -124,6 +123,8 @@ public class NewDemandFragment extends SuperFragment {
 
     @Subscribe
     public void handleServerResponse(ServerResponseEvent e) {
-        redirectToListFragment(super.DEMANDS_LIST_KEY);
+        //TODO refactor! just pass fragment class to be redireted to
+//        redirectToListFragment(NewDemandFragment.class);
+        redirectToListFragment(DEMANDS_LIST_KEY);
     }
 }

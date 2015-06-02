@@ -20,7 +20,7 @@ public class StartCameraHandler implements View.OnClickListener {
     private final Fragment fragment;
     private final File outputFile;
 
-    public StartCameraHandler( Fragment fragment, File outputFile) {
+    public StartCameraHandler(Fragment fragment, File outputFile) {
         this.fragment = fragment;
         this.outputFile = outputFile;
     }
@@ -36,7 +36,9 @@ public class StartCameraHandler implements View.OnClickListener {
         }
 
         File path = new File(Environment.getExternalStorageDirectory(), "foo/bar");
-        if (!path.exists()) path.mkdirs();
+
+        if (!path.exists())
+            path.mkdirs();
 
         Uri imageCaptureUri = Uri.fromFile(outputFile);
 
@@ -45,6 +47,4 @@ public class StartCameraHandler implements View.OnClickListener {
         //cameraIntent.putExtra("return-data", true);
         fragment.startActivityForResult(cameraIntent, RequestCodes.CAMERA_CAPTURE_IMAGE_REQUEST_CODE);
     }
-
-
 }

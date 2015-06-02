@@ -43,7 +43,8 @@ public class LocationHelper {
             locationLongitude = lastKnownLocation.getLongitude();
             locationAvailable = true;
         } catch(NullPointerException e) {
-            // TODO show message that no data is available
+            //TODO when would that happen?
+            //TODO show message that no data is available
             locationAvailable = false;
         }
     }
@@ -57,5 +58,4 @@ public class LocationHelper {
     public boolean isLocationAvailable() {
         return locationAvailable;
     }
-
 }

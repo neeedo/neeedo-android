@@ -22,20 +22,17 @@ import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
 
 public class HttpPostUserAsyncTask extends AsyncTask {
 
-
     private final LoginActivity loginActivity;
 
-    final ActiveUser activeUser = ActiveUser.getInstance();
+    private final ActiveUser activeUser = ActiveUser.getInstance();
 
     public HttpPostUserAsyncTask(LoginActivity loginActivity) {
-
         this.loginActivity = loginActivity;
     }
 
     @Override
     protected Object doInBackground(Object[] params) {
         try {
-
             final String url = ServerConstants.getActiveServer() + "users";
 
             UserModel userModel = UserModel.getInstance();
@@ -73,5 +70,4 @@ public class HttpPostUserAsyncTask extends AsyncTask {
             return false;
         }
     }
-
 }

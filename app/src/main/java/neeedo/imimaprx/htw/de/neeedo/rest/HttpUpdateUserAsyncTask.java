@@ -18,6 +18,8 @@ import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
 
 
 public class HttpUpdateUserAsyncTask extends SuperHttpAsyncTask {
+    //TODO remove all the "HTTP" from class names
+
     @Override
     protected Object doInBackground(Object[] params) {
         try {
