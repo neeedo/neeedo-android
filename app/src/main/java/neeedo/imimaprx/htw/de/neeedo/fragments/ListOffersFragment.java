@@ -22,7 +22,7 @@ import neeedo.imimaprx.htw.de.neeedo.entities.Offers;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
-import neeedo.imimaprx.htw.de.neeedo.rest.offer.GetOffersByUserIDAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.offer.GetOffersAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.BaseAsyncTask;
 
 public class ListOffersFragment extends SuperFragment {
@@ -58,7 +58,7 @@ public class ListOffersFragment extends SuperFragment {
 
         BaseAsyncTask asyncTask;
 
-        asyncTask = new GetOffersByUserIDAsyncTask();
+        asyncTask = new GetOffersAsyncTask();
         asyncTask.execute();
     }
 

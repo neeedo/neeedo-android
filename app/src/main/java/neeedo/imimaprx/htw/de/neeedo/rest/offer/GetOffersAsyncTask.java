@@ -19,23 +19,49 @@ import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
 import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
-import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 import neeedo.imimaprx.htw.de.neeedo.rest.BaseAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
-public class GetOffersByUserIDAsyncTask extends BaseAsyncTask {
+public class GetOffersAsyncTask extends BaseAsyncTask {
+
+    private GetEntitiesMode getEntitiesMode;
+
+    /**
+     * Get the constant from enum in {@link BaseAsyncTask}
+     *
+     * @param getEntitiesMode
+     */
+    public GetOffersAsyncTask(GetEntitiesMode getEntitiesMode) {
+
+        if (getEntitiesMode == null) {
+            throw new IllegalArgumentException("No Mode given.");
+        }
+
+        this.getEntitiesMode = getEntitiesMode;
+    }
+
+
     @Override
     protected Object doInBackground(Object[] params) {
         try {
 
-            final String url = ServerConstantsUtils.getActiveServer() + "offers/users/" + UserModel.getInstance().getUser().getId();;
-
-            final ActiveUser activeUser = ActiveUser.getInstance();
-
-            HttpBasicAuthentication authentication = new HttpBasicAuthentication(activeUser.getUsername(), activeUser.getUserPassword());
 
             HttpHeaders requestHeaders = new HttpHeaders();
+            String url = ServerConstantsUtils.getActiveServer();
 
-            requestHeaders.setAuthorization(authentication);
+            //Case get all offers to the user ID in ActiveUser
+            if (getEntitiesMode == GetEntitiesMode.GET_BY_USER) {
+                url += "offers/users/" + UserModel.getInstance().getUser().getId();
+                final ActiveUser activeUser = ActiveUser.getInstance();
+                HttpBasicAuthentication authentication = new HttpBasicAuthentication(activeUser.getUsername(), activeUser.getUserPassword());
+                requestHeaders.setAuthorization(authentication);
+            }
+
+            //Get Random pool of offers, no authentication needed
+            if (getEntitiesMode == GetEntitiesMode.GET_RANDOM) {
+                url += "offers";
+            }
+
             List<MediaType> acceptableMediaTypes = new ArrayList<>();
             acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
             requestHeaders.setAccept(acceptableMediaTypes);

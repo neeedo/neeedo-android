@@ -25,20 +25,20 @@ import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 public class GetDemandsAsyncTask extends BaseAsyncTask {
 
 
-    private DemandsMode demandsMode;
+    private GetEntitiesMode getEntitiesMode;
 
     /**
      * Get the constant from enum in {@link BaseAsyncTask}
      *
-     * @param demandsMode
+     * @param getEntitiesMode
      */
-    public GetDemandsAsyncTask(DemandsMode demandsMode) {
+    public GetDemandsAsyncTask(GetEntitiesMode getEntitiesMode) {
 
-        if (demandsMode == null) {
+        if (getEntitiesMode == null) {
             throw new IllegalArgumentException("No Mode given.");
         }
 
-        this.demandsMode = demandsMode;
+        this.getEntitiesMode = getEntitiesMode;
     }
 
 
@@ -50,17 +50,18 @@ public class GetDemandsAsyncTask extends BaseAsyncTask {
             String url = ServerConstantsUtils.getActiveServer();
 
             //Case get all Demands to the user ID in ActiveUser
-            if (demandsMode == DemandsMode.GET_BY_USER) {
+            if (getEntitiesMode == GetEntitiesMode.GET_BY_USER) {
                 url += "demands/users/" + UserModel.getInstance().getUser().getId();
-                final ActiveUser activeUser = ActiveUser.getInstance();
-                HttpBasicAuthentication authentication = new HttpBasicAuthentication(activeUser.getUsername(), activeUser.getUserPassword());
-                requestHeaders.setAuthorization(authentication);
+
             }
 
-            //Get Random pool of Demands, no authentication needed
-            if (demandsMode == DemandsMode.GET_RANDOM) {
+            if (getEntitiesMode == GetEntitiesMode.GET_RANDOM) {
                 url += "demands";
             }
+
+            final ActiveUser activeUser = ActiveUser.getInstance();
+            HttpBasicAuthentication authentication = new HttpBasicAuthentication(activeUser.getUsername(), activeUser.getUserPassword());
+            requestHeaders.setAuthorization(authentication);
 
             List<MediaType> acceptableMediaTypes = new ArrayList<>();
             acceptableMediaTypes.add(MediaType.APPLICATION_JSON);

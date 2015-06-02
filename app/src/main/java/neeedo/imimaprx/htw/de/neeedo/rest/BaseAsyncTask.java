@@ -8,7 +8,7 @@ import neeedo.imimaprx.htw.de.neeedo.service.EventService;
 
 public abstract class BaseAsyncTask extends AsyncTask {
 
-    public enum DemandsMode {
+    public enum GetEntitiesMode {
         GET_BY_USER, GET_RANDOM
     }
 
