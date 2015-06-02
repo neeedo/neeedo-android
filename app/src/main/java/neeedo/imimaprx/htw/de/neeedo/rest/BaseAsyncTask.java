@@ -20,6 +20,10 @@ public abstract class BaseAsyncTask extends AsyncTask {
         SUCCESS, FAILED
     }
 
+    public enum SendMode {
+        CREATE, UPDATE
+    }
+
 
     private EventService eventService = EventService.getInstance();
 

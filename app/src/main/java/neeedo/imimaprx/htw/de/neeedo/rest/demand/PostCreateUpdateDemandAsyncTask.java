@@ -17,40 +17,59 @@ import neeedo.imimaprx.htw.de.neeedo.entities.SingleDemand;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
-import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 import neeedo.imimaprx.htw.de.neeedo.rest.BaseAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
-public class GetPostDemandAsyncTask extends BaseAsyncTask {
+public class PostCreateUpdateDemandAsyncTask extends BaseAsyncTask {
+
+    private SendMode sendMode;
+
+
+    /**
+     * Mode of sending UPDATE or CREATE is needed, available in {@link BaseAsyncTask}
+     *
+     * @param sendMode
+     */
+    public PostCreateUpdateDemandAsyncTask(SendMode sendMode) {
+        if (sendMode == null) {
+            throw new IllegalArgumentException("No mode is given.");
+        }
+        this.sendMode = sendMode;
+    }
+
     @Override
     protected Object doInBackground(Object[] params) {
         try {
-            final String url = ServerConstantsUtils.getActiveServer() + "demands";
-
+            String url = ServerConstantsUtils.getActiveServer();
             DemandsModel demandsModel = DemandsModel.getInstance();
             final ActiveUser activeUser = ActiveUser.getInstance();
+            Demand postDemand = demandsModel.getPostDemand();
+            switch (sendMode) {
+                case CREATE: {
+                    url += "demands";
+                }
+                break;
+                case UPDATE: {
+                    url += "demands/" + postDemand.getId() + "/" + postDemand.getVersion();
+                    //to avoid to include these in the json
+                    postDemand.setId(null);
+                    postDemand.setVersion(0);
 
+                }
+            }
             HttpBasicAuthentication authentication = new HttpBasicAuthentication(activeUser.getUsername(), activeUser.getUserPassword());
-
             HttpHeaders requestHeaders = new HttpHeaders();
-
             requestHeaders.setAuthorization(authentication);
             requestHeaders.setContentType(MediaType.APPLICATION_JSON);
-
-            HttpEntity<Demand> requestEntity = new HttpEntity<Demand>(demandsModel.getPostDemand(), requestHeaders);
-
+            HttpEntity<Demand> requestEntity = new HttpEntity<Demand>(postDemand, requestHeaders);
             RestTemplate restTemplate = new RestTemplate(HttpRequestFactoryProviderImpl.getClientHttpRequestFactorySSLSupport(9000));
-
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-
             ResponseEntity<SingleDemand> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, SingleDemand.class);
-
             SingleDemand singleDemand = response.getBody();
             demandsModel.setSingleDemand(singleDemand);
-
-            //Is needed to merge {@link SingleDemand} object into demands list.
             demandsModel.getDemands().getDemands().add(singleDemand.getDemand());
-
+            demandsModel.setPostDemand(null);
             return ReturnTyp.SUCCESS;
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);

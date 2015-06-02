@@ -19,7 +19,6 @@ public class DeleteAsyncTask extends BaseAsyncTask {
     private EntityTyp entityTyp;
     private BaseEntity baseEntity;
 
-
     /**
      * Needs the Entity enum Type defined in {@link BaseAsyncTask} and the Entity to delete.
      *
@@ -31,7 +30,6 @@ public class DeleteAsyncTask extends BaseAsyncTask {
         if (baseEntity == null | entityTyp == null) {
             throw new IllegalArgumentException("Invalid arguments given.");
         }
-
         this.entityTyp = entityTyp;
         this.baseEntity = baseEntity;
     }
@@ -39,9 +37,7 @@ public class DeleteAsyncTask extends BaseAsyncTask {
     @Override
     protected Object doInBackground(Object[] params) {
         try {
-
             String url = ServerConstantsUtils.getActiveServer();
-
             switch (entityTyp) {
 
                 case DEMAND: {
@@ -61,7 +57,6 @@ public class DeleteAsyncTask extends BaseAsyncTask {
                     url += "usersd/" + user.getId() + "/" + user.getVersion();
                 }
                 break;
-
             }
 
             final ActiveUser activeUser = ActiveUser.getInstance();

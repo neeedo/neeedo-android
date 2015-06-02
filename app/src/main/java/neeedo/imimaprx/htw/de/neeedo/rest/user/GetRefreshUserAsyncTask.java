@@ -37,46 +37,30 @@ public class GetRefreshUserAsyncTask extends AsyncTask {
     protected Object doInBackground(Object[] params) {
         try {
             String url = ServerConstantsUtils.getActiveServer() + "users/mail/";
-
             url += username;
-
             HttpBasicAuthentication authentication = new HttpBasicAuthentication(username, password);
-
             HttpHeaders requestHeaders = new HttpHeaders();
-
             requestHeaders.setAuthorization(authentication);
             HttpEntity<?> requestEntity = new HttpEntity<Object>(requestHeaders);
-
             RestTemplate restTemplate = new RestTemplate(HttpRequestFactoryProviderImpl.getClientHttpRequestFactorySSLSupport(5000));
-
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-
-            ResponseEntity<SingleUser> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity,
-                    SingleUser.class);
-
+            ResponseEntity<SingleUser> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, SingleUser.class);
             SingleUser singleUser = responseEntity.getBody();
-
             activeUser.setUsername(username);
             activeUser.setUserPassword(password);
-
             UserModel.getInstance().setUser(singleUser.getUser());
-
             loginActivity.finish();
-
             return BaseAsyncTask.ReturnTyp.SUCCESS;
 
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
-
             activeUser.clearUserInformation();
-
             loginActivity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     loginActivity.setWrongCredentials();
                 }
             });
-
             return BaseAsyncTask.ReturnTyp.FAILED;
         }
     }

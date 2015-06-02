@@ -19,7 +19,7 @@ import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 import neeedo.imimaprx.htw.de.neeedo.rest.BaseAsyncTask;
 
 
-public class HttpUpdateUserAsyncTask extends BaseAsyncTask {
+public class GetUpdateInformationUserAsyncTask extends BaseAsyncTask {
     //TODO remove all the "HTTP" from class names
 
     @Override
@@ -27,21 +27,14 @@ public class HttpUpdateUserAsyncTask extends BaseAsyncTask {
         try {
             UserModel userModel = UserModel.getInstance();
             User user = userModel.getUser();
-
             final String url = ServerConstantsUtils.getActiveServer() + "users/" + user.getId() + "/" + user.getVersion();
-
             HttpHeaders requestHeaders = new HttpHeaders();
             requestHeaders.setContentType(MediaType.APPLICATION_JSON);
-
             HttpEntity<User> requestEntity = new HttpEntity<User>(userModel.getUser(), requestHeaders);
-
             RestTemplate restTemplate = new RestTemplate(HttpRequestFactoryProviderImpl.getClientHttpRequestFactorySSLSupport(9000));
-
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-
             ResponseEntity<SingleUser> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, SingleUser.class);
-
             SingleUser singleUser = response.getBody();
             userModel.setUser(singleUser.getUser());
 

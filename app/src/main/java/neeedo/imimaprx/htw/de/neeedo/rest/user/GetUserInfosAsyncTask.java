@@ -20,43 +20,27 @@ import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
 public class GetUserInfosAsyncTask extends AsyncTask {
 
-
     final ActiveUser activeUser = ActiveUser.getInstance();
 
     @Override
     protected Object doInBackground(Object[] params) {
         try {
-
-
             String url = ServerConstantsUtils.getActiveServer() + "users/mail/";
-
             url += activeUser.getUsername();
-
             HttpBasicAuthentication authentication = new HttpBasicAuthentication(activeUser.getUsername(), activeUser.getUserPassword());
-
             HttpHeaders requestHeaders = new HttpHeaders();
-
             requestHeaders.setAuthorization(authentication);
             HttpEntity<?> requestEntity = new HttpEntity<Object>(requestHeaders);
-
             RestTemplate restTemplate = new RestTemplate(HttpRequestFactoryProviderImpl.getClientHttpRequestFactorySSLSupport(5000));
-
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-
-            ResponseEntity<SingleUser> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity,
-                    SingleUser.class);
-
+            ResponseEntity<SingleUser> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, SingleUser.class);
             SingleUser singleUser = responseEntity.getBody();
-
             UserModel.getInstance().setUser(singleUser.getUser());
-
             return BaseAsyncTask.ReturnTyp.SUCCESS;
 
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
-
             activeUser.clearUserInformation();
-
             return BaseAsyncTask.ReturnTyp.FAILED;
         }
     }

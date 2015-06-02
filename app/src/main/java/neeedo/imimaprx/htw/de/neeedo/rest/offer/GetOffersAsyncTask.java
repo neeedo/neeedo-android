@@ -36,7 +36,6 @@ public class GetOffersAsyncTask extends BaseAsyncTask {
         if (getEntitiesMode == null) {
             throw new IllegalArgumentException("No Mode given.");
         }
-
         this.getEntitiesMode = getEntitiesMode;
     }
 
@@ -45,41 +44,32 @@ public class GetOffersAsyncTask extends BaseAsyncTask {
     protected Object doInBackground(Object[] params) {
         try {
 
-
             HttpHeaders requestHeaders = new HttpHeaders();
             String url = ServerConstantsUtils.getActiveServer();
+            switch (getEntitiesMode) {
+                case GET_BY_USER: {
+                    url += "offers/users/" + UserModel.getInstance().getUser().getId();
+                    final ActiveUser activeUser = ActiveUser.getInstance();
+                    HttpBasicAuthentication authentication = new HttpBasicAuthentication(activeUser.getUsername(), activeUser.getUserPassword());
+                    requestHeaders.setAuthorization(authentication);
+                }
+                break;
 
-            //Case get all offers to the user ID in ActiveUser
-            if (getEntitiesMode == GetEntitiesMode.GET_BY_USER) {
-                url += "offers/users/" + UserModel.getInstance().getUser().getId();
-                final ActiveUser activeUser = ActiveUser.getInstance();
-                HttpBasicAuthentication authentication = new HttpBasicAuthentication(activeUser.getUsername(), activeUser.getUserPassword());
-                requestHeaders.setAuthorization(authentication);
-            }
-
-            //Get Random pool of offers, no authentication needed
-            if (getEntitiesMode == GetEntitiesMode.GET_RANDOM) {
-                url += "offers";
+                case GET_RANDOM: {
+                    url += "offers";
+                }
+                break;
             }
 
             List<MediaType> acceptableMediaTypes = new ArrayList<>();
             acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
             requestHeaders.setAccept(acceptableMediaTypes);
-
             HttpEntity<?> requestEntity = new HttpEntity<Object>(requestHeaders);
-
             RestTemplate restTemplate = new RestTemplate(HttpRequestFactoryProviderImpl.getClientHttpRequestFactorySSLSupport(5000));
-
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-
-            ResponseEntity<Offers> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity,
-                    Offers.class);
-
+            ResponseEntity<Offers> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, Offers.class);
             final Offers offers = responseEntity.getBody();
-
             OffersModel.getInstance().setOffers(offers);
-
-
             return ReturnTyp.SUCCESS;
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
