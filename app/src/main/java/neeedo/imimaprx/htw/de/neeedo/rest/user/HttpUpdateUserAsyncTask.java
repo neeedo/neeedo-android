@@ -45,10 +45,10 @@ public class HttpUpdateUserAsyncTask extends BaseAsyncTask {
             SingleUser singleUser = response.getBody();
             userModel.setUser(singleUser.getUser());
 
-            return "Success";
+            return ReturnTyp.SUCCESS;
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
-            return "Failed";
+            return ReturnTyp.FAILED;
         }
     }
 }

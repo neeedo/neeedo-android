@@ -8,11 +8,25 @@ import neeedo.imimaprx.htw.de.neeedo.service.EventService;
 
 public abstract class BaseAsyncTask extends AsyncTask {
 
+    public enum DemandsMode {
+        GET_BY_USER, GET_RANDOM
+    }
+
+    public enum EntityTyp {
+        DEMAND, OFFER, USER
+    }
+
+    public enum ReturnTyp {
+        SUCCESS, FAILED
+    }
+
+
     private EventService eventService = EventService.getInstance();
 
     @Override
     protected void onPostExecute(Object o) {
         eventService.post(new ServerResponseEvent());
     }
+
 
 }

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Root(name = "demands")
-public class Demands implements Serializable {
+public class Demands implements Serializable, BaseEntity {
 
     @Element
     private ArrayList<Demand> demands;

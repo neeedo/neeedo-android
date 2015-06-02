@@ -32,10 +32,10 @@ public class DeleteUserAsyncTask extends BaseAsyncTask {
 
             userModel.setUser(null);
 
-            return "Success";
+            return ReturnTyp.SUCCESS;
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
-            return "Failed";
+            return ReturnTyp.FAILED;
         }
     }
 }

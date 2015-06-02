@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 @Root(name = "offer")
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Offer implements Serializable {
+public class Offer implements Serializable, BaseEntity {
 
     @Element
     private String id;

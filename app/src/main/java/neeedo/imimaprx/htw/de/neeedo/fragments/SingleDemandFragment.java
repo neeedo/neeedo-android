@@ -15,7 +15,7 @@ import neeedo.imimaprx.htw.de.neeedo.entities.Demand;
 import neeedo.imimaprx.htw.de.neeedo.entities.Demands;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
-import neeedo.imimaprx.htw.de.neeedo.rest.demand.GetDemandsByUserIDAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.demand.GetDemandsAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.BaseAsyncTask;
 
 
@@ -40,7 +40,7 @@ public class SingleDemandFragment extends SuperFragment {
 
         BaseAsyncTask asyncTask;
 
-        asyncTask = new GetDemandsByUserIDAsyncTask();
+        asyncTask = new GetDemandsAsyncTask();
         asyncTask.execute();
     }
 

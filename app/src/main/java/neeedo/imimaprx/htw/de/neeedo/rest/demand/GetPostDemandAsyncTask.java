@@ -51,10 +51,10 @@ public class GetPostDemandAsyncTask extends BaseAsyncTask {
             //Is needed to merge {@link SingleDemand} object into demands list.
             demandsModel.getDemands().getDemands().add(singleDemand.getDemand());
 
-            return "Success";
+            return ReturnTyp.SUCCESS;
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
-            return "Failed";
+            return ReturnTyp.FAILED;
         }
     }
 }

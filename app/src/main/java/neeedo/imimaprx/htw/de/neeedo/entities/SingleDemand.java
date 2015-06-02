@@ -6,7 +6,7 @@ import org.simpleframework.xml.Root;
 import java.io.Serializable;
 
 @Root(name = "demand")
-public class SingleDemand implements Serializable {
+public class SingleDemand implements Serializable, BaseEntity {
 
     @Element
     private Demand demand;

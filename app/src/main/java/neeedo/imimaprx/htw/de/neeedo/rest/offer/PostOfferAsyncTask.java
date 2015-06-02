@@ -51,10 +51,10 @@ public class PostOfferAsyncTask extends BaseAsyncTask {
             //Is needed to merge {@link SingleOffer} object into offers list.
             offersModel.getOffers().getOffers().add(singleOffer.getOffer());
 
-            return "Success";
+            return ReturnTyp.SUCCESS;
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
-            return "Failed";
+            return ReturnTyp.FAILED;
         }
     }
 }

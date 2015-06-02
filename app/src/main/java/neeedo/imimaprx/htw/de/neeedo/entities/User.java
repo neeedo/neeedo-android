@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 @Root(name = "user")
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class User implements Serializable {
+public class User implements Serializable, BaseEntity {
 
     @Element
     private String id = "";

@@ -6,7 +6,7 @@ import org.simpleframework.xml.Root;
 import java.io.Serializable;
 
 @Root(name = "user")
-public class SingleUser implements Serializable {
+public class SingleUser implements Serializable, BaseEntity {
 
     @Element
     private User user;

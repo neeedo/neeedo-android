@@ -1,8 +1,8 @@
 package neeedo.imimaprx.htw.de.neeedo.rest.demand;
 
+
 import android.util.Log;
 
-import org.springframework.http.HttpBasicAuthentication;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -16,26 +16,22 @@ import java.util.List;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.Demands;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
-import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
-import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 import neeedo.imimaprx.htw.de.neeedo.rest.BaseAsyncTask;
 
-public class GetDemandsByUserIDAsyncTask extends BaseAsyncTask {
+public class GetMatchingDemandsAsyncTask extends BaseAsyncTask {
+
+
+
+
     @Override
     protected Object doInBackground(Object[] params) {
         try {
-
-            final String url = ServerConstantsUtils.getActiveServer() + "demands/users/" + UserModel.getInstance().getUser().getId();;
-
-            final ActiveUser activeUser = ActiveUser.getInstance();
-
-            HttpBasicAuthentication authentication = new HttpBasicAuthentication(activeUser.getUsername(), activeUser.getUserPassword());
+            final String url = ServerConstantsUtils.getActiveServer() + "matching/demands";
 
             HttpHeaders requestHeaders = new HttpHeaders();
 
-            requestHeaders.setAuthorization(authentication);
             List<MediaType> acceptableMediaTypes = new ArrayList<>();
             acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
             requestHeaders.setAccept(acceptableMediaTypes);
@@ -49,16 +45,16 @@ public class GetDemandsByUserIDAsyncTask extends BaseAsyncTask {
             ResponseEntity<Demands> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity,
                     Demands.class);
 
-            final Demands demands = responseEntity.getBody();
+            Demands demands = responseEntity.getBody();
 
             DemandsModel.getInstance().setDemands(demands);
 
+            return ReturnTyp.SUCCESS;
 
-            return "Success"; //TODO use proper entities
+
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
-            return "Failed";//TODO use proper entities
+            return ReturnTyp.FAILED;
         }
     }
-
 }

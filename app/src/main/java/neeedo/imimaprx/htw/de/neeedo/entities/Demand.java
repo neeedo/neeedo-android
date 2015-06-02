@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 @Root(name = "demand")
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Demand implements Serializable {
+public class Demand implements Serializable, BaseEntity {
 
     @Element
     private String id;

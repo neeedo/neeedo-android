@@ -6,7 +6,7 @@ import org.simpleframework.xml.Root;
 import java.io.Serializable;
 
 @Root(name = "offer")
-public class SingleOffer implements Serializable {
+public class SingleOffer implements Serializable, BaseEntity {
 
     @Element
     private Offer offer;

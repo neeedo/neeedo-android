@@ -22,7 +22,7 @@ import neeedo.imimaprx.htw.de.neeedo.entities.Demands;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
-import neeedo.imimaprx.htw.de.neeedo.rest.demand.GetDemandsByUserIDAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.demand.GetDemandsAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.BaseAsyncTask;
 
 public class ListDemandsFragment extends SuperFragment {
@@ -55,7 +55,7 @@ public class ListDemandsFragment extends SuperFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        BaseAsyncTask asyncTask = new GetDemandsByUserIDAsyncTask();
+        BaseAsyncTask asyncTask = new GetDemandsAsyncTask();
         asyncTask.execute();
     }
 

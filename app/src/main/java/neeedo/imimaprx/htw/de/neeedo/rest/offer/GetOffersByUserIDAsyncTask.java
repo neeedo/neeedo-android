@@ -54,10 +54,10 @@ public class GetOffersByUserIDAsyncTask extends BaseAsyncTask {
             OffersModel.getInstance().setOffers(offers);
 
 
-            return "Success"; //TODO use proper entities
+            return ReturnTyp.SUCCESS;
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
-            return "Failed";//TODO use proper entities
+            return ReturnTyp.FAILED;
         }
     }
 }
