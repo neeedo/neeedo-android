@@ -42,6 +42,7 @@ public class PostCreateUpdateOfferAsyncTask extends BaseAsyncTask {
         try {
             String url = ServerConstantsUtils.getActiveServer();
             OffersModel offersModel = OffersModel.getInstance();
+            HttpMethod httpMethod = HttpMethod.POST;
             final ActiveUser activeUser = ActiveUser.getInstance();
             Offer postOffer = offersModel.getPostOffer();
 
@@ -55,7 +56,7 @@ public class PostCreateUpdateOfferAsyncTask extends BaseAsyncTask {
                     //to avoid to include these in the json
                     postOffer.setId(null);
                     postOffer.setVersion(0);
-
+                    httpMethod = HttpMethod.PUT;
                 }
             }
 
@@ -67,7 +68,7 @@ public class PostCreateUpdateOfferAsyncTask extends BaseAsyncTask {
             RestTemplate restTemplate = new RestTemplate(HttpRequestFactoryProviderImpl.getClientHttpRequestFactorySSLSupport(9000));
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-            ResponseEntity<SingleOffer> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, SingleOffer.class);
+            ResponseEntity<SingleOffer> response = restTemplate.exchange(url, httpMethod, requestEntity, SingleOffer.class);
             SingleOffer singleOffer = response.getBody();
             offersModel.setSingleOffer(singleOffer);
             offersModel.getOffers().getOffers().add(singleOffer.getOffer());

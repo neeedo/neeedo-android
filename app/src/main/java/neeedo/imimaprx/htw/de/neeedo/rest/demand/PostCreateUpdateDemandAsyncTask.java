@@ -41,6 +41,7 @@ public class PostCreateUpdateDemandAsyncTask extends BaseAsyncTask {
     protected Object doInBackground(Object[] params) {
         try {
             String url = ServerConstantsUtils.getActiveServer();
+            HttpMethod httpMethod = HttpMethod.POST;
             DemandsModel demandsModel = DemandsModel.getInstance();
             final ActiveUser activeUser = ActiveUser.getInstance();
             Demand postDemand = demandsModel.getPostDemand();
@@ -54,6 +55,7 @@ public class PostCreateUpdateDemandAsyncTask extends BaseAsyncTask {
                     //to avoid to include these in the json
                     postDemand.setId(null);
                     postDemand.setVersion(0);
+                    httpMethod = HttpMethod.PUT;
 
                 }
             }
@@ -65,7 +67,7 @@ public class PostCreateUpdateDemandAsyncTask extends BaseAsyncTask {
             RestTemplate restTemplate = new RestTemplate(HttpRequestFactoryProviderImpl.getClientHttpRequestFactorySSLSupport(9000));
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-            ResponseEntity<SingleDemand> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, SingleDemand.class);
+            ResponseEntity<SingleDemand> response = restTemplate.exchange(url, httpMethod, requestEntity, SingleDemand.class);
             SingleDemand singleDemand = response.getBody();
             demandsModel.setSingleDemand(singleDemand);
             demandsModel.getDemands().getDemands().add(singleDemand.getDemand());

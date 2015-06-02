@@ -48,6 +48,7 @@ public class PostCreateUpdateUserAsyncTask extends AsyncTask {
         try {
             String url = ServerConstantsUtils.getActiveServer();
             UserModel userModel = UserModel.getInstance();
+            HttpMethod httpMethod = HttpMethod.POST;
             HttpHeaders requestHeaders = new HttpHeaders();
             User user = userModel.getUser();
 
@@ -61,7 +62,7 @@ public class PostCreateUpdateUserAsyncTask extends AsyncTask {
                     //to avoid to include these in the json
                     user.setId(null);
                     user.setVersion(0);
-
+                    httpMethod = HttpMethod.PUT;
                     //Update needs authentification
                     HttpBasicAuthentication authentication = new HttpBasicAuthentication(activeUser.getUsername(), activeUser.getUserPassword());
                     requestHeaders.setAuthorization(authentication);
@@ -74,7 +75,7 @@ public class PostCreateUpdateUserAsyncTask extends AsyncTask {
             RestTemplate restTemplate = new RestTemplate(HttpRequestFactoryProviderImpl.getClientHttpRequestFactorySSLSupport(9000));
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-            ResponseEntity<SingleUser> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, SingleUser.class);
+            ResponseEntity<SingleUser> response = restTemplate.exchange(url, httpMethod, requestEntity, SingleUser.class);
 
             SingleUser singleUser = response.getBody();
             userModel.putCurrentLoginInformationInActiveUser();
