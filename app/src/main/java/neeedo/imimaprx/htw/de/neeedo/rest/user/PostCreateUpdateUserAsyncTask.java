@@ -66,8 +66,8 @@ public class PostCreateUpdateUserAsyncTask extends AsyncTask {
                     //Update needs authentification
                     HttpBasicAuthentication authentication = new HttpBasicAuthentication(activeUser.getUsername(), activeUser.getUserPassword());
                     requestHeaders.setAuthorization(authentication);
-
                 }
+                break;
             }
 
             requestHeaders.setContentType(MediaType.APPLICATION_JSON);

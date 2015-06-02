@@ -56,8 +56,8 @@ public class PostCreateUpdateDemandAsyncTask extends BaseAsyncTask {
                     postDemand.setId(null);
                     postDemand.setVersion(0);
                     httpMethod = HttpMethod.PUT;
-
                 }
+                break;
             }
             HttpBasicAuthentication authentication = new HttpBasicAuthentication(activeUser.getUsername(), activeUser.getUserPassword());
             HttpHeaders requestHeaders = new HttpHeaders();

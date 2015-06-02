@@ -58,6 +58,7 @@ public class PostCreateUpdateOfferAsyncTask extends BaseAsyncTask {
                     postOffer.setVersion(0);
                     httpMethod = HttpMethod.PUT;
                 }
+                break;
             }
 
             HttpBasicAuthentication authentication = new HttpBasicAuthentication(activeUser.getUsername(), activeUser.getUserPassword());
