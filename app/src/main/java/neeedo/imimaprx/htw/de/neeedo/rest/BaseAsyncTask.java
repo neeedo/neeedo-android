@@ -23,7 +23,7 @@ public abstract class BaseAsyncTask extends AsyncTask {
         CREATE, UPDATE
     }
 
-    private EventService eventService = EventService.getInstance();
+    protected EventService eventService = EventService.getInstance();
 
     @Override
     protected void onPostExecute(Object o) {

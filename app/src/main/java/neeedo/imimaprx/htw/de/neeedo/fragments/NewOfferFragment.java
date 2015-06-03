@@ -17,7 +17,6 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
-import com.squareup.otto.Subscribe;
 
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
@@ -28,13 +27,10 @@ import java.io.File;
 import neeedo.imimaprx.htw.de.neeedo.LoginActivity;
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.Location;
-import neeedo.imimaprx.htw.de.neeedo.entities.SingleOffer;
-import neeedo.imimaprx.htw.de.neeedo.events.NewProductInfosRequestedEvent;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.SendNewOfferHandler;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.StartCameraHandler;
 import neeedo.imimaprx.htw.de.neeedo.helpers.LocationHelper;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
-import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.outpan.GetOutpanByEANAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.utils.ImageUtils;
 import neeedo.imimaprx.htw.de.neeedo.vo.RequestCodes;
@@ -68,7 +64,7 @@ public class NewOfferFragment extends SuperFragment {
         locationLongitude = currentLocation.getLon();
         locationAvailable = locationHelper.isLocationAvailable();
 
-        if (!activeUser.userInformationLoaded()) {
+        if (!activeUser.userCredentialsAvailable()) {
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);
         }

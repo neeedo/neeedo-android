@@ -45,7 +45,6 @@ public class MainActivity extends ActionBarActivity
 
         initSingletons();
         attempLogin();
-
     }
 
     @Override
@@ -56,14 +55,8 @@ public class MainActivity extends ActionBarActivity
     }
 
     private void attempLogin() {
-        ActiveUser activeUser = ActiveUser.getInstance();
-        activeUser.setContext(getApplicationContext());
-        activeUser.loadValuesFromPreferences();
-
-        if (activeUser.userInformationLoaded()) {
-
+        if (activeUser.userCredentialsAvailable()) {
             new GetUserInfosAsyncTask().execute();
-            //@TODO if success replace login button with logout
         }
     }
 

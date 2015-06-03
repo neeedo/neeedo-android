@@ -92,7 +92,7 @@ public class ActiveUser {
         }
     }
 
-    public boolean userInformationLoaded() {
+    public boolean userCredentialsAvailable() {
         if (userPassword.equals("") | username.equals("")) {
             return false;
         }

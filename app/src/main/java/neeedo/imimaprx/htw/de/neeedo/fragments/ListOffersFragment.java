@@ -34,7 +34,7 @@ public class ListOffersFragment extends SuperFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (!activeUser.userInformationLoaded()) {
+        if (!activeUser.userCredentialsAvailable()) {
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);
             // TODO reload view after login

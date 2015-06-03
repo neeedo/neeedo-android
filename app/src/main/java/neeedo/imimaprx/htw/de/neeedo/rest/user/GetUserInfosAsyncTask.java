@@ -12,13 +12,15 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.client.RestTemplate;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.SingleUser;
+import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
+import neeedo.imimaprx.htw.de.neeedo.events.UserStateChangedEvent;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
-public class GetUserInfosAsyncTask extends AsyncTask {
+public class GetUserInfosAsyncTask extends BaseAsyncTask {
 
     final ActiveUser activeUser = ActiveUser.getInstance();
 
@@ -47,6 +49,6 @@ public class GetUserInfosAsyncTask extends AsyncTask {
 
     @Override
     protected void onPostExecute(Object o) {
-        super.onPostExecute(o);
+        eventService.post(new UserStateChangedEvent());
     }
 }
