@@ -1,4 +1,4 @@
-package neeedo.imimaprx.htw.de.neeedo.rest.outpan;
+package neeedo.imimaprx.htw.de.neeedo.rest;
 
 import android.util.Log;
 
@@ -20,40 +20,52 @@ import neeedo.imimaprx.htw.de.neeedo.entities.SingleOffer;
 import neeedo.imimaprx.htw.de.neeedo.events.NewProductInfosRequestedEvent;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
-import neeedo.imimaprx.htw.de.neeedo.rest.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.service.EventService;
-import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
 
-public class GetOutpanByEANAsyncTask extends BaseAsyncTask {
+public class HttpGetOutpanByEANAsyncTask extends SuperHttpAsyncTask {
 
 
     private final String ean;
 
-    public GetOutpanByEANAsyncTask(String ean) {
+    public HttpGetOutpanByEANAsyncTask(String ean) {
         this.ean = ean.trim();
     }
 
 
     protected Object doInBackground(Object[] params) {
         try {
-            final String url = ServerConstantsUtils.getOutpanServer() + ean;
+
+            final String url = ServerConstants.getOutpanServer() + ean;
+
             HttpBasicAuthentication authentication = new HttpBasicAuthentication("e9e42347c7677fede70a1761c1737de1:", "");
+
             HttpHeaders requestHeaders = new HttpHeaders();
+
             requestHeaders.setAuthorization(authentication);
+
             List<MediaType> acceptableMediaTypes = new ArrayList<>();
             acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
             requestHeaders.setAccept(acceptableMediaTypes);
+
             HttpEntity<?> requestEntity = new HttpEntity<Object>(requestHeaders);
+
             RestTemplate restTemplate = new RestTemplate(HttpRequestFactoryProviderImpl.getClientHttpRequestFactorySSLSupport(5000));
+
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-            ResponseEntity<Article> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, Article.class);
+
+            ResponseEntity<Article> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity,
+                    Article.class);
+
             final Article article = responseEntity.getBody();
+
             setOfferFromArticle(article);
-            return ReturnTyp.SUCCESS;
+
+            return "Success"; //TODO use proper entities
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
-            return ReturnTyp.FAILED;
+
+            return "Failed";//TODO use proper entities
         }
     }
 
@@ -65,7 +77,8 @@ public class GetOutpanByEANAsyncTask extends BaseAsyncTask {
     private void setOfferFromArticle(Article article) {
         SingleOffer singleOffer = new SingleOffer();
         Offer offer = new Offer();
-        if (!(article.getName() == null)) {
+
+        if(!(article.getName() == null)) {
             String[] tempTags = article.getName().split("[ ]+");
             ArrayList<String> tags = new ArrayList<>();
             for (String s : tempTags) {
@@ -75,8 +88,7 @@ public class GetOutpanByEANAsyncTask extends BaseAsyncTask {
             singleOffer.setOffer(offer);
             OffersModel.getInstance().setImageUrlList(article.getImages());
         }
+
         OffersModel.getInstance().setSingleOffer(singleOffer);
     }
-
-
 }
