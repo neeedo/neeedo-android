@@ -36,12 +36,12 @@ public class GetUserInfosAsyncTask extends AsyncTask {
             ResponseEntity<SingleUser> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, SingleUser.class);
             SingleUser singleUser = responseEntity.getBody();
             UserModel.getInstance().setUser(singleUser.getUser());
-            return BaseAsyncTask.ReturnTyp.SUCCESS;
+            return BaseAsyncTask.ReturnType.SUCCESS;
 
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
             activeUser.clearUserInformation();
-            return BaseAsyncTask.ReturnTyp.FAILED;
+            return BaseAsyncTask.ReturnType.FAILED;
         }
     }
 

@@ -70,10 +70,10 @@ public class GetOffersAsyncTask extends BaseAsyncTask {
             ResponseEntity<Offers> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, Offers.class);
             final Offers offers = responseEntity.getBody();
             OffersModel.getInstance().setOffers(offers);
-            return ReturnTyp.SUCCESS;
+            return ReturnType.SUCCESS;
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
-            return ReturnTyp.FAILED;
+            return ReturnType.FAILED;
         }
     }
 }

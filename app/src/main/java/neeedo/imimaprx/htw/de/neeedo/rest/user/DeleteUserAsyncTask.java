@@ -25,10 +25,10 @@ public class DeleteUserAsyncTask extends BaseAsyncTask {
             RestTemplate restTemplate = new RestTemplate(HttpRequestFactoryProviderImpl.getClientHttpRequestFactorySSLSupport(4000));
             restTemplate.delete(url);
             userModel.setUser(null);
-            return ReturnTyp.SUCCESS;
+            return ReturnType.SUCCESS;
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
-            return ReturnTyp.FAILED;
+            return ReturnType.FAILED;
         }
     }
 }

@@ -48,10 +48,10 @@ public class GetOutpanByEANAsyncTask extends BaseAsyncTask {
             ResponseEntity<Article> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, Article.class);
             final Article article = responseEntity.getBody();
             setOfferFromArticle(article);
-            return ReturnTyp.SUCCESS;
+            return ReturnType.SUCCESS;
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
-            return ReturnTyp.FAILED;
+            return ReturnType.FAILED;
         }
     }
 

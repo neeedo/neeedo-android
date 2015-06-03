@@ -74,10 +74,10 @@ public class PostCreateUpdateOfferAsyncTask extends BaseAsyncTask {
             offersModel.setSingleOffer(singleOffer);
             offersModel.getOffers().getOffers().add(singleOffer.getOffer());
             offersModel.setPostOffer(null);
-            return ReturnTyp.SUCCESS;
+            return ReturnType.SUCCESS;
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
-            return ReturnTyp.FAILED;
+            return ReturnType.FAILED;
         }
     }
 }

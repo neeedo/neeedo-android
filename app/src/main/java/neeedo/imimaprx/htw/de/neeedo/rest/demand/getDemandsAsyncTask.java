@@ -60,10 +60,10 @@ public class GetDemandsAsyncTask extends BaseAsyncTask {
             ResponseEntity<Demands> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, Demands.class);
             final Demands demands = responseEntity.getBody();
             DemandsModel.getInstance().setDemands(demands);
-            return ReturnTyp.SUCCESS;
+            return ReturnType.SUCCESS;
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
-            return ReturnTyp.FAILED;
+            return ReturnType.FAILED;
         }
     }
 

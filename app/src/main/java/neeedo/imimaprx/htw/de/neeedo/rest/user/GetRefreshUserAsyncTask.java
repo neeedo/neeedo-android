@@ -50,7 +50,7 @@ public class GetRefreshUserAsyncTask extends AsyncTask {
             activeUser.setUserPassword(password);
             UserModel.getInstance().setUser(singleUser.getUser());
             loginActivity.finish();
-            return BaseAsyncTask.ReturnTyp.SUCCESS;
+            return BaseAsyncTask.ReturnType.SUCCESS;
 
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
@@ -61,7 +61,7 @@ public class GetRefreshUserAsyncTask extends AsyncTask {
                     loginActivity.setWrongCredentials();
                 }
             });
-            return BaseAsyncTask.ReturnTyp.FAILED;
+            return BaseAsyncTask.ReturnType.FAILED;
         }
     }
 

@@ -82,7 +82,7 @@ public class PostCreateUpdateUserAsyncTask extends AsyncTask {
             userModel.setUser(singleUser.getUser());
 
             loginActivity.finish();
-            return BaseAsyncTask.ReturnTyp.SUCCESS;
+            return BaseAsyncTask.ReturnType.SUCCESS;
 
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
@@ -93,7 +93,7 @@ public class PostCreateUpdateUserAsyncTask extends AsyncTask {
                     loginActivity.setEmailAlreadyInUse();
                 }
             });
-            return BaseAsyncTask.ReturnTyp.FAILED;
+            return BaseAsyncTask.ReturnType.FAILED;
         }
     }
 }

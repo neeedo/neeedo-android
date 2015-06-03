@@ -12,11 +12,11 @@ public abstract class BaseAsyncTask extends AsyncTask {
         GET_BY_USER, GET_RANDOM
     }
 
-    public enum EntityTyp {
+    public enum EntityType {
         DEMAND, OFFER, USER
     }
 
-    public enum ReturnTyp {
+    public enum ReturnType {
         SUCCESS, FAILED
     }
 

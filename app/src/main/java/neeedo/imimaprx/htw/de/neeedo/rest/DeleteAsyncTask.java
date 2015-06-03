@@ -16,21 +16,21 @@ import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
 public class DeleteAsyncTask extends BaseAsyncTask {
 
-    private EntityTyp entityTyp;
+    private EntityType entityType;
     private BaseEntity baseEntity;
 
     /**
      * Needs the Entity enum Type defined in {@link BaseAsyncTask} and the Entity to delete.
      *
      * @param baseEntity
-     * @param entityTyp
+     * @param entityType
      */
-    public DeleteAsyncTask(BaseEntity baseEntity, EntityTyp entityTyp) {
+    public DeleteAsyncTask(BaseEntity baseEntity, EntityType entityType) {
 
-        if (baseEntity == null | entityTyp == null) {
+        if (baseEntity == null | entityType == null) {
             throw new IllegalArgumentException("Invalid arguments given.");
         }
-        this.entityTyp = entityTyp;
+        this.entityType = entityType;
         this.baseEntity = baseEntity;
     }
 
@@ -38,7 +38,7 @@ public class DeleteAsyncTask extends BaseAsyncTask {
     protected Object doInBackground(Object[] params) {
         try {
             String url = ServerConstantsUtils.getActiveServer();
-            switch (entityTyp) {
+            switch (entityType) {
 
                 case DEMAND: {
                     Demand demand = (Demand) baseEntity;
@@ -66,10 +66,10 @@ public class DeleteAsyncTask extends BaseAsyncTask {
             RestTemplate restTemplate = new RestTemplate(HttpRequestFactoryProviderImpl.getClientHttpRequestFactorySSLSupport(9000));
             restTemplate.delete(url);
 
-            return ReturnTyp.SUCCESS;
+            return ReturnType.SUCCESS;
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
-            return ReturnTyp.FAILED;
+            return ReturnType.FAILED;
         }
     }
 }
