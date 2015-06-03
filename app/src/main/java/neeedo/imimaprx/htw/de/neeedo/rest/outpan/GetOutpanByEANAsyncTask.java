@@ -1,6 +1,7 @@
 package neeedo.imimaprx.htw.de.neeedo.rest.outpan;
 
 import android.util.Log;
+import android.widget.EditText;
 
 import org.springframework.http.HttpBasicAuthentication;
 import org.springframework.http.HttpEntity;
@@ -28,8 +29,10 @@ import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 public class GetOutpanByEANAsyncTask extends BaseAsyncTask {
 
     private final String ean;
+    private final EditText etTags;
 
-    public GetOutpanByEANAsyncTask(String ean) {
+    public GetOutpanByEANAsyncTask(String ean, EditText etTags) {
+        this.etTags = etTags;
         this.ean = ean;
     }
 
@@ -46,8 +49,10 @@ public class GetOutpanByEANAsyncTask extends BaseAsyncTask {
             RestTemplate restTemplate = new RestTemplate(HttpRequestFactoryProviderImpl.getClientHttpRequestFactorySSLSupport(5000));
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             ResponseEntity<Article> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, Article.class);
-            final Article article = responseEntity.getBody();
-            setOfferFromArticle(article);
+
+            Article article = responseEntity.getBody();
+            etTags.setText(getTagsFromArticale(article));
+
             return ReturnType.SUCCESS;
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
@@ -57,22 +62,16 @@ public class GetOutpanByEANAsyncTask extends BaseAsyncTask {
 
     @Override
     protected void onPostExecute(Object o) {
-        EventService.getInstance().post(new NewProductInfosRequestedEvent());
     }
 
-    private void setOfferFromArticle(Article article) {
-        SingleOffer singleOffer = new SingleOffer();
-        Offer offer = new Offer();
+    private String getTagsFromArticale(Article article) {
+        String tagsString = "";
         if (!(article.getName() == null)) {
             String[] tempTags = article.getName().split("[ ]+");
-            ArrayList<String> tags = new ArrayList<>();
-            for (String s : tempTags) {
-                tags.add(s);
+            for (String currentTag : tempTags) {
+                tagsString += currentTag + " ";
             }
-            offer.setTags(tags);
-            singleOffer.setOffer(offer);
-            OffersModel.getInstance().setImageUrlList(article.getImages());
         }
-        OffersModel.getInstance().setSingleOffer(singleOffer);
+        return tagsString;
     }
 }

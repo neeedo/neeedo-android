@@ -83,7 +83,7 @@ public class NewOfferFragment extends SuperFragment {
         etLocationLat = (EditText) view.findViewById(R.id.etLocationLat);
         etLocationLon = (EditText) view.findViewById(R.id.etLocationLon);
         etPrice = (EditText) view.findViewById(R.id.etPrice);
-
+        btnBarcode = (Button) view.findViewById(R.id.newOffer_Barcode_Button);
         btnSubmit = (Button) view.findViewById(R.id.btnSubmit);
         addImageButton = (ImageButton) view.findViewById(R.id.addImageButton);
 
@@ -94,11 +94,8 @@ public class NewOfferFragment extends SuperFragment {
 
         photoFile = ImageUtils.getNewOutputImageFile();
 
-        btnBarcode = (Button) view.findViewById(R.id.newOffer_Barcode_Button);
-
         addImageButton.setOnClickListener(new StartCameraHandler(this, photoFile));
         btnSubmit.setOnClickListener(new SendNewOfferHandler(etTags, etLocationLat, etLocationLon, etPrice));
-
         btnBarcode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,7 +103,7 @@ public class NewOfferFragment extends SuperFragment {
                 integrator.setDesiredBarcodeFormats(IntentIntegrator.PRODUCT_CODE_TYPES);
                 integrator.setPrompt("Scan a barcode");
                 integrator.setResultDisplayDuration(0);
-                integrator.setCameraId(0);  // Use a specific camera of the device
+                integrator.setCameraId(0);
                 Intent barcodeScanIntent = integrator.createScanIntent();
                 startActivityForResult(barcodeScanIntent, RequestCodes.BARCODE_SCAN_REQUEST_CODE);
             }
@@ -163,24 +160,8 @@ public class NewOfferFragment extends SuperFragment {
             addImageButton.setImageBitmap(bitmap);
         } else if (requestCode == RequestCodes.BARCODE_SCAN_REQUEST_CODE) {
             String barcodeEAN = intent.getStringExtra("SCAN_RESULT");
-            GetOutpanByEANAsyncTask eanAsyncTask = new GetOutpanByEANAsyncTask(barcodeEAN);
+            GetOutpanByEANAsyncTask eanAsyncTask = new GetOutpanByEANAsyncTask(barcodeEAN ,etTags );
             eanAsyncTask.execute();
         }
     }
-
-    @Subscribe
-    public void handleNewProductInfos(NewProductInfosRequestedEvent e) {
-        SingleOffer singleOffer = OffersModel.getInstance().getSingleOffer();
-
-        String tags = "";
-
-        if (!(singleOffer.getOffer() == null)) {
-            for (String s : singleOffer.getOffer().getTags()) {
-                tags += s + ", ";
-            }
-
-            tags = tags.substring(0, tags.length() - 2);
-            etTags.setText(tags);
-        }
-    }
-}
+ }
