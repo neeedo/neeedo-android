@@ -17,7 +17,6 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
 import com.squareup.otto.Subscribe;
 
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
@@ -30,9 +29,7 @@ import neeedo.imimaprx.htw.de.neeedo.LoginActivity;
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.Location;
 import neeedo.imimaprx.htw.de.neeedo.entities.SingleOffer;
-import neeedo.imimaprx.htw.de.neeedo.events.NewEanNumberScannedEvent;
 import neeedo.imimaprx.htw.de.neeedo.events.NewProductInfosRequestedEvent;
-import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.SendNewOfferHandler;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.StartCameraHandler;
 import neeedo.imimaprx.htw.de.neeedo.helpers.LocationHelper;
@@ -106,7 +103,7 @@ public class NewOfferFragment extends SuperFragment {
             @Override
             public void onClick(View v) {
                 IntentIntegrator integrator = new IntentIntegrator(getActivity());
-                integrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
+                integrator.setDesiredBarcodeFormats(IntentIntegrator.PRODUCT_CODE_TYPES);
                 integrator.setPrompt("Scan a barcode");
                 integrator.setResultDisplayDuration(0);
                 integrator.setCameraId(0);  // Use a specific camera of the device
@@ -165,27 +162,10 @@ public class NewOfferFragment extends SuperFragment {
 
             addImageButton.setImageBitmap(bitmap);
         } else if (requestCode == RequestCodes.BARCODE_SCAN_REQUEST_CODE) {
-            IntentResult scanResult = IntentIntegrator.parseActivityResult(
-                    requestCode, resultCode, intent);
-
-            if (scanResult != null) {
-                System.out.println();  // handle scan result
-            }
-            System.out.println();
+            String barcodeEAN = intent.getStringExtra("SCAN_RESULT");
+            GetOutpanByEANAsyncTask eanAsyncTask = new GetOutpanByEANAsyncTask(barcodeEAN);
+            eanAsyncTask.execute();
         }
-    }
-
-    @Subscribe
-    public void handleServerResponse(ServerResponseEvent e) {
-        redirectToListFragment(super.OFFERS_LIST_KEY);
-    }
-
-    @Subscribe
-    public void handleNewEanNumberScanned(NewEanNumberScannedEvent e) {
-        String eanNumber = e.getEanNumber();
-
-        GetOutpanByEANAsyncTask eanAsyncTask = new GetOutpanByEANAsyncTask(eanNumber);
-        eanAsyncTask.execute();
     }
 
     @Subscribe
