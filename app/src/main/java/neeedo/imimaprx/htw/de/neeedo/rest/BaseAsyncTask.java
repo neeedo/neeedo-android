@@ -1,6 +1,5 @@
 package neeedo.imimaprx.htw.de.neeedo.rest;
 
-
 import android.os.AsyncTask;
 
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
@@ -24,13 +23,10 @@ public abstract class BaseAsyncTask extends AsyncTask {
         CREATE, UPDATE
     }
 
-
     private EventService eventService = EventService.getInstance();
 
     @Override
     protected void onPostExecute(Object o) {
         eventService.post(new ServerResponseEvent());
     }
-
-
 }
