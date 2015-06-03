@@ -24,14 +24,8 @@ import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
 public class GetDemandsAsyncTask extends BaseAsyncTask {
 
-
     private GetEntitiesMode getEntitiesMode;
 
-    /**
-     * Get the constant from enum in {@link BaseAsyncTask}
-     *
-     * @param getEntitiesMode
-     */  
     public GetDemandsAsyncTask(GetEntitiesMode getEntitiesMode) {
         if (getEntitiesMode == null) {
             throw new IllegalArgumentException("No Mode given.");
