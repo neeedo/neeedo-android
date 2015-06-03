@@ -27,13 +27,11 @@ import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
 public class GetOutpanByEANAsyncTask extends BaseAsyncTask {
 
-
     private final String ean;
 
     public GetOutpanByEANAsyncTask(String ean) {
-        this.ean = ean.trim();
+        this.ean = ean;
     }
-
 
     protected Object doInBackground(Object[] params) {
         try {
@@ -77,6 +75,4 @@ public class GetOutpanByEANAsyncTask extends BaseAsyncTask {
         }
         OffersModel.getInstance().setSingleOffer(singleOffer);
     }
-
-
 }
