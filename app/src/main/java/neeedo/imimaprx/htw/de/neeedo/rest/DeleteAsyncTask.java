@@ -19,24 +19,26 @@ public class DeleteAsyncTask extends BaseAsyncTask {
     private EntityType entityType;
     private BaseEntity baseEntity;
 
-    /**
-     * Needs the Entity enum Type defined in {@link BaseAsyncTask} and the Entity to delete.
-     *
-     * @param baseEntity
-     * @param entityType
-     */
-    public DeleteAsyncTask(BaseEntity baseEntity, EntityType entityType) {
 
-        if (baseEntity == null | entityType == null) {
+    public DeleteAsyncTask(BaseEntity baseEntity) {
+        if (baseEntity == null) {
             throw new IllegalArgumentException("Invalid arguments given.");
         }
-        this.entityType = entityType;
         this.baseEntity = baseEntity;
     }
 
     @Override
     protected Object doInBackground(Object[] params) {
         try {
+
+            if (baseEntity instanceof Demand) {
+                entityType = EntityType.DEMAND;
+            } else if (baseEntity instanceof User) {
+                entityType = EntityType.USER;
+            } else if (baseEntity instanceof Offer) {
+                entityType = EntityType.OFFER;
+            }
+
             String url = ServerConstantsUtils.getActiveServer();
             switch (entityType) {
 
