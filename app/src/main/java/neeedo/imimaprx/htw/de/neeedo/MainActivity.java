@@ -55,6 +55,9 @@ public class MainActivity extends ActionBarActivity
     }
 
     private void attempLogin() {
+        ActiveUser activeUser = ActiveUser.getInstance();
+        activeUser.setContext(getApplicationContext());
+        activeUser.loadValuesFromPreferences();
         if (activeUser.userCredentialsAvailable()) {
             new GetUserInfosAsyncTask().execute();
         }
