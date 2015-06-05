@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.amazonaws.mobileconnectors.s3.transfermanager.Upload;
 import com.google.zxing.integration.android.IntentIntegrator;
 
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
@@ -32,6 +33,7 @@ import neeedo.imimaprx.htw.de.neeedo.fragments.handler.StartCameraHandler;
 import neeedo.imimaprx.htw.de.neeedo.helpers.LocationHelper;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.rest.outpan.GetOutpanByEANAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.service.S3Service;
 import neeedo.imimaprx.htw.de.neeedo.utils.ImageUtils;
 import neeedo.imimaprx.htw.de.neeedo.vo.RequestCodes;
 
@@ -154,6 +156,8 @@ public class NewOfferFragment extends SuperFragment {
             bitmap = ImageUtils.scaleBitmapKeepingAspectRatio(bitmap);
 
             addImageButton.setImageBitmap(bitmap);
+
+//            Upload upload = S3Service.getInstance().getTransferManager().upload(bucket_name, key, file);
         } else if (requestCode == RequestCodes.BARCODE_SCAN_REQUEST_CODE) {
             String barcodeEAN = intent.getStringExtra("SCAN_RESULT");
             GetOutpanByEANAsyncTask eanAsyncTask = new GetOutpanByEANAsyncTask(barcodeEAN ,etTags );

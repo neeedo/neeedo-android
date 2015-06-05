@@ -17,12 +17,16 @@ import neeedo.imimaprx.htw.de.neeedo.fragments.NewDemandFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.NewOfferFragment;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.rest.user.GetUserInfosAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.service.S3Service;
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
+
     private final ActiveUser activeUser = ActiveUser.getInstance();
+    private final S3Service s3Service = S3Service.getInstance();
+
     private static final String NAVIGATION_KEY = "current_navigation_item_selected";
     private int mCurrentNavigationIndex = 0;
 
@@ -65,6 +69,7 @@ public class MainActivity extends ActionBarActivity
 
     private void initSingletons() {
         activeUser.setContext(getApplicationContext());
+        s3Service.initialize(this);
     }
 
     @Override
