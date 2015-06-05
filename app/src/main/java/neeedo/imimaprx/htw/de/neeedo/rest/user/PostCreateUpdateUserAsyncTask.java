@@ -19,7 +19,8 @@ import neeedo.imimaprx.htw.de.neeedo.entities.User;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
-import neeedo.imimaprx.htw.de.neeedo.rest.BaseAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.RestResult;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
 
@@ -82,7 +83,7 @@ public class PostCreateUpdateUserAsyncTask extends AsyncTask {
             userModel.setUser(singleUser.getUser());
 
             loginActivity.finish();
-            return BaseAsyncTask.ReturnType.SUCCESS;
+            return new RestResult(this.getClass().getSimpleName(), RestResult.ReturnType.SUCCESS);
 
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
@@ -93,7 +94,7 @@ public class PostCreateUpdateUserAsyncTask extends AsyncTask {
                     loginActivity.setEmailAlreadyInUse();
                 }
             });
-            return BaseAsyncTask.ReturnType.FAILED;
+            return new RestResult(this.getClass().getSimpleName(), RestResult.ReturnType.FAILED);
         }
     }
 }

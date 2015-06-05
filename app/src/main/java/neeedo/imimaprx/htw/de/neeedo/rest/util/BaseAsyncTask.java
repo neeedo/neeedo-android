@@ -1,4 +1,4 @@
-package neeedo.imimaprx.htw.de.neeedo.rest;
+package neeedo.imimaprx.htw.de.neeedo.rest.util;
 
 import android.os.AsyncTask;
 import org.springframework.http.HttpBasicAuthentication;
@@ -13,13 +13,6 @@ public abstract class BaseAsyncTask extends AsyncTask {
         GET_BY_USER, GET_RANDOM
     }
 
-    public enum EntityType {
-        DEMAND, OFFER, USER
-    }
-
-    public enum ReturnType {
-        SUCCESS, FAILED
-    }
 
     public enum SendMode {
         CREATE, UPDATE

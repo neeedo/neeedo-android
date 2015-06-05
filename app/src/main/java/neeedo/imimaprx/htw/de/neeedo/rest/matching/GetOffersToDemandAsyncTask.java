@@ -3,7 +3,6 @@ package neeedo.imimaprx.htw.de.neeedo.rest.matching;
 
 import android.util.Log;
 
-import org.springframework.http.HttpBasicAuthentication;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -18,10 +17,10 @@ import java.util.List;
 import neeedo.imimaprx.htw.de.neeedo.entities.Demand;
 import neeedo.imimaprx.htw.de.neeedo.entities.Offers;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
-import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
-import neeedo.imimaprx.htw.de.neeedo.rest.BaseAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.RestResult;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
 /**
@@ -45,10 +44,10 @@ public class GetOffersToDemandAsyncTask extends BaseAsyncTask {
             ResponseEntity<Offers> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, Offers.class);
             Offers offers = responseEntity.getBody();
             OffersModel.getInstance().setOffers(offers);
-            return ReturnType.SUCCESS;
+            return new RestResult(this.getClass().getSimpleName(), RestResult.ReturnType.SUCCESS);
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
-            return ReturnType.FAILED;
+            return new RestResult(this.getClass().getSimpleName(), RestResult.ReturnType.FAILED);
         }
     }
 }

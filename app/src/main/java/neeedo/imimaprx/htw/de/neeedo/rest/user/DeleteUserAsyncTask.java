@@ -9,7 +9,8 @@ import org.springframework.web.client.RestTemplate;
 import neeedo.imimaprx.htw.de.neeedo.entities.User;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
-import neeedo.imimaprx.htw.de.neeedo.rest.BaseAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.RestResult;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
 
@@ -26,10 +27,10 @@ public class DeleteUserAsyncTask extends BaseAsyncTask {
             RestTemplate restTemplate = new RestTemplate(HttpRequestFactoryProviderImpl.getClientHttpRequestFactorySSLSupport(4000));
             restTemplate.delete(url);
             userModel.setUser(null);
-            return ReturnType.SUCCESS;
+            return new RestResult(this.getClass().getSimpleName(), RestResult.ReturnType.SUCCESS);
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
-            return ReturnType.FAILED;
+            return new RestResult(this.getClass().getSimpleName(), RestResult.ReturnType.FAILED);
         }
     }
 }

@@ -16,13 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.Article;
-import neeedo.imimaprx.htw.de.neeedo.entities.Offer;
-import neeedo.imimaprx.htw.de.neeedo.entities.SingleOffer;
-import neeedo.imimaprx.htw.de.neeedo.events.NewProductInfosRequestedEvent;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
-import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
-import neeedo.imimaprx.htw.de.neeedo.rest.BaseAsyncTask;
-import neeedo.imimaprx.htw.de.neeedo.service.EventService;
+import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.RestResult;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
 
@@ -53,10 +49,10 @@ public class GetOutpanByEANAsyncTask extends BaseAsyncTask {
             Article article = responseEntity.getBody();
             etTags.setText(getTagsFromArticale(article));
 
-            return ReturnType.SUCCESS;
+            return new RestResult(this.getClass().getSimpleName(), RestResult.ReturnType.SUCCESS);
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
-            return ReturnType.FAILED;
+            return new RestResult(this.getClass().getSimpleName(), RestResult.ReturnType.FAILED);
         }
     }
 

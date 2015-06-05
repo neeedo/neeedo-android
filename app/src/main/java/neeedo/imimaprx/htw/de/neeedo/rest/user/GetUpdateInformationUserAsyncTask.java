@@ -15,8 +15,9 @@ import neeedo.imimaprx.htw.de.neeedo.entities.SingleUser;
 import neeedo.imimaprx.htw.de.neeedo.entities.User;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
+import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.RestResult;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
-import neeedo.imimaprx.htw.de.neeedo.rest.BaseAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 
 
 public class GetUpdateInformationUserAsyncTask extends BaseAsyncTask {
@@ -37,10 +38,10 @@ public class GetUpdateInformationUserAsyncTask extends BaseAsyncTask {
             SingleUser singleUser = response.getBody();
             userModel.setUser(singleUser.getUser());
 
-            return ReturnType.SUCCESS;
+            return new RestResult(this.getClass().getSimpleName(), RestResult.ReturnType.SUCCESS);
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
-            return ReturnType.FAILED;
+            return new RestResult(this.getClass().getSimpleName(), RestResult.ReturnType.FAILED);
         }
     }
 }

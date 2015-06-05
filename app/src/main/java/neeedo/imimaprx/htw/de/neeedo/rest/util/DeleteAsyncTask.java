@@ -1,4 +1,4 @@
-package neeedo.imimaprx.htw.de.neeedo.rest;
+package neeedo.imimaprx.htw.de.neeedo.rest.util;
 
 import android.util.Log;
 
@@ -10,13 +10,17 @@ import neeedo.imimaprx.htw.de.neeedo.entities.Demand;
 import neeedo.imimaprx.htw.de.neeedo.entities.Offer;
 import neeedo.imimaprx.htw.de.neeedo.entities.User;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
+import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.RestResult;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
 public class DeleteAsyncTask extends BaseAsyncTask {
 
+    private enum EntityType {
+        DEMAND, OFFER, USER
+    }
+
     private EntityType entityType;
     private BaseEntity baseEntity;
-
 
     public DeleteAsyncTask(BaseEntity baseEntity) {
         if (baseEntity == null) {
@@ -64,10 +68,10 @@ public class DeleteAsyncTask extends BaseAsyncTask {
             RestTemplate restTemplate = new RestTemplate(HttpRequestFactoryProviderImpl.getClientHttpRequestFactorySSLSupport(9000));
             restTemplate.delete(url);
 
-            return ReturnType.SUCCESS;
+            return new RestResult(this.getClass().getSimpleName(), RestResult.ReturnType.SUCCESS);
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
-            return ReturnType.FAILED;
+            return new RestResult(this.getClass().getSimpleName(), RestResult.ReturnType.FAILED);
         }
     }
 }
