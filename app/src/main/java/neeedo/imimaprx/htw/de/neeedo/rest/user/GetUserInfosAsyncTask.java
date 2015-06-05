@@ -29,9 +29,9 @@ public class GetUserInfosAsyncTask extends BaseAsyncTask {
         try {
             String url = ServerConstantsUtils.getActiveServer() + "users/mail/";
             url += activeUser.getUsername();
-            HttpBasicAuthentication authentication = new HttpBasicAuthentication(activeUser.getUsername(), activeUser.getUserPassword());
+
             HttpHeaders requestHeaders = new HttpHeaders();
-            requestHeaders.setAuthorization(authentication);
+            setAuthorisationHeaders(requestHeaders);
             HttpEntity<?> requestEntity = new HttpEntity<Object>(requestHeaders);
             RestTemplate restTemplate = new RestTemplate(HttpRequestFactoryProviderImpl.getClientHttpRequestFactorySSLSupport(5000));
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());

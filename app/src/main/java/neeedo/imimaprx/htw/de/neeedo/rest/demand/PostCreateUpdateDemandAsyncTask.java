@@ -43,7 +43,6 @@ public class PostCreateUpdateDemandAsyncTask extends BaseAsyncTask {
             String url = ServerConstantsUtils.getActiveServer();
             HttpMethod httpMethod = HttpMethod.POST;
             DemandsModel demandsModel = DemandsModel.getInstance();
-            final ActiveUser activeUser = ActiveUser.getInstance();
             Demand postDemand = demandsModel.getPostDemand();
             switch (sendMode) {
                 case CREATE: {
@@ -59,9 +58,9 @@ public class PostCreateUpdateDemandAsyncTask extends BaseAsyncTask {
                 }
                 break;
             }
-            HttpBasicAuthentication authentication = new HttpBasicAuthentication(activeUser.getUsername(), activeUser.getUserPassword());
+
             HttpHeaders requestHeaders = new HttpHeaders();
-            requestHeaders.setAuthorization(authentication);
+            setAuthorisationHeaders(requestHeaders);
             requestHeaders.setContentType(MediaType.APPLICATION_JSON);
             HttpEntity<Demand> requestEntity = new HttpEntity<Demand>(postDemand, requestHeaders);
             RestTemplate restTemplate = new RestTemplate(HttpRequestFactoryProviderImpl.getClientHttpRequestFactorySSLSupport(9000));

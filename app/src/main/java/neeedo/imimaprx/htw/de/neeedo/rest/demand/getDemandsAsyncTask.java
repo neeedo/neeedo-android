@@ -16,7 +16,6 @@ import java.util.List;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.Demands;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
-import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.BaseAsyncTask;
@@ -48,9 +47,9 @@ public class GetDemandsAsyncTask extends BaseAsyncTask {
                 }
                 break;
             }
-            final ActiveUser activeUser = ActiveUser.getInstance();
-            HttpBasicAuthentication authentication = new HttpBasicAuthentication(activeUser.getUsername(), activeUser.getUserPassword());
-            requestHeaders.setAuthorization(authentication);
+
+            setAuthorisationHeaders(requestHeaders);
+
             List<MediaType> acceptableMediaTypes = new ArrayList<>();
             acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
             requestHeaders.setAccept(acceptableMediaTypes);

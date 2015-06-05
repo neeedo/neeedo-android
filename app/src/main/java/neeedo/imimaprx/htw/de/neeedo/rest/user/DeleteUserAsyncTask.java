@@ -21,6 +21,7 @@ public class DeleteUserAsyncTask extends BaseAsyncTask {
             User user = userModel.getUser();
             final String url = ServerConstantsUtils.getActiveServer() + "usersd/" + user.getId() + "/" + user.getVersion();
             HttpHeaders requestHeaders = new HttpHeaders();
+            setAuthorisationHeaders(requestHeaders);
             requestHeaders.setContentType(MediaType.APPLICATION_JSON);
             RestTemplate restTemplate = new RestTemplate(HttpRequestFactoryProviderImpl.getClientHttpRequestFactorySSLSupport(4000));
             restTemplate.delete(url);

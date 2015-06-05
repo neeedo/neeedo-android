@@ -2,7 +2,6 @@ package neeedo.imimaprx.htw.de.neeedo.rest;
 
 import android.util.Log;
 
-import org.springframework.http.HttpBasicAuthentication;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.client.RestTemplate;
 
@@ -11,7 +10,6 @@ import neeedo.imimaprx.htw.de.neeedo.entities.Demand;
 import neeedo.imimaprx.htw.de.neeedo.entities.Offer;
 import neeedo.imimaprx.htw.de.neeedo.entities.User;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
-import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
 public class DeleteAsyncTask extends BaseAsyncTask {
@@ -61,10 +59,8 @@ public class DeleteAsyncTask extends BaseAsyncTask {
                 break;
             }
 
-            final ActiveUser activeUser = ActiveUser.getInstance();
-            HttpBasicAuthentication authentication = new HttpBasicAuthentication(activeUser.getUsername(), activeUser.getUserPassword());
             HttpHeaders requestHeaders = new HttpHeaders();
-            requestHeaders.setAuthorization(authentication);
+            setAuthorisationHeaders(requestHeaders);
             RestTemplate restTemplate = new RestTemplate(HttpRequestFactoryProviderImpl.getClientHttpRequestFactorySSLSupport(9000));
             restTemplate.delete(url);
 

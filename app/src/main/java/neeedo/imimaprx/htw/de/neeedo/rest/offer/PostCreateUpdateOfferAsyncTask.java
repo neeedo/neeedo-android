@@ -2,7 +2,6 @@ package neeedo.imimaprx.htw.de.neeedo.rest.offer;
 
 import android.util.Log;
 
-import org.springframework.http.HttpBasicAuthentication;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -43,7 +42,6 @@ public class PostCreateUpdateOfferAsyncTask extends BaseAsyncTask {
             String url = ServerConstantsUtils.getActiveServer();
             OffersModel offersModel = OffersModel.getInstance();
             HttpMethod httpMethod = HttpMethod.POST;
-            final ActiveUser activeUser = ActiveUser.getInstance();
             Offer postOffer = offersModel.getPostOffer();
 
             switch (sendMode) {
@@ -61,9 +59,8 @@ public class PostCreateUpdateOfferAsyncTask extends BaseAsyncTask {
                 break;
             }
 
-            HttpBasicAuthentication authentication = new HttpBasicAuthentication(activeUser.getUsername(), activeUser.getUserPassword());
             HttpHeaders requestHeaders = new HttpHeaders();
-            requestHeaders.setAuthorization(authentication);
+            setAuthorisationHeaders(requestHeaders);
             requestHeaders.setContentType(MediaType.APPLICATION_JSON);
             HttpEntity<Offer> requestEntity = new HttpEntity<Offer>(postOffer, requestHeaders);
             RestTemplate restTemplate = new RestTemplate(HttpRequestFactoryProviderImpl.getClientHttpRequestFactorySSLSupport(9000));

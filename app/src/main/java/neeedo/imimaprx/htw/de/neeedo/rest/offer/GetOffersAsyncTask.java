@@ -49,9 +49,7 @@ public class GetOffersAsyncTask extends BaseAsyncTask {
             switch (getEntitiesMode) {
                 case GET_BY_USER: {
                     url += "offers/users/" + UserModel.getInstance().getUser().getId();
-                    final ActiveUser activeUser = ActiveUser.getInstance();
-                    HttpBasicAuthentication authentication = new HttpBasicAuthentication(activeUser.getUsername(), activeUser.getUserPassword());
-                    requestHeaders.setAuthorization(authentication);
+                    setAuthorisationHeaders(requestHeaders);
                 }
                 break;
 

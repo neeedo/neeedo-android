@@ -33,10 +33,9 @@ public class GetOffersToDemandAsyncTask extends BaseAsyncTask {
     protected Object doInBackground(Object[] params) {
         try {
             final String url = ServerConstantsUtils.getActiveServer() + "/matching/demand/1/1";
-            final ActiveUser activeUser = ActiveUser.getInstance();
             HttpHeaders requestHeaders = new HttpHeaders();
-            HttpBasicAuthentication authentication = new HttpBasicAuthentication(activeUser.getUsername(), activeUser.getUserPassword());
-            requestHeaders.setAuthorization(authentication);
+            setAuthorisationHeaders(requestHeaders);
+
             List<MediaType> acceptableMediaTypes = new ArrayList<>();
             acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
             requestHeaders.setAccept(acceptableMediaTypes);

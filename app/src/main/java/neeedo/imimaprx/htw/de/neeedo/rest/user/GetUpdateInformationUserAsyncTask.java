@@ -20,7 +20,6 @@ import neeedo.imimaprx.htw.de.neeedo.rest.BaseAsyncTask;
 
 
 public class GetUpdateInformationUserAsyncTask extends BaseAsyncTask {
-    //TODO remove all the "HTTP" from class names
 
     @Override
     protected Object doInBackground(Object[] params) {
