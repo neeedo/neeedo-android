@@ -5,6 +5,8 @@ import android.content.Context;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.mobileconnectors.s3.transfermanager.TransferManager;
+import com.amazonaws.regions.Region;
+import com.amazonaws.regions.Regions;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
 
@@ -30,6 +32,8 @@ public class S3Service {
         AWSCredentials credentials = new BasicAWSCredentials(accessKeyId, secretKey);
 
         transferManager = new TransferManager(credentials);
+        transferManager.getAmazonS3Client().setRegion(Region.getRegion(Regions.EU_CENTRAL_1));
+
     }
 
 

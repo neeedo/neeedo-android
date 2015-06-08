@@ -34,6 +34,7 @@ import java.io.File;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.Location;
+import neeedo.imimaprx.htw.de.neeedo.fragments.handler.CameraActivityReturnedHandler;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.SendNewOfferHandler;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.StartCameraHandler;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.StartNewBarcodeScanHandler;
@@ -143,41 +144,8 @@ public class NewOfferFragment extends SuperFragment {
         }
 
         if (requestCode == RequestCodes.CAMERA_CAPTURE_IMAGE_REQUEST_CODE) {
-            BitmapFactory.Options options = new BitmapFactory.Options();
+          new CameraActivityReturnedHandler(photoFile,addImageButton).execute();
 
-            options.inSampleSize = 8;
-
-            Bitmap bitmap = BitmapFactory.decodeFile(photoFile.getPath(), options);
-
-            bitmap = ImageUtils.rotateBitmap(bitmap, photoFile);
-            bitmap = ImageUtils.scaleBitmapKeepingAspectRatio(bitmap);
-
-            addImageButton.setImageBitmap(bitmap);
-
-            String accessKeyId = getActivity().getString(R.string.s3_accessKeyId);
-            String secretKey = getActivity().getString(R.string.s3_secretKey);
-
-            java.util.logging.Logger.getLogger("com.amazonaws.request").setLevel(java.util.logging.Level.FINEST);
-
-            AWSCredentials credentials = new BasicAWSCredentials(accessKeyId, secretKey);
-
-            TransferManager transferManager = new TransferManager(credentials);
-            transferManager.getAmazonS3Client().setRegion(Region.getRegion(Regions.EU_CENTRAL_1));
-            Upload upload = transferManager.upload("neeedo-images-stephan-local", photoFile.getName(), photoFile);
-
-
-
-            while (upload.isDone() == false) {
-                System.out.println(upload.getProgress().getPercentTransferred() + "%");
-                Log.d(this.getClass().getName(), "Transfer-Manager: " + transferManager.toString());
-                Log.d(this.getClass().getName(), "Transfer: " + upload.getDescription());
-                Log.d(this.getClass().getName(), "State: " + upload.getState());
-                Log.d(this.getClass().getName(), "Progress: " + upload.getProgress().getBytesTransferred());
-            }
-
-            upload.getState();
-
-            Toast.makeText(getActivity(), "upload is done", Toast.LENGTH_LONG).show();
 
         } else if (requestCode == RequestCodes.BARCODE_SCAN_REQUEST_CODE) {
             String barcodeEAN = intent.getStringExtra("SCAN_RESULT");
