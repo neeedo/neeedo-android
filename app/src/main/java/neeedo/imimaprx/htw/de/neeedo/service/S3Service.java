@@ -27,9 +27,9 @@ public class S3Service {
         String accessKeyId = context.getString(R.string.s3_accessKeyId);
         String secretKey = context.getString(R.string.s3_secretKey);
 
-        AWSCredentials credential = new BasicAWSCredentials(accessKeyId, secretKey);
+        AWSCredentials credentials = new BasicAWSCredentials(accessKeyId, secretKey);
 
-        transferManager = new TransferManager(credential);
+        transferManager = new TransferManager(credentials);
     }
 
 

@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,14 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.mobileconnectors.s3.transfermanager.TransferManager;
+import com.amazonaws.mobileconnectors.s3.transfermanager.TransferManagerConfiguration;
 import com.amazonaws.mobileconnectors.s3.transfermanager.Upload;
+import com.amazonaws.regions.Region;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.s3.S3ClientOptions;
 
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
@@ -94,7 +102,7 @@ public class NewOfferFragment extends SuperFragment {
 
         addImageButton.setOnClickListener(new StartCameraHandler(this, photoFile));
         btnSubmit.setOnClickListener(new SendNewOfferHandler(etTags, etLocationLat, etLocationLon, etPrice));
-        btnBarcode.setOnClickListener(new StartNewBarcodeScanHandler( this ));
+        btnBarcode.setOnClickListener(new StartNewBarcodeScanHandler(this));
 
         return view;
     }
@@ -146,18 +154,35 @@ public class NewOfferFragment extends SuperFragment {
 
             addImageButton.setImageBitmap(bitmap);
 
-            Upload upload = S3Service.getInstance().getTransferManager().upload("neeedo-images-stephan-local", "miau", photoFile);
+            String accessKeyId = getActivity().getString(R.string.s3_accessKeyId);
+            String secretKey = getActivity().getString(R.string.s3_secretKey);
+
+            java.util.logging.Logger.getLogger("com.amazonaws.request").setLevel(java.util.logging.Level.FINEST);
+
+            AWSCredentials credentials = new BasicAWSCredentials(accessKeyId, secretKey);
+
+            TransferManager transferManager = new TransferManager(credentials);
+
+            Upload upload = transferManager.upload("neeedo-images-stephan-local", photoFile.getName(), photoFile);
+
+            transferManager.getAmazonS3Client().setRegion(Region.getRegion(Regions.EU_CENTRAL_1));
 
             while (upload.isDone() == false) {
-                Toast.makeText(getActivity(),"upload is done",Toast.LENGTH_LONG).show();
                 System.out.println(upload.getProgress().getPercentTransferred() + "%");
+                Log.d(this.getClass().getName(), "Transfer-Manager: " + transferManager.toString());
+                Log.d(this.getClass().getName(), "Transfer: " + upload.getDescription());
+                Log.d(this.getClass().getName(), "State: " + upload.getState());
+                Log.d(this.getClass().getName(), "Progress: " + upload.getProgress().getBytesTransferred());
             }
 
+            upload.getState();
+
+            Toast.makeText(getActivity(), "upload is done", Toast.LENGTH_LONG).show();
 
         } else if (requestCode == RequestCodes.BARCODE_SCAN_REQUEST_CODE) {
             String barcodeEAN = intent.getStringExtra("SCAN_RESULT");
-            GetOutpanByEANAsyncTask eanAsyncTask = new GetOutpanByEANAsyncTask(barcodeEAN ,etTags );
+            GetOutpanByEANAsyncTask eanAsyncTask = new GetOutpanByEANAsyncTask(barcodeEAN, etTags);
             eanAsyncTask.execute();
         }
     }
- }
+}
