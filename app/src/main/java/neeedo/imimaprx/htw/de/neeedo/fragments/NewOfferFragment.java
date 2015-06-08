@@ -67,10 +67,11 @@ public class NewOfferFragment extends SuperFragment {
         locationLongitude = currentLocation.getLon();
         locationAvailable = locationHelper.isLocationAvailable();
 
-        if (!activeUser.userCredentialsAvailable()) {
-            Intent intent = new Intent(getActivity(), LoginActivity.class);
-            startActivity(intent);
-        }
+        //TODO DRY!!!
+//        if (!activeUser.userCredentialsAvailable()) {
+//            Intent intent = new Intent(getActivity(), LoginActivity.class);
+//            startActivity(intent);
+//        }
     }
 
     @Override
@@ -153,6 +154,8 @@ public class NewOfferFragment extends SuperFragment {
                 Toast.makeText(getActivity(),"upload is done",Toast.LENGTH_LONG).show();
                 System.out.println(upload.getProgress().getPercentTransferred() + "%");
             }
+
+
         } else if (requestCode == RequestCodes.BARCODE_SCAN_REQUEST_CODE) {
             String barcodeEAN = intent.getStringExtra("SCAN_RESULT");
             GetOutpanByEANAsyncTask eanAsyncTask = new GetOutpanByEANAsyncTask(barcodeEAN ,etTags );
