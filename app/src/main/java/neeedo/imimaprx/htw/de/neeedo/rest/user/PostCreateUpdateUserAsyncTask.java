@@ -30,12 +30,6 @@ public class PostCreateUpdateUserAsyncTask extends AsyncTask {
     private BaseAsyncTask.SendMode sendMode;
     private final ActiveUser activeUser = ActiveUser.getInstance();
 
-    /**
-     * Mode of sending UPDATE or CREATE is needed, available in {@link BaseAsyncTask}
-     *
-     * @param loginActivity
-     * @param sendMode
-     */
     public PostCreateUpdateUserAsyncTask(LoginActivity loginActivity, BaseAsyncTask.SendMode sendMode) {
         if (sendMode == null) {
             throw new IllegalArgumentException("No mode is given.");
