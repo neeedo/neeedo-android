@@ -25,11 +25,6 @@ public class GetOffersAsyncTask extends BaseAsyncTask {
 
     private GetEntitiesMode getEntitiesMode;
 
-    /**
-     * Get the constant from enum in {@link BaseAsyncTask}
-     *
-     * @param getEntitiesMode
-     */
     public GetOffersAsyncTask(GetEntitiesMode getEntitiesMode) {
 
         if (getEntitiesMode == null) {
