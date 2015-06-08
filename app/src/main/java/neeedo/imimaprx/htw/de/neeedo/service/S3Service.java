@@ -31,8 +31,6 @@ public class S3Service {
         AWSCredentials credential = new BasicAWSCredentials(accessKeyId, secretKey);
 
         transferManager = new TransferManager(credential);
-
-//        Upload upload = transferManager.upload(bucket, key, file);
     }
 
 

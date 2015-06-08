@@ -26,13 +26,11 @@ public class GetOffersAsyncTask extends BaseAsyncTask {
     private GetEntitiesMode getEntitiesMode;
 
     public GetOffersAsyncTask(GetEntitiesMode getEntitiesMode) {
-
         if (getEntitiesMode == null) {
             throw new IllegalArgumentException("No Mode given.");
         }
         this.getEntitiesMode = getEntitiesMode;
     }
-
 
     @Override
     protected Object doInBackground(Object[] params) {

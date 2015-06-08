@@ -30,6 +30,7 @@ import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.Location;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.SendNewOfferHandler;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.StartCameraHandler;
+import neeedo.imimaprx.htw.de.neeedo.fragments.handler.StartNewBarcodeScanHandler;
 import neeedo.imimaprx.htw.de.neeedo.helpers.LocationHelper;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.rest.outpan.GetOutpanByEANAsyncTask;
@@ -94,18 +95,7 @@ public class NewOfferFragment extends SuperFragment {
 
         addImageButton.setOnClickListener(new StartCameraHandler(this, photoFile));
         btnSubmit.setOnClickListener(new SendNewOfferHandler(etTags, etLocationLat, etLocationLon, etPrice));
-        btnBarcode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                IntentIntegrator integrator = new IntentIntegrator(getActivity());
-                integrator.setDesiredBarcodeFormats(IntentIntegrator.PRODUCT_CODE_TYPES);
-                integrator.setPrompt("Scan a barcode");
-                integrator.setResultDisplayDuration(0);
-                integrator.setCameraId(0);
-                Intent barcodeScanIntent = integrator.createScanIntent();
-                startActivityForResult(barcodeScanIntent, RequestCodes.BARCODE_SCAN_REQUEST_CODE);
-            }
-        });
+        btnBarcode.setOnClickListener(new StartNewBarcodeScanHandler( this ));
 
         return view;
     }
@@ -157,7 +147,12 @@ public class NewOfferFragment extends SuperFragment {
 
             addImageButton.setImageBitmap(bitmap);
 
-//            Upload upload = S3Service.getInstance().getTransferManager().upload(bucket_name, key, file);
+            Upload upload = S3Service.getInstance().getTransferManager().upload("neeedo-images-stephan-local", "miau", photoFile);
+
+            while (upload.isDone() == false) {
+                Toast.makeText(getActivity(),"upload is done",Toast.LENGTH_LONG).show();
+                System.out.println(upload.getProgress().getPercentTransferred() + "%");
+            }
         } else if (requestCode == RequestCodes.BARCODE_SCAN_REQUEST_CODE) {
             String barcodeEAN = intent.getStringExtra("SCAN_RESULT");
             GetOutpanByEANAsyncTask eanAsyncTask = new GetOutpanByEANAsyncTask(barcodeEAN ,etTags );
