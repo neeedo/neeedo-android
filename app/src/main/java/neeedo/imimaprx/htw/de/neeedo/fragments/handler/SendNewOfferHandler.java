@@ -10,8 +10,8 @@ import neeedo.imimaprx.htw.de.neeedo.entities.Location;
 import neeedo.imimaprx.htw.de.neeedo.entities.Offer;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
 import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
-import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.offer.PostCreateUpdateOfferAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 
 public class SendNewOfferHandler implements View.OnClickListener {
 

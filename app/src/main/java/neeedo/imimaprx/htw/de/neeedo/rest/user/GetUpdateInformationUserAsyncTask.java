@@ -15,9 +15,9 @@ import neeedo.imimaprx.htw.de.neeedo.entities.SingleUser;
 import neeedo.imimaprx.htw.de.neeedo.entities.User;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
+import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.RestResult;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
-import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 
 
 public class GetUpdateInformationUserAsyncTask extends BaseAsyncTask {

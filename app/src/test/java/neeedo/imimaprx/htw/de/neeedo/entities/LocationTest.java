@@ -4,8 +4,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import neeedo.imimaprx.htw.de.neeedo.entities.Location;
-
 public class LocationTest extends Assert {
 
     private Location location;

@@ -6,10 +6,6 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-import neeedo.imimaprx.htw.de.neeedo.entities.Location;
-import neeedo.imimaprx.htw.de.neeedo.entities.Offer;
-import neeedo.imimaprx.htw.de.neeedo.entities.Offers;
-
 public class OffersTest extends Assert {
 
     private Offers offers;

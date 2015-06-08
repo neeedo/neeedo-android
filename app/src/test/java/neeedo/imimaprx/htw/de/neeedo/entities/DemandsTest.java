@@ -1,15 +1,11 @@
 package neeedo.imimaprx.htw.de.neeedo.entities;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import neeedo.imimaprx.htw.de.neeedo.entities.Demand;
-import neeedo.imimaprx.htw.de.neeedo.entities.Demands;
-import neeedo.imimaprx.htw.de.neeedo.entities.Price;
 
 public class DemandsTest extends Assert{
 

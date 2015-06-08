@@ -2,8 +2,6 @@ package neeedo.imimaprx.htw.de.neeedo.fragments.adapters;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 public class OfferSwipeArrayListAdapterTest {
 
     @Test

@@ -1,6 +1,5 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,15 +14,14 @@ import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 
-import neeedo.imimaprx.htw.de.neeedo.LoginActivity;
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.Offer;
 import neeedo.imimaprx.htw.de.neeedo.entities.Offers;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
-import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.offer.GetOffersAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 
 public class ListOffersFragment extends SuperFragment {
 

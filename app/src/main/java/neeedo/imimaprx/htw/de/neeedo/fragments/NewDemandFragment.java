@@ -1,6 +1,5 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +13,6 @@ import com.squareup.otto.Subscribe;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import neeedo.imimaprx.htw.de.neeedo.LoginActivity;
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.Demand;
 import neeedo.imimaprx.htw.de.neeedo.entities.Location;
@@ -24,8 +22,8 @@ import neeedo.imimaprx.htw.de.neeedo.helpers.LocationHelper;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
-import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.demand.PostCreateUpdateDemandAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 
 
 public class NewDemandFragment extends SuperFragment {

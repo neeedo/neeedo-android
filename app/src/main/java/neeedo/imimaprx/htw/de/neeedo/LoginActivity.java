@@ -19,9 +19,9 @@ import android.widget.TextView;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.User;
 import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
-import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.user.GetRefreshUserAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.user.PostCreateUpdateUserAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 
 public class LoginActivity extends Activity {
 

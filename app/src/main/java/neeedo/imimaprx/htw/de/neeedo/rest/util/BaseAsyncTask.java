@@ -1,8 +1,10 @@
 package neeedo.imimaprx.htw.de.neeedo.rest.util;
 
 import android.os.AsyncTask;
+
 import org.springframework.http.HttpBasicAuthentication;
 import org.springframework.http.HttpHeaders;
+
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.service.EventService;

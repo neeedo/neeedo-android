@@ -17,7 +17,6 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.amazonaws.mobileconnectors.s3.transfermanager.Upload;
-import com.google.zxing.integration.android.IntentIntegrator;
 
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
@@ -25,7 +24,6 @@ import org.osmdroid.views.MapView;
 
 import java.io.File;
 
-import neeedo.imimaprx.htw.de.neeedo.LoginActivity;
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.Location;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.SendNewOfferHandler;

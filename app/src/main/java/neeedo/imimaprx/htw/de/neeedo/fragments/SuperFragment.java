@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
@@ -16,7 +15,6 @@ import neeedo.imimaprx.htw.de.neeedo.LoginActivity;
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.events.UserStateChangedEvent;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
-import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
 import neeedo.imimaprx.htw.de.neeedo.service.EventService;
 import neeedo.imimaprx.htw.de.neeedo.vo.RequestCodes;
 

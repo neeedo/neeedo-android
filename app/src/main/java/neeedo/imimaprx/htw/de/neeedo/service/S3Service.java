@@ -5,7 +5,6 @@ import android.content.Context;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.mobileconnectors.s3.transfermanager.TransferManager;
-import com.amazonaws.mobileconnectors.s3.transfermanager.Upload;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
 
