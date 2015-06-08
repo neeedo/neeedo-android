@@ -162,10 +162,10 @@ public class NewOfferFragment extends SuperFragment {
             AWSCredentials credentials = new BasicAWSCredentials(accessKeyId, secretKey);
 
             TransferManager transferManager = new TransferManager(credentials);
-
+            transferManager.getAmazonS3Client().setRegion(Region.getRegion(Regions.EU_CENTRAL_1));
             Upload upload = transferManager.upload("neeedo-images-stephan-local", photoFile.getName(), photoFile);
 
-            transferManager.getAmazonS3Client().setRegion(Region.getRegion(Regions.EU_CENTRAL_1));
+
 
             while (upload.isDone() == false) {
                 System.out.println(upload.getProgress().getPercentTransferred() + "%");
