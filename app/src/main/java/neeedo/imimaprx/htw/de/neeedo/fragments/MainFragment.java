@@ -51,8 +51,6 @@ public class MainFragment extends SuperFragment implements View.OnClickListener 
     public void onClick(View v) {
         //TODO extract whole function into proper controller
 
-        BaseAsyncTask asyncTask;
-
         FragmentManager fragmentManager = getFragmentManager();
         Fragment fragment = null;
         int navigationIndex = 0;
@@ -61,22 +59,19 @@ public class MainFragment extends SuperFragment implements View.OnClickListener 
             case R.id.btnNewDemand:
                 navigationIndex = 4; // 4 = position of new demand menu item
                 fragment = new NewDemandFragment();
-                fragmentManager.beginTransaction()
-                        .addToBackStack(Integer.toString(navigationIndex))
-                        .replace(R.id.container, fragment)
-                        .commit();
-                ((MainActivity) getActivity()).setNavigationIndex(navigationIndex);
                 break;
 
             case R.id.btnNewOffer:
                 navigationIndex = 2; // 2 = position of new offer menu item
                 fragment = new NewOfferFragment();
-                fragmentManager.beginTransaction()
-                        .addToBackStack(Integer.toString(navigationIndex))
-                        .replace(R.id.container, fragment)
-                        .commit();
-                ((MainActivity) getActivity()).setNavigationIndex(navigationIndex);
                 break;
         }
+
+        fragmentManager.beginTransaction()
+                .addToBackStack(Integer.toString(navigationIndex))
+                .replace(R.id.container, fragment)
+                .commit();
+
+        ((MainActivity) getActivity()).setNavigationIndex(navigationIndex);
     }
 }
