@@ -7,7 +7,6 @@ import android.widget.ImageButton;
 
 import java.io.File;
 
-import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.Result;
 import neeedo.imimaprx.htw.de.neeedo.utils.ImageUtils;
 
 public class CameraActivityReturnedHandler extends AsyncTask {

@@ -4,12 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 /**
- * Use the checkForExistingCredentials to check there is a file with user credentials. If it returns true there is and was already loaded.
  * Before setting the username and password it is needed to set the current Context of the application.
- * When user and password is set it will be base64 encoded and saved as a file in the internal storage.
  */
-
-
 public class ActiveUser {
 
     public static final String PREFS_FILE = "PrefsFile";
