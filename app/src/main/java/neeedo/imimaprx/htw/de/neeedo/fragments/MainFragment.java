@@ -19,10 +19,7 @@ public class MainFragment extends SuperFragment implements View.OnClickListener 
 
     private Button btnNewOfferOperation;
     private Button btnNewDemandOperation;
-    private int mCurrentNavigationIndex;
-
     private Activity activity;
-    private ProgressDialog progressDialog;
 
     public MainFragment() {
     }
@@ -50,29 +47,16 @@ public class MainFragment extends SuperFragment implements View.OnClickListener 
     @Override
     public void onClick(View v) {
         //TODO extract whole function into proper controller
-
-        FragmentManager fragmentManager = getFragmentManager();
-        Fragment fragment = null;
         int navigationIndex = 0;
-
         switch (v.getId()) {
             case R.id.btnNewDemand:
-                navigationIndex = 4; // 4 = position of new demand menu item
-                fragment = new NewDemandFragment();
+                navigationIndex = MainActivity.MENU_NEW_DEMAND;
                 break;
 
             case R.id.btnNewOffer:
-                navigationIndex = 2; // 2 = position of new offer menu item
-                fragment = new NewOfferFragment();
+                navigationIndex = MainActivity.MENU_NEW_OFFER;
                 break;
         }
-
-        fragmentManager.beginTransaction()
-                .addToBackStack(Integer.toString(navigationIndex))
-                .replace(R.id.container, fragment)
-                .commit();
-
-        ((MainActivity) getActivity()).setFragment(fragment);
-        ((MainActivity) getActivity()).setNavigationIndex(navigationIndex);
+        ((MainActivity) getActivity()).onNavigationDrawerItemSelected(navigationIndex);
     }
 }

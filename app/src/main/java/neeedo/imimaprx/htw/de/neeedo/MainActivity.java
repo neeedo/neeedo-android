@@ -2,7 +2,6 @@ package neeedo.imimaprx.htw.de.neeedo;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 
@@ -27,8 +26,14 @@ public class MainActivity extends ActionBarActivity
 
     private final ActiveUser activeUser = ActiveUser.getInstance();
 
-    public static final String NAVIGATION_KEY = "current_navigation_item_selected";
+    public static final String STATE_NAVIGATION_INDEX = "current_navigation_state_index";
     public static final String STATE_FRAGMENT = "current_fragment_state";
+    public static final int MENU_HOME = 0;
+    public static final int MENU_LIST_OFFERS = 1;
+    public static final int MENU_NEW_OFFER = 2;
+    public static final int MENU_LIST_DEMANDS = 3;
+    public static final int MENU_NEW_DEMAND = 4;
+    public static final int MENU_SWIPER = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +55,7 @@ public class MainActivity extends ActionBarActivity
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
 
-        savedInstanceState.putInt(NAVIGATION_KEY, mCurrentNavigationIndex);
+        savedInstanceState.putInt(STATE_NAVIGATION_INDEX, mCurrentNavigationIndex);
 
         getSupportFragmentManager().putFragment(savedInstanceState, STATE_FRAGMENT, mFragment);
     }
@@ -60,10 +65,6 @@ public class MainActivity extends ActionBarActivity
         super.onRestoreInstanceState(savedInstanceState);
 
         initOrRestoreState(savedInstanceState);
-    }
-
-    public void setNavigationIndex(int currentNavigationIndex) {
-        mCurrentNavigationIndex = currentNavigationIndex;
     }
 
     public void setFragment(Fragment fragment) {
@@ -86,7 +87,7 @@ public class MainActivity extends ActionBarActivity
     private void initOrRestoreState(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             mFragment = getSupportFragmentManager().getFragment(savedInstanceState, STATE_FRAGMENT);
-            mCurrentNavigationIndex = savedInstanceState.getInt(NAVIGATION_KEY);
+            mCurrentNavigationIndex = savedInstanceState.getInt(STATE_NAVIGATION_INDEX);
         } else {
             mFragment = new MainFragment();
             mCurrentNavigationIndex = 0;
@@ -104,22 +105,22 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         switch (position) {
-            case 0:
+            case MENU_HOME:
                 mFragment = new MainFragment();
                 break;
-            case 1:
+            case MENU_LIST_OFFERS:
                 mFragment = new ListOffersFragment();
                 break;
-            case 2:
+            case MENU_NEW_OFFER:
                 mFragment = new NewOfferFragment();
                 break;
-            case 3:
+            case MENU_LIST_DEMANDS:
                 mFragment = new ListDemandsFragment();
                 break;
-            case 4:
+            case MENU_NEW_DEMAND:
                 mFragment = new NewDemandFragment();
                 break;
-            case 5:
+            case MENU_SWIPER:
                 mFragment = new DiolorSwipeFragment();
                 break;
             default:
