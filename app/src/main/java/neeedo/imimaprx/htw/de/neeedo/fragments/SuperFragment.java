@@ -27,10 +27,6 @@ public class SuperFragment extends Fragment {
 
     private Menu menu;
 
-    //TODO WHAT!?
-    protected static final String OFFERS_LIST_KEY = "offers";
-    protected static final String DEMANDS_LIST_KEY = "demands";
-
     @Override
     public void onResume() {
         super.onResume();
