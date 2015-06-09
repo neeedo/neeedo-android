@@ -22,11 +22,11 @@ public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
+    private int mCurrentNavigationIndex = 0;
 
     private final ActiveUser activeUser = ActiveUser.getInstance();
 
-    private static final String NAVIGATION_KEY = "current_navigation_item_selected";
-    private int mCurrentNavigationIndex = 0;
+    public static final String NAVIGATION_KEY = "current_navigation_item_selected";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +54,19 @@ public class MainActivity extends ActionBarActivity
         super.onSaveInstanceState(savedInstanceState);
 
         savedInstanceState.putInt(NAVIGATION_KEY, mCurrentNavigationIndex);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        mCurrentNavigationIndex = savedInstanceState.getInt(NAVIGATION_KEY);
+
+        onNavigationDrawerItemSelected(mCurrentNavigationIndex);
+    }
+
+    public void setNavigationIndex(int currentNavigationIndex) {
+        mCurrentNavigationIndex = currentNavigationIndex;
     }
 
     private void attempLogin() {

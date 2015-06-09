@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import neeedo.imimaprx.htw.de.neeedo.MainActivity;
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 
@@ -18,6 +19,7 @@ public class MainFragment extends SuperFragment implements View.OnClickListener 
 
     private Button btnNewOfferOperation;
     private Button btnNewDemandOperation;
+    private int mCurrentNavigationIndex;
 
     private Activity activity;
     private ProgressDialog progressDialog;
@@ -53,22 +55,27 @@ public class MainFragment extends SuperFragment implements View.OnClickListener 
 
         FragmentManager fragmentManager = getFragmentManager();
         Fragment fragment = null;
+        int navigationIndex = 0;
 
         switch (v.getId()) {
             case R.id.btnNewDemand:
+                navigationIndex = 4; // 4 = position of new demand menu item
                 fragment = new NewDemandFragment();
                 fragmentManager.beginTransaction()
-                        .addToBackStack("4") // 4 = position of new demand menu item
+                        .addToBackStack(Integer.toString(navigationIndex))
                         .replace(R.id.container, fragment)
                         .commit();
+                ((MainActivity) getActivity()).setNavigationIndex(navigationIndex);
                 break;
 
             case R.id.btnNewOffer:
+                navigationIndex = 2; // 2 = position of new offer menu item
                 fragment = new NewOfferFragment();
                 fragmentManager.beginTransaction()
-                        .addToBackStack("2") // 2 = position of new offer menu item
+                        .addToBackStack(Integer.toString(navigationIndex))
                         .replace(R.id.container, fragment)
                         .commit();
+                ((MainActivity) getActivity()).setNavigationIndex(navigationIndex);
                 break;
         }
     }
