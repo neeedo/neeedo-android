@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.util.Log;
 import android.widget.EditText;
 
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+
 import org.springframework.http.HttpBasicAuthentication;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -79,6 +81,8 @@ public class GetOutpanByEANAsyncTask extends BaseAsyncTask {
             for (String currentTag : tempTags) {
                 tagsString += currentTag + " ";
             }
+        } else {
+            throw new IllegalArgumentException("Name tag is empty");
         }
         return tagsString;
     }
