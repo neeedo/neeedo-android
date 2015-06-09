@@ -34,13 +34,9 @@ public class MainActivity extends ActionBarActivity
 
         super.onCreate(savedInstanceState);
 
-        if (savedInstanceState != null) {
-            mCurrentNavigationIndex = savedInstanceState.getInt(NAVIGATION_KEY);
-        }
-
         setContentView(R.layout.activity_main);
 
-        onNavigationDrawerItemSelected(mCurrentNavigationIndex);
+        restoreState(savedInstanceState);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
@@ -60,9 +56,7 @@ public class MainActivity extends ActionBarActivity
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        mCurrentNavigationIndex = savedInstanceState.getInt(NAVIGATION_KEY);
-
-        onNavigationDrawerItemSelected(mCurrentNavigationIndex);
+        restoreState(savedInstanceState);
     }
 
     public void setNavigationIndex(int currentNavigationIndex) {
@@ -80,6 +74,14 @@ public class MainActivity extends ActionBarActivity
 
     private void initSingletons() {
         activeUser.setContext(getApplicationContext());
+    }
+
+    private void restoreState(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            mCurrentNavigationIndex = savedInstanceState.getInt(NAVIGATION_KEY);
+        }
+
+        onNavigationDrawerItemSelected(mCurrentNavigationIndex);
     }
 
     @Override
