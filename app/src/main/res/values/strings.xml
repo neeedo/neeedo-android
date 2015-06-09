@@ -39,6 +39,7 @@
     <string name="new_card_submit">Submit</string>
 
     <!-- Error messages -->
+    <string name="error_outpan_not_found">Your product was not found in the database</string>
     <string name="error_empty_or_wrong_format">Wrong format or emtpy field(s)</string>
     <string name="sample_title">Gebrauchtes Kinderfahrrad</string>
     <string name="sample_describtion">ich biete ein 2,5 Jahre altes Kinderrad. Es ist optisch und

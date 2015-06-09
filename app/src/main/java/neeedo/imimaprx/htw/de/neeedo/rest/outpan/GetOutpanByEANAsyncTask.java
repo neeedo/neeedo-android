@@ -1,5 +1,6 @@
 package neeedo.imimaprx.htw.de.neeedo.rest.outpan;
 
+import android.app.Activity;
 import android.util.Log;
 import android.widget.EditText;
 
@@ -14,8 +15,8 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
+import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.Article;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
@@ -28,10 +29,12 @@ public class GetOutpanByEANAsyncTask extends BaseAsyncTask {
 
     private final String ean;
     private final EditText etTags;
+    private final Activity activity;
 
-    public GetOutpanByEANAsyncTask(String ean, EditText etTags) {
+    public GetOutpanByEANAsyncTask(String ean, EditText etTags, Activity activity) {
         this.etTags = etTags;
         this.ean = ean;
+        this.activity = activity;
     }
 
     protected Object doInBackground(Object[] params) {
@@ -65,8 +68,7 @@ public class GetOutpanByEANAsyncTask extends BaseAsyncTask {
             etTags.setText(outpanResult.getTags());
         } else if (result instanceof RestResult) {
             if (((RestResult) result).getResult() == RestResult.ReturnType.FAILED)
-                //TODO get from R.strings
-                etTags.setText("failed");
+                etTags.setText(activity.getString(R.string.error_outpan_not_found));
         }
     }
 
