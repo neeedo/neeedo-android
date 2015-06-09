@@ -47,8 +47,7 @@ public class SuperFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == Activity.RESULT_OK || requestCode == RequestCodes.LOGIN_REQUEST_CODE) {
+        if (requestCode == RequestCodes.LOGIN_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             Toast.makeText(getActivity(), "login returned!", Toast.LENGTH_SHORT).show();
         }
     }

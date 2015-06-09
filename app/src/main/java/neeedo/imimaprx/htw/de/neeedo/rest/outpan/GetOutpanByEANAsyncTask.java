@@ -68,7 +68,6 @@ public class GetOutpanByEANAsyncTask extends BaseAsyncTask {
                 //TODO get from R.strings
                 etTags.setText("failed");
         }
-
     }
 
     private String getTagsFromArticle(Article article) {
