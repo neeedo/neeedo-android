@@ -72,6 +72,7 @@ public class MainFragment extends SuperFragment implements View.OnClickListener 
                 .replace(R.id.container, fragment)
                 .commit();
 
+        ((MainActivity) getActivity()).setFragment(fragment);
         ((MainActivity) getActivity()).setNavigationIndex(navigationIndex);
     }
 }

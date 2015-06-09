@@ -23,10 +23,12 @@ public class MainActivity extends ActionBarActivity
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private int mCurrentNavigationIndex = 0;
+    private Fragment mFragment;
 
     private final ActiveUser activeUser = ActiveUser.getInstance();
 
     public static final String NAVIGATION_KEY = "current_navigation_item_selected";
+    public static final String STATE_FRAGMENT = "current_fragment_state";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +38,7 @@ public class MainActivity extends ActionBarActivity
 
         setContentView(R.layout.activity_main);
 
-        restoreState(savedInstanceState);
+        initOrRestoreState(savedInstanceState);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
@@ -50,17 +52,23 @@ public class MainActivity extends ActionBarActivity
         super.onSaveInstanceState(savedInstanceState);
 
         savedInstanceState.putInt(NAVIGATION_KEY, mCurrentNavigationIndex);
+
+        getSupportFragmentManager().putFragment(savedInstanceState, STATE_FRAGMENT, mFragment);
     }
 
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        restoreState(savedInstanceState);
+        initOrRestoreState(savedInstanceState);
     }
 
     public void setNavigationIndex(int currentNavigationIndex) {
         mCurrentNavigationIndex = currentNavigationIndex;
+    }
+
+    public void setFragment(Fragment fragment) {
+        mFragment = fragment;
     }
 
     private void attempLogin() {
@@ -76,46 +84,53 @@ public class MainActivity extends ActionBarActivity
         activeUser.setContext(getApplicationContext());
     }
 
-    private void restoreState(Bundle savedInstanceState) {
+    private void initOrRestoreState(Bundle savedInstanceState) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
         if (savedInstanceState != null) {
+            mFragment = getSupportFragmentManager().getFragment(savedInstanceState, STATE_FRAGMENT);
             mCurrentNavigationIndex = savedInstanceState.getInt(NAVIGATION_KEY);
+        } else {
+            mFragment = new MainFragment();
+            mCurrentNavigationIndex = 0;
         }
 
-        onNavigationDrawerItemSelected(mCurrentNavigationIndex);
+        fragmentManager.beginTransaction()
+                .addToBackStack(String.valueOf(mCurrentNavigationIndex))
+                .replace(R.id.container, mFragment)
+                .commit();
     }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-        Fragment fragment = null;
-
         switch (position) {
             case 0:
-                fragment = new MainFragment();
+                mFragment = new MainFragment();
                 break;
             case 1:
-                fragment = new ListOffersFragment();
+                mFragment = new ListOffersFragment();
                 break;
             case 2:
-                fragment = new NewOfferFragment();
+                mFragment = new NewOfferFragment();
                 break;
             case 3:
-                fragment = new ListDemandsFragment();
+                mFragment = new ListDemandsFragment();
                 break;
             case 4:
-                fragment = new NewDemandFragment();
+                mFragment = new NewDemandFragment();
                 break;
             case 5:
-                fragment = new DiolorSwipeFragment();
+                mFragment = new DiolorSwipeFragment();
                 break;
             default:
-                fragment = new MainFragment();
+                mFragment = new MainFragment();
                 break;
         }
         fragmentManager.beginTransaction()
                 .addToBackStack(String.valueOf(position))
-                .replace(R.id.container, fragment)
+                .replace(R.id.container, mFragment)
                 .commit();
 
         mCurrentNavigationIndex = position;
