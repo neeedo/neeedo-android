@@ -79,8 +79,9 @@ public class GetOutpanByEANAsyncTask extends BaseAsyncTask {
         if (!(article.getName() == null)| !(article.getName().equals(""))) {
             String[] tempTags = article.getName().split("[ ]+");
             for (String currentTag : tempTags) {
-                tagsString += currentTag + " ";
+                tagsString += currentTag + ", ";
             }
+            tagsString = tagsString.substring(0,tagsString.length()-1);
         } else {
             throw new IllegalArgumentException("Name tag is empty");
         }
