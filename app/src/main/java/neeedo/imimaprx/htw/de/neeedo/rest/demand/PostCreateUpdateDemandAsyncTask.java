@@ -23,12 +23,6 @@ public class PostCreateUpdateDemandAsyncTask extends BaseAsyncTask {
 
     private SendMode sendMode;
 
-
-    /**
-     * Mode of sending UPDATE or CREATE is needed, available in {@link BaseAsyncTask}
-     *
-     * @param sendMode
-     */
     public PostCreateUpdateDemandAsyncTask(SendMode sendMode) {
         if (sendMode == null) {
             throw new IllegalArgumentException("No mode is given.");

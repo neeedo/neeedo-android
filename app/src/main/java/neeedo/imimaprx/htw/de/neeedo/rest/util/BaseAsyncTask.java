@@ -15,7 +15,6 @@ public abstract class BaseAsyncTask extends AsyncTask {
         GET_BY_USER, GET_RANDOM
     }
 
-
     public enum SendMode {
         CREATE, UPDATE
     }
@@ -32,5 +31,4 @@ public abstract class BaseAsyncTask extends AsyncTask {
         HttpBasicAuthentication authentication = new HttpBasicAuthentication(activeUser.getUsername(), activeUser.getUserPassword());
         requestHeaders.setAuthorization(authentication);
     }
-
 }
