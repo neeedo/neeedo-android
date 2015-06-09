@@ -14,10 +14,12 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.Article;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.OutpanResult;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.RestResult;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
@@ -47,9 +49,9 @@ public class GetOutpanByEANAsyncTask extends BaseAsyncTask {
             ResponseEntity<Article> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, Article.class);
 
             Article article = responseEntity.getBody();
-            etTags.setText(getTagsFromArticale(article));
+            String tagsString = getTagsFromArticle(article);
 
-            return new RestResult(this.getClass().getSimpleName(), RestResult.ReturnType.SUCCESS);
+            return new OutpanResult(this.getClass().getSimpleName(), RestResult.ReturnType.SUCCESS, tagsString);
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
             return new RestResult(this.getClass().getSimpleName(), RestResult.ReturnType.FAILED);
@@ -57,10 +59,19 @@ public class GetOutpanByEANAsyncTask extends BaseAsyncTask {
     }
 
     @Override
-    protected void onPostExecute(Object o) {
+    protected void onPostExecute(Object result) {
+        if (result instanceof OutpanResult) {
+            OutpanResult outpanResult = (OutpanResult) result;
+            etTags.setText(outpanResult.getTags());
+        } else if (result instanceof RestResult) {
+            if (((RestResult) result).getResult() == RestResult.ReturnType.FAILED)
+                //TODO get from R.strings
+                etTags.setText("failed");
+        }
+
     }
 
-    private String getTagsFromArticale(Article article) {
+    private String getTagsFromArticle(Article article) {
         String tagsString = "";
         if (!(article.getName() == null)) {
             String[] tempTags = article.getName().split("[ ]+");
