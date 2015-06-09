@@ -37,7 +37,6 @@ public class MainActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-
         initOrRestoreState(savedInstanceState);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -85,8 +84,6 @@ public class MainActivity extends ActionBarActivity
     }
 
     private void initOrRestoreState(Bundle savedInstanceState) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-
         if (savedInstanceState != null) {
             mFragment = getSupportFragmentManager().getFragment(savedInstanceState, STATE_FRAGMENT);
             mCurrentNavigationIndex = savedInstanceState.getInt(NAVIGATION_KEY);
@@ -94,17 +91,18 @@ public class MainActivity extends ActionBarActivity
             mFragment = new MainFragment();
             mCurrentNavigationIndex = 0;
         }
+        changeFragment(mFragment, mCurrentNavigationIndex);
+    }
 
-        fragmentManager.beginTransaction()
-                .addToBackStack(String.valueOf(mCurrentNavigationIndex))
-                .replace(R.id.container, mFragment)
+    private void changeFragment(Fragment fragment, int navigationIndex) {
+        getSupportFragmentManager().beginTransaction()
+                .addToBackStack(String.valueOf(navigationIndex))
+                .replace(R.id.container, fragment)
                 .commit();
     }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-
         switch (position) {
             case 0:
                 mFragment = new MainFragment();
@@ -128,11 +126,7 @@ public class MainActivity extends ActionBarActivity
                 mFragment = new MainFragment();
                 break;
         }
-        fragmentManager.beginTransaction()
-                .addToBackStack(String.valueOf(position))
-                .replace(R.id.container, mFragment)
-                .commit();
-
+        changeFragment(mFragment, position);
         mCurrentNavigationIndex = position;
     }
 }
