@@ -76,7 +76,7 @@ public class GetOutpanByEANAsyncTask extends BaseAsyncTask {
 
     private String getTagsFromArticle(Article article) {
         String tagsString = "";
-        if (!(article.getName() == null)|| !(article.getName().equals(""))) {
+        if (!(article.getName() == null)) {
             String[] tempTags = article.getName().split("[ ]+");
             for (String currentTag : tempTags) {
                 tagsString += currentTag + ", ";
