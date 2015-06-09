@@ -100,17 +100,14 @@ public class SuperFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    public void redirectToListFragment(String type) {
+    public void redirectToFragment(Class type) {
         FragmentManager fragmentManager = getFragmentManager();
         Fragment fragment = null;
 
-        // TODO redirect to detail view instead of list
-
-        if (type.equals(DEMANDS_LIST_KEY)) {
-            fragment = new ListDemandsFragment();
-        } else if (type.equals(OFFERS_LIST_KEY)) {
-            fragment = new ListOffersFragment();
-        } else {
+        try {
+            fragment = (Fragment) type.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
             return;
         }
 

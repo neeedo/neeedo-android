@@ -122,8 +122,6 @@ public class NewDemandFragment extends SuperFragment {
 
     @Subscribe
     public void handleServerResponse(ServerResponseEvent e) {
-        //TODO refactor! just pass fragment class to be redireted to
-//        redirectToListFragment(NewDemandFragment.class);
-        redirectToListFragment(DEMANDS_LIST_KEY);
+        redirectToFragment(ListDemandsFragment.class);
     }
 }
