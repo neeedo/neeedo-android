@@ -81,7 +81,7 @@ public class GetOutpanByEANAsyncTask extends BaseAsyncTask {
             for (String currentTag : tempTags) {
                 tagsString += currentTag + ", ";
             }
-            tagsString = tagsString.substring(0,tagsString.length()-1);
+            tagsString = tagsString.substring(0,tagsString.length()-2);
         } else {
             throw new IllegalArgumentException("Name tag is empty");
         }
