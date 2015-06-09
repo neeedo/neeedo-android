@@ -136,7 +136,7 @@ public class NewOfferFragment extends SuperFragment {
 
         } else if (requestCode == RequestCodes.BARCODE_SCAN_REQUEST_CODE) {
             String barcodeEAN = intent.getStringExtra("SCAN_RESULT");
-            GetOutpanByEANAsyncTask eanAsyncTask = new GetOutpanByEANAsyncTask(barcodeEAN, etTags);
+            GetOutpanByEANAsyncTask eanAsyncTask = new GetOutpanByEANAsyncTask(barcodeEAN, etTags, getActivity());
             eanAsyncTask.execute();
         }
     }
