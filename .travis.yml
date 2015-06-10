@@ -30,7 +30,7 @@ before_install:
   - export NDK_PROJECT_PATH=$PWD
 
 before_script:
-  - echo no | android create avd --force -n test -t android-19 --abi armeabi-v7a
+  - echo no | android create avd --force -n test -t android-19 --abi x86
   - emulator -avd test -no-skin -no-audio -no-window &
   - chmod u+x android-wait-for-emulator
   - ./android-wait-for-emulator
