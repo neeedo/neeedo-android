@@ -15,6 +15,7 @@ android:
     - extra-android-m2repository
     - addon-google_apis-google-21
     - sys-img-armeabi-v7a-android-19
+    - sys-img-x86-android-19
     - sys-img-x86-android-tv-l
     - add-on
     - extra
