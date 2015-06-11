@@ -14,6 +14,8 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.squareup.otto.Subscribe;
+
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
@@ -22,6 +24,7 @@ import java.io.File;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.Location;
+import neeedo.imimaprx.htw.de.neeedo.events.NewEanTagsReceivedEvent;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.CameraActivityReturnedHandler;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.SendNewOfferHandler;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.StartCameraHandler;
@@ -29,6 +32,7 @@ import neeedo.imimaprx.htw.de.neeedo.fragments.handler.StartNewBarcodeScanHandle
 import neeedo.imimaprx.htw.de.neeedo.helpers.LocationHelper;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.rest.outpan.GetOutpanByEANAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.service.EventService;
 import neeedo.imimaprx.htw.de.neeedo.utils.ImageUtils;
 import neeedo.imimaprx.htw.de.neeedo.vo.RequestCodes;
 
@@ -49,6 +53,8 @@ public class NewOfferFragment extends SuperFragment {
     private double locationLongitude;
     private boolean locationAvailable;
     private File photoFile;
+
+    private EventService eventService = EventService.getInstance();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -131,13 +137,16 @@ public class NewOfferFragment extends SuperFragment {
         }
 
         if (requestCode == RequestCodes.CAMERA_CAPTURE_IMAGE_REQUEST_CODE) {
-          new CameraActivityReturnedHandler(photoFile,addImageButton).execute();
-
-
+            new CameraActivityReturnedHandler(photoFile, addImageButton).execute();
         } else if (requestCode == RequestCodes.BARCODE_SCAN_REQUEST_CODE) {
             String barcodeEAN = intent.getStringExtra("SCAN_RESULT");
-            GetOutpanByEANAsyncTask eanAsyncTask = new GetOutpanByEANAsyncTask(barcodeEAN, etTags, getActivity());
-            eanAsyncTask.execute();
+            new GetOutpanByEANAsyncTask(barcodeEAN, getActivity()).execute();
         }
+    }
+
+    @Subscribe
+    public void handleNewEanTagsReceived(NewEanTagsReceivedEvent event) {
+        etTags.setText(event.getOutpanResult().getTags());
+
     }
 }
