@@ -1,5 +1,6 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,6 +27,7 @@ public class SingleDemandFragment extends SuperFragment implements View.OnClickL
 
     TextView textView;
     Button btnDeleteDemand;
+    Button btnEditDemand;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,9 +44,12 @@ public class SingleDemandFragment extends SuperFragment implements View.OnClickL
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        btnDeleteDemand = (Button) getActivity().findViewById(R.id.btnDelete);
+        Activity activity = getActivity();
+        btnDeleteDemand = (Button) activity.findViewById(R.id.btnDelete);
+        btnEditDemand = (Button) activity.findViewById(R.id.btnEdit);
 
         btnDeleteDemand.setOnClickListener(this);
+        btnEditDemand.setOnClickListener(this);
 
         BaseAsyncTask asyncTask;
 
@@ -76,21 +81,29 @@ public class SingleDemandFragment extends SuperFragment implements View.OnClickL
 
     @Override
     public void onClick(View view) {
-        if(view.getId() == R.id.btnDelete) {
-            String demandId = getArguments().getString("id");
-            List<Demand> demandList = DemandsModel.getInstance().getDemands().getDemands();
-            Demand currentDemand = null;
+        String demandId = getArguments().getString("id");
+        List<Demand> demandList = DemandsModel.getInstance().getDemands().getDemands();
+        Demand currentDemand = null;
 
-            for (Demand demand : demandList) {
-                if (demand.getId().equals(demandId)) {
-                    currentDemand = demand;
-                    break;
-                }
+        for (Demand demand : demandList) {
+            if (demand.getId().equals(demandId)) {
+                currentDemand = demand;
+                break;
             }
-
-            DemandsModel.getInstance().setPostDemand(currentDemand);
-            BaseAsyncTask asyncTask = new PostCreateUpdateDemandAsyncTask(BaseAsyncTask.SendMode.DELETE);
-            asyncTask.execute();
         }
+
+        switch(view.getId()) {
+            case R.id.btnDelete:
+                DemandsModel.getInstance().setPostDemand(currentDemand);
+                BaseAsyncTask asyncTask = new PostCreateUpdateDemandAsyncTask(BaseAsyncTask.SendMode.DELETE);
+                asyncTask.execute();
+                break;
+
+            case R.id.btnEdit:
+                // TODO add edit demand stuff
+                Log.d("DEBUG", "Edit button clicked");
+                break;
+        }
+
     }
 }
