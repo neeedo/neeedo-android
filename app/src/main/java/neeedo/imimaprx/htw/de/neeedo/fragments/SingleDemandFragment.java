@@ -57,11 +57,7 @@ public class SingleDemandFragment extends SuperFragment implements View.OnClickL
         asyncTask.execute();
     }
 
-    @Subscribe
-    public void fillText(ServerResponseEvent e) {
-
-        String demandId = getArguments().getString("id");
-
+    private Demand findSingleDemand(String demandId) {
         Demands demands = DemandsModel.getInstance().getDemands();
 
         List<Demand> demandList = demands.getDemands();
@@ -74,6 +70,14 @@ public class SingleDemandFragment extends SuperFragment implements View.OnClickL
             }
         }
 
+        return currentDemand;
+    }
+
+    @Subscribe
+    public void fillText(ServerResponseEvent e) {
+        String demandId = getArguments().getString("id");
+        Demand currentDemand = findSingleDemand(demandId);
+
         textView.setText(currentDemand.toString());
 
         // TODO handle exception if demand not found
@@ -82,15 +86,7 @@ public class SingleDemandFragment extends SuperFragment implements View.OnClickL
     @Override
     public void onClick(View view) {
         String demandId = getArguments().getString("id");
-        List<Demand> demandList = DemandsModel.getInstance().getDemands().getDemands();
-        Demand currentDemand = null;
-
-        for (Demand demand : demandList) {
-            if (demand.getId().equals(demandId)) {
-                currentDemand = demand;
-                break;
-            }
-        }
+        Demand currentDemand = findSingleDemand(demandId);
 
         switch(view.getId()) {
             case R.id.btnDelete:
