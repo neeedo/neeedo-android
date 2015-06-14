@@ -64,5 +64,6 @@
     <string name="login_returned">Login returned</string>
 
     <string name="button_delete">Delete</string>
+    <string name="button_edit">Edit</string>
 
 </resources>
