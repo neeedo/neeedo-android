@@ -63,4 +63,6 @@
     <string name="login_no_valid_email_error">Your given email isn\'t valid.</string>
     <string name="login_returned">Login returned</string>
 
+    <string name="button_delete">Delete</string>
+
 </resources>

@@ -1,9 +1,11 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.squareup.otto.Subscribe;
@@ -19,9 +21,10 @@ import neeedo.imimaprx.htw.de.neeedo.rest.demand.GetDemandsAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 
 
-public class SingleDemandFragment extends SuperFragment {
+public class SingleDemandFragment extends SuperFragment implements View.OnClickListener {
 
     TextView textView;
+    Button btnDeleteDemand;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -37,6 +40,10 @@ public class SingleDemandFragment extends SuperFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        btnDeleteDemand = (Button) getActivity().findViewById(R.id.btnDelete);
+
+        btnDeleteDemand.setOnClickListener(this);
 
         BaseAsyncTask asyncTask;
 
@@ -64,5 +71,14 @@ public class SingleDemandFragment extends SuperFragment {
         textView.setText(currentDemand.toString());
 
         // TODO handle exception if demand not found
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view.getId() == R.id.btnDelete) {
+            Log.d("DEBUG", "Click");
+
+            // TODO delete current demand
+        }
     }
 }
