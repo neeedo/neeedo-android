@@ -18,10 +18,9 @@ import neeedo.imimaprx.htw.de.neeedo.entities.Demand;
 import neeedo.imimaprx.htw.de.neeedo.entities.Demands;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
-import neeedo.imimaprx.htw.de.neeedo.rest.demand.DeleteDemandAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.demand.GetDemandsAsyncTask;
-import neeedo.imimaprx.htw.de.neeedo.rest.demand.PostCreateUpdateDemandAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.util.DeleteAsyncTask;
 
 
 public class SingleDemandFragment extends SuperFragment implements View.OnClickListener {
@@ -92,7 +91,7 @@ public class SingleDemandFragment extends SuperFragment implements View.OnClickL
         switch(view.getId()) {
             case R.id.btnDelete:
                 DemandsModel.getInstance().setPostDemand(currentDemand);
-                BaseAsyncTask asyncTask = new DeleteDemandAsyncTask();
+                BaseAsyncTask asyncTask = new DeleteAsyncTask(currentDemand);
                 asyncTask.execute();
                 break;
 
