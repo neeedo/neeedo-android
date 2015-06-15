@@ -1,6 +1,7 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -92,9 +93,12 @@ public class SingleDemandFragment extends SuperFragment implements View.OnClickL
             case R.id.btnDelete:
                 DemandsModel.getInstance().setPostDemand(currentDemand);
                 BaseAsyncTask asyncTask = new DeleteAsyncTask(currentDemand);
-                asyncTask.execute();
-                // TODO check for error
-                redirectToFragment(ListDemandsFragment.class);
+                ConfirmDialogFragment confirmDialog = ConfirmDialogFragment.newInstance(
+                        asyncTask,
+                        ListDemandsFragment.class,
+                        getResources().getString(R.string.dialog_delete_demand)
+                );
+                confirmDialog.show(getFragmentManager(), "confirm");
                 break;
 
             case R.id.btnEdit:

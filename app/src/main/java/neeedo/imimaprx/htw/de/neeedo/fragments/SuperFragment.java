@@ -1,7 +1,12 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.Menu;
@@ -12,9 +17,11 @@ import android.widget.Toast;
 import com.squareup.otto.Subscribe;
 
 import neeedo.imimaprx.htw.de.neeedo.LoginActivity;
+import neeedo.imimaprx.htw.de.neeedo.MainActivity;
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.events.UserStateChangedEvent;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
+import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.service.EventService;
 import neeedo.imimaprx.htw.de.neeedo.vo.RequestCodes;
 
@@ -116,5 +123,45 @@ public class SuperFragment extends Fragment {
     @Subscribe
     public void handleUserStateChanged(UserStateChangedEvent event) {
         setLoginButtonState();
+    }
+
+    public static class ConfirmDialogFragment extends android.support.v4.app.DialogFragment {
+        private static ConfirmDialogFragment dialog;
+        private static BaseAsyncTask task;
+        private static Class fragmentRedirect;
+        private static String message;
+
+        public static ConfirmDialogFragment newInstance(BaseAsyncTask asyncTask, Class fragmentType, String dialogMessage) {
+            dialog = new ConfirmDialogFragment();
+
+            task = asyncTask;
+            fragmentRedirect = fragmentType;
+            message = dialogMessage;
+
+            return dialog;
+        }
+
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            return new ProgressDialog.Builder(getActivity()).
+                    setMessage(message).
+                    setPositiveButton(R.string.dialog_yes,
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    task.execute();
+                                    SuperFragment fragment = (SuperFragment) getFragmentManager().findFragmentById(R.id.container);
+                                    fragment.redirectToFragment(fragmentRedirect);
+                                }
+                            }).
+                    setNegativeButton(R.string.dialog_no,
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialog.dismiss();
+                                }
+                            }).
+                    create();
+
+        }
     }
 }
