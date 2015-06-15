@@ -109,6 +109,7 @@ public class SuperFragment extends Fragment {
 
         fragmentManager.beginTransaction()
                 .replace(R.id.container, fragment)
+                .addToBackStack(null)
                 .commit();
     }
 

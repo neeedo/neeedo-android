@@ -96,8 +96,8 @@ public class SingleDemandFragment extends SuperFragment implements View.OnClickL
                 break;
 
             case R.id.btnEdit:
-                // TODO add edit demand stuff
-                Log.d("DEBUG", "Edit button clicked");
+                DemandsModel.getInstance().setPostDemand(currentDemand);
+                redirectToFragment(EditDemandFragment.class);
                 break;
         }
 
