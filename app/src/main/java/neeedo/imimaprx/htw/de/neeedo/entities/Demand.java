@@ -97,12 +97,20 @@ public class Demand implements Serializable, BaseEntity {
         return mustTags;
     }
 
+    public String getMustTagsString() {
+        return tagsToString(mustTags);
+    }
+
     public void setMustTags(ArrayList<String> mustTags) {
         this.mustTags = mustTags;
     }
 
     public ArrayList<String> getShouldTags() {
         return shouldTags;
+    }
+
+    public String getShouldTagsString() {
+        return tagsToString(shouldTags);
     }
 
     public void setShouldTags(ArrayList<String> shouldTags) {
@@ -115,6 +123,22 @@ public class Demand implements Serializable, BaseEntity {
 
     public void setDemand(Demand demand) {
         this.demand = demand;
+    }
+
+    private String tagsToString(ArrayList<String> tags) {
+        String returnString = "";
+        int counter = 0;
+
+        for(String tag : tags) {
+            if(counter == 0) {
+                returnString = tag;
+            } else {
+                returnString = returnString + ", " + tag;
+            }
+            counter++;
+        }
+
+        return returnString;
     }
 
     @Override

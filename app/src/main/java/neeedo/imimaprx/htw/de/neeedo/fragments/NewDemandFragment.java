@@ -63,7 +63,7 @@ public class NewDemandFragment extends SuperFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.new_demand_form, container, false);
+        View view = inflater.inflate(R.layout.form_demand_view, container, false);
 
         etMustTags = (EditText) view.findViewById(R.id.etMustTags);
         etShouldTags = (EditText) view.findViewById(R.id.etShouldTags);

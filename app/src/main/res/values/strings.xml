@@ -34,9 +34,10 @@
     <string name="new_card_price_min">Price min.</string>
     <string name="new_card_price_max">Price max.</string>
     <string name="new_card_price">Price</string>
-    <string name="new_card_demand">New Demand</string>
     <string name="new_card_offer">New Offer</string>
     <string name="new_card_submit">Submit</string>
+    <string name="new_card_demand">New Demand</string>
+    <string name="edit_card_demand">Edit Demand</string>
 
     <!-- Error messages -->
     <string name="error_outpan_not_found">Your product was not found in the database</string>

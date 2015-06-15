@@ -77,7 +77,7 @@ public class NewOfferFragment extends SuperFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.new_offer_form, container, false);
+        View view = inflater.inflate(R.layout.form_offer_view, container, false);
 
         etTags = (EditText) view.findViewById(R.id.etTags);
         etLocationLat = (EditText) view.findViewById(R.id.etLocationLat);

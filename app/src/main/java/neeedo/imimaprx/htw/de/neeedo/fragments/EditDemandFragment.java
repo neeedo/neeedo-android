@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
@@ -19,7 +20,6 @@ import neeedo.imimaprx.htw.de.neeedo.entities.Location;
 import neeedo.imimaprx.htw.de.neeedo.entities.Price;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.helpers.LocationHelper;
-import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.demand.PostCreateUpdateDemandAsyncTask;
@@ -56,9 +56,12 @@ public class EditDemandFragment extends SuperFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.new_demand_form, container, false);
+        View view = inflater.inflate(R.layout.form_demand_view, container, false);
 
         final Demand currentDemand = DemandsModel.getInstance().getPostDemand();
+
+        TextView header = (TextView) view.findViewById(R.id.tvHeader);
+        header.setText(R.string.edit_card_demand);
 
         etMustTags = (EditText) view.findViewById(R.id.etMustTags);
         etShouldTags = (EditText) view.findViewById(R.id.etShouldTags);
@@ -70,8 +73,8 @@ public class EditDemandFragment extends SuperFragment {
         btnSubmit = (Button) view.findViewById(R.id.btnSubmit);
 
         if(currentDemand != null) {
-            etMustTags.setText(currentDemand.getMustTags().toString());
-            etShouldTags.setText(currentDemand.getShouldTags().toString());
+            etMustTags.setText(currentDemand.getMustTagsString());
+            etShouldTags.setText(currentDemand.getShouldTagsString());
             etLocationLat.setText(String.valueOf(currentDemand.getLocation().getLat()));
             etLocationLon.setText(String.valueOf(currentDemand.getLocation().getLon()));
             etDistance.setText(String.valueOf(currentDemand.getDistance()));
