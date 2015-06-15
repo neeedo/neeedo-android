@@ -50,10 +50,6 @@ public class PostCreateUpdateDemandAsyncTask extends BaseAsyncTask {
                     httpMethod = HttpMethod.PUT;
                 }
                 break;
-                case DELETE: {
-                    url += "demands/" + postDemand.getId() + "/" + postDemand.getVersion();
-                    httpMethod = HttpMethod.DELETE; // TODO fix "400 Bad Request"
-                }
             }
 
             HttpHeaders requestHeaders = new HttpHeaders();

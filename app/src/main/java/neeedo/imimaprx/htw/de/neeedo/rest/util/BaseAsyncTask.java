@@ -16,7 +16,7 @@ public abstract class BaseAsyncTask extends AsyncTask {
     }
 
     public enum SendMode {
-        CREATE, UPDATE, DELETE
+        CREATE, UPDATE
     }
 
     protected EventService eventService = EventService.getInstance();
