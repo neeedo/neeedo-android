@@ -93,6 +93,8 @@ public class SingleDemandFragment extends SuperFragment implements View.OnClickL
                 DemandsModel.getInstance().setPostDemand(currentDemand);
                 BaseAsyncTask asyncTask = new DeleteAsyncTask(currentDemand);
                 asyncTask.execute();
+                // TODO check for error
+                redirectToFragment(ListDemandsFragment.class);
                 break;
 
             case R.id.btnEdit:
