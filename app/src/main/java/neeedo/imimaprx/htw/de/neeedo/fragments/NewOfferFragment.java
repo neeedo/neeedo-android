@@ -95,7 +95,7 @@ public class NewOfferFragment extends SuperFragment {
         addImageButton.setOnClickListener(new StartCameraHandler(this, photoFile));
         btnSubmit.setOnClickListener(new SendNewOfferHandler(etTags, etLocationLat, etLocationLon, etPrice));
         btnBarcode.setOnClickListener(new StartNewBarcodeScanHandler(this));
-btnSetLocation.setOnClickListener(new StartLocationChooserHandler(this));
+        btnSetLocation.setOnClickListener(new StartLocationChooserHandler(this));
 
         return view;
     }
