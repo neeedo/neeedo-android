@@ -2,13 +2,20 @@ package neeedo.imimaprx.htw.de.neeedo.rest.image;
 
 import android.util.Log;
 
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.FormHttpMessageConverter;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.ResourceHttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
@@ -35,17 +42,27 @@ public class PostCreateImageAsyncTask extends BaseAsyncTask {
     @Override
     protected Object doInBackground(Object[] params) {
         try {
-            String url = ServerConstantsUtils.getActiveServer() + "images/";
+            String url = ServerConstantsUtils.getActiveServer()+"images/";
             HttpMethod httpMethod = HttpMethod.POST;
+
+            MultiValueMap<String, Object> parts = new LinkedMultiValueMap<>();
+            parts.add("file", new FileSystemResource(photo));
 
             HttpHeaders requestHeaders = new HttpHeaders();
             setAuthorisationHeaders(requestHeaders);
             requestHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);
-            HttpEntity<File> requestEntity = new HttpEntity<File>(photo, requestHeaders);
+
+            HttpMessageConverter<Object> jackson = new MappingJackson2HttpMessageConverter();
+            HttpMessageConverter<Resource> resource = new ResourceHttpMessageConverter();
+            FormHttpMessageConverter formHttpMessageConverter = new FormHttpMessageConverter();
+            formHttpMessageConverter.addPartConverter(jackson);
+            formHttpMessageConverter.addPartConverter(resource);
+
+            HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<MultiValueMap<String, Object> >(parts, requestHeaders);
 
             RestTemplate restTemplate = new RestTemplate(HttpRequestFactoryProviderImpl.getClientHttpRequestFactorySSLSupport(9000));
-            //restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-            restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+            //restTemplate.getMessageConverters().add(new ProgressFormHttpMessageConverter());
+            restTemplate.getMessageConverters().add(formHttpMessageConverter);
             ResponseEntity<Image> response = restTemplate.exchange(url, httpMethod, requestEntity, Image.class);
 
             Image image = response.getBody();

@@ -29,6 +29,7 @@ import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.CameraActivityReturnedHandler;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.SendNewOfferHandler;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.StartCameraHandler;
+import neeedo.imimaprx.htw.de.neeedo.fragments.handler.StartLocationChooserHandler;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.StartNewBarcodeScanHandler;
 import neeedo.imimaprx.htw.de.neeedo.helpers.LocationHelper;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
@@ -53,8 +54,9 @@ public class NewOfferFragment extends SuperFragment {
     private double locationLatitude;
     private double locationLongitude;
     private boolean locationAvailable;
-    private File photoFile;
+    private Button btnSetLocation;
 
+    private File photoFile;
     private EventService eventService = EventService.getInstance();
 
     @Override
@@ -81,6 +83,7 @@ public class NewOfferFragment extends SuperFragment {
         btnBarcode = (Button) view.findViewById(R.id.newOffer_Barcode_Button);
         btnSubmit = (Button) view.findViewById(R.id.btnSubmit);
         addImageButton = (ImageButton) view.findViewById(R.id.addImageButton);
+        btnSetLocation = (Button) view.findViewById(R.id.btnChooseLocation);
 
         if (locationAvailable) {
             etLocationLat.setText(String.valueOf(locationLatitude));
@@ -92,6 +95,7 @@ public class NewOfferFragment extends SuperFragment {
         addImageButton.setOnClickListener(new StartCameraHandler(this, photoFile));
         btnSubmit.setOnClickListener(new SendNewOfferHandler(etTags, etLocationLat, etLocationLon, etPrice));
         btnBarcode.setOnClickListener(new StartNewBarcodeScanHandler(this));
+btnSetLocation.setOnClickListener(new StartLocationChooserHandler(this));
 
         return view;
     }
@@ -119,6 +123,8 @@ public class NewOfferFragment extends SuperFragment {
                 mapView.getController().animateTo(new GeoPoint(52468277, 13425979));
             }
         }, 200);
+
+
     }
 
     @Override
