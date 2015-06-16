@@ -10,8 +10,8 @@ public class OffersModel {
 
     private Offers offers;
     private SingleOffer singleOffer;
-    private Offer postOffer;
-    private ArrayList<String> imageUrlList;
+
+    private Offer draft;
 
     public static OffersModel getInstance() {
         if (offersModel == null)
@@ -46,19 +46,13 @@ public class OffersModel {
         this.singleOffer = singleOffer;
     }
 
-    public Offer getPostOffer() {
-        return postOffer;
+    public Offer getDraft() {
+        return draft;
     }
 
-    public void setPostOffer(Offer postOffer) {
-        this.postOffer = postOffer;
+    public void setDraft(Offer draft) {
+        this.draft = draft;
     }
 
-    public ArrayList<String> getImageUrlList() {
-        return imageUrlList;
-    }
 
-    public void setImageUrlList(ArrayList<String> imageUrlList) {
-        this.imageUrlList = imageUrlList;
-    }
 }

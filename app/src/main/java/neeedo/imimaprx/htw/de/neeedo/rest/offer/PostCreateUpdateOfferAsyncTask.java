@@ -42,7 +42,7 @@ public class PostCreateUpdateOfferAsyncTask extends BaseAsyncTask {
             String url = ServerConstantsUtils.getActiveServer();
             OffersModel offersModel = OffersModel.getInstance();
             HttpMethod httpMethod = HttpMethod.POST;
-            Offer postOffer = offersModel.getPostOffer();
+            Offer postOffer = offersModel.getDraft();
 
             switch (sendMode) {
                 case CREATE: {
@@ -70,7 +70,7 @@ public class PostCreateUpdateOfferAsyncTask extends BaseAsyncTask {
             SingleOffer singleOffer = response.getBody();
             offersModel.setSingleOffer(singleOffer);
             offersModel.getOffers().getOffers().add(singleOffer.getOffer());
-            offersModel.setPostOffer(null);
+            offersModel.setDraft(null);
             return new RestResult(this.getClass().getSimpleName(), RestResult.ReturnType.SUCCESS);
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);

@@ -11,16 +11,12 @@ import android.widget.TextView;
 
 import com.squareup.otto.Subscribe;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
-import neeedo.imimaprx.htw.de.neeedo.entities.Demand;
-import neeedo.imimaprx.htw.de.neeedo.entities.Demands;
 import neeedo.imimaprx.htw.de.neeedo.entities.Offer;
 import neeedo.imimaprx.htw.de.neeedo.entities.Offers;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
-import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.offer.GetOffersAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
@@ -94,7 +90,7 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
 
         switch(view.getId()) {
             case R.id.btnDelete:
-                OffersModel.getInstance().setPostOffer(currentOffer);
+                OffersModel.getInstance().setDraft(currentOffer);
                 BaseAsyncTask asyncTask = new DeleteAsyncTask(currentOffer);
                 ConfirmDialogFragment confirmDialog = ConfirmDialogFragment.newInstance(
                         asyncTask,
@@ -107,7 +103,7 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
             case R.id.btnEdit:
                 // TODO
                 Log.d("DEBUG", "Edit offer");
-//                OffersModel.getInstance().setPostOffer(currentOffer);
+//                OffersModel.getInstance().setDraft(currentOffer);
 //                redirectToFragment(EditOfferFragment.class);
                 break;
         }

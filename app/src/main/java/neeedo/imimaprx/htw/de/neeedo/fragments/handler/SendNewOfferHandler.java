@@ -44,7 +44,7 @@ public class SendNewOfferHandler implements View.OnClickListener {
         offer.setPrice(price);
         offer.setUserId(UserModel.getInstance().getUser().getId());
 
-        OffersModel.getInstance().setPostOffer(offer);
+        OffersModel.getInstance().setDraft(offer);
         BaseAsyncTask asyncTask = new PostCreateUpdateOfferAsyncTask(BaseAsyncTask.SendMode.CREATE);
         asyncTask.execute();
     }
