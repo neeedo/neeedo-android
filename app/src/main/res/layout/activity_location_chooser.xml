@@ -4,12 +4,24 @@
     android:layout_height="match_parent"
     tools:context="neeedo.imimaprx.htw.de.neeedo.LocationChooserActivity">
 
-    <RelativeLayout
-        android:id="@+id/locationChooserMapContainer"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:gravity="center"></RelativeLayout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="vertical">
 
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@android:color/holo_red_dark" />
+        <RelativeLayout
+            android:id="@+id/locationChooserMapContainer"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:gravity="center"></RelativeLayout>
+
+    </LinearLayout>
 </RelativeLayout>
