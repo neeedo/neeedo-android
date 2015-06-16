@@ -29,32 +29,20 @@ public class GetOffersAsyncTask extends BaseAsyncTask {
     private Integer offset;
     private Location location;
 
-    public GetOffersAsyncTask(GetEntitiesMode getEntitiesMode) {
-        if (getEntitiesMode == null) {
-            throw new IllegalArgumentException("No Mode given.");
-        }
-        this.getEntitiesMode = getEntitiesMode;
-    }
-
     public GetOffersAsyncTask(GetEntitiesMode getEntitiesMode, Location location) {
-        if (getEntitiesMode == null | location == null) {
-            throw new IllegalArgumentException("Not all parameters are given!");
-        }
-        this.getEntitiesMode = getEntitiesMode;
+        this(getEntitiesMode);
         this.location = location;
-
     }
 
+    public GetOffersAsyncTask(GetEntitiesMode getEntitiesMode) {
+        this.getEntitiesMode = getEntitiesMode;
+    }
 
     public GetOffersAsyncTask(GetEntitiesMode getEntitiesMode, Integer limit, Integer offset) {
-        if (getEntitiesMode == null | limit == null | offset == null) {
-            throw new IllegalArgumentException("Not all parameters are given!");
-        }
-        this.getEntitiesMode = getEntitiesMode;
+        this(getEntitiesMode);
         this.limit = limit;
         this.offset = offset;
     }
-
 
     @Override
     protected Object doInBackground(Object[] params) {

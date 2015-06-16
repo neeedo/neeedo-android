@@ -30,26 +30,16 @@ public class GetDemandsAsyncTask extends BaseAsyncTask {
     private Location location;
 
     public GetDemandsAsyncTask(GetEntitiesMode getEntitiesMode) {
-        if (getEntitiesMode == null) {
-            throw new IllegalArgumentException("No Mode given.");
-        }
         this.getEntitiesMode = getEntitiesMode;
     }
 
     public GetDemandsAsyncTask(GetEntitiesMode getEntitiesMode, Location location) {
-        if (getEntitiesMode == null | location == null) {
-            throw new IllegalArgumentException("Not all parameters are given!");
-        }
-        this.getEntitiesMode = getEntitiesMode;
+        this(getEntitiesMode);
         this.location = location;
-
     }
 
     public GetDemandsAsyncTask(GetEntitiesMode getEntitiesMode, Integer limit, Integer offset) {
-        if (getEntitiesMode == null | limit == null | offset == null) {
-            throw new IllegalArgumentException("Not all parameters are given!");
-        }
-        this.getEntitiesMode = getEntitiesMode;
+        this(getEntitiesMode);
         this.limit = limit;
         this.offset = offset;
     }
