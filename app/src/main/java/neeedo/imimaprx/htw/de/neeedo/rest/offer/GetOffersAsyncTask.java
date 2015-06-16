@@ -24,6 +24,8 @@ import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 public class GetOffersAsyncTask extends BaseAsyncTask {
 
     private GetEntitiesMode getEntitiesMode;
+    private Integer limit;
+    private Integer offset;
 
     public GetOffersAsyncTask(GetEntitiesMode getEntitiesMode) {
         if (getEntitiesMode == null) {
@@ -31,6 +33,16 @@ public class GetOffersAsyncTask extends BaseAsyncTask {
         }
         this.getEntitiesMode = getEntitiesMode;
     }
+
+    public GetOffersAsyncTask(GetEntitiesMode getEntitiesMode, Integer limit, Integer offset) {
+        if (getEntitiesMode == null | limit == null | offset == null) {
+            throw new IllegalArgumentException("Not all parameters are given!");
+        }
+        this.getEntitiesMode = getEntitiesMode;
+        this.limit = limit;
+        this.offset = offset;
+    }
+
 
     @Override
     protected Object doInBackground(Object[] params) {
@@ -40,7 +52,11 @@ public class GetOffersAsyncTask extends BaseAsyncTask {
             String url = ServerConstantsUtils.getActiveServer();
             switch (getEntitiesMode) {
                 case GET_BY_USER: {
-                    url += "offers/users/" + UserModel.getInstance().getUser().getId();
+
+                    if (limit != null & offset != null)
+                        url += "offers/users/" + UserModel.getInstance().getUser().getId() + "?limit=" + limit + "&offset=" + offset;
+                    else
+                        url += "offers/users/" + UserModel.getInstance().getUser().getId();
                     setAuthorisationHeaders(requestHeaders);
                 }
                 break;

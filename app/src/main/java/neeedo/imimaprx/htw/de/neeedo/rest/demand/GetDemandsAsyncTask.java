@@ -24,12 +24,23 @@ import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 public class GetDemandsAsyncTask extends BaseAsyncTask {
 
     private GetEntitiesMode getEntitiesMode;
+    private Integer limit;
+    private Integer offset;
 
     public GetDemandsAsyncTask(GetEntitiesMode getEntitiesMode) {
         if (getEntitiesMode == null) {
             throw new IllegalArgumentException("No Mode given.");
         }
         this.getEntitiesMode = getEntitiesMode;
+    }
+
+    public GetDemandsAsyncTask(GetEntitiesMode getEntitiesMode, Integer limit, Integer offset) {
+        if (getEntitiesMode == null | limit == null | offset == null ) {
+            throw new IllegalArgumentException("Not all parameters are given!");
+        }
+        this.getEntitiesMode = getEntitiesMode;
+        this.limit = limit;
+        this.offset = offset;
     }
 
     @Override
@@ -39,7 +50,12 @@ public class GetDemandsAsyncTask extends BaseAsyncTask {
             String url = ServerConstantsUtils.getActiveServer();
             switch (getEntitiesMode) {
                 case GET_BY_USER: {
-                    url += "demands/users/" + UserModel.getInstance().getUser().getId();
+
+                    if(limit!= null & offset != null)
+                        url += "demands/users/" + UserModel.getInstance().getUser().getId() + "?limit=" + limit + "&offset=" + offset;
+                    else
+                        url += "demands/users/" + UserModel.getInstance().getUser().getId();
+
                 }
                 break;
                 case GET_RANDOM: {
