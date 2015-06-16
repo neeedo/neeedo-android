@@ -7,7 +7,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.squareup.otto.Subscribe;
@@ -17,9 +19,13 @@ import java.util.List;
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.Demand;
 import neeedo.imimaprx.htw.de.neeedo.entities.Demands;
+import neeedo.imimaprx.htw.de.neeedo.entities.Offer;
+import neeedo.imimaprx.htw.de.neeedo.entities.Offers;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
+import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.demand.GetDemandsAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.offer.GetOffersAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.DeleteAsyncTask;
 
@@ -29,6 +35,7 @@ public class SingleDemandFragment extends SuperFragment implements View.OnClickL
     TextView textView;
     Button btnDeleteDemand;
     Button btnEditDemand;
+    ListView matchingView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -37,6 +44,7 @@ public class SingleDemandFragment extends SuperFragment implements View.OnClickL
         View view = inflater.inflate(R.layout.single_demand_view, container, false);
 
         textView = (TextView) view.findViewById(R.id.singleview);
+        matchingView = (ListView) view.findViewById(R.id.matchingview);
 
         return view;
     }
@@ -56,6 +64,9 @@ public class SingleDemandFragment extends SuperFragment implements View.OnClickL
 
         asyncTask = new GetDemandsAsyncTask(BaseAsyncTask.GetEntitiesMode.GET_RANDOM);
         asyncTask.execute();
+
+        // TODO launch matching task here
+        new GetOffersAsyncTask(BaseAsyncTask.GetEntitiesMode.GET_RANDOM).execute();
     }
 
     private Demand findSingleDemand(String demandId) {
@@ -82,6 +93,14 @@ public class SingleDemandFragment extends SuperFragment implements View.OnClickL
         textView.setText(currentDemand.toString());
 
         // TODO handle exception if demand not found
+
+        // TODO use matched offers
+        Offers offers = OffersModel.getInstance().getOffers();
+        List<Offer> offerList = offers.getOffers();
+
+        ArrayAdapter<Offer> adapter = new ArrayAdapter<Offer>(getActivity(),
+                android.R.layout.simple_list_item_1, offerList);
+        matchingView.setAdapter(adapter);
     }
 
     @Override
