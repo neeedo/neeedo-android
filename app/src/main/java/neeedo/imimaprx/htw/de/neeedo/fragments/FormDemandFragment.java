@@ -11,13 +11,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
+import neeedo.imimaprx.htw.de.neeedo.entities.Demand;
 import neeedo.imimaprx.htw.de.neeedo.entities.Location;
 import neeedo.imimaprx.htw.de.neeedo.entities.Price;
 import neeedo.imimaprx.htw.de.neeedo.helpers.LocationHelper;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
+import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
 
 public class FormDemandFragment extends SuperFragment implements View.OnClickListener {
     protected final ActiveUser activeUser = ActiveUser.getInstance();
+
     protected EditText etMustTags;
     protected EditText etShouldTags;
     protected EditText etLocationLat;
@@ -45,6 +48,8 @@ public class FormDemandFragment extends SuperFragment implements View.OnClickLis
     protected Location location;
     protected int distance;
     protected Price price;
+
+    protected Demand postDemand;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -91,6 +96,14 @@ public class FormDemandFragment extends SuperFragment implements View.OnClickLis
                 location = new Location(Double.parseDouble(etLocationLatText), Double.parseDouble(etLocationLonText));
                 distance = Integer.parseInt(etDistanceText);
                 price = new Price(Double.parseDouble(etPriceMinText), Double.parseDouble(etPriceMaxText));
+
+                postDemand = new Demand();
+                postDemand.setMustTags(mustTags);
+                postDemand.setShouldTags(shouldTags);
+                postDemand.setLocation(location);
+                postDemand.setDistance(distance);
+                postDemand.setPrice(price);
+                postDemand.setUserId(UserModel.getInstance().getUser().getId());
 
                 break;
         }

@@ -5,24 +5,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.Demand;
-import neeedo.imimaprx.htw.de.neeedo.entities.Location;
-import neeedo.imimaprx.htw.de.neeedo.entities.Price;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
-import neeedo.imimaprx.htw.de.neeedo.helpers.LocationHelper;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
-import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.demand.PostCreateUpdateDemandAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 
@@ -65,22 +56,14 @@ public class EditDemandFragment extends FormDemandFragment {
             case R.id.btnSubmit:
 
                 try {
-
-                    Demand demand = new Demand();
                     if(currentDemand != null) {
-                        demand.setId(currentDemand.getId());
-                        demand.setVersion(currentDemand.getVersion());
+                        postDemand.setId(currentDemand.getId());
+                        postDemand.setVersion(currentDemand.getVersion());
                     }
-                    demand.setMustTags(mustTags);
-                    demand.setShouldTags(shouldTags);
-                    demand.setLocation(location);
-                    demand.setDistance(distance);
-                    demand.setPrice(price);
-                    demand.setUserId(UserModel.getInstance().getUser().getId());
 
-                    Log.d("DEMAND", demand.toString());
+                    Log.d("DEMAND", postDemand.toString());
 
-                    DemandsModel.getInstance().setPostDemand(demand);
+                    DemandsModel.getInstance().setPostDemand(postDemand);
                     BaseAsyncTask asyncTask = new PostCreateUpdateDemandAsyncTask(BaseAsyncTask.SendMode.UPDATE);
                     asyncTask.execute();
                 } catch (Exception e) {
