@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.Demands;
+import neeedo.imimaprx.htw.de.neeedo.entities.Location;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
@@ -26,12 +27,22 @@ public class GetDemandsAsyncTask extends BaseAsyncTask {
     private GetEntitiesMode getEntitiesMode;
     private Integer limit;
     private Integer offset;
+    private Location location;
 
     public GetDemandsAsyncTask(GetEntitiesMode getEntitiesMode) {
         if (getEntitiesMode == null) {
             throw new IllegalArgumentException("No Mode given.");
         }
         this.getEntitiesMode = getEntitiesMode;
+    }
+
+    public GetDemandsAsyncTask(GetEntitiesMode getEntitiesMode, Location location) {
+        if (getEntitiesMode == null | location == null) {
+            throw new IllegalArgumentException("Not all parameters are given!");
+        }
+        this.getEntitiesMode = getEntitiesMode;
+        this.location = location;
+
     }
 
     public GetDemandsAsyncTask(GetEntitiesMode getEntitiesMode, Integer limit, Integer offset) {
@@ -50,19 +61,19 @@ public class GetDemandsAsyncTask extends BaseAsyncTask {
             String url = ServerConstantsUtils.getActiveServer();
             switch (getEntitiesMode) {
                 case GET_BY_USER: {
-
+                    url += "demands/users/" + UserModel.getInstance().getUser().getId();
                     if (limit != null & offset != null)
-                        url += "demands/users/" + UserModel.getInstance().getUser().getId() + "?limit=" + limit + "&offset=" + offset;
-                    else
-                        url += "demands/users/" + UserModel.getInstance().getUser().getId();
-
+                        url += "?limit=" + limit + "&offset=" + offset;
+                    else if (location != null)
+                        url += "?lon=" + location.getLon() + "&lat=" + location.getLat();
                 }
                 break;
                 case GET_RANDOM: {
+                    url += "demands";
                     if (limit != null & offset != null)
-                        url += "demands/" + "?limit=" + limit + "&offset=" + offset;
-                    else
-                        url += "demands";
+                        url += "?limit=" + limit + "&offset=" + offset;
+                    else if (location != null)
+                        url += "?lon=" + location.getLon() + "&lat=" + location.getLat();
                 }
                 break;
             }

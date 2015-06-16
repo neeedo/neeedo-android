@@ -13,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
+import neeedo.imimaprx.htw.de.neeedo.entities.Location;
 import neeedo.imimaprx.htw.de.neeedo.entities.Offers;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
@@ -26,6 +27,7 @@ public class GetOffersAsyncTask extends BaseAsyncTask {
     private GetEntitiesMode getEntitiesMode;
     private Integer limit;
     private Integer offset;
+    private Location location;
 
     public GetOffersAsyncTask(GetEntitiesMode getEntitiesMode) {
         if (getEntitiesMode == null) {
@@ -33,6 +35,16 @@ public class GetOffersAsyncTask extends BaseAsyncTask {
         }
         this.getEntitiesMode = getEntitiesMode;
     }
+
+    public GetOffersAsyncTask(GetEntitiesMode getEntitiesMode, Location location) {
+        if (getEntitiesMode == null | location == null) {
+            throw new IllegalArgumentException("Not all parameters are given!");
+        }
+        this.getEntitiesMode = getEntitiesMode;
+        this.location = location;
+
+    }
+
 
     public GetOffersAsyncTask(GetEntitiesMode getEntitiesMode, Integer limit, Integer offset) {
         if (getEntitiesMode == null | limit == null | offset == null) {
@@ -52,20 +64,21 @@ public class GetOffersAsyncTask extends BaseAsyncTask {
             String url = ServerConstantsUtils.getActiveServer();
             switch (getEntitiesMode) {
                 case GET_BY_USER: {
-
+                    url += "offers/users/" + UserModel.getInstance().getUser().getId();
                     if (limit != null & offset != null)
-                        url += "offers/users/" + UserModel.getInstance().getUser().getId() + "?limit=" + limit + "&offset=" + offset;
-                    else
-                        url += "offers/users/" + UserModel.getInstance().getUser().getId();
+                        url += "?limit=" + limit + "&offset=" + offset;
+                    else if (location != null)
+                        url += "?lon=" + location.getLon() + "&lat=" + location.getLat();
                     setAuthorisationHeaders(requestHeaders);
                 }
                 break;
 
                 case GET_RANDOM: {
+                    url += "offers";
                     if (limit != null & offset != null)
-                        url += "offers/" + "?limit=" + limit + "&offset=" + offset;
-                    else
-                        url += "offers";
+                        url += "?limit=" + limit + "&offset=" + offset;
+                    else if (location != null)
+                        url += "?lon=" + location.getLon() + "&lat=" + location.getLat();
                 }
                 break;
             }
