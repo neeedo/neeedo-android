@@ -66,6 +66,13 @@
             android:layout_alignParentRight="true"
             android:gravity="center"></RelativeLayout>
 
+
+        <Button
+            android:id="@+id/btnChooseLocation"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/new_offer_set_location" />
+
         <Button
             android:id="@+id/btnSubmit"
             android:layout_width="fill_parent"

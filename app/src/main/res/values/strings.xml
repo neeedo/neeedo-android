@@ -72,5 +72,7 @@
 
     <string name="dialog_delete_demand">Are you sure you want to delete this demand?</string>
     <string name="dialog_delete_offer">Are you sure you want to delete this offer?</string>
+    <string name="title_activity_location_chooser">LocationChooser</string>
+    <string name="new_offer_set_location">location setzen</string>
 
 </resources>
