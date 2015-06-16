@@ -42,11 +42,10 @@ public class PostCreateImageAsyncTask extends BaseAsyncTask {
     @Override
     protected Object doInBackground(Object[] params) {
         try {
-            String url = ServerConstantsUtils.getActiveServer()+"images/";
+            String url = ServerConstantsUtils.getActiveServer()+"images";
             HttpMethod httpMethod = HttpMethod.POST;
 
-            MultiValueMap<String, Object> parts = new LinkedMultiValueMap<>();
-            parts.add("file", new FileSystemResource(photo));
+            FileSystemResource fileSystemResource = new FileSystemResource(photo);
 
             HttpHeaders requestHeaders = new HttpHeaders();
             setAuthorisationHeaders(requestHeaders);
@@ -58,7 +57,7 @@ public class PostCreateImageAsyncTask extends BaseAsyncTask {
             formHttpMessageConverter.addPartConverter(jackson);
             formHttpMessageConverter.addPartConverter(resource);
 
-            HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<MultiValueMap<String, Object> >(parts, requestHeaders);
+            HttpEntity<FileSystemResource> requestEntity = new HttpEntity<FileSystemResource>(fileSystemResource, requestHeaders);
 
             RestTemplate restTemplate = new RestTemplate(HttpRequestFactoryProviderImpl.getClientHttpRequestFactorySSLSupport(9000));
             //restTemplate.getMessageConverters().add(new ProgressFormHttpMessageConverter());
