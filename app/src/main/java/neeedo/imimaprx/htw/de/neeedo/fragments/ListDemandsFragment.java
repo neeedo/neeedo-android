@@ -47,7 +47,7 @@ public class ListDemandsFragment extends SuperFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        BaseAsyncTask asyncTask = new GetDemandsAsyncTask(BaseAsyncTask.GetEntitiesMode.GET_RANDOM);
+        BaseAsyncTask asyncTask = new GetDemandsAsyncTask(BaseAsyncTask.GetEntitiesMode.GET_RANDOM, 100, 0); // TODO pagination or higher limit?
         asyncTask.execute();
     }
 

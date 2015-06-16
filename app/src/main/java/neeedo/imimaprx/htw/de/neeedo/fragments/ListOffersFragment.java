@@ -50,7 +50,7 @@ public class ListOffersFragment extends SuperFragment {
 
         BaseAsyncTask asyncTask;
 
-        asyncTask = new GetOffersAsyncTask(BaseAsyncTask.GetEntitiesMode.GET_RANDOM);
+        asyncTask = new GetOffersAsyncTask(BaseAsyncTask.GetEntitiesMode.GET_RANDOM, 100, 0); // TODO pagination or higher limit?
         asyncTask.execute();
     }
 
