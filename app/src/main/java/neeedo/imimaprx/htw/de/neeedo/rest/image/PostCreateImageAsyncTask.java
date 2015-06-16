@@ -12,18 +12,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.ResourceHttpMessageConverter;
-import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
-import java.util.List;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.Image;
-import neeedo.imimaprx.htw.de.neeedo.entities.Offer;
-import neeedo.imimaprx.htw.de.neeedo.entities.SingleOffer;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
@@ -42,10 +38,13 @@ public class PostCreateImageAsyncTask extends BaseAsyncTask {
     @Override
     protected Object doInBackground(Object[] params) {
         try {
-            String url = ServerConstantsUtils.getActiveServer()+"images";
+            String url = ServerConstantsUtils.getActiveServer() + "images";
             HttpMethod httpMethod = HttpMethod.POST;
 
-            FileSystemResource fileSystemResource = new FileSystemResource(photo);
+            MultiValueMap<String, Object> parts = new LinkedMultiValueMap<>();
+            parts.add("name", "image");
+            parts.add("filename", new FileSystemResource(photo));
+            parts.add("Content-Type", "image/jpeg");
 
             HttpHeaders requestHeaders = new HttpHeaders();
             setAuthorisationHeaders(requestHeaders);
@@ -57,7 +56,7 @@ public class PostCreateImageAsyncTask extends BaseAsyncTask {
             formHttpMessageConverter.addPartConverter(jackson);
             formHttpMessageConverter.addPartConverter(resource);
 
-            HttpEntity<FileSystemResource> requestEntity = new HttpEntity<FileSystemResource>(fileSystemResource, requestHeaders);
+            HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<MultiValueMap<String, Object>>(parts, requestHeaders);
 
             RestTemplate restTemplate = new RestTemplate(HttpRequestFactoryProviderImpl.getClientHttpRequestFactorySSLSupport(9000));
             //restTemplate.getMessageConverters().add(new ProgressFormHttpMessageConverter());
@@ -77,8 +76,8 @@ public class PostCreateImageAsyncTask extends BaseAsyncTask {
     protected void onPostExecute(Object o) {
         if (wasSuccessful(o)) {
             ImageUploadResult imageUploadResult = (ImageUploadResult) o;
-            OffersModel.getInstance().getDraft().addSingleImageURL( imageUploadResult.getImageId() );
-            eventService.post( new ImageUploadCompleteEvent() );
+            OffersModel.getInstance().getDraft().addSingleImageURL(imageUploadResult.getImageId());
+            eventService.post(new ImageUploadCompleteEvent());
         }
     }
 }
