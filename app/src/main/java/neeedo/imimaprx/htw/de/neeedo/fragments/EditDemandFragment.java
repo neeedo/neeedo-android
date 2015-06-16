@@ -1,6 +1,7 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,12 +28,11 @@ import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 
 
 public class EditDemandFragment extends FormDemandFragment {
+    private final Demand currentDemand = DemandsModel.getInstance().getPostDemand();;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-
-        final Demand currentDemand = DemandsModel.getInstance().getPostDemand();
 
         TextView header = (TextView) view.findViewById(R.id.tvHeader);
         header.setText(R.string.edit_card_demand);
@@ -47,27 +47,30 @@ public class EditDemandFragment extends FormDemandFragment {
             etPriceMax.setText(String.valueOf(currentDemand.getPrice().getMax()));
         }
 
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String etMustTagsText = etMustTags.getText().toString();
-                String etShouldTagsText = etShouldTags.getText().toString();
-                String etLocationLatText = etLocationLat.getText().toString();
-                String etLocationLonText = etLocationLon.getText().toString();
-                String etDistanceText = etDistance.getText().toString();
-                String etPriceMinText = etPriceMin.getText().toString();
-                String etPriceMaxText = etPriceMax.getText().toString();
+        btnSubmit.setOnClickListener(this);
+
+        return view;
+    }
+
+    @Subscribe
+    public void handleServerResponse(ServerResponseEvent e) {
+        redirectToFragment(ListDemandsFragment.class);
+    }
+
+    @Override
+    public void onClick(View view) {
+        super.onClick(view);
+
+        switch(view.getId()) {
+            case R.id.btnSubmit:
 
                 try {
-                    ArrayList<String> mustTags = new ArrayList<String>(Arrays.asList(etMustTagsText.split(",")));
-                    ArrayList<String> shouldTags = new ArrayList<String>(Arrays.asList(etShouldTagsText.split(",")));
-                    Location location = new Location(Double.parseDouble(etLocationLatText), Double.parseDouble(etLocationLonText));
-                    int distance = Integer.parseInt(etDistanceText);
-                    Price price = new Price(Double.parseDouble(etPriceMinText), Double.parseDouble(etPriceMaxText));
 
                     Demand demand = new Demand();
-                    demand.setId(currentDemand.getId());
-                    demand.setVersion(currentDemand.getVersion());
+                    if(currentDemand != null) {
+                        demand.setId(currentDemand.getId());
+                        demand.setVersion(currentDemand.getVersion());
+                    }
                     demand.setMustTags(mustTags);
                     demand.setShouldTags(shouldTags);
                     demand.setLocation(location);
@@ -75,7 +78,7 @@ public class EditDemandFragment extends FormDemandFragment {
                     demand.setPrice(price);
                     demand.setUserId(UserModel.getInstance().getUser().getId());
 
-                    System.out.println(demand);
+                    Log.d("DEMAND", demand.toString());
 
                     DemandsModel.getInstance().setPostDemand(demand);
                     BaseAsyncTask asyncTask = new PostCreateUpdateDemandAsyncTask(BaseAsyncTask.SendMode.UPDATE);
@@ -84,14 +87,8 @@ public class EditDemandFragment extends FormDemandFragment {
                     e.printStackTrace();
                     Toast.makeText(getActivity(), getString(R.string.error_empty_or_wrong_format), Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
 
-        return view;
-    }
-
-    @Subscribe
-    public void handleServerResponse(ServerResponseEvent e) {
-        redirectToFragment(ListDemandsFragment.class);
+                break;
+        }
     }
 }
