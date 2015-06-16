@@ -31,13 +31,6 @@ public class ListOffersFragment extends SuperFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //TODO DRY!!!
-//        if (!activeUser.userCredentialsAvailable()) {
-//            Intent intent = new Intent(getActivity(), LoginActivity.class);
-//            startActivity(intent);
-//            // TODO reload view after login
-//        }
     }
 
     @Override

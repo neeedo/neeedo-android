@@ -50,7 +50,6 @@ public class EditDemandFragment extends SuperFragment {
         locationLatitude = currentLocation.getLat();
         locationLongitude = currentLocation.getLon();
         locationAvailable = locationHelper.isLocationAvailable();
-
     }
 
     @Override

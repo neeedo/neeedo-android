@@ -67,12 +67,6 @@ public class NewOfferFragment extends SuperFragment {
         locationLatitude = currentLocation.getLat();
         locationLongitude = currentLocation.getLon();
         locationAvailable = locationHelper.isLocationAvailable();
-
-        //TODO DRY!!!
-//        if (!activeUser.userCredentialsAvailable()) {
-//            Intent intent = new Intent(getActivity(), LoginActivity.class);
-//            startActivity(intent);
-//        }
     }
 
     @Override
@@ -129,7 +123,6 @@ public class NewOfferFragment extends SuperFragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-
         super.onActivityResult(requestCode, resultCode, intent);
 
         if (resultCode != Activity.RESULT_OK) {
@@ -148,7 +141,6 @@ public class NewOfferFragment extends SuperFragment {
     @Subscribe
     public void handleNewEanTagsReceived(NewEanTagsReceivedEvent event) {
         etTags.setText(event.getOutpanResult().getTags());
-
     }
 
     @Subscribe

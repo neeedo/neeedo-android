@@ -51,13 +51,6 @@ public class NewDemandFragment extends SuperFragment {
         locationLatitude = currentLocation.getLat();
         locationLongitude = currentLocation.getLon();
         locationAvailable = locationHelper.isLocationAvailable();
-
-        //TODO DRY!!!
-//        if (!activeUser.userCredentialsAvailable()) {
-//            Intent intent = new Intent(getActivity(), LoginActivity.class);
-//            startActivity(intent);
-//        }
-
     }
 
     @Override
