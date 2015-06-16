@@ -12,6 +12,7 @@ public class ActiveUser {
     private static Context context;
 
     //Username is the Email here
+    private boolean isStartup = false;
     private String username = "";
     private String userPassword = "";
 
@@ -78,6 +79,14 @@ public class ActiveUser {
         editor.commit();
     }
 
+    public boolean isAlreadyStarted() {
+        return isStartup;
+    }
+
+    public void setAlreadyStarted(boolean isStartup) {
+        this.isStartup = isStartup;
+    }
+
     public void loadValuesFromPreferences() {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_FILE, context.MODE_PRIVATE);
         username = prefs.getString("name", null);
@@ -86,6 +95,7 @@ public class ActiveUser {
             username = "";
             userPassword = "";
         }
+
     }
 
     public boolean userCredentialsAvailable() {
