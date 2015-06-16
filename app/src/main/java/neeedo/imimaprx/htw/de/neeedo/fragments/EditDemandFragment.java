@@ -26,50 +26,16 @@ import neeedo.imimaprx.htw.de.neeedo.rest.demand.PostCreateUpdateDemandAsyncTask
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 
 
-public class EditDemandFragment extends SuperFragment {
-    private EditText etMustTags;
-    private EditText etShouldTags;
-    private EditText etLocationLat;
-    private EditText etLocationLon;
-    private EditText etDistance;
-    private EditText etPriceMin;
-    private EditText etPriceMax;
-    private Button btnSubmit;
-    private double locationLatitude;
-    private double locationLongitude;
-    private boolean locationAvailable;
-    private LocationHelper locationHelper;
-    private Location currentLocation;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        locationHelper = new LocationHelper(getActivity());
-        currentLocation = locationHelper.getLocation();
-        locationLatitude = currentLocation.getLat();
-        locationLongitude = currentLocation.getLon();
-        locationAvailable = locationHelper.isLocationAvailable();
-    }
+public class EditDemandFragment extends FormDemandFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.form_demand_view, container, false);
+        View view = super.onCreateView(inflater, container, savedInstanceState);
 
         final Demand currentDemand = DemandsModel.getInstance().getPostDemand();
 
         TextView header = (TextView) view.findViewById(R.id.tvHeader);
         header.setText(R.string.edit_card_demand);
-
-        etMustTags = (EditText) view.findViewById(R.id.etMustTags);
-        etShouldTags = (EditText) view.findViewById(R.id.etShouldTags);
-        etLocationLat = (EditText) view.findViewById(R.id.etLocationLat);
-        etLocationLon = (EditText) view.findViewById(R.id.etLocationLon);
-        etDistance = (EditText) view.findViewById(R.id.etDistance);
-        etPriceMin = (EditText) view.findViewById(R.id.etPriceMin);
-        etPriceMax = (EditText) view.findViewById(R.id.etPriceMax);
-        btnSubmit = (Button) view.findViewById(R.id.btnSubmit);
 
         if(currentDemand != null) {
             etMustTags.setText(currentDemand.getMustTagsString());
