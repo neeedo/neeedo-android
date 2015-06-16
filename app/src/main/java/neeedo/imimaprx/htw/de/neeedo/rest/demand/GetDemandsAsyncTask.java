@@ -35,7 +35,7 @@ public class GetDemandsAsyncTask extends BaseAsyncTask {
     }
 
     public GetDemandsAsyncTask(GetEntitiesMode getEntitiesMode, Integer limit, Integer offset) {
-        if (getEntitiesMode == null | limit == null | offset == null ) {
+        if (getEntitiesMode == null | limit == null | offset == null) {
             throw new IllegalArgumentException("Not all parameters are given!");
         }
         this.getEntitiesMode = getEntitiesMode;
@@ -51,7 +51,7 @@ public class GetDemandsAsyncTask extends BaseAsyncTask {
             switch (getEntitiesMode) {
                 case GET_BY_USER: {
 
-                    if(limit!= null & offset != null)
+                    if (limit != null & offset != null)
                         url += "demands/users/" + UserModel.getInstance().getUser().getId() + "?limit=" + limit + "&offset=" + offset;
                     else
                         url += "demands/users/" + UserModel.getInstance().getUser().getId();
@@ -59,7 +59,10 @@ public class GetDemandsAsyncTask extends BaseAsyncTask {
                 }
                 break;
                 case GET_RANDOM: {
-                    url += "demands";
+                    if (limit != null & offset != null)
+                        url += "demands/" + "?limit=" + limit + "&offset=" + offset;
+                    else
+                        url += "demands";
                 }
                 break;
             }

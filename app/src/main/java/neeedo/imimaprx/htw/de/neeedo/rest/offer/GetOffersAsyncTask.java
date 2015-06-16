@@ -62,7 +62,10 @@ public class GetOffersAsyncTask extends BaseAsyncTask {
                 break;
 
                 case GET_RANDOM: {
-                    url += "offers";
+                    if (limit != null & offset != null)
+                        url += "offers/" + "?limit=" + limit + "&offset=" + offset;
+                    else
+                        url += "offers";
                 }
                 break;
             }
