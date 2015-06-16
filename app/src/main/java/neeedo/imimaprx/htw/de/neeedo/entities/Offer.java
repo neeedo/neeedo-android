@@ -107,7 +107,6 @@ public class Offer implements Serializable, BaseEntity {
     }
 
     public void addSingleImageURL(String url) {
-
         images.add(url);
     }
 

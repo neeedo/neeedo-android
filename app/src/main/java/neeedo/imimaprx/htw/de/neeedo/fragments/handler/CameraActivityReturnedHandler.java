@@ -7,6 +7,8 @@ import android.widget.ImageButton;
 
 import java.io.File;
 
+import neeedo.imimaprx.htw.de.neeedo.entities.Image;
+import neeedo.imimaprx.htw.de.neeedo.rest.image.PostCreateImageAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.utils.ImageUtils;
 
 public class CameraActivityReturnedHandler extends AsyncTask {
@@ -37,24 +39,7 @@ public class CameraActivityReturnedHandler extends AsyncTask {
 
     @Override
     protected Object doInBackground(Object[] params) {
-//        Upload upload = S3Service.getInstance().getTransferManager().upload("neeedo-images-stephan-local", photoFile.getName(), photoFile);
-//
-//        while (!upload.isDone()) {
-//            publishProgress(upload.getProgress());
-//        }
-//
-//        return (upload.getState() == Transfer.TransferState.Completed) ? Result.SUCCESS : Result.FAILED;
-    return null;
-    }
-
-    @Override
-    protected void onProgressUpdate(Object[] values) {
-        super.onProgressUpdate(values);
-    }
-
-    @Override
-    protected void onPostExecute(Object o) {
-        super.onPostExecute(o);
-
+        new PostCreateImageAsyncTask(photoFile).execute();
+        return null;
     }
 }

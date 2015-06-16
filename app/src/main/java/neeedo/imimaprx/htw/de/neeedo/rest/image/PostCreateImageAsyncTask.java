@@ -20,23 +20,22 @@ import neeedo.imimaprx.htw.de.neeedo.entities.SingleOffer;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.ImageUploadResult;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.RestResult;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
 public class PostCreateImageAsyncTask extends BaseAsyncTask {
 
     private File photo;
-    private List<Image> images;
 
-    public PostCreateImageAsyncTask(File photo, List<Image> images) {
+    public PostCreateImageAsyncTask(File photo) {
         this.photo = photo;
-        this.images = images;
     }
 
     @Override
     protected Object doInBackground(Object[] params) {
         try {
-            String url = ServerConstantsUtils.getActiveServer()+"images/";
+            String url = ServerConstantsUtils.getActiveServer() + "images/";
             HttpMethod httpMethod = HttpMethod.POST;
 
             HttpHeaders requestHeaders = new HttpHeaders();
@@ -51,12 +50,19 @@ public class PostCreateImageAsyncTask extends BaseAsyncTask {
 
             Image image = response.getBody();
 
-            images.add(image);
-
-            return new RestResult(this.getClass().getSimpleName(), RestResult.ReturnType.SUCCESS);
+            return new ImageUploadResult(this, RestResult.ReturnType.SUCCESS, "id");
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
-            return new RestResult(this.getClass().getSimpleName(), RestResult.ReturnType.FAILED);
+            return new RestResult(this, RestResult.ReturnType.FAILED);
+        }
+    }
+
+    @Override
+    protected void onPostExecute(Object o) {
+        if (wasSuccessful(o)) {
+            ImageUploadResult imageUploadResult = (ImageUploadResult) o;
+            OffersModel.getInstance().getDraft().addSingleImageURL( imageUploadResult.getImageId() );
+            eventService.post( new ImageUploadCompleteEvent() );
         }
     }
 }

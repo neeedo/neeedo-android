@@ -10,25 +10,13 @@ public class RestResult {
     private String creatorClass;
     private ReturnType result;
 
-    public RestResult(String creatorClass, ReturnType result) {
-        this.creatorClass = creatorClass;
-        result = result;
-    }
-
-    public String getCreatorClass() {
-        return creatorClass;
-    }
-
-    public void setCreatorClass(String creatorClass) {
-        this.creatorClass = creatorClass;
+    public RestResult(Object creatorInstance, ReturnType result) {
+        this.creatorClass = creatorInstance.getClass().getSimpleName();
+        this.result = result;
     }
 
     public ReturnType getResult() {
         return result;
-    }
-
-    public void setResult(ReturnType result) {
-        this.result = result;
     }
 
     @Override
@@ -49,7 +37,6 @@ public class RestResult {
         if (creatorClass != null ? !creatorClass.equals(that.creatorClass) : that.creatorClass != null)
             return false;
         return result == that.result;
-
     }
 
     @Override

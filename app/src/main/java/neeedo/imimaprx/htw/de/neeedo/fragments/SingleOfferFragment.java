@@ -25,7 +25,7 @@ import neeedo.imimaprx.htw.de.neeedo.rest.util.DeleteAsyncTask;
 
 public class SingleOfferFragment extends SuperFragment implements View.OnClickListener {
 
-    TextView textView;
+    private TextView textView;
     private Button btnDeleteOffer;
     private Button btnEditOffer;
 
