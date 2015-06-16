@@ -3,6 +3,8 @@ package neeedo.imimaprx.htw.de.neeedo.models;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import org.springframework.util.Base64Utils;
+
 /**
  * Before setting the username and password it is needed to set the current Context of the application.
  */
@@ -106,7 +108,13 @@ public class ActiveUser {
     }
 
     public boolean hasActiveUser() {
-        return ( username != null ) && (username != "");
+        return (username != null) && (username != "");
     }
+
+    public String getAuthentificationHash() {
+        byte[] bytes = String.format("%s:%s", username, userPassword).getBytes();
+        return String.format("Basic %s", Base64Utils.encodeToString(bytes));
+    }
+
 }
 
