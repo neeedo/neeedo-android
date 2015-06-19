@@ -26,7 +26,7 @@ import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.Location;
 import neeedo.imimaprx.htw.de.neeedo.events.NewEanTagsReceivedEvent;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
-import neeedo.imimaprx.htw.de.neeedo.fragments.handler.CameraActivityReturnedHandler;
+import neeedo.imimaprx.htw.de.neeedo.fragments.handler.ImageUploadHandler;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.SendNewOfferHandler;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.StartCameraHandler;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.StartLocationChooserHandler;
@@ -139,7 +139,7 @@ public class NewOfferFragment extends SuperFragment {
         if (requestCode == RequestCodes.CAMERA_CAPTURE_IMAGE_REQUEST_CODE) {
 //            new CameraActivityReturnedHandler(photoFile, addImageButton).execute();
 
-            new BlaHandler(photoFile).execute();
+            new ImageUploadHandler(photoFile).execute();
 
         } else if (requestCode == RequestCodes.BARCODE_SCAN_REQUEST_CODE) {
             String barcodeEAN = intent.getStringExtra("SCAN_RESULT");
