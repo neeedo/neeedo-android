@@ -7,19 +7,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import com.squareup.otto.Subscribe;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
-import neeedo.imimaprx.htw.de.neeedo.entities.Demand;
 import neeedo.imimaprx.htw.de.neeedo.entities.Location;
-import neeedo.imimaprx.htw.de.neeedo.entities.Price;
-import neeedo.imimaprx.htw.de.neeedo.entities.User;
+import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.helpers.LocationHelper;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
-import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
 
-public class FormDemandFragment extends SuperFragment implements View.OnClickListener {
+public class FormDemandFragment extends SuperFragment {
     protected final ActiveUser activeUser = ActiveUser.getInstance();
 
     protected EditText etMustTags;
@@ -36,21 +32,6 @@ public class FormDemandFragment extends SuperFragment implements View.OnClickLis
     protected boolean locationAvailable;
     protected LocationHelper locationHelper;
     protected Location currentLocation;
-
-    protected String etMustTagsText;
-    protected String etShouldTagsText;
-    protected String etLocationLatText;
-    protected String etLocationLonText;
-    protected String etDistanceText;
-    protected String etPriceMinText;
-    protected String etPriceMaxText;
-    protected ArrayList<String> mustTags;
-    protected ArrayList<String> shouldTags;
-    protected Location location;
-    protected int distance;
-    protected Price price;
-
-    protected Demand postDemand;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,35 +62,8 @@ public class FormDemandFragment extends SuperFragment implements View.OnClickLis
         return view;
     }
 
-    @Override
-    public void onClick(View view) {
-        switch(view.getId()) {
-            case R.id.btnSubmit:
-                etMustTagsText = etMustTags.getText().toString();
-                etShouldTagsText = etShouldTags.getText().toString();
-                etLocationLatText = etLocationLat.getText().toString();
-                etLocationLonText = etLocationLon.getText().toString();
-                etDistanceText = etDistance.getText().toString();
-                etPriceMinText = etPriceMin.getText().toString();
-                etPriceMaxText = etPriceMax.getText().toString();
-                mustTags = new ArrayList<String>(Arrays.asList(etMustTagsText.split(",")));
-                shouldTags = new ArrayList<String>(Arrays.asList(etShouldTagsText.split(",")));
-                location = new Location(Double.parseDouble(etLocationLatText), Double.parseDouble(etLocationLonText));
-                distance = Integer.parseInt(etDistanceText);
-                price = new Price(Double.parseDouble(etPriceMinText), Double.parseDouble(etPriceMaxText));
-
-                User currentUser = UserModel.getInstance().getUser();
-
-                postDemand = new Demand();
-                postDemand.setMustTags(mustTags);
-                postDemand.setShouldTags(shouldTags);
-                postDemand.setLocation(location);
-                postDemand.setDistance(distance);
-                postDemand.setPrice(price);
-                postDemand.setUserId(currentUser.getId());
-                postDemand.setName(currentUser.getUsername());
-
-                break;
-        }
+    @Subscribe
+    public void handleServerResponse(ServerResponseEvent e) {
+        redirectToFragment(ListDemandsFragment.class);
     }
 }
