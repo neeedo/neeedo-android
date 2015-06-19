@@ -29,6 +29,9 @@ public class Demand implements Serializable, BaseEntity {
     private ArrayList<String> shouldTags;
 
     @Element
+    private String name = "";
+
+    @Element
     private Location location;
 
     @Element
@@ -121,6 +124,15 @@ public class Demand implements Serializable, BaseEntity {
         return this.demand;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public void setDemand(Demand demand) {
         this.demand = demand;
     }
@@ -129,8 +141,8 @@ public class Demand implements Serializable, BaseEntity {
         String returnString = "";
         int counter = 0;
 
-        for(String tag : tags) {
-            if(counter == 0) {
+        for (String tag : tags) {
+            if (counter == 0) {
                 returnString = tag;
             } else {
                 returnString = returnString + ", " + tag;
@@ -143,20 +155,18 @@ public class Demand implements Serializable, BaseEntity {
 
     @Override
     public String toString() {
-//        return "Demand{" +
-//                "id='" + id + '\'' +
-//                ", version=" + version +
-//                ", userId='" + userId + '\'' +
-//                ", mustTags=" + mustTags +
-//                ", shouldTags=" + shouldTags +
-//                ", location=" + location +
-//                ", distance=" + distance +
-//                ", price=" + price +
-//                '}';
-
-        return "Must have:\n" + mustTags +
-                "\nShould have:\n" + shouldTags +
-                "\n\nPrice: " + price;
+        return "Demand{" +
+                "id='" + id + '\'' +
+                ", version=" + version +
+                ", userId='" + userId + '\'' +
+                ", mustTags=" + mustTags +
+                ", shouldTags=" + shouldTags +
+                ", name='" + name + '\'' +
+                ", location=" + location +
+                ", distance=" + distance +
+                ", price=" + price +
+                ", demand=" + demand +
+                '}';
     }
 
     @Override
@@ -164,33 +174,36 @@ public class Demand implements Serializable, BaseEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Demand demand = (Demand) o;
+        Demand demand1 = (Demand) o;
 
-        if (distance != demand.distance) return false;
-        if (version != demand.version) return false;
-        if (id != null ? !id.equals(demand.id) : demand.id != null) return false;
-        if (location != null ? !location.equals(demand.location) : demand.location != null)
+        if (version != demand1.version) return false;
+        if (distance != demand1.distance) return false;
+        if (id != null ? !id.equals(demand1.id) : demand1.id != null) return false;
+        if (userId != null ? !userId.equals(demand1.userId) : demand1.userId != null) return false;
+        if (mustTags != null ? !mustTags.equals(demand1.mustTags) : demand1.mustTags != null)
             return false;
-        if (mustTags != null ? !mustTags.equals(demand.mustTags) : demand.mustTags != null)
+        if (shouldTags != null ? !shouldTags.equals(demand1.shouldTags) : demand1.shouldTags != null)
             return false;
-        if (price != null ? !price.equals(demand.price) : demand.price != null) return false;
-        if (shouldTags != null ? !shouldTags.equals(demand.shouldTags) : demand.shouldTags != null)
+        if (name != null ? !name.equals(demand1.name) : demand1.name != null) return false;
+        if (location != null ? !location.equals(demand1.location) : demand1.location != null)
             return false;
-        if (userId != null ? !userId.equals(demand.userId) : demand.userId != null) return false;
+        if (price != null ? !price.equals(demand1.price) : demand1.price != null) return false;
+        return !(demand != null ? !demand.equals(demand1.demand) : demand1.demand != null);
 
-        return true;
     }
 
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (int) (version ^ (version >>> 32));
-        result = 41 * result + (userId != null ? userId.hashCode() : 0);
-        result = 47 * result + (mustTags != null ? mustTags.hashCode() : 0);
-        result = 73 * result + (shouldTags != null ? shouldTags.hashCode() : 0);
-        result = 113 * result + (location != null ? location.hashCode() : 0);
-        result = 137 * result + distance;
-        result = 149 * result + (price != null ? price.hashCode() : 0);
+        result = 31 * result + (userId != null ? userId.hashCode() : 0);
+        result = 31 * result + (mustTags != null ? mustTags.hashCode() : 0);
+        result = 31 * result + (shouldTags != null ? shouldTags.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (location != null ? location.hashCode() : 0);
+        result = 31 * result + distance;
+        result = 31 * result + (price != null ? price.hashCode() : 0);
+        result = 31 * result + (demand != null ? demand.hashCode() : 0);
         return result;
     }
 }

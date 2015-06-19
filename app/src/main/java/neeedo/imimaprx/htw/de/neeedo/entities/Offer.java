@@ -23,6 +23,9 @@ public class Offer implements Serializable, BaseEntity {
     private String userId;
 
     @Element
+    private String name = "";
+
+    @Element
     private ArrayList<String> tags = new ArrayList<>();
 
     @Element
@@ -110,22 +113,28 @@ public class Offer implements Serializable, BaseEntity {
         images.add(url);
     }
 
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     @Override
     public String toString() {
-//        return "Offer{" +
-//                "id='" + id + '\'' +
-//                ", version=" + version +
-//                ", userId='" + userId + '\'' +
-//                ", tags=" + tags +
-//                ", location=" + location +
-//                ", price=" + price +
-//                ", offer=" + offer +
-//                ", images=" + images +
-//                '}';
-
-        return "Searching for:\n" + tags +
-                "\n\nPrice: " + price;
+        return "Offer{" +
+                "id='" + id + '\'' +
+                ", version=" + version +
+                ", userId='" + userId + '\'' +
+                ", name='" + name + '\'' +
+                ", tags=" + tags +
+                ", location=" + location +
+                ", price=" + price +
+                ", offer=" + offer +
+                ", images=" + images +
+                '}';
     }
 
     @Override
@@ -138,6 +147,7 @@ public class Offer implements Serializable, BaseEntity {
         if (version != offer1.version) return false;
         if (id != null ? !id.equals(offer1.id) : offer1.id != null) return false;
         if (userId != null ? !userId.equals(offer1.userId) : offer1.userId != null) return false;
+        if (name != null ? !name.equals(offer1.name) : offer1.name != null) return false;
         if (tags != null ? !tags.equals(offer1.tags) : offer1.tags != null) return false;
         if (location != null ? !location.equals(offer1.location) : offer1.location != null)
             return false;
@@ -152,6 +162,7 @@ public class Offer implements Serializable, BaseEntity {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (int) (version ^ (version >>> 32));
         result = 31 * result + (userId != null ? userId.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (tags != null ? tags.hashCode() : 0);
         result = 31 * result + (location != null ? location.hashCode() : 0);
         result = 31 * result + (price != null ? price.hashCode() : 0);
