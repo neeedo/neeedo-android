@@ -14,6 +14,7 @@ import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.Demand;
 import neeedo.imimaprx.htw.de.neeedo.entities.Location;
 import neeedo.imimaprx.htw.de.neeedo.entities.Price;
+import neeedo.imimaprx.htw.de.neeedo.entities.User;
 import neeedo.imimaprx.htw.de.neeedo.helpers.LocationHelper;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
@@ -97,13 +98,16 @@ public class FormDemandFragment extends SuperFragment implements View.OnClickLis
                 distance = Integer.parseInt(etDistanceText);
                 price = new Price(Double.parseDouble(etPriceMinText), Double.parseDouble(etPriceMaxText));
 
+                User currentUser = UserModel.getInstance().getUser();
+
                 postDemand = new Demand();
                 postDemand.setMustTags(mustTags);
                 postDemand.setShouldTags(shouldTags);
                 postDemand.setLocation(location);
                 postDemand.setDistance(distance);
                 postDemand.setPrice(price);
-                postDemand.setUserId(UserModel.getInstance().getUser().getId());
+                postDemand.setUserId(currentUser.getId());
+                postDemand.setName(currentUser.getUsername());
 
                 break;
         }

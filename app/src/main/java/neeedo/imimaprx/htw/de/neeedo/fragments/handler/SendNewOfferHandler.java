@@ -8,6 +8,7 @@ import java.util.Arrays;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.Location;
 import neeedo.imimaprx.htw.de.neeedo.entities.Offer;
+import neeedo.imimaprx.htw.de.neeedo.entities.User;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
 import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.offer.PostCreateUpdateOfferAsyncTask;
@@ -38,11 +39,14 @@ public class SendNewOfferHandler implements View.OnClickListener {
         Location location = new Location(Double.parseDouble(etLocationLatText), Double.parseDouble(etLocationLonText));
         Double price = Double.parseDouble(etPriceText);
 
+        User currentUser = UserModel.getInstance().getUser();
+
         Offer offer = new Offer();
         offer.setTags(tags);
         offer.setLocation(location);
         offer.setPrice(price);
-        offer.setUserId(UserModel.getInstance().getUser().getId());
+        offer.setUserId(currentUser.getId());
+        offer.setName(currentUser.getUsername());
 
         OffersModel.getInstance().setDraft(offer);
         BaseAsyncTask asyncTask = new PostCreateUpdateOfferAsyncTask(BaseAsyncTask.SendMode.CREATE);
