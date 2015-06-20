@@ -176,7 +176,7 @@ public class LoginActivity extends Activity {
         }
 
         User user = new User();
-        user.setUsername(name);
+        user.setName(name);
         user.setEmail(email);
         user.setPassword(password);
 

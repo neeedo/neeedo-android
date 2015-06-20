@@ -61,8 +61,8 @@ public class SendDemandHandler implements View.OnClickListener {
         demand.setLocation(location);
         demand.setDistance(distance);
         demand.setPrice(price);
-        demand.setUser(new User(currentUser.getId(), currentUser.getUsername()));
-        demand.setName(currentUser.getUsername());
+        demand.setUser(new User(currentUser.getId(), currentUser.getName()));
+        demand.setName(currentUser.getName());
         if (sendMode == BaseAsyncTask.SendMode.UPDATE && currentDemand != null) {
             demand.setId(currentDemand.getId());
             demand.setVersion(currentDemand.getVersion());

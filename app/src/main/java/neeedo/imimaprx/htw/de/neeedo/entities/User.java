@@ -18,7 +18,7 @@ public class User implements Serializable, BaseEntity {
     private int version = 0;
 
     @Element
-    private String username = "";
+    private String name = "";
 
     @Element
     private String email = "";
@@ -30,9 +30,9 @@ public class User implements Serializable, BaseEntity {
 
     }
 
-    public User(String id, String username) {
+    public User(String id, String name) {
         this.id = id;
-        this.username = username;
+        this.name = name;
     }
 
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
@@ -54,12 +54,12 @@ public class User implements Serializable, BaseEntity {
     }
 
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
