@@ -30,11 +30,6 @@ public class User implements Serializable, BaseEntity {
 
     }
 
-    public User(String id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     public String getId() {
         return id;
