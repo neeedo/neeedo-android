@@ -20,9 +20,6 @@ public class Offer implements Serializable, BaseEntity {
     private long version = 0;
 
     @Element
-    private String userId;
-
-    @Element
     private String name = "";
 
     @Element
@@ -36,6 +33,9 @@ public class Offer implements Serializable, BaseEntity {
 
     @Element
     private Offer offer;
+
+    @Element
+    private User user;
 
     @Element
     private ArrayList<String> images = new ArrayList<>();
@@ -66,14 +66,6 @@ public class Offer implements Serializable, BaseEntity {
 
     public void setPrice(Double price) {
         this.price = price;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
@@ -122,17 +114,25 @@ public class Offer implements Serializable, BaseEntity {
         this.name = name;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
         return "Offer{" +
                 "id='" + id + '\'' +
                 ", version=" + version +
-                ", userId='" + userId + '\'' +
                 ", name='" + name + '\'' +
                 ", tags=" + tags +
                 ", location=" + location +
                 ", price=" + price +
                 ", offer=" + offer +
+                ", user=" + user +
                 ", images=" + images +
                 '}';
     }
@@ -146,13 +146,13 @@ public class Offer implements Serializable, BaseEntity {
 
         if (version != offer1.version) return false;
         if (id != null ? !id.equals(offer1.id) : offer1.id != null) return false;
-        if (userId != null ? !userId.equals(offer1.userId) : offer1.userId != null) return false;
         if (name != null ? !name.equals(offer1.name) : offer1.name != null) return false;
         if (tags != null ? !tags.equals(offer1.tags) : offer1.tags != null) return false;
         if (location != null ? !location.equals(offer1.location) : offer1.location != null)
             return false;
         if (price != null ? !price.equals(offer1.price) : offer1.price != null) return false;
         if (offer != null ? !offer.equals(offer1.offer) : offer1.offer != null) return false;
+        if (user != null ? !user.equals(offer1.user) : offer1.user != null) return false;
         return !(images != null ? !images.equals(offer1.images) : offer1.images != null);
 
     }
@@ -161,12 +161,12 @@ public class Offer implements Serializable, BaseEntity {
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (int) (version ^ (version >>> 32));
-        result = 31 * result + (userId != null ? userId.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (tags != null ? tags.hashCode() : 0);
         result = 31 * result + (location != null ? location.hashCode() : 0);
         result = 31 * result + (price != null ? price.hashCode() : 0);
         result = 31 * result + (offer != null ? offer.hashCode() : 0);
+        result = 31 * result + (user != null ? user.hashCode() : 0);
         result = 31 * result + (images != null ? images.hashCode() : 0);
         return result;
     }

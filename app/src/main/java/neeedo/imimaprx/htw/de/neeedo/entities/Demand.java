@@ -20,9 +20,6 @@ public class Demand implements Serializable, BaseEntity {
     private long version = 0;
 
     @Element
-    private String userId;
-
-    @Element
     private ArrayList<String> mustTags;
 
     @Element
@@ -42,6 +39,9 @@ public class Demand implements Serializable, BaseEntity {
 
     @Element
     private Demand demand;
+
+    @Element
+    private User user;
 
     public Demand() {
 
@@ -77,14 +77,6 @@ public class Demand implements Serializable, BaseEntity {
 
     public void setPrice(Price price) {
         this.price = price;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
@@ -124,6 +116,14 @@ public class Demand implements Serializable, BaseEntity {
         return this.demand;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public String getName() {
         return name;
     }
@@ -158,7 +158,6 @@ public class Demand implements Serializable, BaseEntity {
         return "Demand{" +
                 "id='" + id + '\'' +
                 ", version=" + version +
-                ", userId='" + userId + '\'' +
                 ", mustTags=" + mustTags +
                 ", shouldTags=" + shouldTags +
                 ", name='" + name + '\'' +
@@ -166,6 +165,7 @@ public class Demand implements Serializable, BaseEntity {
                 ", distance=" + distance +
                 ", price=" + price +
                 ", demand=" + demand +
+                ", user=" + user +
                 '}';
     }
 
@@ -179,7 +179,6 @@ public class Demand implements Serializable, BaseEntity {
         if (version != demand1.version) return false;
         if (distance != demand1.distance) return false;
         if (id != null ? !id.equals(demand1.id) : demand1.id != null) return false;
-        if (userId != null ? !userId.equals(demand1.userId) : demand1.userId != null) return false;
         if (mustTags != null ? !mustTags.equals(demand1.mustTags) : demand1.mustTags != null)
             return false;
         if (shouldTags != null ? !shouldTags.equals(demand1.shouldTags) : demand1.shouldTags != null)
@@ -188,7 +187,8 @@ public class Demand implements Serializable, BaseEntity {
         if (location != null ? !location.equals(demand1.location) : demand1.location != null)
             return false;
         if (price != null ? !price.equals(demand1.price) : demand1.price != null) return false;
-        return !(demand != null ? !demand.equals(demand1.demand) : demand1.demand != null);
+        if (demand != null ? !demand.equals(demand1.demand) : demand1.demand != null) return false;
+        return !(user != null ? !user.equals(demand1.user) : demand1.user != null);
 
     }
 
@@ -196,7 +196,6 @@ public class Demand implements Serializable, BaseEntity {
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (int) (version ^ (version >>> 32));
-        result = 31 * result + (userId != null ? userId.hashCode() : 0);
         result = 31 * result + (mustTags != null ? mustTags.hashCode() : 0);
         result = 31 * result + (shouldTags != null ? shouldTags.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
@@ -204,6 +203,7 @@ public class Demand implements Serializable, BaseEntity {
         result = 31 * result + distance;
         result = 31 * result + (price != null ? price.hashCode() : 0);
         result = 31 * result + (demand != null ? demand.hashCode() : 0);
+        result = 31 * result + (user != null ? user.hashCode() : 0);
         return result;
     }
 }

@@ -3,12 +3,10 @@ package neeedo.imimaprx.htw.de.neeedo.fragments.handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.Demand;
 import neeedo.imimaprx.htw.de.neeedo.entities.Location;
 import neeedo.imimaprx.htw.de.neeedo.entities.Price;
@@ -63,9 +61,9 @@ public class SendDemandHandler implements View.OnClickListener {
         demand.setLocation(location);
         demand.setDistance(distance);
         demand.setPrice(price);
-        demand.setUserId(currentUser.getId());
+        demand.setUser(new User(currentUser.getId(), currentUser.getUsername()));
         demand.setName(currentUser.getUsername());
-        if(sendMode == BaseAsyncTask.SendMode.UPDATE && currentDemand != null) {
+        if (sendMode == BaseAsyncTask.SendMode.UPDATE && currentDemand != null) {
             demand.setId(currentDemand.getId());
             demand.setVersion(currentDemand.getVersion());
         }
