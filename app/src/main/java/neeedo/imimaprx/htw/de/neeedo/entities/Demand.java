@@ -41,6 +41,9 @@ public class Demand implements Serializable, BaseEntity {
     private Demand demand;
 
     @Element
+    String userId = "";
+
+    @Element
     private User user;
 
     public Demand() {
@@ -116,6 +119,7 @@ public class Demand implements Serializable, BaseEntity {
         return this.demand;
     }
 
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     public User getUser() {
         return user;
     }
@@ -135,6 +139,15 @@ public class Demand implements Serializable, BaseEntity {
 
     public void setDemand(Demand demand) {
         this.demand = demand;
+    }
+
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     private String tagsToString(ArrayList<String> tags) {
@@ -165,6 +178,7 @@ public class Demand implements Serializable, BaseEntity {
                 ", distance=" + distance +
                 ", price=" + price +
                 ", demand=" + demand +
+                ", userId='" + userId + '\'' +
                 ", user=" + user +
                 '}';
     }
@@ -188,6 +202,7 @@ public class Demand implements Serializable, BaseEntity {
             return false;
         if (price != null ? !price.equals(demand1.price) : demand1.price != null) return false;
         if (demand != null ? !demand.equals(demand1.demand) : demand1.demand != null) return false;
+        if (userId != null ? !userId.equals(demand1.userId) : demand1.userId != null) return false;
         return !(user != null ? !user.equals(demand1.user) : demand1.user != null);
 
     }
@@ -203,6 +218,7 @@ public class Demand implements Serializable, BaseEntity {
         result = 31 * result + distance;
         result = 31 * result + (price != null ? price.hashCode() : 0);
         result = 31 * result + (demand != null ? demand.hashCode() : 0);
+        result = 31 * result + (userId != null ? userId.hashCode() : 0);
         result = 31 * result + (user != null ? user.hashCode() : 0);
         return result;
     }
