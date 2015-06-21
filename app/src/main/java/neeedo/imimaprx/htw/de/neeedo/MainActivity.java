@@ -2,6 +2,7 @@ package neeedo.imimaprx.htw.de.neeedo;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 
@@ -20,9 +21,10 @@ import neeedo.imimaprx.htw.de.neeedo.rest.user.GetUserByEmailAsyncTask;
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
+    private Fragment mFragment;
+    private FragmentManager mFragmentManager;
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private int mCurrentNavigationIndex = 0;
-    private Fragment mFragment;
 
     private final ActiveUser activeUser = ActiveUser.getInstance();
 
@@ -44,7 +46,7 @@ public class MainActivity extends ActionBarActivity
         setContentView(R.layout.activity_main);
         initOrRestoreState(savedInstanceState);
 
-        mNavigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+        mNavigationDrawerFragment = (NavigationDrawerFragment) mFragmentManager.findFragmentById(R.id.navigation_drawer);
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
 
         initSingletons();
@@ -57,7 +59,9 @@ public class MainActivity extends ActionBarActivity
 
         savedInstanceState.putInt(STATE_NAVIGATION_INDEX, mCurrentNavigationIndex);
 
-        getSupportFragmentManager().putFragment(savedInstanceState, STATE_FRAGMENT, mFragment);
+        if(mFragment != null && mFragment.isAdded()) {
+            mFragmentManager.putFragment(savedInstanceState, STATE_FRAGMENT, mFragment);
+        }
     }
 
     @Override
@@ -89,21 +93,28 @@ public class MainActivity extends ActionBarActivity
     }
 
     private void initOrRestoreState(Bundle savedInstanceState) {
+        mFragmentManager = getSupportFragmentManager();
+
         if (savedInstanceState != null) {
-            mFragment = getSupportFragmentManager().getFragment(savedInstanceState, STATE_FRAGMENT);
+            mFragment = mFragmentManager.getFragment(savedInstanceState, STATE_FRAGMENT);
             mCurrentNavigationIndex = savedInstanceState.getInt(STATE_NAVIGATION_INDEX);
         } else {
             mFragment = new MainFragment();
             mCurrentNavigationIndex = 0;
         }
+
         changeFragment(mFragment, mCurrentNavigationIndex);
     }
 
     private void changeFragment(Fragment fragment, int navigationIndex) {
-        getSupportFragmentManager().beginTransaction()
-                .addToBackStack(String.valueOf(navigationIndex))
-                .replace(R.id.container, fragment)
-                .commit();
+        try {
+            mFragmentManager.beginTransaction()
+                    .addToBackStack(String.valueOf(navigationIndex))
+                    .replace(R.id.container, fragment)
+                    .commit();
+        } catch (NullPointerException e) {
+            // TODO is there a way to avoid this exception?
+        }
     }
 
     @Override
