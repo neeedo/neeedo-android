@@ -15,7 +15,7 @@ import neeedo.imimaprx.htw.de.neeedo.fragments.NavigationDrawerFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.NewDemandFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.NewOfferFragment;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
-import neeedo.imimaprx.htw.de.neeedo.rest.user.GetUserInfosAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.user.GetUserByEmailAsyncTask;
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -79,7 +79,7 @@ public class MainActivity extends ActionBarActivity
         activeUser.setContext(getApplicationContext());
         activeUser.loadValuesFromPreferences();
         if (activeUser.userCredentialsAvailable()) {
-            new GetUserInfosAsyncTask().execute();
+            new GetUserByEmailAsyncTask().execute();
             activeUser.setAlreadyStarted(true);
         }
     }

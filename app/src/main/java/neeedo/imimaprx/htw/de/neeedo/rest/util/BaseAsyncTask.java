@@ -5,8 +5,6 @@ import android.os.AsyncTask;
 import org.springframework.http.HttpBasicAuthentication;
 import org.springframework.http.HttpHeaders;
 
-import java.util.Objects;
-
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.RestResult;
@@ -22,6 +20,10 @@ public abstract class BaseAsyncTask extends AsyncTask {
         CREATE, UPDATE
     }
 
+    public enum CompletionType {
+        SUGGEST, TAG
+    }
+
     protected EventService eventService = EventService.getInstance();
 
     @Override
@@ -29,7 +31,7 @@ public abstract class BaseAsyncTask extends AsyncTask {
         eventService.post(new ServerResponseEvent());
     }
 
-    protected void setAuthorisationHeaders(HttpHeaders requestHeaders){
+    protected void setAuthorisationHeaders(HttpHeaders requestHeaders) {
         final ActiveUser activeUser = ActiveUser.getInstance();
         HttpBasicAuthentication authentication = new HttpBasicAuthentication(activeUser.getUsername(), activeUser.getUserPassword());
         requestHeaders.setAuthorization(authentication);

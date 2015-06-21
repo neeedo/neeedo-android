@@ -12,7 +12,9 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.client.RestTemplate;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.Message;
+import neeedo.imimaprx.htw.de.neeedo.entities.SingleMessage;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
+import neeedo.imimaprx.htw.de.neeedo.models.MessagesModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.RestResult;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
@@ -38,7 +40,11 @@ public class PostMessageAsyncTask extends BaseAsyncTask {
             RestTemplate restTemplate = new RestTemplate(HttpRequestFactoryProviderImpl.getClientHttpRequestFactorySSLSupport(9000));
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-            ResponseEntity response = restTemplate.exchange(url, httpMethod, requestEntity, Void.class);
+            ResponseEntity<SingleMessage> response = restTemplate.exchange(url, httpMethod, requestEntity, SingleMessage.class);
+
+            SingleMessage singleMessage = response.getBody();
+
+            MessagesModel.getInstance().setSingleMessage(singleMessage);
 
             return new RestResult(this.getClass().getSimpleName(), RestResult.ReturnType.SUCCESS);
 

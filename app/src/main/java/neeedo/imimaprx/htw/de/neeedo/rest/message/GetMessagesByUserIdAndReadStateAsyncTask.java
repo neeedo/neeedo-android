@@ -1,4 +1,4 @@
-package neeedo.imimaprx.htw.de.neeedo.rest.completion;
+package neeedo.imimaprx.htw.de.neeedo.rest.message;
 
 import android.util.Log;
 
@@ -13,50 +13,43 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-import neeedo.imimaprx.htw.de.neeedo.entities.Tag;
+import neeedo.imimaprx.htw.de.neeedo.entities.Users;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
+import neeedo.imimaprx.htw.de.neeedo.models.MessagesModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.RestResult;
-import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.TagResult;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
-public class GetCompletionAsyncTask extends BaseAsyncTask {
+public class GetMessagesByUserIdAndReadStateAsyncTask extends BaseAsyncTask {
 
-    private String text;
-    private CompletionType completionType;
+    private String userId1;
+    private boolean read;
 
-    public GetCompletionAsyncTask(String text, CompletionType completionType) {
-        this.text = text;
-        this.completionType = completionType;
+    public GetMessagesByUserIdAndReadStateAsyncTask(String userId1, boolean read) {
+        this.userId1 = userId1;
+        this.read = read;
     }
 
     @Override
     protected Object doInBackground(Object[] params) {
         try {
             HttpHeaders requestHeaders = new HttpHeaders();
+            String url = ServerConstantsUtils.getActiveServer() + "/conversations/" + userId1 + "?read=" + read;
 
-            String url = ServerConstantsUtils.getActiveServer() + "completion/";
-            switch (completionType) {
-                case SUGGEST: {
-                    url += "suggest/" + text;
-                }
-                break;
-                case TAG: {
-                    url += "tag/" + text;
-                }
-                break;
-            }
+            setAuthorisationHeaders(requestHeaders);
 
             List<MediaType> acceptableMediaTypes = new ArrayList<>();
             acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
             requestHeaders.setAccept(acceptableMediaTypes);
-            HttpEntity requestEntity = new HttpEntity(requestHeaders);
+            HttpEntity<?> requestEntity = new HttpEntity<Object>(requestHeaders);
             RestTemplate restTemplate = new RestTemplate(HttpRequestFactoryProviderImpl.getClientHttpRequestFactorySSLSupport(5000));
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-            ResponseEntity<Tag> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, Tag.class);
-            Tag tag = responseEntity.getBody();
+            ResponseEntity<Users> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, Users.class);
+            final Users users = responseEntity.getBody();
 
-            return new TagResult(this.getClass().getSimpleName(), RestResult.ReturnType.SUCCESS, tag);
+            MessagesModel.getInstance().setUsers(users);
+
+            return new RestResult(this.getClass().getSimpleName(), RestResult.ReturnType.SUCCESS);
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
             return new RestResult(this.getClass().getSimpleName(), RestResult.ReturnType.FAILED);

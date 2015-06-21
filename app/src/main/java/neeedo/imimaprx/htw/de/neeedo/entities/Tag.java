@@ -2,31 +2,45 @@ package neeedo.imimaprx.htw.de.neeedo.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 
 @Root(name = "tag")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Tag implements Serializable, BaseEntity {
 
-    @Element
-    private String tag;
+    private ArrayList<String> suggestedTags;
 
-    public String getTag() {
-        return tag;
+    private ArrayList<String> completedTags;
+
+    public Tag() {
+
     }
 
-    public void setTag(String tag) {
-        this.tag = tag;
+    public ArrayList<String> getSuggestedTags() {
+        return suggestedTags;
+    }
+
+    public void setSuggestedTags(ArrayList<String> suggestedTags) {
+        this.suggestedTags = suggestedTags;
+    }
+
+    public ArrayList<String> getCompletedTags() {
+        return completedTags;
+    }
+
+    public void setCompletedTags(ArrayList<String> completedTags) {
+        this.completedTags = completedTags;
     }
 
     @Override
     public String toString() {
         return "Tag{" +
-                "tag='" + tag + '\'' +
+                "suggestedTags=" + suggestedTags +
+                ", completedTags=" + completedTags +
                 '}';
     }
 
@@ -35,14 +49,18 @@ public class Tag implements Serializable, BaseEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Tag tag1 = (Tag) o;
+        Tag tag = (Tag) o;
 
-        return !(tag != null ? !tag.equals(tag1.tag) : tag1.tag != null);
+        if (suggestedTags != null ? !suggestedTags.equals(tag.suggestedTags) : tag.suggestedTags != null)
+            return false;
+        return !(completedTags != null ? !completedTags.equals(tag.completedTags) : tag.completedTags != null);
 
     }
 
     @Override
     public int hashCode() {
-        return tag != null ? tag.hashCode() : 0;
+        int result = suggestedTags != null ? suggestedTags.hashCode() : 0;
+        result = 31 * result + (completedTags != null ? completedTags.hashCode() : 0);
+        return result;
     }
 }
