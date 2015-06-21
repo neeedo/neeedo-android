@@ -19,7 +19,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
 
-import neeedo.imimaprx.htw.de.neeedo.entities.Image;
+import neeedo.imimaprx.htw.de.neeedo.entities.util.Image;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;

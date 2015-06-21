@@ -4,6 +4,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import neeedo.imimaprx.htw.de.neeedo.entities.util.Price;
+
 public class PriceTest extends Assert {
 
     private Price price;

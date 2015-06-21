@@ -1,6 +1,6 @@
 package neeedo.imimaprx.htw.de.neeedo.models;
 
-import neeedo.imimaprx.htw.de.neeedo.entities.User;
+import neeedo.imimaprx.htw.de.neeedo.entities.user.User;
 
 public class UserModel {
 

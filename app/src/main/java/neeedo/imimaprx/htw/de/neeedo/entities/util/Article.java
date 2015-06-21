@@ -1,4 +1,4 @@
-package neeedo.imimaprx.htw.de.neeedo.entities;
+package neeedo.imimaprx.htw.de.neeedo.entities.util;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

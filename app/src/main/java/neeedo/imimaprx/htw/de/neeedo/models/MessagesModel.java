@@ -1,9 +1,9 @@
 package neeedo.imimaprx.htw.de.neeedo.models;
 
 
-import neeedo.imimaprx.htw.de.neeedo.entities.Messages;
-import neeedo.imimaprx.htw.de.neeedo.entities.SingleMessage;
-import neeedo.imimaprx.htw.de.neeedo.entities.Users;
+import neeedo.imimaprx.htw.de.neeedo.entities.message.Messages;
+import neeedo.imimaprx.htw.de.neeedo.entities.message.SingleMessage;
+import neeedo.imimaprx.htw.de.neeedo.entities.user.Users;
 
 public class MessagesModel {
 

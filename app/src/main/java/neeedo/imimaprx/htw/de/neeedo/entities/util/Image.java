@@ -1,4 +1,4 @@
-package neeedo.imimaprx.htw.de.neeedo.entities;
+package neeedo.imimaprx.htw.de.neeedo.entities.util;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -6,7 +6,6 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 
 @Root(name = "image")

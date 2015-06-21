@@ -12,7 +12,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.client.RestTemplate;
 
 import neeedo.imimaprx.htw.de.neeedo.LoginActivity;
-import neeedo.imimaprx.htw.de.neeedo.entities.SingleUser;
+import neeedo.imimaprx.htw.de.neeedo.entities.user.SingleUser;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.UserModel;

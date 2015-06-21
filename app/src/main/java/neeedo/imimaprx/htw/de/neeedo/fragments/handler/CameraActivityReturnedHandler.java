@@ -7,7 +7,6 @@ import android.widget.ImageButton;
 
 import java.io.File;
 
-import neeedo.imimaprx.htw.de.neeedo.entities.Image;
 import neeedo.imimaprx.htw.de.neeedo.rest.image.PostCreateImageAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.utils.ImageUtils;
 

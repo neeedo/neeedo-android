@@ -1,6 +1,6 @@
 package neeedo.imimaprx.htw.de.neeedo.rest.util.returntype;
 
-import neeedo.imimaprx.htw.de.neeedo.entities.Tag;
+import neeedo.imimaprx.htw.de.neeedo.entities.util.Tag;
 
 public class TagResult extends RestResult {
 

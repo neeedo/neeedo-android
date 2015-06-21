@@ -1,4 +1,4 @@
-package neeedo.imimaprx.htw.de.neeedo.entities;
+package neeedo.imimaprx.htw.de.neeedo.entities.util;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;

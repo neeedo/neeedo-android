@@ -1,10 +1,12 @@
-package neeedo.imimaprx.htw.de.neeedo.entities;
+package neeedo.imimaprx.htw.de.neeedo.entities.user;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+
+import neeedo.imimaprx.htw.de.neeedo.entities.util.BaseEntity;
 
 @Root(name = "users")
 public class Users implements Serializable, BaseEntity {

@@ -2,9 +2,9 @@ package neeedo.imimaprx.htw.de.neeedo.models;
 
 import java.util.ArrayList;
 
-import neeedo.imimaprx.htw.de.neeedo.entities.Offer;
-import neeedo.imimaprx.htw.de.neeedo.entities.Offers;
-import neeedo.imimaprx.htw.de.neeedo.entities.SingleOffer;
+import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offer;
+import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offers;
+import neeedo.imimaprx.htw.de.neeedo.entities.offer.SingleOffer;
 
 public class OffersModel {
 

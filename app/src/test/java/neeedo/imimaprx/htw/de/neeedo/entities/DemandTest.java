@@ -7,6 +7,10 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
+import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demand;
+import neeedo.imimaprx.htw.de.neeedo.entities.util.Location;
+import neeedo.imimaprx.htw.de.neeedo.entities.util.Price;
+
 public class DemandTest extends Assert {
 
     private Demand demand;

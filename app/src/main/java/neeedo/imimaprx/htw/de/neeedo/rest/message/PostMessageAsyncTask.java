@@ -11,8 +11,8 @@ import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
-import neeedo.imimaprx.htw.de.neeedo.entities.Message;
-import neeedo.imimaprx.htw.de.neeedo.entities.SingleMessage;
+import neeedo.imimaprx.htw.de.neeedo.entities.message.Message;
+import neeedo.imimaprx.htw.de.neeedo.entities.message.SingleMessage;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.models.MessagesModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;

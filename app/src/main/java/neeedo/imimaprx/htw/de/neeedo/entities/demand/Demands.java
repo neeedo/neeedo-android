@@ -1,4 +1,4 @@
-package neeedo.imimaprx.htw.de.neeedo.entities;
+package neeedo.imimaprx.htw.de.neeedo.entities.demand;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
@@ -6,6 +6,8 @@ import org.simpleframework.xml.Root;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import neeedo.imimaprx.htw.de.neeedo.entities.util.BaseEntity;
 
 @Root(name = "demands")
 public class Demands implements Serializable, BaseEntity {

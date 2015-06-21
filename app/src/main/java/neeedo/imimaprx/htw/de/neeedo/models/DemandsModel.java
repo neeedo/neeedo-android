@@ -3,9 +3,9 @@ package neeedo.imimaprx.htw.de.neeedo.models;
 
 import java.util.ArrayList;
 
-import neeedo.imimaprx.htw.de.neeedo.entities.Demand;
-import neeedo.imimaprx.htw.de.neeedo.entities.Demands;
-import neeedo.imimaprx.htw.de.neeedo.entities.SingleDemand;
+import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demand;
+import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demands;
+import neeedo.imimaprx.htw.de.neeedo.entities.demand.SingleDemand;
 
 public class DemandsModel {
 
