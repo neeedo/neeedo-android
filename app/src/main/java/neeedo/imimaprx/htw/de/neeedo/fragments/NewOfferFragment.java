@@ -22,6 +22,7 @@ import org.osmdroid.views.MapView;
 
 import java.io.File;
 
+import neeedo.imimaprx.htw.de.neeedo.MainActivity;
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.Location;
 import neeedo.imimaprx.htw.de.neeedo.events.NewEanTagsReceivedEvent;
@@ -154,6 +155,6 @@ public class NewOfferFragment extends SuperFragment {
 
     @Subscribe
     public void handleServerResponse(ServerResponseEvent e) {
-        redirectToFragment(ListOffersFragment.class);
+        redirectToFragment(ListOffersFragment.class, MainActivity.MENU_LIST_OFFERS);
     }
 }

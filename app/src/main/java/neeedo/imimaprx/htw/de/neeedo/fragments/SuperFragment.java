@@ -103,7 +103,7 @@ public class SuperFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    public void redirectToFragment(Class type) {
+    public void redirectToFragment(Class type, Integer navItem) {
         FragmentManager fragmentManager = getFragmentManager();
         Fragment fragment = null;
 
@@ -114,10 +114,19 @@ public class SuperFragment extends Fragment {
             return;
         }
 
+        String backstackItem = null;
+        if(navItem != null) {
+            backstackItem = String.valueOf(navItem);
+        }
+
         fragmentManager.beginTransaction()
                 .replace(R.id.container, fragment)
-                .addToBackStack(null)
+                .addToBackStack(backstackItem)
                 .commit();
+    }
+
+    public void redirectToFragment(Class type) {
+        redirectToFragment(type, null);
     }
 
     @Subscribe
@@ -150,7 +159,7 @@ public class SuperFragment extends Fragment {
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     task.execute();
                                     SuperFragment fragment = (SuperFragment) getFragmentManager().findFragmentById(R.id.container);
-                                    fragment.redirectToFragment(fragmentRedirect);
+                                    fragment.redirectToFragment(fragmentRedirect, null);
                                 }
                             }).
                     setNegativeButton(R.string.dialog_no,

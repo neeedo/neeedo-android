@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 
+import neeedo.imimaprx.htw.de.neeedo.MainActivity;
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.SendDemandHandler;
@@ -45,6 +46,6 @@ public class NewDemandFragment extends FormDemandFragment {
 
     @Subscribe
     public void handleServerResponse(ServerResponseEvent e) {
-        redirectToFragment(ListDemandsFragment.class);
+        redirectToFragment(ListDemandsFragment.class, MainActivity.MENU_LIST_DEMANDS);
     }
 }
