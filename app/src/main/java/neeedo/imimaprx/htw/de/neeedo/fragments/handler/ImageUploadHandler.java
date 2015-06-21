@@ -21,6 +21,8 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
+
 public class ImageUploadHandler extends AsyncTask {
     private final File photoFile;
 
@@ -70,7 +72,7 @@ public class ImageUploadHandler extends AsyncTask {
 
             FileInputStream fileInputStream = new FileInputStream(photoFile);
 
-            URL url = new URL("https://api.neeedo.com/images");
+            URL url = new URL(ServerConstantsUtils.getActiveServer() + "images");
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 
             connection.setDoInput(true);

@@ -54,4 +54,9 @@ public class EditDemandFragment extends FormDemandFragment {
         return view;
     }
 
+    @Subscribe
+    public void handleServerResponse(ServerResponseEvent e) {
+        redirectToFragment(ListDemandsFragment.class);
+    }
+
 }
