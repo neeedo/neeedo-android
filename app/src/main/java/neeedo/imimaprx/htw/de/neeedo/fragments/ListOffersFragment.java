@@ -15,9 +15,11 @@ import com.squareup.otto.Subscribe;
 import java.util.ArrayList;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
+import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demand;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offer;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offers;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
+import neeedo.imimaprx.htw.de.neeedo.fragments.adapters.ListProductsArrayAdapter;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.offer.GetOffersAsyncTask;
@@ -63,8 +65,8 @@ public class ListOffersFragment extends SuperFragment {
         Offers offers = OffersModel.getInstance().getOffers();
         ArrayList<Offer> offerList = offers.getOffers();
 
-        ArrayAdapter<Offer> adapter = new ArrayAdapter<Offer>(getActivity(),
-                android.R.layout.simple_list_item_1, offerList);
+        ListProductsArrayAdapter<Demand> adapter = new ListProductsArrayAdapter(getActivity(),
+                R.layout.list_products_item, offerList);
         listView.setAdapter(adapter);
 
         listView.setClickable(true);

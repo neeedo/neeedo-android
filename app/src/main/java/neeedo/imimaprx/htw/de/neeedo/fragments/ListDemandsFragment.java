@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.squareup.otto.Subscribe;
@@ -18,7 +17,7 @@ import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demand;
 import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demands;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
-import neeedo.imimaprx.htw.de.neeedo.fragments.adapters.ListDemandsArrayAdapter;
+import neeedo.imimaprx.htw.de.neeedo.fragments.adapters.ListProductsArrayAdapter;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.demand.GetDemandsAsyncTask;
@@ -63,8 +62,8 @@ public class ListDemandsFragment extends SuperFragment {
         Demands demands = DemandsModel.getInstance().getDemands();
         List<Demand> demandList = demands.getDemands();
 
-        ListDemandsArrayAdapter adapter = new ListDemandsArrayAdapter(getActivity(),
-                R.layout.list_demands_item, demandList);
+        ListProductsArrayAdapter<Demand> adapter = new ListProductsArrayAdapter(getActivity(),
+                R.layout.list_products_item, demandList);
         listView.setAdapter(adapter);
 
         listView.setClickable(true);
