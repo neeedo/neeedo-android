@@ -3,6 +3,7 @@ package neeedo.imimaprx.htw.de.neeedo.fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,11 +25,13 @@ import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demands;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offer;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offers;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.Price;
+import neeedo.imimaprx.htw.de.neeedo.events.FoundMatchesEvent;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.fragments.adapters.ListProductsArrayAdapter;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.demand.GetDemandsAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.matching.GetOffersToDemandAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.offer.GetOffersAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.DeleteAsyncTask;
@@ -132,7 +135,16 @@ public class SingleDemandFragment extends SuperFragment implements View.OnClickL
 
         // TODO handle exception if demand not found
 
-        // TODO use matched offers
+        DemandsModel.getInstance().setPostDemand(currentDemand);
+        OffersModel.getInstance().setOffers(null);
+        BaseAsyncTask asyncTask = new GetOffersToDemandAsyncTask();
+        asyncTask.execute();
+    }
+
+    @Subscribe
+    public void fillMatches(FoundMatchesEvent e) {
+        Log.d("Matching", "Event called");
+
         Offers offers = OffersModel.getInstance().getOffers();
         List<Offer> offerList = offers.getOffers();
 
@@ -140,6 +152,8 @@ public class SingleDemandFragment extends SuperFragment implements View.OnClickL
             ListProductsArrayAdapter<Offer> adapter = new ListProductsArrayAdapter(getActivity(),
                     R.layout.list_products_item, offerList);
             matchingView.setAdapter(adapter);
+        } else {
+            // TODO show if no matches found
         }
     }
 

@@ -16,6 +16,7 @@ import java.util.List;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demand;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offers;
+import neeedo.imimaprx.htw.de.neeedo.events.FoundMatchesEvent;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
@@ -27,6 +28,11 @@ import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
  * Creates experimental Offerslist to the given Demand in DemandModel
  */
 public class GetOffersToDemandAsyncTask extends BaseAsyncTask {
+
+    @Override
+    protected void onPostExecute(Object o) {
+        eventService.post(new FoundMatchesEvent());
+    }
 
     @Override
     protected Object doInBackground(Object[] params) {
