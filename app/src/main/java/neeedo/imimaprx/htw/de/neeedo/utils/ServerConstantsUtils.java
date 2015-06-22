@@ -10,7 +10,7 @@ public class ServerConstantsUtils {
     private static final String LIVE_SERVER_SSL = "https://api.neeedo.com/";
 
     public static String getActiveServer() {
-        return LOCALHOST_SSL;
+        return LIVE_SERVER_SSL;
     }
 
     public static String getOutpanServer() {

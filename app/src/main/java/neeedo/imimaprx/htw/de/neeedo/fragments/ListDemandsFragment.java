@@ -18,6 +18,7 @@ import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demand;
 import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demands;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
+import neeedo.imimaprx.htw.de.neeedo.fragments.adapters.ListDemandsArrayAdapter;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.demand.GetDemandsAsyncTask;
@@ -62,8 +63,8 @@ public class ListDemandsFragment extends SuperFragment {
         Demands demands = DemandsModel.getInstance().getDemands();
         List<Demand> demandList = demands.getDemands();
 
-        ArrayAdapter<Demand> adapter = new ArrayAdapter<Demand>(getActivity(),
-                android.R.layout.simple_list_item_1, demandList);
+        ListDemandsArrayAdapter adapter = new ListDemandsArrayAdapter(getActivity(),
+                R.layout.list_demands_item, demandList);
         listView.setAdapter(adapter);
 
         listView.setClickable(true);
@@ -77,7 +78,7 @@ public class ListDemandsFragment extends SuperFragment {
                 Fragment fragment = new SingleDemandFragment();
 
                 Bundle args = new Bundle();
-                args.putString("id", demand.getId()); // pass current item id
+                args.putString("id", demand.getId());
                 fragment.setArguments(args);
 
                 fragmentManager.beginTransaction()

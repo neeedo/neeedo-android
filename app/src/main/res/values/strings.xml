@@ -75,4 +75,10 @@
     <string name="title_activity_location_chooser">LocationChooser</string>
     <string name="new_offer_set_location">location setzen</string>
 
+    <string name="item_distance">Distance</string>
+    <string name="item_price">Price</string>
+
+    <string name="format_price">#0.00 €</string>
+    <string name="format_distance">#0.00 km</string>
+
 </resources>
