@@ -2,7 +2,6 @@ package neeedo.imimaprx.htw.de.neeedo.fragments.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +22,8 @@ public class ListProductsArrayAdapter<Object> extends ArrayAdapter<Object> {
     private List<Object> products;
     private Class productType;
 
-    TextView tvMustTags;
-    TextView tvShouldTags;
+    TextView tvPrimaryTags;
+    TextView tvSecondaryTags;
     TextView tvDistance;
     TextView tvPrice;
     TextView tvUser;
@@ -44,8 +43,8 @@ public class ListProductsArrayAdapter<Object> extends ArrayAdapter<Object> {
         LayoutInflater inflater = ((Activity) context).getLayoutInflater();
         row = inflater.inflate(layoutResourceId, parent, false);
 
-        tvMustTags = (TextView) row.findViewById(R.id.tvMustTags);
-        tvShouldTags = (TextView) row.findViewById(R.id.tvShouldTags);
+        tvPrimaryTags = (TextView) row.findViewById(R.id.tvPrimaryTags);
+        tvSecondaryTags = (TextView) row.findViewById(R.id.tvSecondaryTags);
         tvDistance = (TextView) row.findViewById(R.id.tvDistance);
         tvPrice = (TextView) row.findViewById(R.id.tvPrice);
         tvUser = (TextView) row.findViewById(R.id.tvUser);
@@ -53,8 +52,8 @@ public class ListProductsArrayAdapter<Object> extends ArrayAdapter<Object> {
         DecimalFormat priceFormat = new DecimalFormat(context.getString(R.string.format_price));
         DecimalFormat distanceFormat = new DecimalFormat(context.getString(R.string.format_distance));
 
-        String mustTagsText = null;
-        String shouldTagsText = null;
+        String primaryTagsText = null;
+        String secondaryTagsText = null;
         String distanceText = null;
         String priceText = null;
         String userText = null;
@@ -64,8 +63,8 @@ public class ListProductsArrayAdapter<Object> extends ArrayAdapter<Object> {
             Demand demand = (Demand) products.get(position);
             Price price = demand.getPrice();
 
-            mustTagsText = demand.getMustTagsString();
-            shouldTagsText = demand.getShouldTagsString();
+            primaryTagsText = demand.getMustTagsString();
+            secondaryTagsText = demand.getShouldTagsString();
             distanceText = context.getString(
                     R.string.item_distance) +
                     ": " +
@@ -84,11 +83,15 @@ public class ListProductsArrayAdapter<Object> extends ArrayAdapter<Object> {
 
             Offer offer = (Offer) products.get(position);
 
-            mustTagsText = offer.getTags().toString();
-            priceText = priceFormat.format(offer.getPrice());
+            primaryTagsText = offer.getTagsString();
+            priceText = context.getString(
+                    R.string.item_price) +
+                    ": " +
+                    priceFormat.format(offer.getPrice()
+                    );
             userText = offer.getUser().getName();
 
-            tvShouldTags.setVisibility(View.GONE);
+            tvSecondaryTags.setVisibility(View.GONE);
             tvDistance.setVisibility(View.GONE);
 
         } else {
@@ -96,8 +99,10 @@ public class ListProductsArrayAdapter<Object> extends ArrayAdapter<Object> {
             // TODO error
         }
 
-        tvMustTags.setText(mustTagsText);
-        tvShouldTags.setText(shouldTagsText);
+        // TODO add image (for offers)
+
+        tvPrimaryTags.setText(primaryTagsText);
+        tvSecondaryTags.setText(secondaryTagsText);
         tvDistance.setText(distanceText);
         tvPrice.setText(priceText);
         tvUser.setText(userText);

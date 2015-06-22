@@ -88,6 +88,10 @@ public class Offer implements Serializable, BaseEntity {
         return tags;
     }
 
+    public String getTagsString() {
+        return tagsToString(tags);
+    }
+
     public void setTags(ArrayList<String> tags) {
         this.tags = tags;
     }
@@ -137,6 +141,22 @@ public class Offer implements Serializable, BaseEntity {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    private String tagsToString(ArrayList<String> tags) {
+        String returnString = "";
+        int counter = 0;
+
+        for (String tag : tags) {
+            if (counter == 0) {
+                returnString = tag;
+            } else {
+                returnString = returnString + ", " + tag;
+            }
+            counter++;
+        }
+
+        return returnString;
     }
 
 

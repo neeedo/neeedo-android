@@ -36,7 +36,7 @@ public class ListDemandsFragment extends SuperFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        View view = inflater.inflate(R.layout.list_demands_view, container, false);
+        View view = inflater.inflate(R.layout.list_products_view, container, false);
 
         listView = (ListView) view.findViewById(R.id.listview);
 
