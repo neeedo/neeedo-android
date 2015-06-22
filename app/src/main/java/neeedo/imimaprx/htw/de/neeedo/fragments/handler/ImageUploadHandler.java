@@ -44,7 +44,7 @@ public class ImageUploadHandler extends AsyncTask {
 
         byte[] buffer;
 
-        int maxBufferSize = 1024 * 2 * 2 * 2;
+        int maxBufferSize = 1024 * 8;
 
         try {
             TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
@@ -78,6 +78,7 @@ public class ImageUploadHandler extends AsyncTask {
 
             ActiveUser activeUser = ActiveUser.getInstance();
             String authString = activeUser.getAuthentificationHash();
+
             Log.d("Auth", authString);
 
             connection.setDoInput(true);
@@ -156,5 +157,10 @@ public class ImageUploadHandler extends AsyncTask {
 
         int uploadedBytes = (int) values[0];
         int totalAmountBytesToUpload = (int) values[1];
+    }
+
+    @Override
+    protected void onPostExecute(Object o) {
+        super.onPostExecute(o);
     }
 }
