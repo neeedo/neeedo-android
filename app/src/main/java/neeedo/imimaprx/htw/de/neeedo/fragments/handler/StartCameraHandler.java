@@ -13,20 +13,26 @@ import android.widget.Toast;
 import java.io.File;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
+import neeedo.imimaprx.htw.de.neeedo.fragments.SuperFragment;
+import neeedo.imimaprx.htw.de.neeedo.utils.ImageUtils;
 import neeedo.imimaprx.htw.de.neeedo.vo.RequestCodes;
 
 public class StartCameraHandler implements View.OnClickListener {
 
-    private final Fragment fragment;
-    private final File outputFile;
+    private SuperFragment fragment;
+    private  File outputFile;
 
-    public StartCameraHandler(Fragment fragment, File outputFile) {
+    public StartCameraHandler(SuperFragment fragment) {
         this.fragment = fragment;
         this.outputFile = outputFile;
     }
 
     @Override
     public void onClick(View v) {
+        outputFile = ImageUtils.getNewOutputImageFile();
+fragment.setNewCameraOutputFile(outputFile);
+
+
         Context context = fragment.getActivity();
         PackageManager packageManager = context.getPackageManager();
 
@@ -35,16 +41,10 @@ public class StartCameraHandler implements View.OnClickListener {
             return;
         }
 
-        File path = new File(Environment.getExternalStorageDirectory(), "foo/bar");
-
-        if (!path.exists())
-            path.mkdirs();
-
         Uri imageCaptureUri = Uri.fromFile(outputFile);
 
         Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageCaptureUri);
-        //cameraIntent.putExtra("return-data", true);
         fragment.startActivityForResult(cameraIntent, RequestCodes.CAMERA_CAPTURE_IMAGE_REQUEST_CODE);
     }
 }

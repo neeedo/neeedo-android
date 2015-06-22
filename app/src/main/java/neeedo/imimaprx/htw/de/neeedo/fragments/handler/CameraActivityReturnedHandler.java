@@ -20,21 +20,6 @@ public class CameraActivityReturnedHandler extends AsyncTask {
         this.addImageButton = addImageButton;
     }
 
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-
-        BitmapFactory.Options options = new BitmapFactory.Options();
-
-        options.inSampleSize = 8;
-
-        Bitmap bitmap = BitmapFactory.decodeFile(photoFile.getPath(), options);
-
-        bitmap = ImageUtils.rotateBitmap(bitmap, photoFile);
-        bitmap = ImageUtils.scaleBitmapKeepingAspectRatio(bitmap);
-
-        addImageButton.setImageBitmap(bitmap);
-    }
 
     @Override
     protected Object doInBackground(Object[] params) {

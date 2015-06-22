@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 
+import java.io.File;
+
 import neeedo.imimaprx.htw.de.neeedo.LoginActivity;
 import neeedo.imimaprx.htw.de.neeedo.MainActivity;
 import neeedo.imimaprx.htw.de.neeedo.R;
@@ -29,7 +31,10 @@ public class SuperFragment extends Fragment {
 
     protected EventService eventService = EventService.getInstance();
 
+    protected File newCameraOutputFile;
+
     private MenuItem actionBarLogout;
+
     private MenuItem actionBarLogin;
 
     private Menu menu;
@@ -134,6 +139,10 @@ public class SuperFragment extends Fragment {
         setLoginButtonState();
     }
 
+    public void setNewCameraOutputFile(File newCameraOutputFile) {
+        this.newCameraOutputFile = newCameraOutputFile;
+    }
+
     public static class ConfirmDialogFragment extends android.support.v4.app.DialogFragment {
         private static ConfirmDialogFragment dialog;
         private static BaseAsyncTask task;
@@ -170,7 +179,6 @@ public class SuperFragment extends Fragment {
                                 }
                             }).
                     create();
-
         }
     }
 }

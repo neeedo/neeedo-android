@@ -57,9 +57,6 @@ public class NewOfferFragment extends SuperFragment {
     private boolean locationAvailable;
     private Button btnSetLocation;
 
-    private File photoFile;
-    private EventService eventService = EventService.getInstance();
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,9 +88,7 @@ public class NewOfferFragment extends SuperFragment {
             etLocationLon.setText(String.valueOf(locationLongitude));
         }
 
-        photoFile = ImageUtils.getNewOutputImageFile();
-
-        addImageButton.setOnClickListener(new StartCameraHandler(this, photoFile));
+        addImageButton.setOnClickListener(new StartCameraHandler(this));
         btnSubmit.setOnClickListener(new SendNewOfferHandler(etTags, etLocationLat, etLocationLon, etPrice));
         btnBarcode.setOnClickListener(new StartNewBarcodeScanHandler(this));
         btnSetLocation.setOnClickListener(new StartLocationChooserHandler(this));
@@ -138,10 +133,7 @@ public class NewOfferFragment extends SuperFragment {
         }
 
         if (requestCode == RequestCodes.CAMERA_CAPTURE_IMAGE_REQUEST_CODE) {
-//            new CameraActivityReturnedHandler(photoFile, addImageButton).execute();
-
-            new ImageUploadHandler(photoFile).execute();
-
+            new ImageUploadHandler(newCameraOutputFile).execute();
         } else if (requestCode == RequestCodes.BARCODE_SCAN_REQUEST_CODE) {
             String barcodeEAN = intent.getStringExtra("SCAN_RESULT");
             new GetOutpanByEANAsyncTask(barcodeEAN, getActivity()).execute();
