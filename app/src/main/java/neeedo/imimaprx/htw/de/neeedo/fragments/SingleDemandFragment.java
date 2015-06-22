@@ -1,6 +1,7 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,9 @@ import android.widget.TextView;
 
 import com.squareup.otto.Subscribe;
 
+import org.w3c.dom.Text;
+
+import java.text.DecimalFormat;
 import java.util.List;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
@@ -19,7 +23,9 @@ import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demand;
 import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demands;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offer;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offers;
+import neeedo.imimaprx.htw.de.neeedo.entities.util.Price;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
+import neeedo.imimaprx.htw.de.neeedo.fragments.adapters.ListProductsArrayAdapter;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.demand.GetDemandsAsyncTask;
@@ -30,10 +36,14 @@ import neeedo.imimaprx.htw.de.neeedo.rest.util.DeleteAsyncTask;
 
 public class SingleDemandFragment extends SuperFragment implements View.OnClickListener {
 
-    TextView textView;
     Button btnDeleteDemand;
     Button btnEditDemand;
     ListView matchingView;
+    TextView tvMustTags;
+    TextView tvShouldTags;
+    TextView tvDistance;
+    TextView tvPrice;
+    TextView tvUser;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,7 +51,12 @@ public class SingleDemandFragment extends SuperFragment implements View.OnClickL
 
         View view = inflater.inflate(R.layout.single_demand_view, container, false);
 
-        textView = (TextView) view.findViewById(R.id.singleview);
+        tvMustTags = (TextView) view.findViewById(R.id.tvMustTags);
+        tvShouldTags = (TextView) view.findViewById(R.id.tvShouldTags);
+        tvDistance = (TextView) view.findViewById(R.id.tvDistance);
+        tvPrice = (TextView) view.findViewById(R.id.tvPrice);
+        tvUser = (TextView) view.findViewById(R.id.tvUser);
+
         matchingView = (ListView) view.findViewById(R.id.matchingview);
 
         return view;
@@ -87,8 +102,33 @@ public class SingleDemandFragment extends SuperFragment implements View.OnClickL
     public void fillText(ServerResponseEvent e) {
         String demandId = getArguments().getString("id");
         Demand currentDemand = findSingleDemand(demandId);
+        Context context = getActivity();
 
-        textView.setText(currentDemand.toString());
+        DecimalFormat priceFormat = new DecimalFormat(context.getString(R.string.format_price));
+        DecimalFormat distanceFormat = new DecimalFormat(context.getString(R.string.format_distance));
+        Price price = currentDemand.getPrice();
+
+        String mustTagsText = currentDemand.getMustTagsString();
+        String shouldTagsText = currentDemand.getShouldTagsString();
+        String distanceText = context.getString(
+                R.string.item_distance) +
+                ": " +
+                distanceFormat.format(currentDemand.getDistance()
+                );
+        String priceText = context.getString(
+                R.string.item_price) +
+                ": " +
+                priceFormat.format(price.getMin()) +
+                " - " +
+                priceFormat.format(price.getMax()
+                );
+        String userText = currentDemand.getUser().getName();
+
+        tvMustTags.setText(mustTagsText);
+        tvShouldTags.setText(shouldTagsText);
+        tvDistance.setText(distanceText);
+        tvPrice.setText(priceText);
+        tvUser.setText(userText);
 
         // TODO handle exception if demand not found
 
@@ -96,9 +136,11 @@ public class SingleDemandFragment extends SuperFragment implements View.OnClickL
         Offers offers = OffersModel.getInstance().getOffers();
         List<Offer> offerList = offers.getOffers();
 
-        ArrayAdapter<Offer> adapter = new ArrayAdapter<Offer>(getActivity(),
-                android.R.layout.simple_list_item_1, offerList);
-        matchingView.setAdapter(adapter);
+        if(!offerList.isEmpty()) {
+            ListProductsArrayAdapter<Offer> adapter = new ListProductsArrayAdapter(getActivity(),
+                    R.layout.list_products_item, offerList);
+            matchingView.setAdapter(adapter);
+        }
     }
 
     @Override
