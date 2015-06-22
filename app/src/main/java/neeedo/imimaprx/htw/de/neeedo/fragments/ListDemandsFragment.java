@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.squareup.otto.Subscribe;
 
@@ -26,6 +27,7 @@ import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 public class ListDemandsFragment extends SuperFragment {
     private final ActiveUser activeUser = ActiveUser.getInstance();
     ListView listView;
+    View view;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,7 +38,7 @@ public class ListDemandsFragment extends SuperFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        View view = inflater.inflate(R.layout.list_products_view, container, false);
+        view = inflater.inflate(R.layout.list_products_view, container, false);
 
         listView = (ListView) view.findViewById(R.id.listview);
 
@@ -62,29 +64,38 @@ public class ListDemandsFragment extends SuperFragment {
         Demands demands = DemandsModel.getInstance().getDemands();
         List<Demand> demandList = demands.getDemands();
 
-        ListProductsArrayAdapter<Demand> adapter = new ListProductsArrayAdapter(getActivity(),
-                R.layout.list_products_item, demandList);
-        listView.setAdapter(adapter);
+        TextView tvEmpty = (TextView) view.findViewById(R.id.tvEmpty);
 
-        listView.setClickable(true);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        if(!demandList.isEmpty()) {
+            ListProductsArrayAdapter<Demand> adapter = new ListProductsArrayAdapter(getActivity(),
+                    R.layout.list_products_item, demandList);
+            listView.setAdapter(adapter);
 
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                Demand demand = (Demand) listView.getItemAtPosition(position);
+            listView.setClickable(true);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-                FragmentManager fragmentManager = getFragmentManager();
-                Fragment fragment = new SingleDemandFragment();
+                @Override
+                public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                    Demand demand = (Demand) listView.getItemAtPosition(position);
 
-                Bundle args = new Bundle();
-                args.putString("id", demand.getId());
-                fragment.setArguments(args);
+                    FragmentManager fragmentManager = getFragmentManager();
+                    Fragment fragment = new SingleDemandFragment();
 
-                fragmentManager.beginTransaction()
-                        .addToBackStack(null)
-                        .replace(R.id.container, fragment)
-                        .commit();
-            }
-        });
+                    Bundle args = new Bundle();
+                    args.putString("id", demand.getId());
+                    fragment.setArguments(args);
+
+                    fragmentManager.beginTransaction()
+                            .addToBackStack(null)
+                            .replace(R.id.container, fragment)
+                            .commit();
+                }
+            });
+
+            tvEmpty.setVisibility(View.GONE);
+        } else {
+            tvEmpty.setText(getActivity().getString(R.string.empty_demands_message));
+            tvEmpty.setVisibility(View.VISIBLE);
+        }
     }
 }

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.squareup.otto.Subscribe;
 
@@ -29,6 +30,7 @@ public class ListOffersFragment extends SuperFragment {
 
     private final ActiveUser activeUser = ActiveUser.getInstance();
     ListView listView;
+    View view;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,7 +41,7 @@ public class ListOffersFragment extends SuperFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        View view = inflater.inflate(R.layout.list_products_view, container, false);
+        view = inflater.inflate(R.layout.list_products_view, container, false);
 
         listView = (ListView) view.findViewById(R.id.listview);
 
@@ -65,29 +67,38 @@ public class ListOffersFragment extends SuperFragment {
         Offers offers = OffersModel.getInstance().getOffers();
         ArrayList<Offer> offerList = offers.getOffers();
 
-        ListProductsArrayAdapter<Demand> adapter = new ListProductsArrayAdapter(getActivity(),
-                R.layout.list_products_item, offerList);
-        listView.setAdapter(adapter);
+        TextView tvEmpty = (TextView) view.findViewById(R.id.tvEmpty);
 
-        listView.setClickable(true);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        if(!offerList.isEmpty()) {
+            ListProductsArrayAdapter<Demand> adapter = new ListProductsArrayAdapter(getActivity(),
+                    R.layout.list_products_item, offerList);
+            listView.setAdapter(adapter);
 
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                Offer offer = (Offer) listView.getItemAtPosition(position);
+            listView.setClickable(true);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-                FragmentManager fragmentManager = getFragmentManager();
-                Fragment fragment = new SingleOfferFragment();
+                @Override
+                public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                    Offer offer = (Offer) listView.getItemAtPosition(position);
 
-                Bundle args = new Bundle();
-                args.putString("id", offer.getId()); // pass current item id
-                fragment.setArguments(args);
+                    FragmentManager fragmentManager = getFragmentManager();
+                    Fragment fragment = new SingleOfferFragment();
 
-                fragmentManager.beginTransaction()
-                        .addToBackStack(null)
-                        .replace(R.id.container, fragment)
-                        .commit();
-            }
-        });
+                    Bundle args = new Bundle();
+                    args.putString("id", offer.getId()); // pass current item id
+                    fragment.setArguments(args);
+
+                    fragmentManager.beginTransaction()
+                            .addToBackStack(null)
+                            .replace(R.id.container, fragment)
+                            .commit();
+                }
+            });
+
+            tvEmpty.setVisibility(View.GONE);
+        } else {
+            tvEmpty.setText(getActivity().getString(R.string.empty_offers_message));
+            tvEmpty.setVisibility(View.VISIBLE);
+        }
     }
 }

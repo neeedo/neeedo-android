@@ -35,7 +35,12 @@ public class ListProductsArrayAdapter<Object> extends ArrayAdapter<Object> {
         this.layoutResourceId = layoutResourceId;
         this.products = products;
 
-        productType = products.get(0).getClass(); // TODO is there a better way to determine the class?
+        try {
+            productType = products.get(0).getClass(); // TODO is there a better way to determine the class?
+        } catch (NullPointerException e) {
+            productType = null;
+        }
+
     }
 
     @Override
@@ -94,9 +99,18 @@ public class ListProductsArrayAdapter<Object> extends ArrayAdapter<Object> {
             tvSecondaryTags.setVisibility(View.GONE);
             tvDistance.setVisibility(View.GONE);
 
+        } else if(productType == null) {
+
+            tvPrimaryTags.setVisibility(View.GONE);
+            tvSecondaryTags.setVisibility(View.GONE);
+            tvDistance.setVisibility(View.GONE);
+            tvPrice.setVisibility(View.GONE);
+            tvUser.setVisibility(View.GONE);
+
         } else {
 
-            // TODO error
+            throw new IllegalArgumentException();
+
         }
 
         // TODO add image (for offers)

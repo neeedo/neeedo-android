@@ -77,6 +77,8 @@
 
     <string name="item_distance">Distance</string>
     <string name="item_price">Price</string>
+    <string name="empty_offers_message">You have no offers at the moment</string>
+    <string name="empty_demands_message">You have no demands at the moment</string>
 
     <string name="format_price">#0.00 €</string>
     <string name="format_distance">#0.00 km</string>
