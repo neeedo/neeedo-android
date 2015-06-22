@@ -1,6 +1,7 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,11 +12,13 @@ import android.widget.TextView;
 
 import com.squareup.otto.Subscribe;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offer;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offers;
+import neeedo.imimaprx.htw.de.neeedo.entities.util.Price;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.offer.GetOffersAsyncTask;
@@ -24,10 +27,11 @@ import neeedo.imimaprx.htw.de.neeedo.rest.util.DeleteAsyncTask;
 
 
 public class SingleOfferFragment extends SuperFragment implements View.OnClickListener {
-
-    private TextView textView;
     private Button btnDeleteOffer;
     private Button btnEditOffer;
+    private TextView tvTags;
+    private TextView tvPrice;
+    private TextView tvUser;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -35,7 +39,9 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
 
         View view = inflater.inflate(R.layout.single_offer_view, container, false);
 
-        textView = (TextView) view.findViewById(R.id.singleview);
+        tvTags = (TextView) view.findViewById(R.id.tvTags);
+        tvPrice = (TextView) view.findViewById(R.id.tvPrice);
+        tvUser = (TextView) view.findViewById(R.id.tvUser);
 
         return view;
     }
@@ -77,8 +83,20 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
     public void fillText(ServerResponseEvent e) {
         String offerId = getArguments().getString("id");
         Offer currentOffer = findSingleOffer(offerId);
+        Context context = getActivity();
 
-        textView.setText(currentOffer.toString());
+        DecimalFormat priceFormat = new DecimalFormat(context.getString(R.string.format_price));
+
+        String tagsText = currentOffer.getTagsString();
+        String priceText = context.getString(R.string.item_price) +
+                ": " +
+                priceFormat.format(currentOffer.getPrice()
+                );
+        String userText = currentOffer.getUser().getName();
+
+        tvTags.setText(tagsText);
+        tvPrice.setText(priceText);
+        tvUser.setText(userText);
 
         // TODO handle exception if offer not found
     }

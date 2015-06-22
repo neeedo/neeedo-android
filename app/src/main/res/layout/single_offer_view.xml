@@ -30,12 +30,49 @@
             android:layout_column="1"
             android:layout_row="0" />
 
-        <TextView android:id="@+id/singleview"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
             android:layout_column="0"
             android:layout_row="1"
-            android:layout_columnSpan="2" />
+            android:layout_columnSpan="2"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView android:id="@+id/tvTags"
+                android:layout_width="match_parent"
+                android:layout_height="21dp"
+                android:gravity="center_vertical"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
+                android:textStyle="bold"
+                android:textSize="16dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="0dp" />
+
+            <TextView android:id="@+id/tvPrice"
+                android:layout_width="match_parent"
+                android:layout_height="22dp"
+                android:gravity="center_vertical"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
+                android:textStyle="normal"
+                android:textSize="12dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp" />
+
+            <TextView android:id="@+id/tvUser"
+                android:layout_width="match_parent"
+                android:layout_height="22dp"
+                android:gravity="center_vertical"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
+                android:textStyle="italic"
+                android:textSize="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp" />
+
+        </LinearLayout>
 
     </GridLayout>
 

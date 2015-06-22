@@ -38,7 +38,6 @@ import neeedo.imimaprx.htw.de.neeedo.rest.util.DeleteAsyncTask;
 
 
 public class SingleDemandFragment extends SuperFragment implements View.OnClickListener {
-
     Button btnDeleteDemand;
     Button btnEditDemand;
     ListView matchingView;
