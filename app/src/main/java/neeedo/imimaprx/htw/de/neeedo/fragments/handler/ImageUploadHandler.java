@@ -21,6 +21,7 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
 public class ImageUploadHandler extends AsyncTask {
@@ -75,6 +76,10 @@ public class ImageUploadHandler extends AsyncTask {
             URL url = new URL(ServerConstantsUtils.getActiveServer() + "images");
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 
+            ActiveUser activeUser = ActiveUser.getInstance();
+            String authString = activeUser.getAuthentificationHash();
+            Log.d("Auth", authString);
+
             connection.setDoInput(true);
             connection.setDoOutput(true);
             connection.setUseCaches(false);
@@ -83,7 +88,7 @@ public class ImageUploadHandler extends AsyncTask {
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Connection", "Keep-Alive");
             connection.setRequestProperty("ENCTYPE", "multipart/form-data");
-            connection.setRequestProperty("Authorization", "Basic dGVzdEB0ZXN0MTIzLmRlOnRlc3Q=");
+            connection.setRequestProperty("Authorization", authString);
             connection.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
             connection.setRequestProperty("uploaded_file", photoFile.getName());
 
