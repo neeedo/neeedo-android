@@ -25,7 +25,7 @@ import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
 public class ImageUploadHandler extends AsyncTask {
-    private final File photoFile;
+    private File photoFile;
 
     public ImageUploadHandler(File photoFile) {
         this.photoFile = photoFile;
