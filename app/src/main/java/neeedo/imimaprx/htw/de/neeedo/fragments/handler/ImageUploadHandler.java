@@ -1,13 +1,20 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments.handler;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -21,7 +28,9 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
+import neeedo.imimaprx.htw.de.neeedo.utils.ImageUtils;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
 public class ImageUploadHandler extends AsyncTask {
@@ -31,22 +40,22 @@ public class ImageUploadHandler extends AsyncTask {
         this.photoFile = photoFile;
     }
 
+
     @Override
     protected Object doInBackground(Object[] params) {
-
-        String lineEnd = "\r\n";
-        String twoHyphens = "--";
-        String boundary = "*****";
-
-        int bytesRead;
-        int totalAmountBytesToUpload;
-        int bufferSize;
-
-        byte[] buffer;
-
-        int maxBufferSize = 1024 * 8;
-
         try {
+            String lineEnd = "\r\n";
+            String twoHyphens = "--";
+            String boundary = "*****";
+
+            int bytesRead;
+            int totalAmountBytesToUpload;
+            int bufferSize;
+
+            byte[] buffer;
+
+            int maxBufferSize = 1024 * 8;
+
             TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
                 public java.security.cert.X509Certificate[] getAcceptedIssuers() {
                     return null;
@@ -70,8 +79,6 @@ public class ImageUploadHandler extends AsyncTask {
                 }
             };
             HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
-
-            FileInputStream fileInputStream = new FileInputStream(photoFile);
 
             URL url = new URL(ServerConstantsUtils.getActiveServer() + "images");
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
@@ -99,6 +106,10 @@ public class ImageUploadHandler extends AsyncTask {
             dataOutputStream.writeBytes("Content-Disposition: form-data; name=\"image\";filename=\"" + photoFile.getName() + "\"" + lineEnd);
 
             dataOutputStream.writeBytes(lineEnd);
+
+            FileInputStream fileInputStream = new FileInputStream(photoFile);
+
+//            BitmapFactory.decodeStream(fileInputStream).compress(Bitmap.CompressFormat.JPEG, 15, dataOutputStream);
 
             totalAmountBytesToUpload = fileInputStream.available();
 
@@ -147,8 +158,6 @@ public class ImageUploadHandler extends AsyncTask {
 
         //TODO propper return types
         return null;
-
-
     }
 
     @Override
@@ -162,5 +171,6 @@ public class ImageUploadHandler extends AsyncTask {
     @Override
     protected void onPostExecute(Object o) {
         super.onPostExecute(o);
+
     }
 }

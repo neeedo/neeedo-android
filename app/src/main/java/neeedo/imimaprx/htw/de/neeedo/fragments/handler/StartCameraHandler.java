@@ -20,7 +20,7 @@ import neeedo.imimaprx.htw.de.neeedo.vo.RequestCodes;
 public class StartCameraHandler implements View.OnClickListener {
 
     private SuperFragment fragment;
-    private  File outputFile;
+    private File outputFile;
 
     public StartCameraHandler(SuperFragment fragment) {
         this.fragment = fragment;
@@ -30,8 +30,7 @@ public class StartCameraHandler implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         outputFile = ImageUtils.getNewOutputImageFile();
-fragment.setNewCameraOutputFile(outputFile);
-
+        fragment.setNewCameraOutputFile(outputFile);
 
         Context context = fragment.getActivity();
         PackageManager packageManager = context.getPackageManager();
