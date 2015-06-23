@@ -6,7 +6,6 @@ import org.simpleframework.xml.Root;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 
 @Root(name = "tag")
@@ -37,8 +36,8 @@ public class Tag implements Serializable, BaseEntity {
         this.completedTags = completedTags;
     }
 
-    public List<String> getAvailableTags() {
-        List<String> temp = new ArrayList<>();
+    public ArrayList<String> getAvailableTags() {
+        ArrayList<String> temp = new ArrayList<>();
         for (String s : suggestedTags) {
             temp.add(s);
         }
