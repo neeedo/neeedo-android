@@ -5,9 +5,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
+
+import java.util.ArrayList;
 
 import neeedo.imimaprx.htw.de.neeedo.MainActivity;
 import neeedo.imimaprx.htw.de.neeedo.R;
@@ -54,6 +57,15 @@ public class NewDemandFragment extends FormDemandFragment {
     public void fillSuggestions(GetSuggestionEvent e) {
         Log.d("Suggestion Event", "called");
 
-        System.out.println(e.getTagResult().getTag());
+        suggestions = e.getTagResult().getTag().getAvailableTags();
+        suggestionsAdapter = new ArrayAdapter<>(getActivity(),
+                android.R.layout.simple_list_item_1, suggestions);
+        etMustTags.setAdapter(suggestionsAdapter);
+
+        for(String tag : suggestions) {
+            System.out.println(tag);
+        }
+
+        suggestionsAdapter.notifyDataSetChanged();
     }
 }

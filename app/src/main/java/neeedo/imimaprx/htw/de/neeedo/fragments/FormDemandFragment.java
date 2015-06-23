@@ -74,13 +74,6 @@ public class FormDemandFragment extends SuperFragment {
         etPriceMax = (EditText) view.findViewById(R.id.etPriceMax);
         btnSubmit = (Button) view.findViewById(R.id.btnSubmit);
 
-        suggestions = new ArrayList<>();
-        suggestions.add("test");
-        suggestionsAdapter = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_list_item_1, suggestions);
-
-        etMustTags.setAdapter(suggestionsAdapter);
-
         etMustTags.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -89,16 +82,13 @@ public class FormDemandFragment extends SuperFragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//                suggestions.add("test2");
-//                suggestionsAdapter.notifyDataSetChanged();
-
-                // TODO get tag suggestions from API
-
                 String tagsText = etMustTags.getText().toString();
                 if(tagsText.length() > 2) { // TODO check for spaces etc.
                     BaseAsyncTask asyncTask = new GetCompletionAsyncTask(tagsText, BaseAsyncTask.CompletionType.TAG);
                     asyncTask.execute();
                 }
+
+                // TODO handle multiple strings/tags
 
             }
 
