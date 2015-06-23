@@ -9,7 +9,7 @@ import org.simpleframework.xml.Root;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import neeedo.imimaprx.htw.de.neeedo.entities.user.User;
+import neeedo.imimaprx.htw.de.neeedo.entities.user.UserMin;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.BaseEntity;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.Location;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.Price;
@@ -17,7 +17,7 @@ import neeedo.imimaprx.htw.de.neeedo.entities.util.Price;
 
 @Root(name = "demand")
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Demand implements Serializable, BaseEntity {
+public class DemandMin implements Serializable, BaseEntity {
 
     @Element
     private String id;
@@ -41,12 +41,9 @@ public class Demand implements Serializable, BaseEntity {
     private Price price;
 
     @Element
-    private String userId = "";
+    private UserMin user;
 
-    @Element
-    private User user;
-
-    public Demand() {
+    public DemandMin() {
 
     }
 
@@ -56,6 +53,30 @@ public class Demand implements Serializable, BaseEntity {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public long getVersion() {
+        return version;
+    }
+
+    public void setVersion(long version) {
+        this.version = version;
+    }
+
+    public ArrayList<String> getMustTags() {
+        return mustTags;
+    }
+
+    public void setMustTags(ArrayList<String> mustTags) {
+        this.mustTags = mustTags;
+    }
+
+    public ArrayList<String> getShouldTags() {
+        return shouldTags;
+    }
+
+    public void setShouldTags(ArrayList<String> shouldTags) {
+        this.shouldTags = shouldTags;
     }
 
     public Location getLocation() {
@@ -82,76 +103,17 @@ public class Demand implements Serializable, BaseEntity {
         this.price = price;
     }
 
-    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
-    public long getVersion() {
-        return version;
-    }
-
-    public void setVersion(long version) {
-        this.version = version;
-    }
-
-    public ArrayList<String> getMustTags() {
-        return mustTags;
-    }
-
-    public String getMustTagsString() {
-        return tagsToString(mustTags);
-    }
-
-    public void setMustTags(ArrayList<String> mustTags) {
-        this.mustTags = mustTags;
-    }
-
-    public ArrayList<String> getShouldTags() {
-        return shouldTags;
-    }
-
-    public String getShouldTagsString() {
-        return tagsToString(shouldTags);
-    }
-
-    public void setShouldTags(ArrayList<String> shouldTags) {
-        this.shouldTags = shouldTags;
-    }
-
-    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
-    public User getUser() {
+    public UserMin getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserMin user) {
         this.user = user;
-    }
-
-    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    private String tagsToString(ArrayList<String> tags) {
-        String returnString = "";
-        int counter = 0;
-
-        for (String tag : tags) {
-            if (counter == 0) {
-                returnString = tag;
-            } else {
-                returnString = returnString + ", " + tag;
-            }
-            counter++;
-        }
-
-        return returnString;
     }
 
     @Override
     public String toString() {
-        return "Demand{" +
+        return "DemandMin{" +
                 "id='" + id + '\'' +
                 ", version=" + version +
                 ", mustTags=" + mustTags +
@@ -159,7 +121,6 @@ public class Demand implements Serializable, BaseEntity {
                 ", location=" + location +
                 ", distance=" + distance +
                 ", price=" + price +
-                ", userId='" + userId + '\'' +
                 ", user=" + user +
                 '}';
     }
@@ -169,20 +130,19 @@ public class Demand implements Serializable, BaseEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Demand demand = (Demand) o;
+        DemandMin demandMin = (DemandMin) o;
 
-        if (version != demand.version) return false;
-        if (distance != demand.distance) return false;
-        if (id != null ? !id.equals(demand.id) : demand.id != null) return false;
-        if (mustTags != null ? !mustTags.equals(demand.mustTags) : demand.mustTags != null)
+        if (version != demandMin.version) return false;
+        if (distance != demandMin.distance) return false;
+        if (id != null ? !id.equals(demandMin.id) : demandMin.id != null) return false;
+        if (mustTags != null ? !mustTags.equals(demandMin.mustTags) : demandMin.mustTags != null)
             return false;
-        if (shouldTags != null ? !shouldTags.equals(demand.shouldTags) : demand.shouldTags != null)
+        if (shouldTags != null ? !shouldTags.equals(demandMin.shouldTags) : demandMin.shouldTags != null)
             return false;
-        if (location != null ? !location.equals(demand.location) : demand.location != null)
+        if (location != null ? !location.equals(demandMin.location) : demandMin.location != null)
             return false;
-        if (price != null ? !price.equals(demand.price) : demand.price != null) return false;
-        if (userId != null ? !userId.equals(demand.userId) : demand.userId != null) return false;
-        return !(user != null ? !user.equals(demand.user) : demand.user != null);
+        if (price != null ? !price.equals(demandMin.price) : demandMin.price != null) return false;
+        return !(user != null ? !user.equals(demandMin.user) : demandMin.user != null);
 
     }
 
@@ -195,7 +155,6 @@ public class Demand implements Serializable, BaseEntity {
         result = 31 * result + (location != null ? location.hashCode() : 0);
         result = 31 * result + distance;
         result = 31 * result + (price != null ? price.hashCode() : 0);
-        result = 31 * result + (userId != null ? userId.hashCode() : 0);
         result = 31 * result + (user != null ? user.hashCode() : 0);
         return result;
     }

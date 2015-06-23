@@ -50,7 +50,7 @@ public class SendDemandHandler implements View.OnClickListener {
         ArrayList<String> shouldTags = new ArrayList<String>(Arrays.asList(etShouldTagsText.split(",")));
         Location location = new Location(Double.parseDouble(etLocationLatText), Double.parseDouble(etLocationLonText));
         int distance = Integer.parseInt(etDistanceText);
-        Price price = new Price(Double.parseDouble(etPriceMinText), Double.parseDouble(etPriceMaxText));
+        Price price = new Price(Long.parseLong(etPriceMinText), Long.parseLong(etPriceMaxText));
 
         User currentUser = UserModel.getInstance().getUser();
         Demand currentDemand = DemandsModel.getInstance().getPostDemand();
@@ -62,7 +62,7 @@ public class SendDemandHandler implements View.OnClickListener {
         demand.setDistance(distance);
         demand.setPrice(price);
         demand.setUserId(currentUser.getId());
-        demand.setName(currentUser.getName());
+
         if (sendMode == BaseAsyncTask.SendMode.UPDATE && currentDemand != null) {
             demand.setId(currentDemand.getId());
             demand.setVersion(currentDemand.getVersion());
