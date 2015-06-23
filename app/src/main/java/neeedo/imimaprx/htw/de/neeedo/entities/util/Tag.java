@@ -48,5 +48,31 @@ public class Tag implements Serializable, BaseEntity {
         return temp;
     }
 
+    @Override
+    public String toString() {
+        return "Tag{" +
+                "suggestedTags=" + suggestedTags +
+                ", completedTags=" + completedTags +
+                '}';
+    }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Tag tag = (Tag) o;
+
+        if (suggestedTags != null ? !suggestedTags.equals(tag.suggestedTags) : tag.suggestedTags != null)
+            return false;
+        return !(completedTags != null ? !completedTags.equals(tag.completedTags) : tag.completedTags != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = suggestedTags != null ? suggestedTags.hashCode() : 0;
+        result = 31 * result + (completedTags != null ? completedTags.hashCode() : 0);
+        return result;
+    }
 }
