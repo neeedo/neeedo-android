@@ -76,10 +76,10 @@ public class FormDemandFragment extends SuperFragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String tagsText = etMustTags.getText().toString();
-                if (tagsText.length() > 2) { // TODO check for spaces etc.
+                if (tagsText.length() > 2) {
                     if (tagsText.matches("[A-Za-z0-9]+"))
                         new GetCompletionAsyncTask(tagsText, BaseAsyncTask.CompletionType.TAG).execute();
-                    else
+                    else if (tagsText.matches("[A-Za-z0-9 ,]+"))
                         new GetCompletionAsyncTask(tagsText, BaseAsyncTask.CompletionType.PHRASE).execute();
                 }
 
