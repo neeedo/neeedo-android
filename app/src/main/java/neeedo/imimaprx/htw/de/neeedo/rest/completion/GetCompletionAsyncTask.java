@@ -40,7 +40,7 @@ public class GetCompletionAsyncTask extends BaseAsyncTask {
 
             String url = ServerConstantsUtils.getActiveServer() + "completion/";
             switch (completionType) {
-                case SUGGEST: {
+                case PHRASE: {
                     String query = URLEncoder.encode(text, "utf-8");
                     url += "suggest/" + query;
                 }

@@ -21,7 +21,7 @@ public abstract class BaseAsyncTask extends AsyncTask {
     }
 
     public enum CompletionType {
-        SUGGEST, TAG
+        PHRASE, TAG
     }
 
     protected EventService eventService = EventService.getInstance();
