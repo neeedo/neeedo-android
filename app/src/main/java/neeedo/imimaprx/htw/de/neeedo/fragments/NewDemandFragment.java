@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
@@ -63,8 +64,37 @@ public class NewDemandFragment extends FormDemandFragment {
         etMustTags.setAdapter(suggestionsAdapter);
 
         for(String tag : suggestions) {
-            System.out.println(tag);
+            Log.d("Tag", tag);
         }
+
+        // rip off last tag of current text
+        final String[] tags = etMustTags.getText().toString().split("[ ,]+");
+        String currentTextWithoutLastTag = "";
+        for(int i = 0; i < tags.length-1; i++) {
+            if(i != 0) {
+                currentTextWithoutLastTag = currentTextWithoutLastTag + ", " + tags[i];
+            } else {
+                currentTextWithoutLastTag = tags[i];
+            }
+        }
+        final String currentText = currentTextWithoutLastTag;
+
+        // add selected suggestion tag to already entered tags
+        etMustTags.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Log.d("Autocomplete", "Item " + position + " selected");
+
+                String newText;
+                if(currentText.length() != 0) {
+                    newText = currentText + ", " + suggestions.get(position);
+                } else {
+                    newText = suggestions.get(position);
+                }
+                etMustTags.setText(newText);
+                etMustTags.setSelection(etMustTags.getText().length());
+            }
+        });
 
         suggestionsAdapter.notifyDataSetChanged();
     }

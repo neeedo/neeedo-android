@@ -3,9 +3,11 @@ package neeedo.imimaprx.htw.de.neeedo.fragments;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -67,6 +69,8 @@ public class FormDemandFragment extends SuperFragment {
         etPriceMax = (EditText) view.findViewById(R.id.etPriceMax);
         btnSubmit = (Button) view.findViewById(R.id.btnSubmit);
 
+
+
         etMustTags.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -76,14 +80,15 @@ public class FormDemandFragment extends SuperFragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String tagsText = etMustTags.getText().toString();
-                if (tagsText.length() > 2) {
-                    if (tagsText.matches("[A-Za-z0-9]+"))
-                        new GetCompletionAsyncTask(tagsText, BaseAsyncTask.CompletionType.TAG).execute();
-                    else if (tagsText.matches("[A-Za-z0-9 ,]+"))
-                        new GetCompletionAsyncTask(tagsText, BaseAsyncTask.CompletionType.PHRASE).execute();
+                String tags[] = tagsText.split("[ ,]+");
+                String lastTag = tags[tags.length-1]; // get last tag for suggestion
+                if (lastTag.length() > 2) {
+                    if (lastTag.matches("[A-Za-z0-9]+"))
+                        new GetCompletionAsyncTask(lastTag, BaseAsyncTask.CompletionType.TAG).execute();
+                    // TODO combine with PHRASE suggestion
+//                    else if (tagsText.matches("[A-Za-z0-9 ,]+"))
+//                        new GetCompletionAsyncTask(tagsText, BaseAsyncTask.CompletionType.PHRASE).execute();
                 }
-
-                // TODO handle multiple strings/tags
 
             }
 
