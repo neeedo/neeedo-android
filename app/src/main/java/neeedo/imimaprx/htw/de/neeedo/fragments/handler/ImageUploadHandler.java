@@ -1,5 +1,7 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments.handler;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -9,6 +11,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
 
 import javax.net.ssl.HostnameVerifier;
@@ -31,7 +35,6 @@ public class ImageUploadHandler extends AsyncTask {
 
     @Override
     protected Object doInBackground(Object[] params) {
-        HttpsURLConnection connection = null;
 
         try {
             String lineEnd = "\r\n";
@@ -46,37 +49,11 @@ public class ImageUploadHandler extends AsyncTask {
 
             int maxBufferSize = 1024 * 8;
 
-            TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
-                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-                    return null;
-                }
-
-                public void checkClientTrusted(X509Certificate[] certs, String authType) {
-                }
-
-                public void checkServerTrusted(X509Certificate[] certs, String authType) {
-                }
-            }
-            };
-
-            SSLContext sc = SSLContext.getInstance("SSL");
-            sc.init(null, trustAllCerts, new java.security.SecureRandom());
-            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-
-            HostnameVerifier allHostsValid = new HostnameVerifier() {
-                public boolean verify(String hostname, SSLSession session) {
-                    return true;
-                }
-            };
-            HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
+            trustAllCerts();
 
             URL url = new URL(ServerConstantsUtils.getActiveServer() + "images");
-            connection = (HttpsURLConnection) url.openConnection();
 
-            ActiveUser activeUser = ActiveUser.getInstance();
-            String authString = activeUser.getAuthentificationHash();
-
-            Log.d("Auth", authString);
+        HttpsURLConnection    connection = (HttpsURLConnection) url.openConnection();
 
             connection.setDoInput(true);
             connection.setDoOutput(true);
@@ -86,7 +63,7 @@ public class ImageUploadHandler extends AsyncTask {
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Connection", "keep-alive");
             connection.setRequestProperty("ENCTYPE", "multipart/form-data");
-            connection.setRequestProperty("Authorization", authString);
+            connection.setRequestProperty("Authorization", ActiveUser.getInstance().getAuthentificationHash());
             connection.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
             connection.setRequestProperty("uploaded_file", photoFile.getName());
             connection.setRequestProperty("Content-Length", String.valueOf(photoFile.length()));
@@ -103,7 +80,7 @@ public class ImageUploadHandler extends AsyncTask {
 
             FileInputStream fileInputStream = new FileInputStream(photoFile);
 
-//            BitmapFactory.decodeStream(fileInputStream).compress(Bitmap.CompressFormat.JPEG, 15, dataOutputStream);
+            BitmapFactory.decodeStream(fileInputStream).compress(Bitmap.CompressFormat.JPEG, 80, dataOutputStream);
 
             totalAmountBytesToUpload = fileInputStream.available();
 
@@ -150,28 +127,35 @@ public class ImageUploadHandler extends AsyncTask {
 
         } catch (Exception e) {
             Log.e("bla", "Exception : " + e.getMessage(), e);
-
-            try {
-                BufferedReader br = new BufferedReader(new InputStreamReader((connection.getInputStream())));
-
-                StringBuilder sb = new StringBuilder();
-                String output;
-
-                while ((output = br.readLine()) != null) {
-                    sb.append(output);
-                    Log.i("uploadFile", sb.toString());
-                    //TODO do something with the id
-                }
-
-                Log.i("uploadFile", sb.toString());
-
-            } catch (Exception x) {
-
-            }
         }
 
-        //TODO propper return types
         return null;
+    }
+
+    private void trustAllCerts() throws NoSuchAlgorithmException, KeyManagementException {
+        TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
+            public X509Certificate[] getAcceptedIssuers() {
+                return null;
+            }
+
+            public void checkClientTrusted(X509Certificate[] certs, String authType) {
+            }
+
+            public void checkServerTrusted(X509Certificate[] certs, String authType) {
+            }
+        }
+        };
+
+        SSLContext sc = SSLContext.getInstance("SSL");
+        sc.init(null, trustAllCerts, new java.security.SecureRandom());
+        HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+
+        HostnameVerifier allHostsValid = new HostnameVerifier() {
+            public boolean verify(String hostname, SSLSession session) {
+                return true;
+            }
+        };
+        HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
     }
 
     @Override
