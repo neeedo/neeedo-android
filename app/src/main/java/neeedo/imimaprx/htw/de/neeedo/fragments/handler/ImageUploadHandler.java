@@ -1,5 +1,6 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments.handler;
 
+import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -22,19 +23,40 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import neeedo.imimaprx.htw.de.neeedo.R;
+import neeedo.imimaprx.htw.de.neeedo.fragments.SuperFragment;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
-public class ImageUploadHandler extends AsyncTask {
+public class ImageUploadHandler extends AsyncTask<Void, Integer, Void> {
+    private final SuperFragment fragment;
     private File photoFile;
 
-    public ImageUploadHandler(File photoFile) {
+    private int totalAmountBytesToUpload;
+    private ProgressDialog progressDialog;
+
+    public ImageUploadHandler(File photoFile, SuperFragment fragment) {
         this.photoFile = photoFile;
+        this.fragment = fragment;
     }
 
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+
+        progressDialog = new ProgressDialog(fragment.getActivity());
+//        progressDialog.setMessage(fragment.getString(R.string.camera_uploading_progress));
+        progressDialog.setMessage("asd");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.setIndeterminate(false);
+        progressDialog.setCancelable(false);
+        progressDialog.setMax(100);
+        progressDialog.setProgress(0);
+        progressDialog.show();
+    }
 
     @Override
-    protected Object doInBackground(Object[] params) {
+    protected Void doInBackground(Void... params) {
 
         try {
             String lineEnd = "\r\n";
@@ -42,7 +64,7 @@ public class ImageUploadHandler extends AsyncTask {
             String boundary = "*****";
 
             int bytesRead;
-            int totalAmountBytesToUpload;
+
             int bufferSize;
 
             byte[] buffer;
@@ -53,7 +75,7 @@ public class ImageUploadHandler extends AsyncTask {
 
             URL url = new URL(ServerConstantsUtils.getActiveServer() + "images");
 
-        HttpsURLConnection    connection = (HttpsURLConnection) url.openConnection();
+            HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 
             connection.setDoInput(true);
             connection.setDoOutput(true);
@@ -80,7 +102,7 @@ public class ImageUploadHandler extends AsyncTask {
 
             FileInputStream fileInputStream = new FileInputStream(photoFile);
 
-            BitmapFactory.decodeStream(fileInputStream).compress(Bitmap.CompressFormat.JPEG, 80, dataOutputStream);
+//            BitmapFactory.decodeStream(fileInputStream).compress(Bitmap.CompressFormat.JPEG, 80, dataOutputStream);
 
             totalAmountBytesToUpload = fileInputStream.available();
 
@@ -91,14 +113,13 @@ public class ImageUploadHandler extends AsyncTask {
 
             while (bytesRead > 0) {
                 dataOutputStream.write(buffer, 0, bufferSize);
-                totalAmountBytesToUpload = fileInputStream.available();
+
                 bufferSize = Math.min(totalAmountBytesToUpload, maxBufferSize);
                 bytesRead = fileInputStream.read(buffer, 0, bufferSize);
 
-                final int restBytes = totalAmountBytesToUpload;
-                final int uploadedBytes = totalAmountBytesToUpload - restBytes;
+                int restBytesToUpload = fileInputStream.available();
 
-                publishProgress(uploadedBytes, totalAmountBytesToUpload);
+                publishProgress(restBytesToUpload);
             }
 
             dataOutputStream.writeBytes(lineEnd);
@@ -159,16 +180,21 @@ public class ImageUploadHandler extends AsyncTask {
     }
 
     @Override
-    protected void onProgressUpdate(Object[] values) {
-        super.onProgressUpdate(values);
+    protected void onProgressUpdate(Integer... stillLeftToUpload) {
 
-        int uploadedBytes = (int) values[0];
-        int totalAmountBytesToUpload = (int) values[1];
+        int alreadyUploaded = totalAmountBytesToUpload - stillLeftToUpload[0];
+
+        int onePercent = totalAmountBytesToUpload / 100;
+        int percent = alreadyUploaded / onePercent;
+
+        Log.d("progress ", Integer.toString(percent));
+
+        progressDialog.setProgress(percent);
     }
 
     @Override
-    protected void onPostExecute(Object o) {
+    protected void onPostExecute(Void o) {
         super.onPostExecute(o);
-
+            progressDialog.dismiss();
     }
 }
