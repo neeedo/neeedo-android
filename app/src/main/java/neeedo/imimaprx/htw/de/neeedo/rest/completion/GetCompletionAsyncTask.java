@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.util.Tag;
+import neeedo.imimaprx.htw.de.neeedo.events.GetSuggestionEvent;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.RestResult;
@@ -29,6 +30,12 @@ public class GetCompletionAsyncTask extends BaseAsyncTask {
     public GetCompletionAsyncTask(String text, CompletionType completionType) {
         this.text = text;
         this.completionType = completionType;
+    }
+
+    @Override
+    protected void onPostExecute(Object result) {
+        if(result instanceof TagResult)
+            eventService.post(new GetSuggestionEvent((TagResult) result));
     }
 
     @Override

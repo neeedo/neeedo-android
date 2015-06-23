@@ -11,6 +11,7 @@ import com.squareup.otto.Subscribe;
 
 import neeedo.imimaprx.htw.de.neeedo.MainActivity;
 import neeedo.imimaprx.htw.de.neeedo.R;
+import neeedo.imimaprx.htw.de.neeedo.events.GetSuggestionEvent;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.SendDemandHandler;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
@@ -47,5 +48,12 @@ public class NewDemandFragment extends FormDemandFragment {
     @Subscribe
     public void handleServerResponse(ServerResponseEvent e) {
         redirectToFragment(ListDemandsFragment.class, MainActivity.MENU_LIST_DEMANDS);
+    }
+
+    @Subscribe
+    public void fillSuggestions(GetSuggestionEvent e) {
+        Log.d("Suggestion Event", "called");
+
+        System.out.println(e.getTagResult().getTag());
     }
 }
