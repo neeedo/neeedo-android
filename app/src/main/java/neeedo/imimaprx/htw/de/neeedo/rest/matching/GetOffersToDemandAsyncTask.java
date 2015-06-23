@@ -43,7 +43,7 @@ public class GetOffersToDemandAsyncTask extends BaseAsyncTask {
     @Override
     protected Object doInBackground(Object[] params) {
         try {
-            final String url = ServerConstantsUtils.getActiveServer() + "matching/demand/1/1";
+            final String url = ServerConstantsUtils.getActiveServer() + "matching/demand";
             HttpHeaders requestHeaders = new HttpHeaders();
             setAuthorisationHeaders(requestHeaders);
 
