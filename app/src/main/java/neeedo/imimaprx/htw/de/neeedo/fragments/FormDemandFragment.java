@@ -3,25 +3,18 @@ package neeedo.imimaprx.htw.de.neeedo.fragments;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.squareup.otto.Subscribe;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.Location;
-import neeedo.imimaprx.htw.de.neeedo.events.GetSuggestionEvent;
-import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.helpers.LocationHelper;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.rest.completion.GetCompletionAsyncTask;
@@ -83,9 +76,11 @@ public class FormDemandFragment extends SuperFragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String tagsText = etMustTags.getText().toString();
-                if(tagsText.length() > 2) { // TODO check for spaces etc.
-                    BaseAsyncTask asyncTask = new GetCompletionAsyncTask(tagsText, BaseAsyncTask.CompletionType.TAG);
-                    asyncTask.execute();
+                if (tagsText.length() > 2) { // TODO check for spaces etc.
+                    if (tagsText.matches("[A-Za-z0-9]+"))
+                        new GetCompletionAsyncTask(tagsText, BaseAsyncTask.CompletionType.TAG).execute();
+                    else
+                        new GetCompletionAsyncTask(tagsText, BaseAsyncTask.CompletionType.PHRASE).execute();
                 }
 
                 // TODO handle multiple strings/tags
