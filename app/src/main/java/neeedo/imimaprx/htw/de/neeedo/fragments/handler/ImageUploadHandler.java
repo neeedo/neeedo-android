@@ -1,24 +1,14 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments.handler;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.os.Environment;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.Reader;
-import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 import java.security.cert.X509Certificate;
 
 import javax.net.ssl.HostnameVerifier;
@@ -28,9 +18,7 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
-import neeedo.imimaprx.htw.de.neeedo.utils.ImageUtils;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
 public class ImageUploadHandler extends AsyncTask {
@@ -43,6 +31,8 @@ public class ImageUploadHandler extends AsyncTask {
 
     @Override
     protected Object doInBackground(Object[] params) {
+        HttpsURLConnection connection = null;
+
         try {
             String lineEnd = "\r\n";
             String twoHyphens = "--";
@@ -81,7 +71,7 @@ public class ImageUploadHandler extends AsyncTask {
             HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
 
             URL url = new URL(ServerConstantsUtils.getActiveServer() + "images");
-            HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+            connection = (HttpsURLConnection) url.openConnection();
 
             ActiveUser activeUser = ActiveUser.getInstance();
             String authString = activeUser.getAuthentificationHash();
@@ -94,16 +84,20 @@ public class ImageUploadHandler extends AsyncTask {
             connection.setChunkedStreamingMode(maxBufferSize);
 
             connection.setRequestMethod("POST");
-            connection.setRequestProperty("Connection", "Keep-Alive");
+            connection.setRequestProperty("Connection", "keep-alive");
             connection.setRequestProperty("ENCTYPE", "multipart/form-data");
             connection.setRequestProperty("Authorization", authString);
             connection.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
             connection.setRequestProperty("uploaded_file", photoFile.getName());
+            connection.setRequestProperty("Content-Length", String.valueOf(photoFile.length()));
+            connection.setRequestProperty("User-Agent", "Android Multipart HTTP Client 1.0");
 
             DataOutputStream dataOutputStream = new DataOutputStream(connection.getOutputStream());
 
             dataOutputStream.writeBytes(twoHyphens + boundary + lineEnd);
             dataOutputStream.writeBytes("Content-Disposition: form-data; name=\"image\";filename=\"" + photoFile.getName() + "\"" + lineEnd);
+            dataOutputStream.writeBytes("Content-Type: image/jpeg" + lineEnd);
+            dataOutputStream.writeBytes("Content-Transfer-Encoding: binary" + lineEnd);
 
             dataOutputStream.writeBytes(lineEnd);
 
@@ -148,12 +142,32 @@ public class ImageUploadHandler extends AsyncTask {
                 //TODO do something with the id
             }
 
+            Log.i("uploadFile", sb.toString());
+
             fileInputStream.close();
             dataOutputStream.flush();
             dataOutputStream.close();
 
         } catch (Exception e) {
             Log.e("bla", "Exception : " + e.getMessage(), e);
+
+            try {
+                BufferedReader br = new BufferedReader(new InputStreamReader((connection.getInputStream())));
+
+                StringBuilder sb = new StringBuilder();
+                String output;
+
+                while ((output = br.readLine()) != null) {
+                    sb.append(output);
+                    Log.i("uploadFile", sb.toString());
+                    //TODO do something with the id
+                }
+
+                Log.i("uploadFile", sb.toString());
+
+            } catch (Exception x) {
+
+            }
         }
 
         //TODO propper return types
