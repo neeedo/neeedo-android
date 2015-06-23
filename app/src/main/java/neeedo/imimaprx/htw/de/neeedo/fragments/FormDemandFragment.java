@@ -69,8 +69,6 @@ public class FormDemandFragment extends SuperFragment {
         etPriceMax = (EditText) view.findViewById(R.id.etPriceMax);
         btnSubmit = (Button) view.findViewById(R.id.btnSubmit);
 
-
-
         etMustTags.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
