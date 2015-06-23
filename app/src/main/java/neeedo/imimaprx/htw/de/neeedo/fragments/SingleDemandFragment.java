@@ -37,6 +37,7 @@ import neeedo.imimaprx.htw.de.neeedo.rest.util.DeleteAsyncTask;
 public class SingleDemandFragment extends SuperFragment implements View.OnClickListener {
     Button btnDeleteDemand;
     Button btnEditDemand;
+    View view;
     ListView matchingView;
     TextView tvMustTags;
     TextView tvShouldTags;
@@ -48,7 +49,7 @@ public class SingleDemandFragment extends SuperFragment implements View.OnClickL
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        View view = inflater.inflate(R.layout.single_demand_view, container, false);
+        view = inflater.inflate(R.layout.single_demand_view, container, false);
 
         tvMustTags = (TextView) view.findViewById(R.id.tvMustTags);
         tvShouldTags = (TextView) view.findViewById(R.id.tvShouldTags);
@@ -144,12 +145,20 @@ public class SingleDemandFragment extends SuperFragment implements View.OnClickL
         Offers offers = OffersModel.getInstance().getOffers();
         List<Offer> offerList = offers.getOffers();
 
+        TextView tvEmpty = (TextView) view.findViewById(R.id.tvEmpty);
+        ListView matchingView = (ListView) view.findViewById(R.id.matchingview);
+
         if (!offerList.isEmpty()) {
             ListProductsArrayAdapter<Offer> adapter = new ListProductsArrayAdapter(getActivity(),
                     R.layout.list_products_item, offerList);
             matchingView.setAdapter(adapter);
+
+            tvEmpty.setVisibility(View.GONE);
+            matchingView.setVisibility(View.VISIBLE);
         } else {
-            // TODO show if no matches found
+            matchingView.setVisibility(View.GONE);
+            tvEmpty.setVisibility(View.VISIBLE);
+            tvEmpty.setText(getActivity().getString(R.string.empty_matching_message));
         }
     }
 
