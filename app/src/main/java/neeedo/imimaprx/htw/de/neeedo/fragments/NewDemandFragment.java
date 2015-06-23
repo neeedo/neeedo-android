@@ -87,9 +87,9 @@ public class NewDemandFragment extends FormDemandFragment {
 
                 String newText;
                 if(currentText.length() != 0) {
-                    newText = currentText + ", " + suggestions.get(position);
+                    newText = currentText + ", " + adapterView.getItemAtPosition(position);
                 } else {
-                    newText = suggestions.get(position);
+                    newText = (String) adapterView.getItemAtPosition(position);
                 }
                 etMustTags.setText(newText);
                 etMustTags.setSelection(etMustTags.getText().length());
