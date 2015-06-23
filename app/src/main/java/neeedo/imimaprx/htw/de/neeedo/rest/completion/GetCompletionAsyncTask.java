@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,12 +34,15 @@ public class GetCompletionAsyncTask extends BaseAsyncTask {
     @Override
     protected Object doInBackground(Object[] params) {
         try {
+
+
             HttpHeaders requestHeaders = new HttpHeaders();
 
             String url = ServerConstantsUtils.getActiveServer() + "completion/";
             switch (completionType) {
                 case SUGGEST: {
-                    url += "suggest/" + text;
+                    String query = URLEncoder.encode(text, "utf-8");
+                    url += "suggest/" + query;
                 }
                 break;
                 case TAG: {
