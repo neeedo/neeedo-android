@@ -3,15 +3,16 @@ package neeedo.imimaprx.htw.de.neeedo.entities.demand;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import org.simpleframework.xml.Element;
+import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import neeedo.imimaprx.htw.de.neeedo.entities.user.User;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.BaseEntity;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.Location;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.Price;
-import neeedo.imimaprx.htw.de.neeedo.entities.user.User;
 
 
 @Root(name = "demand")
@@ -24,10 +25,10 @@ public class Demand implements Serializable, BaseEntity {
     @Element
     private long version = 0;
 
-    @Element
+    @ElementList(name = "mustTags")
     private ArrayList<String> mustTags;
 
-    @Element
+    @ElementList(name = "shouldTags")
     private ArrayList<String> shouldTags;
 
     @Element
@@ -41,9 +42,6 @@ public class Demand implements Serializable, BaseEntity {
 
     @Element
     private Price price;
-
-    @Element
-    private Demand demand;
 
     @Element
     String userId = "";
@@ -120,10 +118,6 @@ public class Demand implements Serializable, BaseEntity {
         this.shouldTags = shouldTags;
     }
 
-    public Demand getDemand() {
-        return this.demand;
-    }
-
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     public User getUser() {
         return user;
@@ -140,10 +134,6 @@ public class Demand implements Serializable, BaseEntity {
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setDemand(Demand demand) {
-        this.demand = demand;
     }
 
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
@@ -182,7 +172,6 @@ public class Demand implements Serializable, BaseEntity {
                 ", location=" + location +
                 ", distance=" + distance +
                 ", price=" + price +
-                ", demand=" + demand +
                 ", userId='" + userId + '\'' +
                 ", user=" + user +
                 '}';
@@ -193,22 +182,21 @@ public class Demand implements Serializable, BaseEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Demand demand1 = (Demand) o;
+        Demand demand = (Demand) o;
 
-        if (version != demand1.version) return false;
-        if (distance != demand1.distance) return false;
-        if (id != null ? !id.equals(demand1.id) : demand1.id != null) return false;
-        if (mustTags != null ? !mustTags.equals(demand1.mustTags) : demand1.mustTags != null)
+        if (version != demand.version) return false;
+        if (distance != demand.distance) return false;
+        if (id != null ? !id.equals(demand.id) : demand.id != null) return false;
+        if (mustTags != null ? !mustTags.equals(demand.mustTags) : demand.mustTags != null)
             return false;
-        if (shouldTags != null ? !shouldTags.equals(demand1.shouldTags) : demand1.shouldTags != null)
+        if (shouldTags != null ? !shouldTags.equals(demand.shouldTags) : demand.shouldTags != null)
             return false;
-        if (name != null ? !name.equals(demand1.name) : demand1.name != null) return false;
-        if (location != null ? !location.equals(demand1.location) : demand1.location != null)
+        if (name != null ? !name.equals(demand.name) : demand.name != null) return false;
+        if (location != null ? !location.equals(demand.location) : demand.location != null)
             return false;
-        if (price != null ? !price.equals(demand1.price) : demand1.price != null) return false;
-        if (demand != null ? !demand.equals(demand1.demand) : demand1.demand != null) return false;
-        if (userId != null ? !userId.equals(demand1.userId) : demand1.userId != null) return false;
-        return !(user != null ? !user.equals(demand1.user) : demand1.user != null);
+        if (price != null ? !price.equals(demand.price) : demand.price != null) return false;
+        if (userId != null ? !userId.equals(demand.userId) : demand.userId != null) return false;
+        return !(user != null ? !user.equals(demand.user) : demand.user != null);
 
     }
 
@@ -222,7 +210,6 @@ public class Demand implements Serializable, BaseEntity {
         result = 31 * result + (location != null ? location.hashCode() : 0);
         result = 31 * result + distance;
         result = 31 * result + (price != null ? price.hashCode() : 0);
-        result = 31 * result + (demand != null ? demand.hashCode() : 0);
         result = 31 * result + (userId != null ? userId.hashCode() : 0);
         result = 31 * result + (user != null ? user.hashCode() : 0);
         return result;

@@ -7,14 +7,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.squareup.otto.Subscribe;
-
-import org.w3c.dom.Text;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -134,10 +131,10 @@ public class SingleDemandFragment extends SuperFragment implements View.OnClickL
 
         // TODO handle exception if demand not found
 
-        DemandsModel.getInstance().setPostDemand(currentDemand);
+        //DemandsModel.getInstance().setPostDemand(currentDemand);
         OffersModel.getInstance().setOffers(null);
-        BaseAsyncTask asyncTask = new GetOffersToDemandAsyncTask();
-        asyncTask.execute();
+        new GetOffersToDemandAsyncTask(currentDemand).execute();
+
     }
 
     @Subscribe
@@ -147,7 +144,7 @@ public class SingleDemandFragment extends SuperFragment implements View.OnClickL
         Offers offers = OffersModel.getInstance().getOffers();
         List<Offer> offerList = offers.getOffers();
 
-        if(!offerList.isEmpty()) {
+        if (!offerList.isEmpty()) {
             ListProductsArrayAdapter<Offer> adapter = new ListProductsArrayAdapter(getActivity(),
                     R.layout.list_products_item, offerList);
             matchingView.setAdapter(adapter);
@@ -161,7 +158,7 @@ public class SingleDemandFragment extends SuperFragment implements View.OnClickL
         String demandId = getArguments().getString("id");
         Demand currentDemand = findSingleDemand(demandId);
 
-        switch(view.getId()) {
+        switch (view.getId()) {
             case R.id.btnDelete:
                 DemandsModel.getInstance().setPostDemand(currentDemand);
                 BaseAsyncTask asyncTask = new DeleteAsyncTask(currentDemand);
