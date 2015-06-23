@@ -1,21 +1,35 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.squareup.otto.Subscribe;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.Location;
+import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.helpers.LocationHelper;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
+import neeedo.imimaprx.htw.de.neeedo.rest.completion.GetCompletionAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 
 public class FormDemandFragment extends SuperFragment {
     protected final ActiveUser activeUser = ActiveUser.getInstance();
 
-    protected EditText etMustTags;
+    protected AutoCompleteTextView etMustTags;
     protected EditText etShouldTags;
     protected EditText etLocationLat;
     protected EditText etLocationLon;
@@ -29,6 +43,8 @@ public class FormDemandFragment extends SuperFragment {
     protected boolean locationAvailable;
     protected LocationHelper locationHelper;
     protected Location currentLocation;
+
+    protected final ArrayList<String> suggestions = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,7 +63,7 @@ public class FormDemandFragment extends SuperFragment {
 
         View view = inflater.inflate(R.layout.form_demand_view, container, false);
 
-        etMustTags = (EditText) view.findViewById(R.id.etMustTags);
+        etMustTags = (AutoCompleteTextView) view.findViewById(R.id.etMustTags);
         etShouldTags = (EditText) view.findViewById(R.id.etShouldTags);
         etLocationLat = (EditText) view.findViewById(R.id.etLocationLat);
         etLocationLon = (EditText) view.findViewById(R.id.etLocationLon);
@@ -56,6 +72,39 @@ public class FormDemandFragment extends SuperFragment {
         etPriceMax = (EditText) view.findViewById(R.id.etPriceMax);
         btnSubmit = (Button) view.findViewById(R.id.btnSubmit);
 
+        suggestions.add("test");
+        final ArrayAdapter<String> suggestionsAdapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_list_item_1, suggestions);
+        etMustTags.setAdapter(suggestionsAdapter);
+
+        etMustTags.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                suggestions.add("test2");
+                suggestionsAdapter.notifyDataSetChanged();
+
+                // TODO get tag suggestions from API
+
+//                BaseAsyncTask asyncTask = new GetCompletionAsyncTask(etMustTags.getText().toString(), BaseAsyncTask.CompletionType.TAG);
+//                asyncTask.execute();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
         return view;
     }
+
+//    @Subscribe
+//    public void fillSuggestions(ServerResponseEvent e) {
+//        Log.d("Suggestion Event", "called");
+//    }
 }
