@@ -15,7 +15,7 @@ public class Tag implements Serializable, BaseEntity {
     private ArrayList<String> suggestedTags = new ArrayList<>();
 
     private ArrayList<String> completedTags = new ArrayList<>();
-x
+
     public Tag() {
 
     }
