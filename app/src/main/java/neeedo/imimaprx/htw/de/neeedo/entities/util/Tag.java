@@ -6,6 +6,7 @@ import org.simpleframework.xml.Root;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 
 @Root(name = "tag")
@@ -36,31 +37,16 @@ public class Tag implements Serializable, BaseEntity {
         this.completedTags = completedTags;
     }
 
-    @Override
-    public String toString() {
-        return "Tag{" +
-                "suggestedTags=" + suggestedTags +
-                ", completedTags=" + completedTags +
-                '}';
+    public List<String> getAvailableTags() {
+        List<String> temp = new ArrayList<>();
+        for (String s : suggestedTags) {
+            temp.add(s);
+        }
+        for (String s : completedTags) {
+            temp.add(s);
+        }
+        return temp;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
 
-        Tag tag = (Tag) o;
-
-        if (suggestedTags != null ? !suggestedTags.equals(tag.suggestedTags) : tag.suggestedTags != null)
-            return false;
-        return !(completedTags != null ? !completedTags.equals(tag.completedTags) : tag.completedTags != null);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = suggestedTags != null ? suggestedTags.hashCode() : 0;
-        result = 31 * result + (completedTags != null ? completedTags.hashCode() : 0);
-        return result;
-    }
 }
