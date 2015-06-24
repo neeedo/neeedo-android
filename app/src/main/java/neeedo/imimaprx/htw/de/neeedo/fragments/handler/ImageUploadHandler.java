@@ -45,7 +45,7 @@ public class ImageUploadHandler extends AsyncTask<Void, Integer, Void> {
         super.onPreExecute();
 
         progressDialog = new ProgressDialog(fragment.getActivity());
-//        progressDialog.setMessage(fragment.getString(R.string.camera_uploading_progress));
+        progressDialog.setMessage(fragment.getString(R.string.camera_uploading_progress));
         progressDialog.setMessage("asd");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         progressDialog.setIndeterminate(false);
@@ -181,7 +181,7 @@ public class ImageUploadHandler extends AsyncTask<Void, Integer, Void> {
 
     @Override
     protected void onProgressUpdate(Integer... stillLeftToUpload) {
-
+        super.onProgressUpdate(stillLeftToUpload);
         int alreadyUploaded = totalAmountBytesToUpload - stillLeftToUpload[0];
 
         int onePercent = totalAmountBytesToUpload / 100;
@@ -195,6 +195,6 @@ public class ImageUploadHandler extends AsyncTask<Void, Integer, Void> {
     @Override
     protected void onPostExecute(Void o) {
         super.onPostExecute(o);
-            progressDialog.dismiss();
+        progressDialog.dismiss();
     }
 }
