@@ -1,10 +1,7 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +9,6 @@ import android.widget.Button;
 
 import neeedo.imimaprx.htw.de.neeedo.MainActivity;
 import neeedo.imimaprx.htw.de.neeedo.R;
-import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 
 
 public class MainFragment extends SuperFragment implements View.OnClickListener {

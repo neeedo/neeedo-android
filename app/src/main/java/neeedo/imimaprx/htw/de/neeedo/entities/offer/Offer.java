@@ -8,9 +8,9 @@ import org.simpleframework.xml.Root;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import neeedo.imimaprx.htw.de.neeedo.entities.user.User;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.BaseEntity;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.Location;
-import neeedo.imimaprx.htw.de.neeedo.entities.user.User;
 
 
 @Root(name = "offer")

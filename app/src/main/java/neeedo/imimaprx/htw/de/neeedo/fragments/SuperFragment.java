@@ -2,7 +2,6 @@ package neeedo.imimaprx.htw.de.neeedo.fragments;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,7 +18,6 @@ import com.squareup.otto.Subscribe;
 import java.io.File;
 
 import neeedo.imimaprx.htw.de.neeedo.LoginActivity;
-import neeedo.imimaprx.htw.de.neeedo.MainActivity;
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.events.UserStateChangedEvent;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;

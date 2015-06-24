@@ -1,8 +1,6 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments.handler;
 
 import android.app.ProgressDialog;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
@@ -28,7 +26,6 @@ import javax.net.ssl.X509TrustManager;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.fragments.NewOfferFragment;
-import neeedo.imimaprx.htw.de.neeedo.fragments.SuperFragment;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 

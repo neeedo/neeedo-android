@@ -1,14 +1,11 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments.handler;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.widget.ImageButton;
 
 import java.io.File;
 
 import neeedo.imimaprx.htw.de.neeedo.rest.image.PostCreateImageAsyncTask;
-import neeedo.imimaprx.htw.de.neeedo.utils.ImageUtils;
 
 public class CameraActivityReturnedHandler extends AsyncTask {
 

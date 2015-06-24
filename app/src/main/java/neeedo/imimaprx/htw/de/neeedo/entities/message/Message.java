@@ -8,8 +8,8 @@ import org.simpleframework.xml.Root;
 import java.io.Serializable;
 import java.security.Timestamp;
 
-import neeedo.imimaprx.htw.de.neeedo.entities.util.BaseEntity;
 import neeedo.imimaprx.htw.de.neeedo.entities.user.User;
+import neeedo.imimaprx.htw.de.neeedo.entities.util.BaseEntity;
 
 
 @Root(name = "message")

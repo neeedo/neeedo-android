@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demand;
+import neeedo.imimaprx.htw.de.neeedo.entities.user.User;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.Location;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.Price;
-import neeedo.imimaprx.htw.de.neeedo.entities.user.User;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.demand.PostCreateUpdateDemandAsyncTask;

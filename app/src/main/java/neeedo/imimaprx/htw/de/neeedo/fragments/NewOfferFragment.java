@@ -20,7 +20,6 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import neeedo.imimaprx.htw.de.neeedo.MainActivity;
@@ -36,8 +35,6 @@ import neeedo.imimaprx.htw.de.neeedo.fragments.handler.StartNewBarcodeScanHandle
 import neeedo.imimaprx.htw.de.neeedo.helpers.LocationHelper;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.rest.outpan.GetOutpanByEANAsyncTask;
-import neeedo.imimaprx.htw.de.neeedo.service.EventService;
-import neeedo.imimaprx.htw.de.neeedo.utils.ImageUtils;
 import neeedo.imimaprx.htw.de.neeedo.vo.RequestCodes;
 
 
