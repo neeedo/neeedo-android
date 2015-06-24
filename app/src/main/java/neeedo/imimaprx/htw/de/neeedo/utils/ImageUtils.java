@@ -13,34 +13,47 @@ import java.util.Locale;
 
 public class ImageUtils {
 
-    public static Bitmap rotateBitmap(Bitmap bitmap, File photoFile) {
-        ExifInterface exif = null;
-        try {
-            exif = new ExifInterface(photoFile.getPath());
-        } catch (IOException e) {
-            e.printStackTrace();
+//    public static Bitmap rotateBitmap( File photoFile) {
+//        ExifInterface exif = null;
+//        try {
+//            exif = new ExifInterface(photoFile.getPath());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        String orientString = exif.getAttribute(ExifInterface.TAG_ORIENTATION);
+//        int orientation = orientString != null ? Integer.parseInt(orientString) : ExifInterface.ORIENTATION_NORMAL;
+//        int rotationAngle = 0;
+//
+//        if (orientation == ExifInterface.ORIENTATION_ROTATE_90) rotationAngle = 90;
+//        if (orientation == ExifInterface.ORIENTATION_ROTATE_180) rotationAngle = 180;
+//        if (orientation == ExifInterface.ORIENTATION_ROTATE_270) rotationAngle = 270;
+//
+//        Matrix matrix = new Matrix();
+//        matrix.setRotate(rotationAngle);
+//        Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+//
+//        return rotatedBitmap;
+//    }
+
+    public static Bitmap resize(Bitmap image, int maxWidth, int maxHeight) {
+        if (maxHeight > 0 && maxWidth > 0) {
+            int width = image.getWidth();
+            int height = image.getHeight();
+            float ratioBitmap = (float) width / (float) height;
+            float ratioMax = (float) maxWidth / (float) maxHeight;
+
+            int finalWidth = maxWidth;
+            int finalHeight = maxHeight;
+            if (ratioMax > 1) {
+                finalWidth = (int) ((float)maxHeight * ratioBitmap);
+            } else {
+                finalHeight = (int) ((float)maxWidth / ratioBitmap);
+            }
+            image = Bitmap.createScaledBitmap(image, finalWidth, finalHeight, true);
+            return image;
+        } else {
+            return image;
         }
-        String orientString = exif.getAttribute(ExifInterface.TAG_ORIENTATION);
-        int orientation = orientString != null ? Integer.parseInt(orientString) : ExifInterface.ORIENTATION_NORMAL;
-        int rotationAngle = 0;
-
-        if (orientation == ExifInterface.ORIENTATION_ROTATE_90) rotationAngle = 90;
-        if (orientation == ExifInterface.ORIENTATION_ROTATE_180) rotationAngle = 180;
-        if (orientation == ExifInterface.ORIENTATION_ROTATE_270) rotationAngle = 270;
-
-        Matrix matrix = new Matrix();
-        matrix.setRotate(rotationAngle, (float) bitmap.getWidth() / 2, (float) bitmap.getHeight() / 2);
-        Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-
-        return rotatedBitmap;
-    }
-
-    public static Bitmap scaleBitmapKeepingAspectRatio(Bitmap bitmap) {
-        float ratio = Math.min((float) 502 / bitmap.getWidth(), (float) 375 / bitmap.getHeight());
-        int width = Math.round(ratio * bitmap.getWidth());
-        int height = Math.round(ratio * bitmap.getHeight());
-
-        return Bitmap.createScaledBitmap(bitmap, width, height, true);
     }
 
 

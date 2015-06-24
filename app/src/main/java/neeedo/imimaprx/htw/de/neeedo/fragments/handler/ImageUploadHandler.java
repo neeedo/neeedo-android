@@ -1,17 +1,28 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments.handler;
 
 import android.app.ProgressDialog;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -27,6 +38,7 @@ import javax.net.ssl.X509TrustManager;
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.fragments.NewOfferFragment;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
+import neeedo.imimaprx.htw.de.neeedo.utils.ImageUtils;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
 public class ImageUploadHandler extends AsyncTask<Void, Integer, Void> {
@@ -96,27 +108,24 @@ public class ImageUploadHandler extends AsyncTask<Void, Integer, Void> {
             dataOutputStream.writeBytes("Content-Disposition: form-data; name=\"image\";filename=\"" + photoFile.getName() + "\"" + lineEnd);
             dataOutputStream.writeBytes("Content-Type: image/jpeg" + lineEnd);
             dataOutputStream.writeBytes("Content-Transfer-Encoding: binary" + lineEnd);
-
             dataOutputStream.writeBytes(lineEnd);
 
-            FileInputStream fileInputStream = new FileInputStream(photoFile);
+            ByteArrayInputStream byteArrayInputStream = getFileInputStream();
 
-//            BitmapFactory.decodeStream(fileInputStream).compress(Bitmap.CompressFormat.JPEG, 80, dataOutputStream);
-
-            totalAmountBytesToUpload = fileInputStream.available();
+            totalAmountBytesToUpload = byteArrayInputStream.available();
 
             bufferSize = Math.min(totalAmountBytesToUpload, maxBufferSize);
             buffer = new byte[bufferSize];
 
-            bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+            bytesRead = byteArrayInputStream.read(buffer, 0, bufferSize);
 
             while (bytesRead > 0) {
                 dataOutputStream.write(buffer, 0, bufferSize);
 
                 bufferSize = Math.min(totalAmountBytesToUpload, maxBufferSize);
-                bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+                bytesRead = byteArrayInputStream.read(buffer, 0, bufferSize);
 
-                int restBytesToUpload = fileInputStream.available();
+                int restBytesToUpload = byteArrayInputStream.available();
 
                 publishProgress(restBytesToUpload);
             }
@@ -142,15 +151,66 @@ public class ImageUploadHandler extends AsyncTask<Void, Integer, Void> {
 
             imageFileName = responseObject.getString("image");
 
-            fileInputStream.close();
+            byteArrayInputStream.close();
             dataOutputStream.flush();
             dataOutputStream.close();
-
-        } catch (Exception e) {
-            Toast.makeText(fragment.getActivity(), "something went wrong!", Toast.LENGTH_SHORT).show();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         return null;
+    }
+
+    private ByteArrayInputStream getFileInputStream() throws FileNotFoundException {
+        //Vorgabe:
+        //Offer-Images
+        //Anzahl nicht begrenzt
+        //Größe: max. 3 MB
+        //Auflösung max.: 1024 * 1024
+        //Dateitypen: JPEG, PNG, BMP
+
+        Bitmap sourceBitmap = BitmapFactory.decodeFile(photoFile.getPath());
+
+        ExifInterface exif = null;
+        try {
+            exif = new ExifInterface(photoFile.getPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String orientString = exif.getAttribute(ExifInterface.TAG_ORIENTATION);
+        int orientation = orientString != null ? Integer.parseInt(orientString) : ExifInterface.ORIENTATION_NORMAL;
+        int rotationAngle = 0;
+
+        if (orientation == ExifInterface.ORIENTATION_ROTATE_90) rotationAngle = 90;
+        if (orientation == ExifInterface.ORIENTATION_ROTATE_180) rotationAngle = 180;
+        if (orientation == ExifInterface.ORIENTATION_ROTATE_270) rotationAngle = 270;
+
+        Matrix matrix = new Matrix();
+        matrix.setRotate(rotationAngle);
+
+        //rotate
+        Bitmap rotatedBitmap = Bitmap.createBitmap(sourceBitmap, 0, 0, sourceBitmap.getWidth(), sourceBitmap.getHeight(), matrix, true);
+        sourceBitmap = null; //to free memory
+
+        //scale
+        Bitmap scaledBitmap = ImageUtils.resize(rotatedBitmap, 1024, 1024);
+        rotatedBitmap = null; //to free memory
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+        scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream);
+
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
+
+        return byteArrayInputStream;
     }
 
     @Override
@@ -170,6 +230,6 @@ public class ImageUploadHandler extends AsyncTask<Void, Integer, Void> {
         super.onPostExecute(o);
         progressDialog.dismiss();
 
-        fragment.setNewImage( imageFileName );
+//        fragment.setNewImage(imageFileName);
     }
 }
