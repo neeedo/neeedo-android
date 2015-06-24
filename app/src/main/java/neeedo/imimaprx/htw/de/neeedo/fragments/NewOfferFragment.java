@@ -21,6 +21,7 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import neeedo.imimaprx.htw.de.neeedo.MainActivity;
 import neeedo.imimaprx.htw.de.neeedo.R;
@@ -42,6 +43,8 @@ import neeedo.imimaprx.htw.de.neeedo.vo.RequestCodes;
 
 public class NewOfferFragment extends SuperFragment {
     private final ActiveUser activeUser = ActiveUser.getInstance();
+    private ArrayList<String> uploadedImages = new ArrayList<String>();
+
     private EditText etTags;
     private EditText etLocationLat;
     private EditText etLocationLon;
@@ -148,5 +151,10 @@ public class NewOfferFragment extends SuperFragment {
     @Subscribe
     public void handleServerResponse(ServerResponseEvent e) {
         redirectToFragment(ListOffersFragment.class, MainActivity.MENU_LIST_OFFERS);
+    }
+
+    public void setNewImage(String newImage) {
+        uploadedImages.add(newImage);
+//addImageButton.set
     }
 }

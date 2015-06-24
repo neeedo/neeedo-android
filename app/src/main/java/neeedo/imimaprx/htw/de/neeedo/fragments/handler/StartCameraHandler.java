@@ -24,7 +24,6 @@ public class StartCameraHandler implements View.OnClickListener {
 
     public StartCameraHandler(SuperFragment fragment) {
         this.fragment = fragment;
-        this.outputFile = outputFile;
     }
 
     @Override

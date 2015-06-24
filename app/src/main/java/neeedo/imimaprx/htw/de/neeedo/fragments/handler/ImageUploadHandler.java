@@ -5,6 +5,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
+
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -24,18 +27,20 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
+import neeedo.imimaprx.htw.de.neeedo.fragments.NewOfferFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.SuperFragment;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
 public class ImageUploadHandler extends AsyncTask<Void, Integer, Void> {
-    private final SuperFragment fragment;
+    private final NewOfferFragment fragment;
     private File photoFile;
+    private String imageFileName;
 
     private int totalAmountBytesToUpload;
     private ProgressDialog progressDialog;
 
-    public ImageUploadHandler(File photoFile, SuperFragment fragment) {
+    public ImageUploadHandler(File photoFile, NewOfferFragment fragment) {
         this.photoFile = photoFile;
         this.fragment = fragment;
     }
@@ -132,22 +137,23 @@ public class ImageUploadHandler extends AsyncTask<Void, Integer, Void> {
 
             BufferedReader br = new BufferedReader(new InputStreamReader((connection.getInputStream())));
             StringBuilder sb = new StringBuilder();
-            String output;
 
-            while ((output = br.readLine()) != null) {
-                sb.append(output);
-                Log.i("uploadFile", sb.toString());
-                //TODO do something with the id
+            String responseString;
+            while ((responseString = br.readLine()) != null) {
+                sb.append(responseString);
             }
 
-            Log.i("uploadFile", sb.toString());
+            JSONObject responseObject
+                    = new JSONObject(sb.toString());
+
+            imageFileName = responseObject.getString("image");
 
             fileInputStream.close();
             dataOutputStream.flush();
             dataOutputStream.close();
 
         } catch (Exception e) {
-            Log.e("bla", "Exception : " + e.getMessage(), e);
+            Toast.makeText(fragment.getActivity(), "something went wrong!", Toast.LENGTH_SHORT).show();
         }
 
         return null;
@@ -182,19 +188,20 @@ public class ImageUploadHandler extends AsyncTask<Void, Integer, Void> {
     @Override
     protected void onProgressUpdate(Integer... stillLeftToUpload) {
         super.onProgressUpdate(stillLeftToUpload);
+
         int alreadyUploaded = totalAmountBytesToUpload - stillLeftToUpload[0];
 
         int onePercent = totalAmountBytesToUpload / 100;
-        int percent = alreadyUploaded / onePercent;
+        int percentUploaded = alreadyUploaded / onePercent;
 
-        Log.d("progress ", Integer.toString(percent));
-
-        progressDialog.setProgress(percent);
+        progressDialog.setProgress(percentUploaded);
     }
 
     @Override
     protected void onPostExecute(Void o) {
         super.onPostExecute(o);
         progressDialog.dismiss();
+
+        fragment.setNewImage( imageFileName );
     }
 }
