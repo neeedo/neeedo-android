@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.MultiAutoCompleteTextView;
 
 import com.squareup.otto.Subscribe;
 
@@ -56,39 +57,11 @@ public class NewDemandFragment extends FormDemandFragment {
         suggestionsAdapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_list_item_1, suggestions);
         etMustTags.setAdapter(suggestionsAdapter);
+        etMustTags.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
 
         for(String tag : suggestions) {
             Log.d("Tag", tag);
         }
-
-        // rip off last tag of current text
-        final String[] tags = etMustTags.getText().toString().split("[ ,]+");
-        String currentTextWithoutLastTag = "";
-        for(int i = 0; i < tags.length-1; i++) {
-            if(i != 0) {
-                currentTextWithoutLastTag = currentTextWithoutLastTag + ", " + tags[i];
-            } else {
-                currentTextWithoutLastTag = tags[i];
-            }
-        }
-        final String currentText = currentTextWithoutLastTag;
-
-        // add selected suggestion tag to already entered tags
-        etMustTags.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Log.d("Autocomplete", "Item " + position + " selected");
-
-                String newText;
-                if(currentText.length() != 0) {
-                    newText = currentText + ", " + adapterView.getItemAtPosition(position);
-                } else {
-                    newText = (String) adapterView.getItemAtPosition(position);
-                }
-                etMustTags.setText(newText);
-                etMustTags.setSelection(etMustTags.getText().length());
-            }
-        });
 
         suggestionsAdapter.notifyDataSetChanged();
     }

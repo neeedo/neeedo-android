@@ -20,7 +20,7 @@
             android:layout_height="120dp"
             android:src="@drawable/new_card_form_image_placeholder" />
 
-        <AutoCompleteTextView
+        <MultiAutoCompleteTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/new_card_must_tags"

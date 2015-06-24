@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.MultiAutoCompleteTextView;
 
 import java.util.ArrayList;
 
@@ -23,7 +24,7 @@ import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 public class FormDemandFragment extends SuperFragment {
     protected final ActiveUser activeUser = ActiveUser.getInstance();
 
-    protected AutoCompleteTextView etMustTags;
+    protected MultiAutoCompleteTextView etMustTags;
     protected EditText etShouldTags;
     protected EditText etLocationLat;
     protected EditText etLocationLon;
@@ -58,7 +59,7 @@ public class FormDemandFragment extends SuperFragment {
 
         View view = inflater.inflate(R.layout.form_demand_view, container, false);
 
-        etMustTags = (AutoCompleteTextView) view.findViewById(R.id.etMustTags);
+        etMustTags = (MultiAutoCompleteTextView) view.findViewById(R.id.etMustTags);
         etShouldTags = (EditText) view.findViewById(R.id.etShouldTags);
         etLocationLat = (EditText) view.findViewById(R.id.etLocationLat);
         etLocationLon = (EditText) view.findViewById(R.id.etLocationLon);
