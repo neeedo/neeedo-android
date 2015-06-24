@@ -17,6 +17,7 @@ import neeedo.imimaprx.htw.de.neeedo.fragments.NewDemandFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.NewOfferFragment;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.rest.user.GetUserByEmailAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.utils.CertificateTrustService;
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -49,6 +50,7 @@ public class MainActivity extends ActionBarActivity
         mNavigationDrawerFragment = (NavigationDrawerFragment) mFragmentManager.findFragmentById(R.id.navigation_drawer);
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
 
+        CertificateTrustService.trustAllCerts();
         initSingletons();
         attempLogin();
     }
@@ -59,7 +61,7 @@ public class MainActivity extends ActionBarActivity
 
         savedInstanceState.putInt(STATE_NAVIGATION_INDEX, mCurrentNavigationIndex);
 
-        if(mFragment != null && mFragment.isAdded()) {
+        if (mFragment != null && mFragment.isAdded()) {
             mFragmentManager.putFragment(savedInstanceState, STATE_FRAGMENT, mFragment);
         }
     }

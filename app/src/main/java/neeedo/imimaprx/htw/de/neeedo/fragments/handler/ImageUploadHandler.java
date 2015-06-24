@@ -59,7 +59,6 @@ public class ImageUploadHandler extends AsyncTask<Void, Integer, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-
         try {
             String lineEnd = "\r\n";
             String twoHyphens = "--";
@@ -72,8 +71,6 @@ public class ImageUploadHandler extends AsyncTask<Void, Integer, Void> {
             byte[] buffer;
 
             int maxBufferSize = 1024 * 8;
-
-            trustAllCerts();
 
             URL url = new URL(ServerConstantsUtils.getActiveServer() + "images");
 
@@ -154,32 +151,6 @@ public class ImageUploadHandler extends AsyncTask<Void, Integer, Void> {
         }
 
         return null;
-    }
-
-    private void trustAllCerts() throws NoSuchAlgorithmException, KeyManagementException {
-        TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
-            public X509Certificate[] getAcceptedIssuers() {
-                return null;
-            }
-
-            public void checkClientTrusted(X509Certificate[] certs, String authType) {
-            }
-
-            public void checkServerTrusted(X509Certificate[] certs, String authType) {
-            }
-        }
-        };
-
-        SSLContext sc = SSLContext.getInstance("SSL");
-        sc.init(null, trustAllCerts, new java.security.SecureRandom());
-        HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-
-        HostnameVerifier allHostsValid = new HostnameVerifier() {
-            public boolean verify(String hostname, SSLSession session) {
-                return true;
-            }
-        };
-        HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
     }
 
     @Override

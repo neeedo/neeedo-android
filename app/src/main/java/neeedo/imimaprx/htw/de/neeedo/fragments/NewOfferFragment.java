@@ -119,8 +119,6 @@ public class NewOfferFragment extends SuperFragment {
                 mapView.getController().animateTo(new GeoPoint(52468277, 13425979));
             }
         }, 200);
-
-
     }
 
     @Override
@@ -152,6 +150,6 @@ public class NewOfferFragment extends SuperFragment {
 
     public void setNewImage(String newImage) {
         uploadedImages.add(newImage);
-//addImageButton.set
+//        addImageButton.set
     }
 }
