@@ -131,7 +131,7 @@ public class NewOfferFragment extends SuperFragment {
         }
 
         if (requestCode == RequestCodes.CAMERA_CAPTURE_IMAGE_REQUEST_CODE) {
-            new ImageUploadHandler(newCameraOutputFile, this).execute();
+            new ImageUploadHandler(newCameraOutputFile, getActivity()).execute();
         } else if (requestCode == RequestCodes.BARCODE_SCAN_REQUEST_CODE) {
             String barcodeEAN = intent.getStringExtra("SCAN_RESULT");
             new GetOutpanByEANAsyncTask(barcodeEAN, getActivity()).execute();

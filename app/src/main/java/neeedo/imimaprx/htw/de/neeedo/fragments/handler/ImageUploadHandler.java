@@ -1,5 +1,6 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments.handler;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -36,30 +37,35 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
+import neeedo.imimaprx.htw.de.neeedo.events.NewImageReceivedFromServer;
 import neeedo.imimaprx.htw.de.neeedo.fragments.NewOfferFragment;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
+import neeedo.imimaprx.htw.de.neeedo.service.EventService;
 import neeedo.imimaprx.htw.de.neeedo.utils.ImageUtils;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
 public class ImageUploadHandler extends AsyncTask<Void, Integer, Void> {
-    private final NewOfferFragment fragment;
+    private final Activity activity;
     private File photoFile;
-    private String imageFileName;
+    private String imageFileNameOnServer;
+    private Bitmap finalOptimizedBitmap;
+
+    private EventService eventService = EventService.getInstance();
 
     private int totalAmountBytesToUpload;
     private ProgressDialog progressDialog;
 
-    public ImageUploadHandler(File photoFile, NewOfferFragment fragment) {
+    public ImageUploadHandler(File photoFile, Activity activity) {
         this.photoFile = photoFile;
-        this.fragment = fragment;
+        this.activity = activity;
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
 
-        progressDialog = new ProgressDialog(fragment.getActivity());
-        progressDialog.setMessage(fragment.getString(R.string.camera_uploading_progress));
+        progressDialog = new ProgressDialog(activity);
+        progressDialog.setMessage(activity.getString(R.string.camera_uploading_progress));
         progressDialog.setMessage("asd");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         progressDialog.setIndeterminate(false);
@@ -149,7 +155,7 @@ public class ImageUploadHandler extends AsyncTask<Void, Integer, Void> {
             JSONObject responseObject
                     = new JSONObject(sb.toString());
 
-            imageFileName = responseObject.getString("image");
+            imageFileNameOnServer = responseObject.getString("image");
 
             byteArrayInputStream.close();
             dataOutputStream.flush();
@@ -173,8 +179,8 @@ public class ImageUploadHandler extends AsyncTask<Void, Integer, Void> {
         //Vorgabe:
         //Offer-Images
         //Anzahl nicht begrenzt
-        //Größe: max. 3 MB
-        //Auflösung max.: 1024 * 1024
+        //Gre: max. 3 MB
+        //Auflsung max.: 1024 * 1024
         //Dateitypen: JPEG, PNG, BMP
 
         Bitmap sourceBitmap = BitmapFactory.decodeFile(photoFile.getPath());
@@ -196,19 +202,16 @@ public class ImageUploadHandler extends AsyncTask<Void, Integer, Void> {
         Matrix matrix = new Matrix();
         matrix.setRotate(rotationAngle);
 
-        //rotate
         Bitmap rotatedBitmap = Bitmap.createBitmap(sourceBitmap, 0, 0, sourceBitmap.getWidth(), sourceBitmap.getHeight(), matrix, true);
-        sourceBitmap = null; //to free memory
-
-        //scale
         Bitmap scaledBitmap = ImageUtils.resize(rotatedBitmap, 1024, 1024);
-        rotatedBitmap = null; //to free memory
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
         scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream);
 
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
+
+        finalOptimizedBitmap = BitmapFactory.decodeStream(byteArrayInputStream);
 
         return byteArrayInputStream;
     }
@@ -229,6 +232,8 @@ public class ImageUploadHandler extends AsyncTask<Void, Integer, Void> {
     protected void onPostExecute(Void o) {
         super.onPostExecute(o);
         progressDialog.dismiss();
+
+eventService.post(new NewImageReceivedFromServer( imageFileNameOnServer, finalOptimizedBitmap ));
 
 //        fragment.setNewImage(imageFileName);
     }
