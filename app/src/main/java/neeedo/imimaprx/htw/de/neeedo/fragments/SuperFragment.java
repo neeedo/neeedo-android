@@ -29,7 +29,6 @@ public class SuperFragment extends Fragment {
 
     protected EventService eventService = EventService.getInstance();
 
-    protected File newCameraOutputFile;
 
     private MenuItem actionBarLogout;
 
@@ -135,10 +134,6 @@ public class SuperFragment extends Fragment {
     @Subscribe
     public void handleUserStateChanged(UserStateChangedEvent event) {
         setLoginButtonState();
-    }
-
-    public void setNewCameraOutputFile(File newCameraOutputFile) {
-        this.newCameraOutputFile = newCameraOutputFile;
     }
 
     public static class ConfirmDialogFragment extends android.support.v4.app.DialogFragment {

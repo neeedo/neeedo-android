@@ -22,6 +22,7 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import neeedo.imimaprx.htw.de.neeedo.MainActivity;
@@ -44,7 +45,6 @@ import neeedo.imimaprx.htw.de.neeedo.vo.RequestCodes;
 public class NewOfferFragment extends SuperFragment {
     private final ActiveUser activeUser = ActiveUser.getInstance();
     private ArrayList<String> uploadedImages = new ArrayList<String>();
-
     private EditText etTags;
     private EditText etLocationLat;
     private EditText etLocationLon;
@@ -59,6 +59,11 @@ public class NewOfferFragment extends SuperFragment {
     private double locationLongitude;
     private boolean locationAvailable;
     private Button btnSetLocation;
+    private File newCameraOutputFile;
+
+    public void setNewCameraOutputFile(File newCameraOutputFile) {
+        this.newCameraOutputFile = newCameraOutputFile;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,6 +75,10 @@ public class NewOfferFragment extends SuperFragment {
         locationLatitude = currentLocation.getLat();
         locationLongitude = currentLocation.getLon();
         locationAvailable = locationHelper.isLocationAvailable();
+
+        if(savedInstanceState != null){
+            System.out.println();
+        }
     }
 
     @Override
@@ -139,6 +148,13 @@ public class NewOfferFragment extends SuperFragment {
             String barcodeEAN = intent.getStringExtra("SCAN_RESULT");
             new GetOutpanByEANAsyncTask(barcodeEAN, getActivity()).execute();
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putSerializable("newCameraOutputFile", newCameraOutputFile);
+
+        super.onSaveInstanceState(savedInstanceState);
     }
 
     @Subscribe
