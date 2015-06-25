@@ -37,9 +37,11 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
+import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offer;
 import neeedo.imimaprx.htw.de.neeedo.events.NewImageReceivedFromServer;
 import neeedo.imimaprx.htw.de.neeedo.fragments.NewOfferFragment;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
+import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
 import neeedo.imimaprx.htw.de.neeedo.service.EventService;
 import neeedo.imimaprx.htw.de.neeedo.utils.ImageUtils;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
@@ -50,6 +52,7 @@ public class ImageUploadHandler extends AsyncTask<Void, Integer, Void> {
     private String imageFileNameOnServer;
     private Bitmap finalOptimizedBitmap;
 
+    private OffersModel offersModel = OffersModel.getInstance();
     private EventService eventService = EventService.getInstance();
 
     private int totalAmountBytesToUpload;
@@ -207,6 +210,7 @@ public class ImageUploadHandler extends AsyncTask<Void, Integer, Void> {
         super.onPostExecute(o);
         progressDialog.dismiss();
 
+        offersModel.getDraft().addSingleImageURL(imageFileNameOnServer);
         eventService.post(new NewImageReceivedFromServer(imageFileNameOnServer, finalOptimizedBitmap));
     }
 }
