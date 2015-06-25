@@ -77,7 +77,7 @@ public class NewOfferFragment extends SuperFragment {
         locationAvailable = locationHelper.isLocationAvailable();
 
         if(savedInstanceState != null){
-            System.out.println();
+           newCameraOutputFile = (File) savedInstanceState.get("newCameraOutputFile");
         }
     }
 
