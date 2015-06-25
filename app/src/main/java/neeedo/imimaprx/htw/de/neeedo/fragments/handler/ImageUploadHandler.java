@@ -176,33 +176,7 @@ public class ImageUploadHandler extends AsyncTask<Void, Integer, Void> {
     }
 
     private ByteArrayInputStream getFileInputStream() throws FileNotFoundException {
-        //Vorgabe:
-        //Offer-Images
-        //Anzahl nicht begrenzt
-        //Gre: max. 3 MB
-        //Auflsung max.: 1024 * 1024
-        //Dateitypen: JPEG, PNG, BMP
-
-        Bitmap sourceBitmap = BitmapFactory.decodeFile(photoFile.getPath());
-
-        ExifInterface exif = null;
-        try {
-            exif = new ExifInterface(photoFile.getPath());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        String orientString = exif.getAttribute(ExifInterface.TAG_ORIENTATION);
-        int orientation = orientString != null ? Integer.parseInt(orientString) : ExifInterface.ORIENTATION_NORMAL;
-        int rotationAngle = 0;
-
-        if (orientation == ExifInterface.ORIENTATION_ROTATE_90) rotationAngle = 90;
-        if (orientation == ExifInterface.ORIENTATION_ROTATE_180) rotationAngle = 180;
-        if (orientation == ExifInterface.ORIENTATION_ROTATE_270) rotationAngle = 270;
-
-        Matrix matrix = new Matrix();
-        matrix.setRotate(rotationAngle);
-
-        Bitmap rotatedBitmap = Bitmap.createBitmap(sourceBitmap, 0, 0, sourceBitmap.getWidth(), sourceBitmap.getHeight(), matrix, true);
+        Bitmap rotatedBitmap = ImageUtils.rotateBitmap(photoFile);
         Bitmap scaledBitmap = ImageUtils.resize(rotatedBitmap, 1024, 1024);
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -233,8 +207,6 @@ public class ImageUploadHandler extends AsyncTask<Void, Integer, Void> {
         super.onPostExecute(o);
         progressDialog.dismiss();
 
-eventService.post(new NewImageReceivedFromServer( imageFileNameOnServer, finalOptimizedBitmap ));
-
-//        fragment.setNewImage(imageFileName);
+        eventService.post(new NewImageReceivedFromServer(imageFileNameOnServer, finalOptimizedBitmap));
     }
 }
