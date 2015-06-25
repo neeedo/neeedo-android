@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import neeedo.imimaprx.htw.de.neeedo.MainActivity;
@@ -43,6 +45,9 @@ import neeedo.imimaprx.htw.de.neeedo.vo.RequestCodes;
 
 
 public class NewOfferFragment extends SuperFragment {
+    public static final String STATE_CAMERA_OUTPUT = "new_camera_output_file";
+    public static final String STATE_IMAGE_LIST = "image_file_list";
+
     private final ActiveUser activeUser = ActiveUser.getInstance();
     private ArrayList<String> uploadedImages = new ArrayList<String>();
     private EditText etTags;
@@ -60,6 +65,7 @@ public class NewOfferFragment extends SuperFragment {
     private boolean locationAvailable;
     private Button btnSetLocation;
     private File newCameraOutputFile;
+    private ArrayList<Bitmap> imageFiles;
 
     public void setNewCameraOutputFile(File newCameraOutputFile) {
         this.newCameraOutputFile = newCameraOutputFile;
@@ -76,8 +82,10 @@ public class NewOfferFragment extends SuperFragment {
         locationLongitude = currentLocation.getLon();
         locationAvailable = locationHelper.isLocationAvailable();
 
+        imageFiles = new ArrayList<>();
+
         if(savedInstanceState != null){
-           newCameraOutputFile = (File) savedInstanceState.get("newCameraOutputFile");
+            newCameraOutputFile = (File) savedInstanceState.get(STATE_CAMERA_OUTPUT);
         }
     }
 
@@ -152,9 +160,25 @@ public class NewOfferFragment extends SuperFragment {
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putSerializable("newCameraOutputFile", newCameraOutputFile);
+        savedInstanceState.putSerializable(STATE_CAMERA_OUTPUT, newCameraOutputFile);
+        savedInstanceState.putParcelableArrayList(STATE_IMAGE_LIST, imageFiles);
 
         super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onViewStateRestored(Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+
+        if(savedInstanceState != null){
+            newCameraOutputFile = (File) savedInstanceState.get(STATE_CAMERA_OUTPUT);
+            // TODO put this also into onCreate()
+            ArrayList<Parcelable> imageFiles = savedInstanceState.getParcelableArrayList(STATE_IMAGE_LIST);
+            for(Parcelable image : imageFiles) {
+                this.imageFiles.add((Bitmap) image);
+                addImageButton.setImageBitmap((Bitmap) image);
+            }
+        }
     }
 
     @Subscribe
@@ -164,8 +188,9 @@ public class NewOfferFragment extends SuperFragment {
 
     @Subscribe
     public void handleNewImageReceivedFromServer(NewImageReceivedFromServer event) {
-        Bitmap finalOptimizedBitmap = event.getfinalOptimizedBitmap();
-        addImageButton.setImageBitmap(finalOptimizedBitmap);
+        Bitmap finalImageFile = event.getfinalOptimizedBitmap();
+        addImageButton.setImageBitmap(finalImageFile);
+        imageFiles.add(finalImageFile);
     }
 
     @Subscribe
