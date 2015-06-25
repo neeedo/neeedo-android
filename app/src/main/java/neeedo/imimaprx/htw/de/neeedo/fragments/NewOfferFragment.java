@@ -83,10 +83,6 @@ public class NewOfferFragment extends SuperFragment {
         locationAvailable = locationHelper.isLocationAvailable();
 
         imageFiles = new ArrayList<>();
-
-        if(savedInstanceState != null){
-            newCameraOutputFile = (File) savedInstanceState.get(STATE_CAMERA_OUTPUT);
-        }
     }
 
     @Override
@@ -102,6 +98,8 @@ public class NewOfferFragment extends SuperFragment {
         btnSubmit = (Button) view.findViewById(R.id.btnSubmit);
         addImageButton = (ImageButton) view.findViewById(R.id.addImageButton);
         btnSetLocation = (Button) view.findViewById(R.id.btnChooseLocation);
+
+        initOrRestore(savedInstanceState);
 
         if (locationAvailable) {
             etLocationLat.setText(String.valueOf(locationLatitude));
@@ -170,9 +168,12 @@ public class NewOfferFragment extends SuperFragment {
     public void onViewStateRestored(Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
 
+        initOrRestore(savedInstanceState);
+    }
+
+    private void initOrRestore(Bundle savedInstanceState) {
         if(savedInstanceState != null){
             newCameraOutputFile = (File) savedInstanceState.get(STATE_CAMERA_OUTPUT);
-            // TODO put this also into onCreate()
             ArrayList<Parcelable> imageFiles = savedInstanceState.getParcelableArrayList(STATE_IMAGE_LIST);
             for(Parcelable image : imageFiles) {
                 this.imageFiles.add((Bitmap) image);
