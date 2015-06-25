@@ -11,6 +11,8 @@ import android.widget.MultiAutoCompleteTextView;
 
 import com.squareup.otto.Subscribe;
 
+import java.util.ArrayList;
+
 import neeedo.imimaprx.htw.de.neeedo.MainActivity;
 import neeedo.imimaprx.htw.de.neeedo.events.GetSuggestionEvent;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
@@ -53,7 +55,7 @@ public class NewDemandFragment extends FormDemandFragment {
     public void fillSuggestions(GetSuggestionEvent e) {
         Log.d("Suggestion Event", "called");
 
-        suggestions = e.getTagResult().getTag().getAvailableTags();
+        suggestions.addAll(e.getTagResult().getTag().getAvailableTags()); // TODO make items unique (set)
         suggestionsAdapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_list_item_1, suggestions);
         etMustTags.setAdapter(suggestionsAdapter);

@@ -76,15 +76,16 @@ public class FormDemandFragment extends SuperFragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                suggestions = new ArrayList<>();
                 String tagsText = etMustTags.getText().toString();
                 String tags[] = tagsText.split("[ ,]+");
                 String lastTag = tags[tags.length-1]; // get last tag for suggestion
-                if (lastTag.length() > 2) {
-                    if (lastTag.matches("[A-Za-z0-9]+"))
+                if (lastTag.length() > 0) {
+                    if (lastTag.matches("[A-Za-z0-9]+")) {
                         new GetCompletionAsyncTask(lastTag, BaseAsyncTask.CompletionType.TAG).execute();
-                    // TODO combine with PHRASE suggestion
-//                    else if (tagsText.matches("[A-Za-z0-9 ,]+"))
-//                        new GetCompletionAsyncTask(tagsText, BaseAsyncTask.CompletionType.PHRASE).execute();
+                    }
+                    // TODO something is wrong with PHRASE check if text contains ","
+                    new GetCompletionAsyncTask(tagsText, BaseAsyncTask.CompletionType.PHRASE).execute();
                 }
 
             }
@@ -92,6 +93,21 @@ public class FormDemandFragment extends SuperFragment {
             @Override
             public void afterTextChanged(Editable editable) {
 
+            }
+        });
+
+        etMustTags.setOnClickListener(new View.OnClickListener() {
+            private boolean open = false;
+
+            @Override
+            public void onClick(View view) {
+                if (open) {
+                    etMustTags.dismissDropDown();
+                    open = false;
+                } else {
+                    etMustTags.showDropDown();
+                    open = true;
+                }
             }
         });
 
