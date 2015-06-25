@@ -2,6 +2,8 @@ package neeedo.imimaprx.htw.de.neeedo.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -26,6 +28,7 @@ import neeedo.imimaprx.htw.de.neeedo.MainActivity;
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.Location;
 import neeedo.imimaprx.htw.de.neeedo.events.NewEanTagsReceivedEvent;
+import neeedo.imimaprx.htw.de.neeedo.events.NewImageReceivedFromServer;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.ImageUploadHandler;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.SendNewOfferHandler;
@@ -141,6 +144,12 @@ public class NewOfferFragment extends SuperFragment {
     @Subscribe
     public void handleNewEanTagsReceived(NewEanTagsReceivedEvent event) {
         etTags.setText(event.getOutpanResult().getTags());
+    }
+
+    @Subscribe
+    public void handleNewImageReceivedFromServer(NewImageReceivedFromServer event) {
+        Bitmap finalOptimizedBitmap = event.getfinalOptimizedBitmap();
+        addImageButton.setImageBitmap(finalOptimizedBitmap);
     }
 
     @Subscribe

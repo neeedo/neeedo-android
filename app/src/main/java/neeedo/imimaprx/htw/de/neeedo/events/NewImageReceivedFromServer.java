@@ -10,4 +10,8 @@ public class NewImageReceivedFromServer {
         this.imageFileNameOnServer = imageFileNameOnServer;
         this.finalOptimizedBitmap = finalOptimizedBitmap;
     }
+
+    public Bitmap getfinalOptimizedBitmap() {
+        return finalOptimizedBitmap;
+    }
 }
