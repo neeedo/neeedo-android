@@ -47,12 +47,12 @@ public class OffersModel {
     }
 
     public Offer getDraft() {
+        if (draft == null)
+            draft = new Offer();
         return draft;
     }
 
     public void setDraft(Offer draft) {
         this.draft = draft;
     }
-
-
 }

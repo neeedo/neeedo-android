@@ -67,7 +67,7 @@ public class ImageUploadHandler extends AsyncTask<Void, Integer, Void> {
     protected void onPreExecute() {
         super.onPreExecute();
 
-        progressDialog = new ProgressDialog(activity.getBaseContext());
+        progressDialog = new ProgressDialog(activity);
         progressDialog.setMessage(activity.getString(R.string.camera_uploading_progress));
         progressDialog.setMessage("asd");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
