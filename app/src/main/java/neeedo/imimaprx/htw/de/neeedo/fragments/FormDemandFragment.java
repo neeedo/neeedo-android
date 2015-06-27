@@ -83,9 +83,10 @@ public class FormDemandFragment extends SuperFragment {
                 if (lastTag.length() > 0) {
                     if (lastTag.matches("[A-Za-z0-9]+")) {
                         new GetCompletionAsyncTask(lastTag, BaseAsyncTask.CompletionType.TAG).execute();
+                    } else {
+                        // it was said there will be tolerance against %20
+                        new GetCompletionAsyncTask(tagsText, BaseAsyncTask.CompletionType.PHRASE).execute();
                     }
-                    // TODO something is wrong with PHRASE check if text contains ","
-                    new GetCompletionAsyncTask(tagsText, BaseAsyncTask.CompletionType.PHRASE).execute();
                 }
 
             }
