@@ -21,6 +21,7 @@ import neeedo.imimaprx.htw.de.neeedo.helpers.LocationHelper;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.rest.completion.GetCompletionAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.utils.AutocompletionOnClickListener;
 import neeedo.imimaprx.htw.de.neeedo.utils.AutocompletionTextWatcher;
 
 public class FormDemandFragment extends FormFragment {
@@ -73,20 +74,8 @@ public class FormDemandFragment extends FormFragment {
         etMustTags.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
         etShouldTags.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
 
-        etMustTags.setOnClickListener(new View.OnClickListener() {
-            private boolean open = false;
-
-            @Override
-            public void onClick(View view) {
-                if (open) {
-                    etMustTags.dismissDropDown();
-                    open = false;
-                } else {
-                    etMustTags.showDropDown();
-                    open = true;
-                }
-            }
-        });
+        etMustTags.setOnClickListener(new AutocompletionOnClickListener(etMustTags));
+        etShouldTags.setOnClickListener(new AutocompletionOnClickListener(etShouldTags));
 
         return view;
     }
