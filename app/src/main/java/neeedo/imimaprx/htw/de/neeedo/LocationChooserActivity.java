@@ -117,9 +117,8 @@ public class LocationChooserActivity extends ActionBarActivity {
 
         @Override
         protected Object doInBackground(Object[] params) {
-
             InputStream is = null;
-            String json = "";
+            String jsonString = "";
             ArrayList<FoundLocation> locationsArrayList;
 
             try {
@@ -139,21 +138,17 @@ public class LocationChooserActivity extends ActionBarActivity {
                     System.out.println(line);
                 }
                 is.close();
-                json = sb.toString();
+                jsonString = sb.toString();
 
-                JSONArray locationJSONArray = new JSONArray(json);
-                Log.d("1", locationJSONArray.toString());
-
+                JSONArray locationJSONArray = new JSONArray(jsonString);
+                
                 locationsArrayList = new ArrayList<FoundLocation>();
 
                 for (int i = 0; i < locationJSONArray.length(); i++) {
                     JSONObject currentLocationObject = (JSONObject) locationJSONArray.get(i);
-
-                    FoundLocation foundLocation = new FoundLocation( currentLocationObject);
+                    FoundLocation foundLocation = new FoundLocation(currentLocationObject);
                     locationsArrayList.add(foundLocation);
                 }
-                Log.d("2", locationsArrayList.toString());
-//                locationArray.getJSONArray()
             } catch (Exception e) {
                 Log.e("Buffer Error", "Error converting result " + e.toString());
             }
