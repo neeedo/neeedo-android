@@ -20,8 +20,9 @@ import neeedo.imimaprx.htw.de.neeedo.helpers.LocationHelper;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.rest.completion.GetCompletionAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.utils.AutocompletionTextWatcher;
 
-public class FormDemandFragment extends SuperFragment {
+public class FormDemandFragment extends FormFragment {
     protected final ActiveUser activeUser = ActiveUser.getInstance();
 
     protected MultiAutoCompleteTextView etMustTags;
@@ -38,9 +39,6 @@ public class FormDemandFragment extends SuperFragment {
     protected boolean locationAvailable;
     protected LocationHelper locationHelper;
     protected Location currentLocation;
-
-    protected ArrayList<String> suggestions;
-    protected ArrayAdapter<String> suggestionsAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,36 +66,8 @@ public class FormDemandFragment extends SuperFragment {
         etPriceMax = (EditText) view.findViewById(R.id.etPriceMax);
         btnSubmit = (Button) view.findViewById(R.id.btnSubmit);
 
-        etMustTags.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                suggestions = new ArrayList<>();
-                String tagsText = etMustTags.getText().toString();
-                String tags[] = tagsText.split("[ ,]+");
-                String lastTag = tags[tags.length-1]; // get last tag for suggestion
-                if (tagsText.length() > 0) {
-                    // do completion for last tag
-                    if (lastTag.matches("[A-Za-z0-9]+")) {
-                        new GetCompletionAsyncTask(lastTag, BaseAsyncTask.CompletionType.TAG).execute();
-                    }
-                    // do suggestion for all tags
-                    if (tagsText.matches("[A-Za-z0-9, ]+")) {
-                        new GetCompletionAsyncTask(tagsText, BaseAsyncTask.CompletionType.PHRASE).execute();
-                    }
-                }
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
+        AutocompletionTextWatcher textWatcher = new AutocompletionTextWatcher(this, etMustTags);
+        etMustTags.addTextChangedListener(textWatcher);
 
         etMustTags.setOnClickListener(new View.OnClickListener() {
             private boolean open = false;
