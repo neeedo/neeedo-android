@@ -65,6 +65,8 @@ public class NewDemandFragment extends FormDemandFragment {
                 android.R.layout.simple_list_item_1, suggestions);
         etMustTags.setAdapter(suggestionsAdapter);
         etMustTags.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+        etShouldTags.setAdapter(suggestionsAdapter);
+        etShouldTags.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
 
         for(String tag : suggestions) {
             Log.d("Tag", tag);

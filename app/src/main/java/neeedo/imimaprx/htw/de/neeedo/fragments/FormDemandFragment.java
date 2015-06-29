@@ -26,7 +26,7 @@ public class FormDemandFragment extends FormFragment {
     protected final ActiveUser activeUser = ActiveUser.getInstance();
 
     protected MultiAutoCompleteTextView etMustTags;
-    protected EditText etShouldTags;
+    protected MultiAutoCompleteTextView etShouldTags;
     protected EditText etLocationLat;
     protected EditText etLocationLon;
     protected EditText etDistance;
@@ -58,7 +58,7 @@ public class FormDemandFragment extends FormFragment {
         View view = inflater.inflate(R.layout.form_demand_view, container, false);
 
         etMustTags = (MultiAutoCompleteTextView) view.findViewById(R.id.etMustTags);
-        etShouldTags = (EditText) view.findViewById(R.id.etShouldTags);
+        etShouldTags = (MultiAutoCompleteTextView) view.findViewById(R.id.etShouldTags);
         etLocationLat = (EditText) view.findViewById(R.id.etLocationLat);
         etLocationLon = (EditText) view.findViewById(R.id.etLocationLon);
         etDistance = (EditText) view.findViewById(R.id.etDistance);
@@ -66,8 +66,8 @@ public class FormDemandFragment extends FormFragment {
         etPriceMax = (EditText) view.findViewById(R.id.etPriceMax);
         btnSubmit = (Button) view.findViewById(R.id.btnSubmit);
 
-        AutocompletionTextWatcher textWatcher = new AutocompletionTextWatcher(this, etMustTags);
-        etMustTags.addTextChangedListener(textWatcher);
+        etMustTags.addTextChangedListener(new AutocompletionTextWatcher(this, etMustTags));
+        etShouldTags.addTextChangedListener(new AutocompletionTextWatcher(this, etShouldTags));
 
         etMustTags.setOnClickListener(new View.OnClickListener() {
             private boolean open = false;

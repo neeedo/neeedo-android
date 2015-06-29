@@ -26,7 +26,7 @@
             android:hint="@string/new_card_must_tags"
             android:id="@+id/etMustTags" />
 
-        <EditText
+        <MultiAutoCompleteTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/new_card_should_tags"
