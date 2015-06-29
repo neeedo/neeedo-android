@@ -15,13 +15,12 @@
             android:text="@string/new_card_offer"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
-        <ImageButton
-            android:id="@+id/addImageButton"
+        <LinearLayout android:orientation="horizontal"
+            android:id="@+id/imagesContainer"
             android:layout_width="fill_parent"
             android:layout_height="120dp"
-            android:background="#6897c8"
             android:scaleType="centerInside"
-            android:src="@drawable/add_offer_image" />
+           android:background="@drawable/add_offer_image" />
 
         <Button
             android:layout_width="wrap_content"

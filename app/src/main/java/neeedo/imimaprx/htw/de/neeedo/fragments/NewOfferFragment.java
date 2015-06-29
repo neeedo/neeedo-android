@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
@@ -15,6 +14,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -25,7 +25,6 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
 import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import neeedo.imimaprx.htw.de.neeedo.MainActivity;
@@ -57,7 +56,7 @@ public class NewOfferFragment extends SuperFragment {
     private EditText etPrice;
     private Button btnSubmit;
     private Button btnBarcode;
-    private ImageButton addImageButton;
+    private LinearLayout imagesContainer;
     private LocationHelper locationHelper;
     private Location currentLocation;
     private MapView mapView;
@@ -97,7 +96,7 @@ public class NewOfferFragment extends SuperFragment {
         etPrice = (EditText) view.findViewById(R.id.etPrice);
         btnBarcode = (Button) view.findViewById(R.id.newOffer_Barcode_Button);
         btnSubmit = (Button) view.findViewById(R.id.btnSubmit);
-        addImageButton = (ImageButton) view.findViewById(R.id.addImageButton);
+        imagesContainer = (LinearLayout) view.findViewById(R.id.imagesContainer);
         btnSetLocation = (Button) view.findViewById(R.id.btnChooseLocation);
 
         initOrRestore(savedInstanceState);
@@ -107,7 +106,7 @@ public class NewOfferFragment extends SuperFragment {
             etLocationLon.setText(String.valueOf(locationLongitude));
         }
 
-        addImageButton.setOnClickListener(new StartCameraHandler(this));
+        imagesContainer.setOnClickListener(new StartCameraHandler(this));
         btnSubmit.setOnClickListener(new SendNewOfferHandler(etTags, etLocationLat, etLocationLon, etPrice));
         btnBarcode.setOnClickListener(new StartNewBarcodeScanHandler(this));
         btnSetLocation.setOnClickListener(new StartLocationChooserHandler(this));
@@ -178,7 +177,8 @@ public class NewOfferFragment extends SuperFragment {
             ArrayList<Parcelable> imageFiles = savedInstanceState.getParcelableArrayList(STATE_IMAGE_LIST);
             for (Parcelable image : imageFiles) {
                 this.imageFiles.add((Bitmap) image);
-                addImageButton.setImageBitmap((Bitmap) image);
+
+              //TODO  addImageButton.setImageBitmap((Bitmap) image);
             }
         }
     }
@@ -209,5 +209,7 @@ public class NewOfferFragment extends SuperFragment {
         imageButton.setBackgroundColor(Color.TRANSPARENT);
 //        imageButton.setTag(i);
 //        imageButton.setId(i);
+
+        imagesContainer.addView(imageButton);
     }
 }
