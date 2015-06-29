@@ -33,6 +33,8 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
+import neeedo.imimaprx.htw.de.neeedo.entities.util.Location;
+
 
 public class LocationChooserActivity extends ActionBarActivity {
     public static final String NOMINATIM_SERVICE_URL = "http://nominatim.openstreetmap.org/";
@@ -118,11 +120,11 @@ public class LocationChooserActivity extends ActionBarActivity {
 
             InputStream is = null;
             String json = "";
-            ArrayList<String> locationsArrayList;
+            ArrayList<FoundLocation> locationsArrayList;
 
             try {
                 DefaultHttpClient httpClient = new DefaultHttpClient();
-                HttpPost httpPost = new HttpPost("http://nominatim.openstreetmap.org/search?q=emser+str+54&format=json");
+                HttpPost httpPost = new HttpPost("http://nominatim.openstreetmap.org/search?q=berlin+hauptstr&format=json");
 
                 HttpResponse httpResponse = httpClient.execute(httpPost);
                 HttpEntity httpEntity = httpResponse.getEntity();
@@ -142,11 +144,13 @@ public class LocationChooserActivity extends ActionBarActivity {
                 JSONArray locationJSONArray = new JSONArray(json);
                 Log.d("1", locationJSONArray.toString());
 
-                locationsArrayList = new ArrayList<String>();
+                locationsArrayList = new ArrayList<FoundLocation>();
 
                 for (int i = 0; i < locationJSONArray.length(); i++) {
-                    String value = locationJSONArray.get(i).toString();
-                    locationsArrayList.add(value);
+                    JSONObject currentLocationObject = (JSONObject) locationJSONArray.get(i);
+
+                    FoundLocation foundLocation = new FoundLocation( currentLocationObject);
+                    locationsArrayList.add(foundLocation);
                 }
                 Log.d("2", locationsArrayList.toString());
 //                locationArray.getJSONArray()
