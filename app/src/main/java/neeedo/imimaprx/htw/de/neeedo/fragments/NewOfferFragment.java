@@ -191,7 +191,7 @@ public class NewOfferFragment extends SuperFragment {
     @Subscribe
     public void handleNewImageReceivedFromServer(NewImageReceivedFromServer event) {
         Bitmap finalImageFile = event.getfinalOptimizedBitmap();
-        addImageButton.setImageBitmap(finalImageFile);
+        addImage(finalImageFile);
         imageFiles.add(finalImageFile);
     }
 
