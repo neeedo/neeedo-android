@@ -10,6 +10,18 @@
         android:gravity="bottom"
         android:orientation="vertical">
 
+
+        <!--<RelativeLayout-->
+            <!--android:id="@+id/locationChooserMapContainer"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="fill_parent"-->
+
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_alignParentBottom="true"-->
+
+            <!--android:gravity="center"/>-->
+
         <AutoCompleteTextView
             android:id="@+id/autoCompleteAddress"
             android:layout_width="fill_parent"

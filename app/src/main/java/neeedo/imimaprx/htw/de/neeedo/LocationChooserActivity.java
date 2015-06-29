@@ -1,5 +1,5 @@
 package neeedo.imimaprx.htw.de.neeedo;
-
+import android.widget.Filter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.RelativeLayout;
 
@@ -62,8 +63,8 @@ public class LocationChooserActivity extends ActionBarActivity {
         mapView.setBuiltInZoomControls(true);
         mapView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-        RelativeLayout mapContainer = (RelativeLayout) findViewById(R.id.locationChooserMapContainer);
-        mapContainer.addView(mapView);
+//        RelativeLayout mapContainer = (RelativeLayout) findViewById(R.id.locationChooserMapContainer);
+//        mapContainer.addView(mapView);
 
         //this is a hack to get around one of the osmdroid bugs
         new Handler().postDelayed(new Runnable() {
@@ -73,25 +74,40 @@ public class LocationChooserActivity extends ActionBarActivity {
             }
         }, 200);
 
+        String[] language = {"C", "C++", "Java", ".NET", "iPhone", "Android", "ASP.NET", "PHP"};
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, language);
+        adapter.setNotifyOnChange(true);
+
+
+
 
         autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.autoCompleteAddress);
+        autoCompleteTextView.setThreshold(0);//will start working after third character
+        autoCompleteTextView.setAdapter(adapter);
+        autoCompleteTextView.setHint("???? ???????, ???????");
 
-        autoCompleteTextView.addTextChangedListener(new TextWatcher() {
+//        autoCompleteTextView.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void onTextChanged(CharSequence inputString, int start, int before, int count) {
+//                new NewSearchForLocationHandler(inputString.toString()).execute();
+//
+//                autoCompleteTextView.setAdapter(adapter);
+//                adapter.notifyDataSetChanged();
+//
+//                autoCompleteTextView.showDropDown();
+//            }
+//
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count,
+//                                          int after) {
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//            }
+//        });
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                new NewSearchForLocationHandler(s.toString()).execute();
-            }
 
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
 
     }
 
@@ -166,7 +182,7 @@ public class LocationChooserActivity extends ActionBarActivity {
             if (findLocationResult.getResult() == RestResult.ReturnType.FAILED) {
                 return;
             } else if (findLocationResult.getResult() == RestResult.ReturnType.SUCCESS) {
-                
+
             }
         }
     }
