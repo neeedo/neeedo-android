@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
@@ -66,6 +67,7 @@ public class NewOfferFragment extends SuperFragment {
     private double locationLongitude;
     private boolean locationAvailable;
     private Button btnSetLocation;
+    private ImageButton addImageButton;
     private File newCameraOutputFile;
     private ArrayList<Bitmap> imageFiles;
 
@@ -100,6 +102,7 @@ public class NewOfferFragment extends SuperFragment {
         btnSubmit = (Button) view.findViewById(R.id.btnSubmit);
         imagesContainer = (LinearLayout) view.findViewById(R.id.imagesContainer);
         btnSetLocation = (Button) view.findViewById(R.id.btnChooseLocation);
+        addImageButton = (ImageButton) view.findViewById(R.id.addImageButton);
 
         initOrRestore(savedInstanceState);
 
@@ -108,7 +111,7 @@ public class NewOfferFragment extends SuperFragment {
             etLocationLon.setText(String.valueOf(locationLongitude));
         }
 
-        imagesContainer.setOnClickListener(new StartCameraHandler(this));
+        addImageButton.setOnClickListener(new StartCameraHandler(this));
         btnSubmit.setOnClickListener(new SendNewOfferHandler(etTags, etLocationLat, etLocationLon, etPrice));
         btnBarcode.setOnClickListener(new StartNewBarcodeScanHandler(this));
         btnSetLocation.setOnClickListener(new StartLocationChooserHandler(this));
@@ -209,10 +212,6 @@ public class NewOfferFragment extends SuperFragment {
         imageButton.setLayoutParams(layoutParameters);
         imageButton.setScaleType(ScaleType.FIT_START);
         imageButton.setAdjustViewBounds(true);
-//        imageButton.setOnClickListener(ClickListener);
-        imageButton.setBackgroundColor(Color.TRANSPARENT);
-//        imageButton.setTag(i);
-//        imageButton.setId(i);
 
         imagesContainer.addView(imageButton);
     }

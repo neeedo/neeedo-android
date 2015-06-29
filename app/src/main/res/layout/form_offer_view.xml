@@ -15,19 +15,35 @@
             android:text="@string/new_card_offer"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
-        <LinearLayout android:orientation="horizontal"
-            android:id="@+id/imagesContainer"
+        <HorizontalScrollView
             android:layout_width="fill_parent"
             android:layout_height="120dp"
-            android:scaleType="fitStart"
-           android:background="@drawable/add_offer_image" />
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/imagesContainer"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/addImageButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitStart"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/add_offer_image" />
+
+
+            </LinearLayout>
+        </HorizontalScrollView>
 
         <Button
+            android:id="@+id/newOffer_Barcode_Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/start_barcode_scan"
-            android:id="@+id/newOffer_Barcode_Button"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:text="@string/start_barcode_scan" />
 
         <EditText
             android:id="@+id/etTags"
@@ -64,7 +80,6 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
             android:gravity="center"></RelativeLayout>
-
 
         <Button
             android:id="@+id/btnChooseLocation"
