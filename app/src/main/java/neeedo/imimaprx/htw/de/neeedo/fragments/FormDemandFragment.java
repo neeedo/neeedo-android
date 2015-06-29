@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.Location;
+import neeedo.imimaprx.htw.de.neeedo.events.GetSuggestionEvent;
 import neeedo.imimaprx.htw.de.neeedo.helpers.LocationHelper;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.rest.completion.GetCompletionAsyncTask;
@@ -69,6 +70,9 @@ public class FormDemandFragment extends FormFragment {
         etMustTags.addTextChangedListener(new AutocompletionTextWatcher(this, etMustTags));
         etShouldTags.addTextChangedListener(new AutocompletionTextWatcher(this, etShouldTags));
 
+        etMustTags.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+        etShouldTags.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+
         etMustTags.setOnClickListener(new View.OnClickListener() {
             private boolean open = false;
 
@@ -85,5 +89,13 @@ public class FormDemandFragment extends FormFragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void fillSuggestions(GetSuggestionEvent e) {
+        super.fillSuggestions(e);
+
+        etMustTags.setAdapter(suggestionsAdapter);
+        etShouldTags.setAdapter(suggestionsAdapter);
     }
 }

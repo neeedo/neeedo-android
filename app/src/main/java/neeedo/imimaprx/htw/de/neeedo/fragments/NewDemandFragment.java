@@ -53,24 +53,7 @@ public class NewDemandFragment extends FormDemandFragment {
 
     @Subscribe
     public void fillSuggestions(GetSuggestionEvent e) {
-        Log.d("Suggestion Event", "called");
-
-        for(String suggestion : e.getTagResult().getTag().getAvailableTags()) {
-            if(!suggestions.contains(suggestion)) {
-                suggestions.add(suggestion);
-            }
-        }
-
-        suggestionsAdapter = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_list_item_1, suggestions);
-        etMustTags.setAdapter(suggestionsAdapter);
-        etMustTags.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-        etShouldTags.setAdapter(suggestionsAdapter);
-        etShouldTags.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-
-        for(String tag : suggestions) {
-            Log.d("Tag", tag);
-        }
+        super.fillSuggestions(e);
 
         suggestionsAdapter.notifyDataSetChanged();
     }
