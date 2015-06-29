@@ -26,7 +26,6 @@ import neeedo.imimaprx.htw.de.neeedo.R;
 public class NavigationDrawerFragment extends SuperFragment {
 
     private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
-
     private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
 
     private NavigationDrawerCallbacks mCallbacks;

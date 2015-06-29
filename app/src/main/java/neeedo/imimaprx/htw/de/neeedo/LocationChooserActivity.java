@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.RelativeLayout;
 
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
@@ -17,6 +18,7 @@ import org.osmdroid.views.MapView;
 public class LocationChooserActivity extends ActionBarActivity {
     public static final String NOMINATIM_SERVICE_URL = "http://nominatim.openstreetmap.org/";
     private MapView mapView;
+    private AutoCompleteTextView autoCompleteTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +40,7 @@ public class LocationChooserActivity extends ActionBarActivity {
         RelativeLayout mapContainer = (RelativeLayout) findViewById(R.id.locationChooserMapContainer);
         mapContainer.addView(mapView);
 
-        //this is a hack to get around one of the osmdroid bugs
+                //this is a hack to get around one of the osmdroid bugs
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -47,6 +49,12 @@ public class LocationChooserActivity extends ActionBarActivity {
         }, 200);
 
         new NewSearchForLocationHandler( "berlin").execute();
+
+
+
+        autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.autoCompleteAddress);
+
+
     }
 
     @Override
