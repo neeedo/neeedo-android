@@ -22,6 +22,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.mockito.internal.matchers.Find;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
@@ -32,8 +33,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.util.Location;
+import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.FindLocationResult;
+import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.RestResult;
 
 
 public class LocationChooserActivity extends ActionBarActivity {
@@ -108,7 +112,7 @@ public class LocationChooserActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private class NewSearchForLocationHandler extends AsyncTask {
+    private class NewSearchForLocationHandler extends AsyncTask<Void, Void, FindLocationResult> {
         private final String query;
 
         public NewSearchForLocationHandler(String query) {
@@ -116,10 +120,10 @@ public class LocationChooserActivity extends ActionBarActivity {
         }
 
         @Override
-        protected Object doInBackground(Object[] params) {
+        protected FindLocationResult doInBackground(Void... voids) {
             InputStream is = null;
             String jsonString = "";
-            ArrayList<FoundLocation> locationsArrayList;
+            ArrayList<FoundLocation> locationsArrayList = null;
 
             try {
                 DefaultHttpClient httpClient = new DefaultHttpClient();
@@ -141,7 +145,7 @@ public class LocationChooserActivity extends ActionBarActivity {
                 jsonString = sb.toString();
 
                 JSONArray locationJSONArray = new JSONArray(jsonString);
-                
+
                 locationsArrayList = new ArrayList<FoundLocation>();
 
                 for (int i = 0; i < locationJSONArray.length(); i++) {
@@ -150,10 +154,20 @@ public class LocationChooserActivity extends ActionBarActivity {
                     locationsArrayList.add(foundLocation);
                 }
             } catch (Exception e) {
-                Log.e("Buffer Error", "Error converting result " + e.toString());
+                return new FindLocationResult(this.getClass().getSimpleName(), RestResult.ReturnType.FAILED, null);
             }
 
-            return "foo!";
+            return new FindLocationResult(this.getClass().getSimpleName(), RestResult.ReturnType.SUCCESS, locationsArrayList);
+        }
+
+        @Override
+        protected void onPostExecute(FindLocationResult findLocationResult) {
+            super.onPostExecute(findLocationResult);
+            if (findLocationResult.getResult() == RestResult.ReturnType.FAILED) {
+                return;
+            } else if (findLocationResult.getResult() == RestResult.ReturnType.SUCCESS) {
+                
+            }
         }
     }
 
