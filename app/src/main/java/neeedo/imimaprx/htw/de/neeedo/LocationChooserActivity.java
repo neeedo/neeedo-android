@@ -1,18 +1,37 @@
 package neeedo.imimaprx.htw.de.neeedo;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.RelativeLayout;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 
 
 public class LocationChooserActivity extends ActionBarActivity {
@@ -40,7 +59,7 @@ public class LocationChooserActivity extends ActionBarActivity {
         RelativeLayout mapContainer = (RelativeLayout) findViewById(R.id.locationChooserMapContainer);
         mapContainer.addView(mapView);
 
-                //this is a hack to get around one of the osmdroid bugs
+        //this is a hack to get around one of the osmdroid bugs
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -48,12 +67,25 @@ public class LocationChooserActivity extends ActionBarActivity {
             }
         }, 200);
 
-        new NewSearchForLocationHandler( "berlin").execute();
-
-
 
         autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.autoCompleteAddress);
 
+        autoCompleteTextView.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                new NewSearchForLocationHandler(s.toString()).execute();
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
 
     }
 
@@ -73,4 +105,57 @@ public class LocationChooserActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    private class NewSearchForLocationHandler extends AsyncTask {
+        private final String query;
+
+        public NewSearchForLocationHandler(String query) {
+            this.query = query;
+        }
+
+        @Override
+        protected Object doInBackground(Object[] params) {
+
+            InputStream is = null;
+            String json = "";
+            ArrayList<String> locationsArrayList;
+
+            try {
+                DefaultHttpClient httpClient = new DefaultHttpClient();
+                HttpPost httpPost = new HttpPost("http://nominatim.openstreetmap.org/search?q=emser+str+54&format=json");
+
+                HttpResponse httpResponse = httpClient.execute(httpPost);
+                HttpEntity httpEntity = httpResponse.getEntity();
+                is = httpEntity.getContent();
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(
+                        is, "iso-8859-1"), 8);
+                StringBuilder sb = new StringBuilder();
+                String line = null;
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line + "\n");
+                    System.out.println(line);
+                }
+                is.close();
+                json = sb.toString();
+
+                JSONArray locationJSONArray = new JSONArray(json);
+                Log.d("1", locationJSONArray.toString());
+
+                locationsArrayList = new ArrayList<String>();
+
+                for (int i = 0; i < locationJSONArray.length(); i++) {
+                    String value = locationJSONArray.get(i).toString();
+                    locationsArrayList.add(value);
+                }
+                Log.d("2", locationsArrayList.toString());
+//                locationArray.getJSONArray()
+            } catch (Exception e) {
+                Log.e("Buffer Error", "Error converting result " + e.toString());
+            }
+
+            return "foo!";
+        }
+    }
+
 }
