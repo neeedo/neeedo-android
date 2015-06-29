@@ -19,7 +19,7 @@
             android:id="@+id/imagesContainer"
             android:layout_width="fill_parent"
             android:layout_height="120dp"
-            android:scaleType="centerInside"
+            android:scaleType="fitStart"
            android:background="@drawable/add_offer_image" />
 
         <Button

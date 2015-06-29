@@ -14,6 +14,8 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -205,6 +207,8 @@ public class NewOfferFragment extends SuperFragment {
         imageButton.setImageBitmap(image);
         LayoutParams layoutParameters = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
         imageButton.setLayoutParams(layoutParameters);
+        imageButton.setScaleType(ScaleType.FIT_START);
+        imageButton.setAdjustViewBounds(true);
 //        imageButton.setOnClickListener(ClickListener);
         imageButton.setBackgroundColor(Color.TRANSPARENT);
 //        imageButton.setTag(i);
