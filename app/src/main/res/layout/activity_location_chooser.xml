@@ -10,18 +10,21 @@
         android:gravity="bottom"
         android:orientation="vertical">
 
-        <EditText
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteAddress"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="@android:color/holo_red_dark" />
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:ems="10" />
+
         <RelativeLayout
             android:id="@+id/locationChooserMapContainer"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
-            android:gravity="center"></RelativeLayout>
+            android:gravity="center"/>
 
     </LinearLayout>
 </RelativeLayout>
