@@ -55,7 +55,12 @@ public class NewDemandFragment extends FormDemandFragment {
     public void fillSuggestions(GetSuggestionEvent e) {
         Log.d("Suggestion Event", "called");
 
-        suggestions.addAll(e.getTagResult().getTag().getAvailableTags()); // TODO make items unique (set)
+        for(String suggestion : e.getTagResult().getTag().getAvailableTags()) {
+            if(!suggestions.contains(suggestion)) {
+                suggestions.add(suggestion);
+            }
+        }
+
         suggestionsAdapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_list_item_1, suggestions);
         etMustTags.setAdapter(suggestionsAdapter);

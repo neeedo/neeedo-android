@@ -80,11 +80,13 @@ public class FormDemandFragment extends SuperFragment {
                 String tagsText = etMustTags.getText().toString();
                 String tags[] = tagsText.split("[ ,]+");
                 String lastTag = tags[tags.length-1]; // get last tag for suggestion
-                if (lastTag.length() > 0) {
+                if (tagsText.length() > 0) {
+                    // do completion for last tag
                     if (lastTag.matches("[A-Za-z0-9]+")) {
                         new GetCompletionAsyncTask(lastTag, BaseAsyncTask.CompletionType.TAG).execute();
-                    } else {
-                        // it was said there will be tolerance against %20
+                    }
+                    // do suggestion for all tags
+                    if (tagsText.matches("[A-Za-z0-9, ]+")) {
                         new GetCompletionAsyncTask(tagsText, BaseAsyncTask.CompletionType.PHRASE).execute();
                     }
                 }
