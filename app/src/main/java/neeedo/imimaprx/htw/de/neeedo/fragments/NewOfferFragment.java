@@ -3,6 +3,7 @@ package neeedo.imimaprx.htw.de.neeedo.fragments;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -172,10 +173,10 @@ public class NewOfferFragment extends SuperFragment {
     }
 
     private void initOrRestore(Bundle savedInstanceState) {
-        if(savedInstanceState != null){
+        if (savedInstanceState != null) {
             newCameraOutputFile = (File) savedInstanceState.get(STATE_CAMERA_OUTPUT);
             ArrayList<Parcelable> imageFiles = savedInstanceState.getParcelableArrayList(STATE_IMAGE_LIST);
-            for(Parcelable image : imageFiles) {
+            for (Parcelable image : imageFiles) {
                 this.imageFiles.add((Bitmap) image);
                 addImageButton.setImageBitmap((Bitmap) image);
             }
@@ -199,8 +200,14 @@ public class NewOfferFragment extends SuperFragment {
         redirectToFragment(ListOffersFragment.class, MainActivity.MENU_LIST_OFFERS);
     }
 
-    public void setNewImage(String newImage) {
-        uploadedImages.add(newImage);
-//        addImageButton.set
+    private void addImage(Bitmap image) {
+        ImageButton imageButton = new ImageButton(getActivity());
+        imageButton.setImageBitmap(image);
+        LayoutParams layoutParameters = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
+        imageButton.setLayoutParams(layoutParameters);
+//        imageButton.setOnClickListener(ClickListener);
+        imageButton.setBackgroundColor(Color.TRANSPARENT);
+//        imageButton.setTag(i);
+//        imageButton.setId(i);
     }
 }
