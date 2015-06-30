@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.user.Users;
+import neeedo.imimaprx.htw.de.neeedo.events.UserMessageContactsLoadedEvent;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.models.MessagesModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
@@ -28,6 +29,12 @@ public class GetMessagesByUserIdAndReadStateAsyncTask extends BaseAsyncTask {
     public GetMessagesByUserIdAndReadStateAsyncTask(String userId1, boolean read) {
         this.userId1 = userId1;
         this.read = read;
+    }
+
+    @Override
+    protected void onPostExecute(Object result) {
+        if (result instanceof RestResult)
+            eventService.post(new UserMessageContactsLoadedEvent());
     }
 
     @Override
@@ -47,12 +54,12 @@ public class GetMessagesByUserIdAndReadStateAsyncTask extends BaseAsyncTask {
             ResponseEntity<Users> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, Users.class);
             final Users users = responseEntity.getBody();
 
-            MessagesModel.getInstance().setUsers(users);
+            MessagesModel.getInstance().appendUsers(users);
 
-            return new RestResult( RestResult.ReturnType.SUCCESS);
+            return new RestResult(RestResult.ReturnType.SUCCESS);
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
-            return new RestResult( RestResult.ReturnType.FAILED);
+            return new RestResult(RestResult.ReturnType.FAILED);
         }
     }
 

@@ -11,7 +11,7 @@
         android:orientation="vertical">
 
 
-        <AutoCompleteTextView
+        <neeedo.imimaprx.htw.de.neeedo.LocationAutoCompleteTextView
             android:id="@+id/autoCompleteAddress"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

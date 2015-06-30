@@ -3,6 +3,7 @@ package neeedo.imimaprx.htw.de.neeedo.models;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.message.Messages;
 import neeedo.imimaprx.htw.de.neeedo.entities.message.SingleMessage;
+import neeedo.imimaprx.htw.de.neeedo.entities.user.User;
 import neeedo.imimaprx.htw.de.neeedo.entities.user.Users;
 
 public class MessagesModel {
@@ -43,5 +44,16 @@ public class MessagesModel {
 
     public void setUsers(Users users) {
         this.users = users;
+    }
+
+    public void appendUsers(Users users) {
+        if (this.users == null) {
+            this.users = users;
+        } else {
+
+            for (User user : users.getUsers()) {
+                users.addSingleUser(user);
+            }
+        }
     }
 }

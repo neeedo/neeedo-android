@@ -11,6 +11,7 @@
     <string name="title_section_my_offers">My Offers</string>
     <string name="title_section_my_demands">My Demands</string>
     <string name="title_section_swiper">Swiper</string>
+    <string name="title_section_message">Message</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -84,5 +85,6 @@
     <string name="format_price">#0.00 €</string>
     <string name="format_distance">#0.00 km</string>
     <string name="camera_uploading_progress">image is uploading</string>
+    <string name="location_chooser_search_hint">Suche...</string>
 
 </resources>
