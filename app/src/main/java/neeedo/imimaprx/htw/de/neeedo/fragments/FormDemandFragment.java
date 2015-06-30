@@ -7,9 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.MultiAutoCompleteTextView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.apmem.tools.layouts.FlowLayout;
@@ -27,7 +25,7 @@ public class FormDemandFragment extends FormFragment {
     protected final ActiveUser activeUser = ActiveUser.getInstance();
 
     protected MultiAutoCompleteTextView etMustTags;
-    protected FlowLayout llMustTags;
+    protected FlowLayout flMustTagSuggestions;
     protected MultiAutoCompleteTextView etShouldTags;
     protected EditText etLocationLat;
     protected EditText etLocationLon;
@@ -60,7 +58,7 @@ public class FormDemandFragment extends FormFragment {
         View view = inflater.inflate(R.layout.form_demand_view, container, false);
 
         etMustTags = (MultiAutoCompleteTextView) view.findViewById(R.id.etMustTags);
-        llMustTags = (FlowLayout) view.findViewById(R.id.llMustTags);
+        flMustTagSuggestions = (FlowLayout) view.findViewById(R.id.flMustTagSuggestions);
         etShouldTags = (MultiAutoCompleteTextView) view.findViewById(R.id.etShouldTags);
         etLocationLat = (EditText) view.findViewById(R.id.etLocationLat);
         etLocationLon = (EditText) view.findViewById(R.id.etLocationLon);
@@ -92,25 +90,25 @@ public class FormDemandFragment extends FormFragment {
         etShouldTags.setAdapter(completionsAdapter);
 
         if(e.getCompletionType().equals(BaseAsyncTask.CompletionType.PHRASE)) {
-            llMustTags.removeAllViewsInLayout();
+            flMustTagSuggestions.removeAllViewsInLayout();
         }
 
         for(final String suggestion : suggestions) {
             final TextView tvMustTag = new TextView(getActivity());
             tvMustTag.setText(suggestion);
-            tvMustTag.setPadding(10, 10, 10, 10);
+            tvMustTag.setPadding(15, 10, 15, 10);
             tvMustTag.setBackgroundColor(Color.parseColor("#88BEB1"));
             FlowLayout.LayoutParams layoutParams = new FlowLayout.LayoutParams(
                     FlowLayout.LayoutParams.WRAP_CONTENT, FlowLayout.LayoutParams.WRAP_CONTENT);
-            layoutParams.setMargins(5, 5, 5, 5);
-            llMustTags.addView(tvMustTag, layoutParams);
+            layoutParams.setMargins(5, 5, 5, 10);
+            flMustTagSuggestions.addView(tvMustTag, layoutParams);
             tvMustTag.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     String tag = tvMustTag.getText().toString();
                     etMustTags.setText(etMustTags.getText().toString() + tag + ", ");
                     etMustTags.setSelection(etMustTags.length());
-                    llMustTags.removeViewInLayout(tvMustTag);
+                    flMustTagSuggestions.removeViewInLayout(tvMustTag);
                     suggestions.remove(suggestion);
                 }
             });

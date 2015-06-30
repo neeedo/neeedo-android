@@ -38,12 +38,12 @@ public class AutocompletionTextWatcher implements TextWatcher {
                     new GetCompletionAsyncTask(lastTag, BaseAsyncTask.CompletionType.TAG).execute();
                 }
             }
-        } else if(completionType.equals(BaseAsyncTask.CompletionType.PHRASE)) { // TODO only if last tag completed
+        } else if(completionType.equals(BaseAsyncTask.CompletionType.PHRASE)) {
             String tagsText = etInput.getText().toString();
-            char lastCharacter = charSequence.charAt(charSequence.length()-1);
             if(tagsText.length() > 0) {
+                char lastCharacter = charSequence.charAt(charSequence.length()-1);
                 // do suggestion for all tags
-                if(tagsText.matches("[A-Za-z0-9, ]+")) { // TODO check why phrases with "," don't work
+                if(tagsText.matches("[A-Za-z0-9, ]+") && (lastCharacter == ',' || lastCharacter == ' ')) {
                     new GetCompletionAsyncTask(tagsText, BaseAsyncTask.CompletionType.PHRASE).execute();
                 }
             }

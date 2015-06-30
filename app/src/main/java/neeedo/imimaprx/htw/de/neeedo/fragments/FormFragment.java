@@ -25,21 +25,14 @@ public class FormFragment extends SuperFragment {
     public void fillSuggestions(GetSuggestionEvent e) {
         Log.d("Suggestion Event", e.getCompletionType()+" called");
 
-        if(e.getCompletionType().equals(BaseAsyncTask.CompletionType.TAG)) {
-            completions = e.getTagResult().getTag().getCompletedTags();
+        suggestions = e.getTagResult().getTag().getSuggestedTags();
+        completions = e.getTagResult().getTag().getCompletedTags();
 
-            completionsAdapter = new ArrayAdapter<>(getActivity(),
-                    android.R.layout.simple_list_item_1, completions);
+        completionsAdapter = new ArrayAdapter<>(getActivity(),
+                android.R.layout.simple_list_item_1, completions);
 
-            for(String tag : completions) {
-                Log.d("Tag", tag);
-            }
-        } else if(e.getCompletionType().equals(BaseAsyncTask.CompletionType.PHRASE)) {
-            suggestions = e.getTagResult().getTag().getSuggestedTags();
-
-            for(String tag : suggestions) {
-                Log.d("Tag", tag);
-            }
+        for(String tag : completions) {
+            Log.d("Tag", tag);
         }
     }
 }
