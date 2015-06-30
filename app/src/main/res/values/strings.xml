@@ -90,4 +90,7 @@
     <string name="location_chooser_search_hint">Suche...</string>
     <string name="message_view_no_conversations_found">No conversations have been found.</string>
 
+    <string name="single_offer_fragment_toast_message">Your message was send.</string>
+    <string name="single_offer_message_edit_text_hint">Write your message here.</string>
+
 </resources>
