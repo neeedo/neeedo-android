@@ -62,7 +62,7 @@ public class EditDemandFragment extends FormDemandFragment {
     public void fillSuggestions(GetSuggestionEvent e) {
         super.fillSuggestions(e);
 
-        suggestionsAdapter.notifyDataSetChanged();
+        completionsAdapter.notifyDataSetChanged();
     }
 
 }

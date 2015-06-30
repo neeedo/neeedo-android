@@ -1,17 +1,11 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.MultiAutoCompleteTextView;
 
 import com.squareup.otto.Subscribe;
-
-import java.util.ArrayList;
 
 import neeedo.imimaprx.htw.de.neeedo.MainActivity;
 import neeedo.imimaprx.htw.de.neeedo.events.GetSuggestionEvent;
@@ -55,6 +49,6 @@ public class NewDemandFragment extends FormDemandFragment {
     public void fillSuggestions(GetSuggestionEvent e) {
         super.fillSuggestions(e);
 
-        suggestionsAdapter.notifyDataSetChanged();
+        completionsAdapter.notifyDataSetChanged();
     }
 }

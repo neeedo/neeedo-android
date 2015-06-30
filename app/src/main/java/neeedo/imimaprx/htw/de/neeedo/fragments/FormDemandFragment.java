@@ -1,25 +1,18 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments;
 
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
-
-import java.util.ArrayList;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.Location;
 import neeedo.imimaprx.htw.de.neeedo.events.GetSuggestionEvent;
 import neeedo.imimaprx.htw.de.neeedo.helpers.LocationHelper;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
-import neeedo.imimaprx.htw.de.neeedo.rest.completion.GetCompletionAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.utils.AutocompletionOnClickListener;
 import neeedo.imimaprx.htw.de.neeedo.utils.AutocompletionTextWatcher;
@@ -68,8 +61,9 @@ public class FormDemandFragment extends FormFragment {
         etPriceMax = (EditText) view.findViewById(R.id.etPriceMax);
         btnSubmit = (Button) view.findViewById(R.id.btnSubmit);
 
-        etMustTags.addTextChangedListener(new AutocompletionTextWatcher(this, etMustTags));
-        etShouldTags.addTextChangedListener(new AutocompletionTextWatcher(this, etShouldTags));
+        BaseAsyncTask.CompletionType completionType = BaseAsyncTask.CompletionType.TAG;
+        etMustTags.addTextChangedListener(new AutocompletionTextWatcher(this, etMustTags, completionType));
+        etShouldTags.addTextChangedListener(new AutocompletionTextWatcher(this, etShouldTags, completionType));
 
         etMustTags.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
         etShouldTags.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
@@ -84,7 +78,7 @@ public class FormDemandFragment extends FormFragment {
     public void fillSuggestions(GetSuggestionEvent e) {
         super.fillSuggestions(e);
 
-        etMustTags.setAdapter(suggestionsAdapter);
-        etShouldTags.setAdapter(suggestionsAdapter);
+        etMustTags.setAdapter(completionsAdapter);
+        etShouldTags.setAdapter(completionsAdapter);
     }
 }

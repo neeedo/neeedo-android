@@ -35,7 +35,7 @@ public class GetCompletionAsyncTask extends BaseAsyncTask {
     @Override
     protected void onPostExecute(Object result) {
         if(result instanceof TagResult)
-            eventService.post(new GetSuggestionEvent((TagResult) result));
+            eventService.post(new GetSuggestionEvent((TagResult) result, completionType));
     }
 
     @Override

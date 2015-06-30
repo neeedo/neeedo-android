@@ -13,10 +13,12 @@ import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 public class AutocompletionTextWatcher implements TextWatcher {
     FormFragment fragment;
     EditText etInput;
+    BaseAsyncTask.CompletionType completionType;
 
-    public AutocompletionTextWatcher(FormFragment fragment, EditText etInput) {
+    public AutocompletionTextWatcher(FormFragment fragment, EditText etInput, BaseAsyncTask.CompletionType completionType) {
         this.fragment = fragment;
         this.etInput = etInput;
+        this.completionType = completionType;
     }
 
     @Override
@@ -26,18 +28,15 @@ public class AutocompletionTextWatcher implements TextWatcher {
 
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        fragment.setSuggestions(new ArrayList<String>());
-        String tagsText = etInput.getText().toString();
-        String tags[] = tagsText.split("[ ,]+");
-        String lastTag = tags[tags.length-1]; // get last tag for suggestion
-        if (tagsText.length() > 0) {
-            // do completion for last tag
-            if (lastTag.matches("[A-Za-z0-9]+")) {
-                new GetCompletionAsyncTask(lastTag, BaseAsyncTask.CompletionType.TAG).execute();
-            }
-            // do suggestion for all tags
-            if (tagsText.matches("[A-Za-z0-9, ]+")) {
-                new GetCompletionAsyncTask(tagsText, BaseAsyncTask.CompletionType.PHRASE).execute();
+        if(completionType.equals(BaseAsyncTask.CompletionType.TAG)) {
+            String tagsText = etInput.getText().toString();
+            String tags[] = tagsText.split("[ ,]+");
+            String lastTag = tags[tags.length-1]; // get last tag for completion
+            if (tagsText.length() > 0) {
+                // do completion for last tag
+                if (lastTag.matches("[A-Za-z0-9]+")) {
+                    new GetCompletionAsyncTask(lastTag, BaseAsyncTask.CompletionType.TAG).execute();
+                }
             }
         }
 
