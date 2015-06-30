@@ -67,6 +67,8 @@
 
     <string name="button_delete">Delete</string>
     <string name="button_edit">Edit</string>
+    <string name="button_messsage">Write message</string>
+    <string name="button_send">Send</string>
 
     <string name="dialog_yes">Yes</string>
     <string name="dialog_no">No</string>
