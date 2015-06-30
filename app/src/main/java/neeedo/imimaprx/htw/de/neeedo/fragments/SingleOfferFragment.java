@@ -8,7 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 
@@ -16,10 +18,14 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
+import neeedo.imimaprx.htw.de.neeedo.entities.message.Message;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offer;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offers;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
+import neeedo.imimaprx.htw.de.neeedo.events.UserMessageSendEvent;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
+import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
+import neeedo.imimaprx.htw.de.neeedo.rest.message.PostMessageAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.offer.GetOffersAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.DeleteAsyncTask;
@@ -28,9 +34,13 @@ import neeedo.imimaprx.htw.de.neeedo.rest.util.DeleteAsyncTask;
 public class SingleOfferFragment extends SuperFragment implements View.OnClickListener {
     private Button btnDeleteOffer;
     private Button btnEditOffer;
+    private Button btnMessage;
+    private Button btnSend;
     private TextView tvTags;
     private TextView tvPrice;
     private TextView tvUser;
+    private EditText editTextSendMessage;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,6 +51,7 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
         tvTags = (TextView) view.findViewById(R.id.tvTags);
         tvPrice = (TextView) view.findViewById(R.id.tvPrice);
         tvUser = (TextView) view.findViewById(R.id.tvUser);
+        editTextSendMessage = (EditText) view.findViewById(R.id.getMessage);
 
         return view;
     }
@@ -52,9 +63,13 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
         Activity activity = getActivity();
         btnDeleteOffer = (Button) activity.findViewById(R.id.btnDelete);
         btnEditOffer = (Button) activity.findViewById(R.id.btnEdit);
+        btnMessage = (Button) activity.findViewById(R.id.btnMessage);
+        btnSend = (Button) activity.findViewById(R.id.btnSend);
 
         btnDeleteOffer.setOnClickListener(this);
         btnEditOffer.setOnClickListener(this);
+        btnMessage.setOnClickListener(this);
+        btnSend.setOnClickListener(this);
 
         BaseAsyncTask asyncTask;
 
@@ -105,7 +120,7 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
         String offerId = getArguments().getString("id");
         Offer currentOffer = findSingleOffer(offerId);
 
-        switch(view.getId()) {
+        switch (view.getId()) {
             case R.id.btnDelete:
                 OffersModel.getInstance().setDraft(currentOffer);
                 BaseAsyncTask asyncTask = new DeleteAsyncTask(currentOffer);
@@ -123,6 +138,35 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
 //                OffersModel.getInstance().setDraft(currentOffer);
 //                redirectToFragment(EditOfferFragment.class);
                 break;
+            case R.id.btnMessage: {
+                btnMessage.setVisibility(View.GONE);
+                btnSend.setVisibility(View.VISIBLE);
+                editTextSendMessage.setVisibility(View.VISIBLE);
+            }
+            break;
+
+            case R.id.btnSend: {
+                String message = editTextSendMessage.getText().toString();
+                if (message.length() == 0) {
+                    return;
+                }
+                Message m = new Message();
+                m.setSenderId(UserModel.getInstance().getUser().getId());
+                m.setRecipientId(currentOffer.getUserId());
+                m.setBody(message);
+
+                new PostMessageAsyncTask(m).execute();
+                btnSend.setVisibility(View.GONE);
+                btnMessage.setVisibility(View.VISIBLE);
+                editTextSendMessage.setVisibility(View.GONE);
+
+            }
+            break;
         }
+    }
+
+    @Subscribe
+    public void messageSend(UserMessageSendEvent userMessageSendEvent) {
+        Toast.makeText(getActivity(), getActivity().getString(R.string.single_offer_fragment_toast_message), Toast.LENGTH_SHORT).show();
     }
 }

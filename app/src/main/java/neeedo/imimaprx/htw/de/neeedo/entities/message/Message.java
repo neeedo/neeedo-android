@@ -6,7 +6,6 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 import java.io.Serializable;
-import java.security.Timestamp;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.user.User;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.BaseEntity;
@@ -26,7 +25,7 @@ public class Message implements Serializable, BaseEntity {
     private User recipient;
 
     @Element
-    private Timestamp timestamp;
+    private Long timestamp;
 
     @Element
     private boolean read;
@@ -99,11 +98,11 @@ public class Message implements Serializable, BaseEntity {
     }
 
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
-    public Timestamp getTimestamp() {
+    public Long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Timestamp timestamp) {
+    public void setTimestamp(Long timestamp) {
         this.timestamp = timestamp;
     }
 
