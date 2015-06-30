@@ -12,6 +12,7 @@ import neeedo.imimaprx.htw.de.neeedo.fragments.DiolorSwipeFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.ListDemandsFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.ListOffersFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.MainFragment;
+import neeedo.imimaprx.htw.de.neeedo.fragments.MessageFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.NavigationDrawerFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.NewDemandFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.NewOfferFragment;
@@ -37,6 +38,7 @@ public class MainActivity extends ActionBarActivity
     public static final int MENU_LIST_DEMANDS = 3;
     public static final int MENU_NEW_DEMAND = 4;
     public static final int MENU_SWIPER = 5;
+    public static final int MENU_MESSAGE = 6;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +80,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     private void attempLogin() {
+
         ActiveUser activeUser = ActiveUser.getInstance();
         if (activeUser.isAlreadyStarted()) {
             return;
@@ -140,6 +143,10 @@ public class MainActivity extends ActionBarActivity
             case MENU_SWIPER:
                 mFragment = new DiolorSwipeFragment();
                 break;
+            case MENU_MESSAGE:
+                mFragment = new MessageFragment();
+                break;
+
             default:
                 mFragment = new MainFragment();
                 break;

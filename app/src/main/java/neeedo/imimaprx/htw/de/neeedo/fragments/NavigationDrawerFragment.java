@@ -101,7 +101,8 @@ public class NavigationDrawerFragment extends SuperFragment {
                         getString(R.string.title_section_new_offer),
                         getString(R.string.title_section_my_demands),
                         getString(R.string.title_section_new_demand),
-                        getString(R.string.title_section_swiper)
+                        getString(R.string.title_section_swiper),
+                        getString(R.string.title_section_message)
                 }));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;

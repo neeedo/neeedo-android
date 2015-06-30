@@ -25,7 +25,7 @@ public class Users implements Serializable, BaseEntity {
         return false;
     }
 
-    public void addSingleDemand(User user) {
+    public void addSingleUser(User user) {
         if (users == null) {
             users = new ArrayList<>();
         }
