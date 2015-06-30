@@ -84,5 +84,6 @@
     <string name="format_price">#0.00 €</string>
     <string name="format_distance">#0.00 km</string>
     <string name="camera_uploading_progress">image is uploading</string>
+    <string name="location_chooser_search_hint">Suche...</string>
 
 </resources>
