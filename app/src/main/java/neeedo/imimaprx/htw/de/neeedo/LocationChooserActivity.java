@@ -27,6 +27,8 @@ import org.osmdroid.views.MapView;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.FindLocationResult;
@@ -71,14 +73,14 @@ public class LocationChooserActivity extends ActionBarActivity {
         adapter.setNotifyOnChange(true);
 
         autoCompleteTextView = (LocationAutoCompleteTextView) findViewById(R.id.autoCompleteAddress);
-        autoCompleteTextView.setThreshold(0);//will start working after third character
+        autoCompleteTextView.setThreshold(3);//will start working after third character
         autoCompleteTextView.setAdapter(adapter);
         autoCompleteTextView.setHint(getString(R.string.location_chooser_search_hint));
 
         autoCompleteTextView.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence inputString, int start, int before, int count) {
-                new NewSearchForLocationHandler(inputString.toString()).execute();
+                new FindLocationSuggestionsHandler(inputString.toString(), adapter).execute();
             }
 
             @Override
@@ -90,8 +92,6 @@ public class LocationChooserActivity extends ActionBarActivity {
             public void afterTextChanged(Editable s) {
             }
         });
-
-
     }
 
     @Override
@@ -107,68 +107,6 @@ public class LocationChooserActivity extends ActionBarActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
-    }
-
-    private class NewSearchForLocationHandler extends AsyncTask<Void, Void, FindLocationResult> {
-        private final String query;
-
-        public NewSearchForLocationHandler(String query) {
-            this.query = query;
-        }
-
-        @Override
-        protected FindLocationResult doInBackground(Void... voids) {
-            InputStream is = null;
-            String jsonString = "";
-            ArrayList<FoundLocation> locationsArrayList = null;
-
-            try {
-                DefaultHttpClient httpClient = new DefaultHttpClient();
-                HttpPost httpPost = new HttpPost("http://nominatim.openstreetmap.org/search?q=berlin+hauptstr&format=json");
-
-                HttpResponse httpResponse = httpClient.execute(httpPost);
-                HttpEntity httpEntity = httpResponse.getEntity();
-                is = httpEntity.getContent();
-
-                BufferedReader reader = new BufferedReader(new InputStreamReader(
-                        is, "iso-8859-1"), 8);
-                StringBuilder sb = new StringBuilder();
-                String line = null;
-                while ((line = reader.readLine()) != null) {
-                    sb.append(line + "\n");
-                    System.out.println(line);
-                }
-                is.close();
-                jsonString = sb.toString();
-
-                JSONArray locationJSONArray = new JSONArray(jsonString);
-
-                locationsArrayList = new ArrayList<FoundLocation>();
-
-                for (int i = 0; i < locationJSONArray.length(); i++) {
-                    JSONObject currentLocationObject = (JSONObject) locationJSONArray.get(i);
-                    FoundLocation foundLocation = new FoundLocation(currentLocationObject);
-                    locationsArrayList.add(foundLocation);
-                }
-            } catch (Exception e) {
-                return new FindLocationResult(this.getClass().getSimpleName(), RestResult.ReturnType.FAILED, null);
-            }
-
-            return new FindLocationResult(this.getClass().getSimpleName(), RestResult.ReturnType.SUCCESS, locationsArrayList);
-        }
-
-        @Override
-        protected void onPostExecute(FindLocationResult findLocationResult) {
-            super.onPostExecute(findLocationResult);
-            if (findLocationResult.getResult() == RestResult.ReturnType.FAILED) {
-                return;
-            } else if (findLocationResult.getResult() == RestResult.ReturnType.SUCCESS) {
-                adapter.clear();
-                adapter.addAll(findLocationResult.getFoundLocations());
-                adapter.notifyDataSetChanged();
-            }
-        }
     }
 }
