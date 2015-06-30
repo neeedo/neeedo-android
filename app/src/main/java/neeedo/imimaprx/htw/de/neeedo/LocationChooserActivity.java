@@ -9,10 +9,13 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -30,6 +33,7 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.FindLocationResult;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.RestResult;
@@ -90,6 +94,15 @@ public class LocationChooserActivity extends ActionBarActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+            }
+        });
+
+        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) {
+                FoundLocation selectedItem = adapter.getItem(position);
+                System.out.println(0);
+                mapView.getController().animateTo(new GeoPoint(selectedItem.getLatitude(),selectedItem.getLongitude()));
             }
         });
     }

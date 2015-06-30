@@ -2,16 +2,18 @@ package neeedo.imimaprx.htw.de.neeedo;
 
 import org.json.JSONObject;
 
+import neeedo.imimaprx.htw.de.neeedo.utils.GeoLocationUtils;
+
 public class FoundLocation {
     private double importance;
     private String name;
-    private String latitude;
-    private String longitude;
+    private double latitude;
+    private double longitude;
 
     public FoundLocation(JSONObject currentLocationObject) {
         try {
-            this.latitude = currentLocationObject.getString("lat");
-            this.longitude = currentLocationObject.getString("lon");
+            this.latitude = currentLocationObject.getDouble("lat");
+            this.longitude = currentLocationObject.getDouble("lon");
             this.name = currentLocationObject.getString("display_name");
             this.importance = currentLocationObject.getDouble("importance");
         } catch (Exception e) {
@@ -22,5 +24,13 @@ public class FoundLocation {
     @Override
     public String toString() {
         return name;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
     }
 }

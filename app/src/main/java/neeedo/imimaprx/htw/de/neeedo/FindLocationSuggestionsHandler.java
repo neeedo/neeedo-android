@@ -85,7 +85,7 @@ public class FindLocationSuggestionsHandler extends AsyncTask<Void, Void, FindLo
         if (findLocationResult.getResult() == RestResult.ReturnType.FAILED) {
             return;
         } else if (findLocationResult.getResult() == RestResult.ReturnType.SUCCESS) {
-            if (findLocationResult.getRequestNumberThisRequest() < requestCounter) {
+            if (findLocationResult.getRequestNumberThisRequest() < requestCounter) { //if response is for the last request we have triggered
                 return;
             }
             adapter.clear();
