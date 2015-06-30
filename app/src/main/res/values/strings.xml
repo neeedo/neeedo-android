@@ -86,5 +86,6 @@
     <string name="format_distance">#0.00 km</string>
     <string name="camera_uploading_progress">image is uploading</string>
     <string name="location_chooser_search_hint">Suche...</string>
+    <string name="message_view_no_conversations_found">No conversations have been found.</string>
 
 </resources>
