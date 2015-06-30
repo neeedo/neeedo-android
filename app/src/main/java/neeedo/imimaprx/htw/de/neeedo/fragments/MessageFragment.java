@@ -1,9 +1,13 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments;
 
+
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -40,6 +44,28 @@ public class MessageFragment extends SuperFragment {
         userAdapter = new ArrayAdapter<User>(getActivity(), android.R.layout.simple_list_item_1, users);
         editText = (EditText) view.findViewById(R.id.message_view_edit_text);
         messageView.setAdapter(userAdapter);
+
+        messageView.setClickable(true);
+        messageView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                User user = (User) messageView.getItemAtPosition(position);
+
+                FragmentManager fragmentManager = getFragmentManager();
+                Fragment fragment = new MessagesFragment();
+
+                Bundle args = new Bundle();
+                args.putString("id", user.getId());
+                fragment.setArguments(args);
+
+                fragmentManager.beginTransaction()
+                        .addToBackStack(null)
+                        .replace(R.id.container, fragment)
+                        .commit();
+            }
+        });
 
 
         if (ActiveUser.getInstance().hasActiveUser()) {

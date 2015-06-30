@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.message.Messages;
+import neeedo.imimaprx.htw.de.neeedo.events.MessagesLoadedEvent;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.models.MessagesModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
@@ -29,6 +30,13 @@ public class GetMessagesAsyncTask extends BaseAsyncTask {
         this.userId1 = userId1;
         this.userId2 = userId2;
     }
+
+    @Override
+    protected void onPostExecute(Object result) {
+        if (result instanceof RestResult)
+            eventService.post(new MessagesLoadedEvent());
+    }
+
 
     @Override
     protected Object doInBackground(Object[] params) {
