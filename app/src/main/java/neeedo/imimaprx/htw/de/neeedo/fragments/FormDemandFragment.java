@@ -12,6 +12,8 @@ import android.widget.MultiAutoCompleteTextView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import org.apmem.tools.layouts.FlowLayout;
+
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.Location;
 import neeedo.imimaprx.htw.de.neeedo.events.GetSuggestionEvent;
@@ -25,7 +27,7 @@ public class FormDemandFragment extends FormFragment {
     protected final ActiveUser activeUser = ActiveUser.getInstance();
 
     protected MultiAutoCompleteTextView etMustTags;
-    protected LinearLayout llMustTags;
+    protected FlowLayout llMustTags;
     protected MultiAutoCompleteTextView etShouldTags;
     protected EditText etLocationLat;
     protected EditText etLocationLon;
@@ -58,7 +60,7 @@ public class FormDemandFragment extends FormFragment {
         View view = inflater.inflate(R.layout.form_demand_view, container, false);
 
         etMustTags = (MultiAutoCompleteTextView) view.findViewById(R.id.etMustTags);
-        llMustTags = (LinearLayout) view.findViewById(R.id.llMustTags);
+        llMustTags = (FlowLayout) view.findViewById(R.id.llMustTags);
         etShouldTags = (MultiAutoCompleteTextView) view.findViewById(R.id.etShouldTags);
         etLocationLat = (EditText) view.findViewById(R.id.etLocationLat);
         etLocationLon = (EditText) view.findViewById(R.id.etLocationLon);
@@ -96,9 +98,12 @@ public class FormDemandFragment extends FormFragment {
         for(final String suggestion : suggestions) {
             final TextView tvMustTag = new TextView(getActivity());
             tvMustTag.setText(suggestion);
-            tvMustTag.setPadding(5, 5, 5, 5);
-            tvMustTag.setBackgroundColor(Color.GRAY); // TODO nicer layout
-            llMustTags.addView(tvMustTag);
+            tvMustTag.setPadding(10, 10, 10, 10);
+            tvMustTag.setBackgroundColor(Color.parseColor("#88BEB1"));
+            FlowLayout.LayoutParams layoutParams = new FlowLayout.LayoutParams(
+                    FlowLayout.LayoutParams.WRAP_CONTENT, FlowLayout.LayoutParams.WRAP_CONTENT);
+            layoutParams.setMargins(5, 5, 5, 5);
+            llMustTags.addView(tvMustTag, layoutParams);
             tvMustTag.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

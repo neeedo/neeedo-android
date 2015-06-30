@@ -12,6 +12,7 @@ android {
         targetSdkVersion 21
         versionCode 3
         versionName "1.1"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -59,6 +60,8 @@ dependencies {
     compile 'com.journeyapps:zxing-android-legacy:2.3.0@aar'
     compile 'com.journeyapps:zxing-android-integration:2.3.0@aar'
     compile 'com.google.zxing:core:3.2.0'
+    compile 'org.apmem.tools:layouts:1.9'
+    compile 'com.android.support:multidex:1.0.0'
 
     compile('org.simpleframework:simple-xml:2.7.+') {
         exclude module: 'stax'
