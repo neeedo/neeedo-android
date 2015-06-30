@@ -152,7 +152,7 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
                 }
                 Message m = new Message();
                 m.setSenderId(UserModel.getInstance().getUser().getId());
-                m.setRecipientId(currentOffer.getUserId());
+                m.setRecipientId(currentOffer.getUser().getId());
                 m.setBody(message);
 
                 new PostMessageAsyncTask(m).execute();

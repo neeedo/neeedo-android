@@ -121,11 +121,13 @@ public class Offer implements Serializable, BaseEntity {
         return name;
     }
 
+    @Deprecated
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     public String getUserId() {
         return userId;
     }
 
+    @Deprecated
     public void setUserId(String userId) {
         this.userId = userId;
     }

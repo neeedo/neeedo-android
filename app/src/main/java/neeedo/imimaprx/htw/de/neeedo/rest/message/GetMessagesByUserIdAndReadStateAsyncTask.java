@@ -41,7 +41,7 @@ public class GetMessagesByUserIdAndReadStateAsyncTask extends BaseAsyncTask {
     protected Object doInBackground(Object[] params) {
         try {
             HttpHeaders requestHeaders = new HttpHeaders();
-            String url = ServerConstantsUtils.getActiveServer() + "/conversations/" + userId1 + "?read=" + read;
+            String url = ServerConstantsUtils.getActiveServer() + "conversations/" + userId1 + "?read=" + read;
 
             setAuthorisationHeaders(requestHeaders);
 

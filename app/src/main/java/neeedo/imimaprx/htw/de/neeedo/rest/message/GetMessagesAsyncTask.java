@@ -13,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
+import neeedo.imimaprx.htw.de.neeedo.entities.message.Message;
 import neeedo.imimaprx.htw.de.neeedo.entities.message.Messages;
 import neeedo.imimaprx.htw.de.neeedo.events.MessagesLoadedEvent;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
@@ -56,6 +57,7 @@ public class GetMessagesAsyncTask extends BaseAsyncTask {
             final Messages messages = responseEntity.getBody();
 
             MessagesModel.getInstance().setMessages(messages);
+
 
             return new RestResult( RestResult.ReturnType.SUCCESS);
         } catch (Exception e) {
