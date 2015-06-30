@@ -15,16 +15,19 @@
             android:text="@string/new_card_demand"
             android:id="@+id/tvHeader" />
 
-        <ImageButton
-            android:layout_width="fill_parent"
-            android:layout_height="120dp"
-            android:src="@drawable/new_card_form_image_placeholder" />
-
         <MultiAutoCompleteTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/new_card_must_tags"
             android:id="@+id/etMustTags" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/llMustTags"
+            android:padding="10dp"></LinearLayout>
 
         <MultiAutoCompleteTextView
             android:layout_width="match_parent"
