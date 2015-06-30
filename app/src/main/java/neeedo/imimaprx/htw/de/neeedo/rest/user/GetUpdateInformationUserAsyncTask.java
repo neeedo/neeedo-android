@@ -38,10 +38,10 @@ public class GetUpdateInformationUserAsyncTask extends BaseAsyncTask {
             SingleUser singleUser = response.getBody();
             userModel.setUser(singleUser.getUser());
 
-            return new RestResult(this.getClass().getSimpleName(), RestResult.ReturnType.SUCCESS);
+            return new RestResult(RestResult.ReturnType.SUCCESS);
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
-            return new RestResult(this.getClass().getSimpleName(), RestResult.ReturnType.FAILED);
+            return new RestResult( RestResult.ReturnType.FAILED);
         }
     }
 }

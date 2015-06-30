@@ -44,10 +44,10 @@ public class GetDemandByIDAsyncTask extends BaseAsyncTask {
             ResponseEntity<SingleDemand> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, SingleDemand.class);
             final SingleDemand singleDemand = responseEntity.getBody();
             DemandsModel.getInstance().setSingleDemand(singleDemand);
-            return new RestResult(this.getClass().getSimpleName(), RestResult.ReturnType.SUCCESS);
+            return new RestResult( RestResult.ReturnType.SUCCESS);
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
-            return new RestResult(this.getClass().getSimpleName(), RestResult.ReturnType.FAILED);
+            return new RestResult(RestResult.ReturnType.FAILED);
         }
     }
 

@@ -44,10 +44,10 @@ public class GetOfferByIDAsyncTask extends BaseAsyncTask {
             ResponseEntity<SingleOffer> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, SingleOffer.class);
             final SingleOffer singleOffer = responseEntity.getBody();
             OffersModel.getInstance().setSingleOffer(singleOffer);
-            return new RestResult(this.getClass().getSimpleName(), RestResult.ReturnType.SUCCESS);
+            return new RestResult(RestResult.ReturnType.SUCCESS);
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
-            return new RestResult(this.getClass().getSimpleName(), RestResult.ReturnType.FAILED);
+            return new RestResult( RestResult.ReturnType.FAILED);
         }
     }
 

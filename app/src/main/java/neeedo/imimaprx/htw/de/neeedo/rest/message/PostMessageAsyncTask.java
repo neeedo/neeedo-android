@@ -46,11 +46,11 @@ public class PostMessageAsyncTask extends BaseAsyncTask {
 
             MessagesModel.getInstance().setSingleMessage(singleMessage);
 
-            return new RestResult(this.getClass().getSimpleName(), RestResult.ReturnType.SUCCESS);
+            return new RestResult(RestResult.ReturnType.SUCCESS);
 
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
-            return new RestResult(this.getClass().getSimpleName(), RestResult.ReturnType.FAILED);
+            return new RestResult(RestResult.ReturnType.FAILED);
         }
     }
 }

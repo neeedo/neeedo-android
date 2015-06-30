@@ -46,10 +46,10 @@ public class PutMessageReadStateAsyncTask extends BaseAsyncTask {
 
             //TODO what to do with the recived message ? It's just some kind of "Yes it worked" response
 
-            return new RestResult(this.getClass().getSimpleName(), RestResult.ReturnType.SUCCESS);
+            return new RestResult( RestResult.ReturnType.SUCCESS);
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
-            return new RestResult(this.getClass().getSimpleName(), RestResult.ReturnType.FAILED);
+            return new RestResult( RestResult.ReturnType.FAILED);
         }
     }
 

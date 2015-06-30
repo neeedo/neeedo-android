@@ -63,8 +63,8 @@ public class LocationChooserActivity extends ActionBarActivity {
         mapView.setBuiltInZoomControls(true);
         mapView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-//        RelativeLayout mapContainer = (RelativeLayout) findViewById(R.id.locationChooserMapContainer);
-//        mapContainer.addView(mapView);
+        RelativeLayout mapContainer = (RelativeLayout) findViewById(R.id.locationChooserMapContainer);
+        mapContainer.addView(mapView);
 
         //this is a hack to get around one of the osmdroid bugs
         new Handler().postDelayed(new Runnable() {
@@ -74,7 +74,7 @@ public class LocationChooserActivity extends ActionBarActivity {
             }
         }, 200);
 
-        String[] language = {"C", "C++", "Java", ".NET", "iPhone", "Android", "ASP.NET", "PHP"};
+        String[] language = {"C", "C++", "Java", ".NET", "iPhone", "Android", "ASP.NET", "PHP", "asdfghjkl"};
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, language);
         adapter.setNotifyOnChange(true);
 

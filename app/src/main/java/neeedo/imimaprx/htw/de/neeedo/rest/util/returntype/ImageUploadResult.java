@@ -4,8 +4,8 @@ public class ImageUploadResult extends RestResult {
 
     private String imageId;
 
-    public ImageUploadResult(Object creatorInstance, RestResult.ReturnType restResult, String imageId) {
-        super(creatorInstance, restResult);
+    public ImageUploadResult( RestResult.ReturnType restResult, String imageId) {
+        super( restResult);
         this.imageId = imageId;
     }
 

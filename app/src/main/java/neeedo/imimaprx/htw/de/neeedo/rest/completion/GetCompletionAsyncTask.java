@@ -67,10 +67,10 @@ public class GetCompletionAsyncTask extends BaseAsyncTask {
             ResponseEntity<Tag> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, Tag.class);
             Tag tag = responseEntity.getBody();
 
-            return new TagResult(this.getClass().getSimpleName(), RestResult.ReturnType.SUCCESS, tag);
+            return new TagResult(RestResult.ReturnType.SUCCESS, tag);
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
-            return new RestResult(this.getClass().getSimpleName(), RestResult.ReturnType.FAILED);
+            return new RestResult( RestResult.ReturnType.FAILED);
         }
     }
 

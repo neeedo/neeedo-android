@@ -44,10 +44,10 @@ public class GetFavoritesByIDAsyncTask extends BaseAsyncTask {
             ResponseEntity<Favorites> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, Favorites.class);
             final Favorites favorites = responseEntity.getBody();
             FavoritesModel.getInstance().setFavorites(favorites);
-            return new RestResult(this.getClass().getSimpleName(), RestResult.ReturnType.SUCCESS);
+            return new RestResult( RestResult.ReturnType.SUCCESS);
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
-            return new RestResult(this.getClass().getSimpleName(), RestResult.ReturnType.FAILED);
+            return new RestResult( RestResult.ReturnType.FAILED);
         }
     }
 

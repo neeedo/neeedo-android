@@ -77,7 +77,7 @@ public class PostCreateUpdateUserAsyncTask extends AsyncTask {
             userModel.setUser(singleUser.getUser());
 
             loginActivity.finish();
-            return new RestResult(this.getClass().getSimpleName(), RestResult.ReturnType.SUCCESS);
+            return new RestResult( RestResult.ReturnType.SUCCESS);
 
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
@@ -88,7 +88,7 @@ public class PostCreateUpdateUserAsyncTask extends AsyncTask {
                     loginActivity.setEmailAlreadyInUse();
                 }
             });
-            return new RestResult(this.getClass().getSimpleName(), RestResult.ReturnType.FAILED);
+            return new RestResult(RestResult.ReturnType.FAILED);
         }
     }
 }

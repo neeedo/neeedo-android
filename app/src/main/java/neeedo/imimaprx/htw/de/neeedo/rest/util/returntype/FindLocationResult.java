@@ -9,7 +9,7 @@ public class FindLocationResult extends RestResult {
     private ArrayList<FoundLocation> foundLocations;
 
     public FindLocationResult(String creatorClass, ReturnType result, ArrayList<FoundLocation> foundLocations) {
-        super(creatorClass, result);
+        super( result);
         this.foundLocations = foundLocations;
     }
 

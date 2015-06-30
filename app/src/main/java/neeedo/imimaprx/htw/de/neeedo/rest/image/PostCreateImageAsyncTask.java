@@ -65,10 +65,10 @@ public class PostCreateImageAsyncTask extends BaseAsyncTask {
 
             Image image = response.getBody();
 
-            return new ImageUploadResult(this, RestResult.ReturnType.SUCCESS, "id");
+            return new ImageUploadResult(RestResult.ReturnType.SUCCESS, "id");
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
-            return new RestResult(this, RestResult.ReturnType.FAILED);
+            return new RestResult(RestResult.ReturnType.FAILED);
         }
     }
 

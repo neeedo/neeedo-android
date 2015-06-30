@@ -64,10 +64,10 @@ public class PostCreateUpdateDemandAsyncTask extends BaseAsyncTask {
             demandsModel.setSingleDemand(singleDemand);
             demandsModel.getDemands().getDemands().add(singleDemand.getDemand());
             demandsModel.setPostDemand(null);
-            return new RestResult(this.getClass().getSimpleName(), RestResult.ReturnType.SUCCESS);
+            return new RestResult(RestResult.ReturnType.SUCCESS);
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
-            return new RestResult(this.getClass().getSimpleName(), RestResult.ReturnType.FAILED);
+            return new RestResult(RestResult.ReturnType.FAILED);
         }
     }
 }

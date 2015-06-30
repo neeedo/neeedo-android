@@ -54,10 +54,10 @@ public class GetOutpanByEANAsyncTask extends BaseAsyncTask {
             Article article = responseEntity.getBody();
             String tagsString = getTagsFromArticle(article);
 
-            return new OutpanResult(this.getClass().getSimpleName(), RestResult.ReturnType.SUCCESS, tagsString);
+            return new OutpanResult(RestResult.ReturnType.SUCCESS, tagsString);
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
-            return new RestResult(this.getClass().getSimpleName(), RestResult.ReturnType.FAILED);
+            return new RestResult(RestResult.ReturnType.FAILED);
         }
     }
 
