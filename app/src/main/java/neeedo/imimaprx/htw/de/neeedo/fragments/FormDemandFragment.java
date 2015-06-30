@@ -1,5 +1,6 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,9 +67,8 @@ public class FormDemandFragment extends FormFragment {
         etPriceMax = (EditText) view.findViewById(R.id.etPriceMax);
         btnSubmit = (Button) view.findViewById(R.id.btnSubmit);
 
-        BaseAsyncTask.CompletionType completionType = BaseAsyncTask.CompletionType.TAG;
-        etMustTags.addTextChangedListener(new AutocompletionTextWatcher(this, etMustTags, completionType));
-        etShouldTags.addTextChangedListener(new AutocompletionTextWatcher(this, etShouldTags, completionType));
+        etMustTags.addTextChangedListener(new AutocompletionTextWatcher(this, etMustTags, BaseAsyncTask.CompletionType.TAG));
+        etShouldTags.addTextChangedListener(new AutocompletionTextWatcher(this, etShouldTags, BaseAsyncTask.CompletionType.TAG));
 
         etMustTags.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
         etShouldTags.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
@@ -76,21 +76,8 @@ public class FormDemandFragment extends FormFragment {
         etMustTags.setOnClickListener(new AutocompletionOnClickListener(etMustTags));
         etShouldTags.setOnClickListener(new AutocompletionOnClickListener(etShouldTags));
 
-        // TODO use real suggestions for tags
-        for(int i = 0; i < 3; i++) {
-            final TextView tvMustTag = new TextView(getActivity());
-            tvMustTag.setText("tag"+i);
-            tvMustTag.setPadding(0, 0, 5, 0);
-            llMustTags.addView(tvMustTag);
-            tvMustTag.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    String tag = tvMustTag.getText().toString();
-                    etMustTags.setText(etMustTags.getText().toString() + tag + ", ");
-                    etMustTags.setSelection(etMustTags.length());
-                }
-            });
-        }
+        etMustTags.addTextChangedListener(new AutocompletionTextWatcher(this, etMustTags, BaseAsyncTask.CompletionType.PHRASE));
+
 
         return view;
     }
@@ -101,5 +88,27 @@ public class FormDemandFragment extends FormFragment {
 
         etMustTags.setAdapter(completionsAdapter);
         etShouldTags.setAdapter(completionsAdapter);
+
+        if(e.getCompletionType().equals(BaseAsyncTask.CompletionType.PHRASE)) {
+            llMustTags.removeAllViewsInLayout();
+        }
+
+        for(final String suggestion : suggestions) {
+            final TextView tvMustTag = new TextView(getActivity());
+            tvMustTag.setText(suggestion);
+            tvMustTag.setPadding(5, 5, 5, 5);
+            tvMustTag.setBackgroundColor(Color.GRAY); // TODO nicer layout
+            llMustTags.addView(tvMustTag);
+            tvMustTag.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String tag = tvMustTag.getText().toString();
+                    etMustTags.setText(etMustTags.getText().toString() + tag + ", ");
+                    etMustTags.setSelection(etMustTags.length());
+                    llMustTags.removeViewInLayout(tvMustTag);
+                    suggestions.remove(suggestion);
+                }
+            });
+        }
     }
 }

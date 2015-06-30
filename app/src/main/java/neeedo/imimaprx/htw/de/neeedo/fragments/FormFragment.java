@@ -12,16 +12,18 @@ import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 public class FormFragment extends SuperFragment {
     protected ArrayList<String> completions;
     protected ArrayAdapter<String> completionsAdapter;
+    protected ArrayList<String> suggestions;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         completions = new ArrayList<>();
+        suggestions = new ArrayList<>();
     }
 
     public void fillSuggestions(GetSuggestionEvent e) {
-        Log.d("Suggestion Event", "called");
+        Log.d("Suggestion Event", e.getCompletionType()+" called");
 
         if(e.getCompletionType().equals(BaseAsyncTask.CompletionType.TAG)) {
             completions = e.getTagResult().getTag().getCompletedTags();
@@ -30,6 +32,12 @@ public class FormFragment extends SuperFragment {
                     android.R.layout.simple_list_item_1, completions);
 
             for(String tag : completions) {
+                Log.d("Tag", tag);
+            }
+        } else if(e.getCompletionType().equals(BaseAsyncTask.CompletionType.PHRASE)) {
+            suggestions = e.getTagResult().getTag().getSuggestedTags();
+
+            for(String tag : suggestions) {
                 Log.d("Tag", tag);
             }
         }
