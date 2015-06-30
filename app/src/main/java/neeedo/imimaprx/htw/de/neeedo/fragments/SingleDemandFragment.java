@@ -3,10 +3,13 @@ package neeedo.imimaprx.htw.de.neeedo.fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -146,12 +149,32 @@ public class SingleDemandFragment extends SuperFragment implements View.OnClickL
         List<Offer> offerList = offers.getOffers();
 
         TextView tvEmpty = (TextView) view.findViewById(R.id.tvEmpty);
-        ListView matchingView = (ListView) view.findViewById(R.id.matchingview);
+        final ListView matchingView = (ListView) view.findViewById(R.id.matchingview);
 
         if (!offerList.isEmpty()) {
             ListProductsArrayAdapter<Offer> adapter = new ListProductsArrayAdapter(getActivity(),
                     R.layout.list_products_item, offerList);
             matchingView.setAdapter(adapter);
+
+            matchingView.setClickable(true);
+            matchingView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                    Offer offer = (Offer) matchingView.getItemAtPosition(position);
+
+                    FragmentManager fragmentManager = getFragmentManager();
+                    Fragment fragment = new SingleOfferFragment();
+
+                    Bundle args = new Bundle();
+                    args.putString("id", offer.getId());
+                    fragment.setArguments(args);
+
+                    fragmentManager.beginTransaction()
+                            .addToBackStack(null)
+                            .replace(R.id.container, fragment)
+                            .commit();
+                }
+            });
 
             tvEmpty.setVisibility(View.GONE);
             matchingView.setVisibility(View.VISIBLE);
