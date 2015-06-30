@@ -47,7 +47,7 @@ public class MessagesFragment extends SuperFragment {
 
 
     @Subscribe
-    public void getUsers(MessagesLoadedEvent messagesLoadedEvent) {
+    public void getMessages(MessagesLoadedEvent messagesLoadedEvent) {
         messages = MessagesModel.getInstance().getMessages().getMessages();
 
         for (Message message : messages) {
