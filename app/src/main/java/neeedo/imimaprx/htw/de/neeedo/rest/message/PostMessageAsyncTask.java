@@ -41,6 +41,7 @@ public class PostMessageAsyncTask extends BaseAsyncTask {
     protected Object doInBackground(Object[] params) {
         try {
             String url = ServerConstantsUtils.getActiveServer() + "messages";
+
             HttpMethod httpMethod = HttpMethod.POST;
 
             HttpHeaders requestHeaders = new HttpHeaders();

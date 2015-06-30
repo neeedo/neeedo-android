@@ -1,6 +1,7 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,8 +47,13 @@ public class MessagesFragment extends SuperFragment {
 
 
     @Subscribe
-    public void getUsers(MessagesLoadedEvent messagesLoadedEvent) {
+    public void getMessages(MessagesLoadedEvent messagesLoadedEvent) {
         messages = MessagesModel.getInstance().getMessages().getMessages();
+
+        for (Message message : messages) {
+
+            Log.i(this.getClass().getSimpleName(), "MessageFragment: " + message);
+        }
 
         messageAdapter.notifyDataSetChanged();
     }
