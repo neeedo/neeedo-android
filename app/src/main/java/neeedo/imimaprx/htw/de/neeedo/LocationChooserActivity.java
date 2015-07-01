@@ -1,6 +1,6 @@
 package neeedo.imimaprx.htw.de.neeedo;
 
-import android.os.AsyncTask;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
@@ -11,32 +11,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import org.osmdroid.DefaultResourceProxyImpl;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.ItemizedIconOverlay;
+import org.osmdroid.views.overlay.Overlay;
+import org.osmdroid.views.overlay.OverlayItem;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.HashMap;
-
-import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.FindLocationResult;
-import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.RestResult;
 
 
 public class LocationChooserActivity extends ActionBarActivity {
@@ -44,14 +32,17 @@ public class LocationChooserActivity extends ActionBarActivity {
     private MapView mapView;
     private LocationAutoCompleteTextView autoCompleteTextView;
     private ArrayAdapter<FoundLocation> adapter;
+    private DefaultResourceProxyImpl resourceProxy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location_chooser);
 
-        final ActionBar actionBar = getSupportActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        resourceProxy = new DefaultResourceProxyImpl(this);
 
         mapView = new MapView(this, null);
         mapView.setTileSource(TileSourceFactory.MAPNIK);
@@ -101,11 +92,32 @@ public class LocationChooserActivity extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) {
                 FoundLocation selectedItem = adapter.getItem(position);
-                System.out.println(0);
-                mapView.getController().animateTo(new GeoPoint(selectedItem.getLatitude(),selectedItem.getLongitude()));
+                GeoPoint geoPoint = new GeoPoint(selectedItem.getLatitude(), selectedItem.getLongitude());
+                setLocationSelected(geoPoint);
+                InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(
+                        Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(autoCompleteTextView.getWindowToken(), 0);
             }
         });
     }
+
+    private void setLocationSelected(GeoPoint geoPoint) {
+        mapView.getController().animateTo(geoPoint);
+        deleteAllOverlays();
+        ArrayList<OverlayItem> ownOverlay = new ArrayList<OverlayItem>();
+        ownOverlay.add(new OverlayItem("", "", geoPoint));
+        ItemizedIconOverlay userLocationOverlay = new ItemizedIconOverlay<OverlayItem>(ownOverlay, getResources().getDrawable(R.drawable.map_marker), null, resourceProxy);
+
+        mapView.getOverlays().add(userLocationOverlay);
+    }
+
+    private void deleteAllOverlays() {
+
+        for (Overlay element : mapView.getOverlays()) {
+            mapView.getOverlays().remove(element);
+        }
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
