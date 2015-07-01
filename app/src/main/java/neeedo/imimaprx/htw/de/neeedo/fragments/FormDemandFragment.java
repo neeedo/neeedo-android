@@ -19,6 +19,7 @@ import neeedo.imimaprx.htw.de.neeedo.helpers.LocationHelper;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.utils.AutocompletionOnClickListener;
+import neeedo.imimaprx.htw.de.neeedo.utils.AutocompletionOnFocusChangeListener;
 import neeedo.imimaprx.htw.de.neeedo.utils.AutocompletionTextWatcher;
 
 public class FormDemandFragment extends FormFragment {
@@ -78,17 +79,7 @@ public class FormDemandFragment extends FormFragment {
 
         etMustTags.addTextChangedListener(new AutocompletionTextWatcher(this, etMustTags, BaseAsyncTask.CompletionType.PHRASE));
 
-        etMustTags.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                if(hasFocus) {
-                    flMustTagSuggestions.setVisibility(View.VISIBLE);
-                } else {
-                    flMustTagSuggestions.setVisibility(View.GONE);
-                }
-
-            }
-        });
+        etMustTags.setOnFocusChangeListener(new AutocompletionOnFocusChangeListener(flMustTagSuggestions));
 
         return view;
     }
@@ -100,29 +91,6 @@ public class FormDemandFragment extends FormFragment {
         etMustTags.setAdapter(completionsAdapter);
         etShouldTags.setAdapter(completionsAdapter);
 
-        if(e.getCompletionType().equals(BaseAsyncTask.CompletionType.PHRASE)) {
-            flMustTagSuggestions.removeAllViewsInLayout();
-        }
-
-        for(final String suggestion : suggestions) {
-            final TextView tvMustTag = new TextView(getActivity());
-            tvMustTag.setText(suggestion);
-            tvMustTag.setPadding(15, 10, 15, 10);
-            tvMustTag.setBackgroundColor(Color.parseColor("#88BEB1"));
-            FlowLayout.LayoutParams layoutParams = new FlowLayout.LayoutParams(
-                    FlowLayout.LayoutParams.WRAP_CONTENT, FlowLayout.LayoutParams.WRAP_CONTENT);
-            layoutParams.setMargins(5, 5, 5, 10);
-            flMustTagSuggestions.addView(tvMustTag, layoutParams);
-            tvMustTag.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    String tag = tvMustTag.getText().toString();
-                    etMustTags.setText(etMustTags.getText().toString() + tag + ", ");
-                    etMustTags.setSelection(etMustTags.length());
-                    flMustTagSuggestions.removeViewInLayout(tvMustTag);
-                    suggestions.remove(suggestion);
-                }
-            });
-        }
+        super.showSuggestionTags(flMustTagSuggestions, etMustTags, e);
     }
 }

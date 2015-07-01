@@ -1,8 +1,16 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import org.apmem.tools.layouts.FlowLayout;
 
 import java.util.ArrayList;
 
@@ -33,6 +41,36 @@ public class FormFragment extends SuperFragment {
 
         for(String tag : completions) {
             Log.d("Tag", tag);
+        }
+    }
+
+    protected void showSuggestionTags(final ViewGroup layout, final EditText tags, GetSuggestionEvent e) {
+        if(e.getCompletionType().equals(BaseAsyncTask.CompletionType.PHRASE)) {
+            layout.removeAllViewsInLayout();
+        }
+
+        for(final String suggestion : suggestions) {
+            final TextView tag = new TextView(getActivity());
+            tag.setText(suggestion);
+            tag.setPadding(15, 10, 15, 10);
+            tag.setBackgroundColor(Color.parseColor("#88BEB1"));
+
+            FlowLayout.LayoutParams layoutParams = new FlowLayout.LayoutParams(
+                    FlowLayout.LayoutParams.WRAP_CONTENT, FlowLayout.LayoutParams.WRAP_CONTENT);
+            layoutParams.setMargins(5, 5, 5, 10);
+
+            layout.addView(tag, layoutParams);
+
+            tag.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String tagText = tag.getText().toString();
+                    tags.setText(tags.getText().toString() + tagText + ", ");
+                    tags.setSelection(tags.length());
+                    layout.removeViewInLayout(tag);
+                    suggestions.remove(suggestion);
+                }
+            });
         }
     }
 }
