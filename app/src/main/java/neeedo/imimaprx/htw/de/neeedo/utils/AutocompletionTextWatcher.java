@@ -35,7 +35,7 @@ public class AutocompletionTextWatcher implements TextWatcher {
             if (tagsText.length() > 0) {
                 // do completion for last tag
                 if (lastTag.matches("[A-Za-z0-9]+")) {
-                    new GetCompletionAsyncTask(lastTag, BaseAsyncTask.CompletionType.TAG).execute();
+                    new GetCompletionAsyncTask(lastTag, BaseAsyncTask.CompletionType.TAG, charSequence).execute();
                 }
             }
         } else if(completionType.equals(BaseAsyncTask.CompletionType.PHRASE)) {
@@ -44,7 +44,7 @@ public class AutocompletionTextWatcher implements TextWatcher {
                 char lastCharacter = charSequence.charAt(charSequence.length()-1);
                 // do suggestion for all tags
                 if(tagsText.matches("[A-Za-z0-9, ]+") && (lastCharacter == ',' || lastCharacter == ' ')) {
-                    new GetCompletionAsyncTask(tagsText, BaseAsyncTask.CompletionType.PHRASE).execute();
+                    new GetCompletionAsyncTask(tagsText, BaseAsyncTask.CompletionType.PHRASE, charSequence).execute();
                 }
             }
         }

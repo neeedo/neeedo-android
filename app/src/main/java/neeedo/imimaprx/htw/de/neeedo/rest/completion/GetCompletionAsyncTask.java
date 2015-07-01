@@ -23,19 +23,20 @@ import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.TagResult;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
 public class GetCompletionAsyncTask extends BaseAsyncTask {
-
     private String text;
     private CompletionType completionType;
+    private CharSequence charSequence;
 
-    public GetCompletionAsyncTask(String text, CompletionType completionType) {
+    public GetCompletionAsyncTask(String text, CompletionType completionType, CharSequence charSequence) {
         this.text = text;
         this.completionType = completionType;
+        this.charSequence = charSequence;
     }
 
     @Override
     protected void onPostExecute(Object result) {
         if(result instanceof TagResult)
-            eventService.post(new GetSuggestionEvent((TagResult) result, completionType));
+            eventService.post(new GetSuggestionEvent((TagResult) result, completionType, charSequence));
     }
 
     @Override
