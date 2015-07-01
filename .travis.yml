@@ -23,7 +23,6 @@ before_install:
   - sudo apt-get clean
   - sudo apt-get update -y
   - sudo apt-get install -y libstdc++6:i386 lib32z1 build-essential autoconf automake libtool expect
-  - sudo pip install codecov
   - curl -L http://dl.google.com/android/ndk/android-ndk-r9-linux-x86_64.tar.bz2 > ndk.tar.bz2
   - sudo tar -C /opt -jxf ndk.tar.bz2
   - export NDK_PROJECT_PATH=$PWD
