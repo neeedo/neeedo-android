@@ -9,6 +9,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.GestureDetector;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -59,7 +60,6 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
         mapView.setBuiltInZoomControls(true);
         mapView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         mapView.setClickable(true);
-
 
         RelativeLayout mapContainer = (RelativeLayout) findViewById(R.id.locationChooserMapContainer);
         mapContainer.addView(mapView);
@@ -141,7 +141,7 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
 
     private void setLocationSelected(IGeoPoint geoPoint) {
         mapView.getController().animateTo(geoPoint);
-        deleteAllOverlays();
+        deleteAllUiOverlays();
         ArrayList<OverlayItem> ownOverlay = new ArrayList<OverlayItem>();
         ownOverlay.add(new OverlayItem("", "", (GeoPoint) geoPoint));
         ItemizedIconOverlay userLocationOverlay = new ItemizedIconOverlay<OverlayItem>(ownOverlay, getResources().getDrawable(R.drawable.map_marker), null, resourceProxy);
@@ -149,7 +149,7 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
         mapView.getOverlays().add(userLocationOverlay);
     }
 
-    private void deleteAllOverlays() {
+    private void deleteAllUiOverlays() {
         for (Overlay element : mapView.getOverlays()) {
             if (element instanceof MapEventsOverlay)
                 continue;
@@ -168,8 +168,8 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.location_chooser_done) {
+            finish();//TODO
         }
         return super.onOptionsItemSelected(item);
     }
