@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 
-import com.splunk.mint.Mint;
 
 import neeedo.imimaprx.htw.de.neeedo.fragments.DiolorSwipeFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.ListDemandsFragment;
@@ -42,8 +41,6 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Mint.initAndStartSession(this, "9b8bdf4b");
-
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
