@@ -78,6 +78,17 @@ public class FormDemandFragment extends FormFragment {
 
         etMustTags.addTextChangedListener(new AutocompletionTextWatcher(this, etMustTags, BaseAsyncTask.CompletionType.PHRASE));
 
+        etMustTags.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if(hasFocus) {
+                    flMustTagSuggestions.setVisibility(View.VISIBLE);
+                } else {
+                    flMustTagSuggestions.setVisibility(View.GONE);
+                }
+
+            }
+        });
 
         return view;
     }

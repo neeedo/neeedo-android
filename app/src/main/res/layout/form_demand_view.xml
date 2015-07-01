@@ -24,7 +24,8 @@
         <org.apmem.tools.layouts.FlowLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/flMustTagSuggestions"></org.apmem.tools.layouts.FlowLayout>
+            android:id="@+id/flMustTagSuggestions"
+            android:visibility="gone" ></org.apmem.tools.layouts.FlowLayout>
 
         <MultiAutoCompleteTextView
             android:layout_width="match_parent"
