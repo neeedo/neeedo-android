@@ -28,6 +28,7 @@ public class FormDemandFragment extends FormFragment {
     protected MultiAutoCompleteTextView etMustTags;
     protected FlowLayout flMustTagSuggestions;
     protected MultiAutoCompleteTextView etShouldTags;
+    protected FlowLayout flShouldTagSuggestions;
     protected EditText etLocationLat;
     protected EditText etLocationLon;
     protected EditText etDistance;
@@ -61,6 +62,7 @@ public class FormDemandFragment extends FormFragment {
         etMustTags = (MultiAutoCompleteTextView) view.findViewById(R.id.etMustTags);
         flMustTagSuggestions = (FlowLayout) view.findViewById(R.id.flMustTagSuggestions);
         etShouldTags = (MultiAutoCompleteTextView) view.findViewById(R.id.etShouldTags);
+        flShouldTagSuggestions = (FlowLayout) view.findViewById(R.id.flShouldTagSuggestions);
         etLocationLat = (EditText) view.findViewById(R.id.etLocationLat);
         etLocationLon = (EditText) view.findViewById(R.id.etLocationLon);
         etDistance = (EditText) view.findViewById(R.id.etDistance);
@@ -78,8 +80,10 @@ public class FormDemandFragment extends FormFragment {
         etShouldTags.setOnClickListener(new AutocompletionOnClickListener(etShouldTags));
 
         etMustTags.addTextChangedListener(new AutocompletionTextWatcher(this, etMustTags, BaseAsyncTask.CompletionType.PHRASE));
+        etShouldTags.addTextChangedListener(new AutocompletionTextWatcher(this, etShouldTags, BaseAsyncTask.CompletionType.PHRASE));
 
         etMustTags.setOnFocusChangeListener(new AutocompletionOnFocusChangeListener(flMustTagSuggestions));
+        etShouldTags.setOnFocusChangeListener(new AutocompletionOnFocusChangeListener(flShouldTagSuggestions));
 
         return view;
     }
@@ -92,5 +96,6 @@ public class FormDemandFragment extends FormFragment {
         etShouldTags.setAdapter(completionsAdapter);
 
         super.showSuggestionTags(flMustTagSuggestions, etMustTags, e);
+        super.showSuggestionTags(flShouldTagSuggestions, etShouldTags, e);
     }
 }

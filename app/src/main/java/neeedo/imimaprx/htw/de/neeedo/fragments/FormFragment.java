@@ -52,12 +52,13 @@ public class FormFragment extends SuperFragment {
         for(final String suggestion : suggestions) {
             final TextView tag = new TextView(getActivity());
             tag.setText(suggestion);
-            tag.setPadding(15, 10, 15, 10);
+            tag.setPadding(25, 20, 25, 20);
             tag.setBackgroundColor(Color.parseColor("#88BEB1"));
+            tag.setTextSize(16);
 
             FlowLayout.LayoutParams layoutParams = new FlowLayout.LayoutParams(
                     FlowLayout.LayoutParams.WRAP_CONTENT, FlowLayout.LayoutParams.WRAP_CONTENT);
-            layoutParams.setMargins(5, 5, 5, 10);
+            layoutParams.setMargins(10, 10, 10, 15);
 
             layout.addView(tag, layoutParams);
 

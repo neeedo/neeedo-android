@@ -33,6 +33,12 @@
             android:hint="@string/new_card_should_tags"
             android:id="@+id/etShouldTags" />
 
+        <org.apmem.tools.layouts.FlowLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/flShouldTagSuggestions"
+            android:visibility="gone" ></org.apmem.tools.layouts.FlowLayout>
+
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
