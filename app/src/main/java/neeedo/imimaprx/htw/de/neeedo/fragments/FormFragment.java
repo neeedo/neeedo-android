@@ -69,7 +69,6 @@ public class FormFragment extends SuperFragment {
                         String tagText = tvTag.getText().toString();
                         String inputText = etInput.getText().toString();
                         etInput.setText(inputText + ((lastCharacter == ',' || lastCharacter == ' ') ? "" : ", ") + tagText + ", ");
-                        etInput.setText(inputText + tagText);
                         etInput.setSelection(etInput.length());
                         layout.removeViewInLayout(tvTag);
                         suggestions.remove(suggestion);
