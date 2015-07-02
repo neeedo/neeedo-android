@@ -2,6 +2,8 @@ package neeedo.imimaprx.htw.de.neeedo;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
@@ -82,11 +84,11 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
         autoCompleteTextView.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence inputString, int start, int before, int count) {
-                new FindLocationSuggestionsHandler(inputString.toString(), adapter, autoCompleteTextView,that).execute();
+                new FindLocationSuggestionsHandler(inputString.toString(), adapter, autoCompleteTextView, that).execute();
             }
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count,                                          int after) {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
             @Override
@@ -127,6 +129,16 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
                 continue;
             mapView.getOverlays().remove(element);
         }
+    }
+
+    private void closeActivityAndReturnData() {
+        //TODO use real values
+        GeoPoint geoPoint = new GeoPoint(52468277, 13425979);
+        Intent output = new Intent();
+        output.putExtra("latitude", geoPoint.getLatitude());
+        output.putExtra("longitude", geoPoint.getLongitude());
+        setResult(RESULT_OK, output);
+        finish();
     }
 
     @Override
