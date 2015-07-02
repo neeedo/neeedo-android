@@ -10,6 +10,7 @@ import android.widget.ListView;
 
 import com.squareup.otto.Subscribe;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
@@ -20,23 +21,15 @@ import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.message.GetMessagesAsyncTask;
 
 public class MessagesFragment extends SuperFragment {
-
-
     private ListView messageView;
-    private ArrayList<Message> messages;
-    private ArrayAdapter<Message> messageAdapter;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
         View view = inflater.inflate(R.layout.messages_view, container, false);
-        messages = new ArrayList<>();
 
         messageView = (ListView) view.findViewById(R.id.messages_view_list);
-        messageAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, messages);
-        messageView.setAdapter(messageAdapter);
 
         Bundle args = getArguments();
         String user2Id = args.getString("id");
@@ -48,14 +41,16 @@ public class MessagesFragment extends SuperFragment {
 
     @Subscribe
     public void getMessages(MessagesLoadedEvent messagesLoadedEvent) {
-        messages = MessagesModel.getInstance().getMessages().getMessages();
+        ArrayList<Message> messages = MessagesModel.getInstance().getMessages().getMessages();
 
         for (Message message : messages) {
-
             Log.i(this.getClass().getSimpleName(), "MessageFragment: " + message);
         }
 
-        messageAdapter.notifyDataSetChanged();
+        if(!messages.isEmpty()) {
+            ArrayAdapter<Message> messageAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, messages);
+            messageView.setAdapter(messageAdapter);
+        }
     }
 
     @Override
