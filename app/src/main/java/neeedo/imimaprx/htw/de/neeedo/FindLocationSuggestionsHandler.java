@@ -1,5 +1,6 @@
 package neeedo.imimaprx.htw.de.neeedo;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ArrayAdapter;
@@ -23,12 +24,15 @@ import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.RestResult;
 
 public class FindLocationSuggestionsHandler extends AsyncTask<Void, Void, FindLocationResult> {
     private static int requestCounter = 0;
+    private final LocationAutoCompleteTextView autoCompleteTextView;
+    private final Activity activity;
     private ArrayAdapter<FoundLocation> adapter;
     private String query;
 
-    public FindLocationSuggestionsHandler(String query, ArrayAdapter<FoundLocation> adapter) {
+    public FindLocationSuggestionsHandler(String query, ArrayAdapter<FoundLocation> adapter, LocationAutoCompleteTextView autoCompleteTextView, Activity activity) {
         this.adapter = adapter;
-
+        this.autoCompleteTextView = autoCompleteTextView;
+        this.activity = activity;
         try {
             this.query = URLEncoder.encode(query, "UTF-8");
         } catch (UnsupportedEncodingException e) {
@@ -64,7 +68,6 @@ public class FindLocationSuggestionsHandler extends AsyncTask<Void, Void, FindLo
             jsonString = stringBuilder.toString();
 
 
-
             JSONArray locationJSONArray = new JSONArray(jsonString);
 
             locationsArrayList = new ArrayList<FoundLocation>();
@@ -92,9 +95,15 @@ public class FindLocationSuggestionsHandler extends AsyncTask<Void, Void, FindLo
             if (findLocationResult.getRequestNumberThisRequest() < requestCounter) { //if response is for the last request we have triggered
                 return;
             }
-            adapter.clear();
-            adapter.addAll(findLocationResult.getFoundLocations());
-            adapter.notifyDataSetChanged();
+            if (findLocationResult.getFoundLocations().size() == 0) {
+                if (autoCompleteTextView.isPopupShowing()) {
+                    autoCompleteTextView.dismissDropDown();
+                }
+            } else {
+                adapter = new ArrayAdapter<FoundLocation>(activity, android.R.layout.simple_dropdown_item_1line, findLocationResult.getFoundLocations());
+                autoCompleteTextView.setAdapter(adapter);
+                autoCompleteTextView.showDropDown();
+            }
         }
     }
 }

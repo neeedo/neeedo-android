@@ -1,5 +1,6 @@
 package neeedo.imimaprx.htw.de.neeedo;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -41,6 +42,7 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
     private LocationAutoCompleteTextView autoCompleteTextView;
     private ArrayAdapter<FoundLocation> adapter;
     private DefaultResourceProxyImpl resourceProxy;
+    private Activity that = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,23 +75,18 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
             }
         }, 200);
 
-        adapter = new ArrayAdapter<FoundLocation>(this, android.R.layout.simple_dropdown_item_1line, new ArrayList<FoundLocation>());
-        adapter.setNotifyOnChange(true);
-
         autoCompleteTextView = (LocationAutoCompleteTextView) findViewById(R.id.autoCompleteAddress);
         autoCompleteTextView.setThreshold(3);//will start working after third character
         autoCompleteTextView.setAdapter(adapter);
         autoCompleteTextView.setHint(getString(R.string.location_chooser_search_hint));
-
         autoCompleteTextView.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence inputString, int start, int before, int count) {
-                new FindLocationSuggestionsHandler(inputString.toString(), adapter).execute();
+                new FindLocationSuggestionsHandler(inputString.toString(), adapter, autoCompleteTextView,that).execute();
             }
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after) {
+            public void beforeTextChanged(CharSequence s, int start, int count,                                          int after) {
             }
 
             @Override
@@ -131,7 +128,6 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
             mapView.getOverlays().remove(element);
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
