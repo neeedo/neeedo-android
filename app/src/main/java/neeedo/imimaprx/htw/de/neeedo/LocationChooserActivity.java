@@ -65,6 +65,7 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
         mapContainer.addView(mapView);
 
         //this is a hack to get around one of the osmdroid bugs
+        //TODO make last known location
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -112,32 +113,6 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
         mapView.getOverlays().add(mapEventsOverlay);
         mapView.invalidate();
     }
-
-//    @Override
-//    public boolean dispatchTouchEvent(MotionEvent ev) {
-//        final boolean[] wasLongPress = new boolean[1];
-//
-//        GestureDetector gestureDetector = new GestureDetector(new GestureDetector.SimpleOnGestureListener() {
-//            public void onLongPress(MotionEvent e) {
-//                wasLongPress[0] = true;
-//            }
-//        });
-//
-//        if (!wasLongPress[0])
-//            return super.dispatchTouchEvent(ev);
-//
-//        Projection proj = mapView.getProjection();
-//        IGeoPoint loc = proj.fromPixels((int) ev.getX(), (int) ev.getY());
-//        String longitude = Double.toString(((double) loc.getLongitudeE6()) / 1000000);
-//        String latitude = Double.toString(((double) loc.getLatitudeE6()) / 1000000);
-//
-//        Toast toast = Toast.makeText(getApplicationContext(), "Longitude: " + longitude + " Latitude: " + latitude, Toast.LENGTH_LONG);
-//        toast.show();
-//        setLocationSelected(loc);
-//
-//        return super.dispatchTouchEvent(ev);
-//    }
-
 
     private void setLocationSelected(IGeoPoint geoPoint) {
         mapView.getController().animateTo(geoPoint);

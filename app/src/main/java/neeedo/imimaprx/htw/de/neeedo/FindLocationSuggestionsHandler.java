@@ -1,6 +1,7 @@
 package neeedo.imimaprx.htw.de.neeedo;
 
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 
 import org.apache.http.HttpEntity;
@@ -46,22 +47,23 @@ public class FindLocationSuggestionsHandler extends AsyncTask<Void, Void, FindLo
 
         try {
             DefaultHttpClient httpClient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost("http://nominatim.openstreetmap.org/search?q=" + query + "&format=json");
+            String url = "http://nominatim.openstreetmap.org/search?q=" + query + "&format=json";
+            HttpPost httpPost = new HttpPost(url);
 
             HttpResponse httpResponse = httpClient.execute(httpPost);
             HttpEntity httpEntity = httpResponse.getEntity();
             is = httpEntity.getContent();
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(
-                    is, "UTF-8"), 8);
-            StringBuilder sb = new StringBuilder();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"), 8);
+            StringBuilder stringBuilder = new StringBuilder();
             String line = null;
             while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
-                System.out.println(line);
+                stringBuilder.append(line + "\n");
             }
             is.close();
-            jsonString = sb.toString();
+            jsonString = stringBuilder.toString();
+
+
 
             JSONArray locationJSONArray = new JSONArray(jsonString);
 
@@ -72,6 +74,8 @@ public class FindLocationSuggestionsHandler extends AsyncTask<Void, Void, FindLo
                 FoundLocation foundLocation = new FoundLocation(currentLocationObject);
                 locationsArrayList.add(foundLocation);
             }
+
+            Log.d("foo", url + "\nreturned" + jsonString + "\nsize" + locationsArrayList.size());
         } catch (Exception e) {
             return new FindLocationResult(RestResult.ReturnType.FAILED, requestNumberThisRequest, null);
         }
