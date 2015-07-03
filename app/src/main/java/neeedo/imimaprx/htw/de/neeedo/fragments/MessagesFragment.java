@@ -23,6 +23,7 @@ import neeedo.imimaprx.htw.de.neeedo.models.MessagesModel;
 import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.message.GetMessagesAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.message.PostMessageAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.message.PutMessageReadStateAsyncTask;
 
 public class MessagesFragment extends SuperFragment implements View.OnClickListener {
     private ListView messageView;
@@ -52,10 +53,14 @@ public class MessagesFragment extends SuperFragment implements View.OnClickListe
     public void getMessages(MessagesLoadedEvent messagesLoadedEvent) {
         ArrayList<Message> messages = MessagesModel.getInstance().getMessages().getMessages();
 
-        if (!messages.isEmpty()) {
+      //  if (!messages.isEmpty()) {
             ArrayAdapter<Message> messageAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, messages);
             messageView.setAdapter(messageAdapter);
-        }
+            for (Message m : messages) {
+                if (!m.isRead())
+                    new PutMessageReadStateAsyncTask(m.getId()).execute();
+            }
+      //  }
     }
 
     @Override

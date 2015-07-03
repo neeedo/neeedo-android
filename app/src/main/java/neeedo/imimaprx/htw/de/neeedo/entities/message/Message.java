@@ -41,6 +41,9 @@ public class Message implements Serializable, BaseEntity {
     private String recipientId;
 
     @Element
+    private String messageId;
+
+    @Element
     private String body;
 
     public Message() {
@@ -119,6 +122,19 @@ public class Message implements Serializable, BaseEntity {
         this.read = read;
     }
 
+    public static void setFormatter(SimpleDateFormat formatter) {
+        Message.formatter = formatter;
+    }
+
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+    public String getMessageId() {
+        return messageId;
+    }
+
+    public void setMessageId(String messageId) {
+        this.messageId = messageId;
+    }
+
     @Override
     public String toString() {
         Date date = new Date(timestamp);
@@ -143,6 +159,8 @@ public class Message implements Serializable, BaseEntity {
             return false;
         if (recipientId != null ? !recipientId.equals(message.recipientId) : message.recipientId != null)
             return false;
+        if (messageId != null ? !messageId.equals(message.messageId) : message.messageId != null)
+            return false;
         return !(body != null ? !body.equals(message.body) : message.body != null);
 
     }
@@ -156,6 +174,7 @@ public class Message implements Serializable, BaseEntity {
         result = 31 * result + (read ? 1 : 0);
         result = 31 * result + (senderId != null ? senderId.hashCode() : 0);
         result = 31 * result + (recipientId != null ? recipientId.hashCode() : 0);
+        result = 31 * result + (messageId != null ? messageId.hashCode() : 0);
         result = 31 * result + (body != null ? body.hashCode() : 0);
         return result;
     }

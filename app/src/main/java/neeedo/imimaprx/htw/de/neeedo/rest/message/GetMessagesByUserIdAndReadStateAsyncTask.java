@@ -19,6 +19,7 @@ import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.models.MessagesModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.RestResult;
+import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.UserMessageResult;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
 public class GetMessagesByUserIdAndReadStateAsyncTask extends BaseAsyncTask {
@@ -33,8 +34,8 @@ public class GetMessagesByUserIdAndReadStateAsyncTask extends BaseAsyncTask {
 
     @Override
     protected void onPostExecute(Object result) {
-        if (result instanceof RestResult)
-            eventService.post(new UserMessageContactsLoadedEvent());
+        if (result instanceof UserMessageResult)
+            eventService.post(new UserMessageContactsLoadedEvent((UserMessageResult) result, read));
     }
 
     @Override
@@ -54,12 +55,13 @@ public class GetMessagesByUserIdAndReadStateAsyncTask extends BaseAsyncTask {
             ResponseEntity<Users> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, Users.class);
             final Users users = responseEntity.getBody();
 
-            MessagesModel.getInstance().appendUsers(users);
+            MessagesModel.getInstance().setUsers(users);
+            //MessagesModel.getInstance().appendUsers(users);
 
-            return new RestResult(RestResult.ReturnType.SUCCESS);
+            return new UserMessageResult(RestResult.ReturnType.SUCCESS, read);
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
-            return new RestResult(RestResult.ReturnType.FAILED);
+            return new UserMessageResult(RestResult.ReturnType.FAILED, read);
         }
     }
 

@@ -46,12 +46,21 @@ public class MessagesModel {
         this.users = users;
     }
 
-    public void appendUsers(Users users) {
+    public void appendUsers(Users newUsers) {
         if (this.users == null) {
-            this.users = users;
+            this.users = newUsers;
         } else {
-
-            for (User user : users.getUsers()) {
+            for (User user : newUsers.getUsers()) {
+                boolean skip = false;
+                for (User u : users.getUsers()) {
+                    if (u.getId().equals(user.getId())) {
+                        skip = true;
+                        break;
+                    }
+                }
+                if (skip) {
+                    continue;
+                }
                 users.addSingleUser(user);
             }
         }

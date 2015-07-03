@@ -28,6 +28,9 @@ public class User implements Serializable, BaseEntity {
     @Element
     private String password = "";
 
+    @Element
+    private boolean hasNewMessages = false;
+
     public User() {
 
     }
@@ -82,9 +85,22 @@ public class User implements Serializable, BaseEntity {
         this.password = password;
     }
 
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+    public boolean isHasNewMessages() {
+        return hasNewMessages;
+    }
+
+    public void setHasNewMessages(boolean hasNewMessages) {
+        this.hasNewMessages = hasNewMessages;
+    }
+
     @Override
     public String toString() {
-        return "" + name;
+
+        String text = name;
+        if (hasNewMessages)
+            text = "New message from " + name;
+        return text;
     }
 
     @Override
@@ -95,6 +111,7 @@ public class User implements Serializable, BaseEntity {
         User user = (User) o;
 
         if (version != user.version) return false;
+        if (hasNewMessages != user.hasNewMessages) return false;
         if (id != null ? !id.equals(user.id) : user.id != null) return false;
         if (name != null ? !name.equals(user.name) : user.name != null) return false;
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
@@ -109,6 +126,7 @@ public class User implements Serializable, BaseEntity {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (hasNewMessages ? 1 : 0);
         return result;
     }
 }
