@@ -55,8 +55,8 @@ public class GetMessagesByUserIdAndReadStateAsyncTask extends BaseAsyncTask {
             ResponseEntity<Users> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, Users.class);
             final Users users = responseEntity.getBody();
 
-            MessagesModel.getInstance().setUsers(users);
-            //MessagesModel.getInstance().appendUsers(users);
+            //MessagesModel.getInstance().setUsers(users);
+            MessagesModel.getInstance().appendUsers(users);
 
             return new UserMessageResult(RestResult.ReturnType.SUCCESS, read);
         } catch (Exception e) {
