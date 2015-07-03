@@ -32,7 +32,7 @@ public class User implements Serializable, BaseEntity {
 
     }
 
-    public User(String id, String name){
+    public User(String id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -82,4 +82,33 @@ public class User implements Serializable, BaseEntity {
         this.password = password;
     }
 
+    @Override
+    public String toString() {
+        return "" + name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (version != user.version) return false;
+        if (id != null ? !id.equals(user.id) : user.id != null) return false;
+        if (name != null ? !name.equals(user.name) : user.name != null) return false;
+        if (email != null ? !email.equals(user.email) : user.email != null) return false;
+        return !(password != null ? !password.equals(user.password) : user.password != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + version;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        return result;
+    }
 }

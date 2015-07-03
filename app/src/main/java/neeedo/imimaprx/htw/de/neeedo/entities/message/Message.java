@@ -6,6 +6,8 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.user.User;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.BaseEntity;
@@ -14,6 +16,8 @@ import neeedo.imimaprx.htw.de.neeedo.entities.util.BaseEntity;
 @Root(name = "message")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Message implements Serializable, BaseEntity {
+
+    private static SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yy hh:mm");
 
     @Element
     private String id;
@@ -117,16 +121,8 @@ public class Message implements Serializable, BaseEntity {
 
     @Override
     public String toString() {
-        return "Message{" +
-                "id='" + id + '\'' +
-                ", sender=" + sender +
-                ", recipient=" + recipient +
-                ", timestamp=" + timestamp +
-                ", read=" + read +
-                ", senderId='" + senderId + '\'' +
-                ", recipientId='" + recipientId + '\'' +
-                ", body='" + body + '\'' +
-                '}';
+        Date date = new Date(timestamp);
+        return formatter.format(date) + ": " + body;
     }
 
     @Override
