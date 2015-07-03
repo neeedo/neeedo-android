@@ -1,11 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1">
 
     <ListView
+        android:id="@+id/messages_view_list"
+        android:layout_width="match_parent"
+        android:layout_height="193dp"
+        android:layout_weight="0.68"
+        android:visibility="visible" />
+
+    <EditText
+        android:id="@+id/messages_view_answer_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/messages_view_list"
-        android:visibility="visible" />
+        android:layout_weight="0.13"
+        android:editable="true"
+        android:hint="@string/single_offer_message_edit_text_hint"
+        android:gravity="center" />
+
+    <Button
+        android:id="@+id/messages_view_send_button"
+        android:layout_width="127dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/messages_view_send" />
+
 </LinearLayout>

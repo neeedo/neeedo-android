@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -31,6 +32,7 @@ public class MessageFragment extends SuperFragment {
     private ArrayList<User> users;
     private ArrayAdapter<User> userAdapter;
     private EditText editText;
+
 
 
     @Override

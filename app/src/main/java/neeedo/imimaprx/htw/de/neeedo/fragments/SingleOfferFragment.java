@@ -57,7 +57,7 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
+        public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         Activity activity = getActivity();
