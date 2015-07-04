@@ -25,15 +25,14 @@ import neeedo.imimaprx.htw.de.neeedo.models.MessagesModel;
 import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.message.GetMessagesByUserIdAndReadStateAsyncTask;
 
-public class MessageFragment extends SuperFragment implements View.OnClickListener {
+public class MessageFragment extends SuperFragment {
 
 
     private ListView messageView;
     private ArrayList<User> users;
     private ArrayAdapter<User> userAdapter;
     private EditText editText;
-    private Button loadOlderBtn;
-    private boolean newState = true;
+
 
 
     @Override
@@ -70,10 +69,11 @@ public class MessageFragment extends SuperFragment implements View.OnClickListen
             }
         });
 
-
+        MessagesModel.getInstance().clearUsers();
         if (ActiveUser.getInstance().hasActiveUser()) {
             new GetMessagesByUserIdAndReadStateAsyncTask(UserModel.getInstance().getUser().getId(), false).execute();
-            newState = true;
+            new GetMessagesByUserIdAndReadStateAsyncTask(UserModel.getInstance().getUser().getId(), true).execute();
+
 
         } else {
             editText.setVisibility(View.VISIBLE);
@@ -88,11 +88,6 @@ public class MessageFragment extends SuperFragment implements View.OnClickListen
 
         users = MessagesModel.getInstance().getUsers().getUsers();
 
-        if (newState) {
-            for (User user : users) {
-                user.setHasNewMessages(true);
-            }
-        }
 
         if (users.size() > 0) {
             editText.setVisibility(View.INVISIBLE);
@@ -101,12 +96,9 @@ public class MessageFragment extends SuperFragment implements View.OnClickListen
         } else {
             editText.setVisibility(View.VISIBLE);
             messageView.setVisibility(View.INVISIBLE);
-            if (newState) {
-                loadOlderConversations();
-            }
+
             return;
         }
-
 
         userAdapter = new ArrayAdapter<User>(getActivity(), android.R.layout.simple_list_item_1, users);
         messageView.setAdapter(userAdapter);
@@ -118,28 +110,10 @@ public class MessageFragment extends SuperFragment implements View.OnClickListen
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        loadOlderBtn = (Button) getActivity().findViewById(R.id.message_view_load_older_button);
-        loadOlderBtn.setOnClickListener(this);
+
 
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.message_view_load_older_button: {
-                loadOlderConversations();
-            }
-            break;
-        }
-    }
 
-    private void loadOlderConversations() {
-        if (ActiveUser.getInstance().hasActiveUser() & newState) {
-            new GetMessagesByUserIdAndReadStateAsyncTask(UserModel.getInstance().getUser().getId(), true).execute();
-            newState = false;
-        } else {
-            editText.setVisibility(View.VISIBLE);
-            messageView.setVisibility(View.INVISIBLE);
-        }
-    }
+
 }

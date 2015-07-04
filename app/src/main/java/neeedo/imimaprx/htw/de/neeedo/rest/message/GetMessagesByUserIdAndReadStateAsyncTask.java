@@ -13,13 +13,13 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
+import neeedo.imimaprx.htw.de.neeedo.entities.user.User;
 import neeedo.imimaprx.htw.de.neeedo.entities.user.Users;
 import neeedo.imimaprx.htw.de.neeedo.events.UserMessageContactsLoadedEvent;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.models.MessagesModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.RestResult;
-import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.UserMessageResult;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
 public class GetMessagesByUserIdAndReadStateAsyncTask extends BaseAsyncTask {
@@ -34,8 +34,8 @@ public class GetMessagesByUserIdAndReadStateAsyncTask extends BaseAsyncTask {
 
     @Override
     protected void onPostExecute(Object result) {
-        if (result instanceof UserMessageResult)
-            eventService.post(new UserMessageContactsLoadedEvent((UserMessageResult) result, read));
+        if (result instanceof RestResult)
+            eventService.post(new UserMessageContactsLoadedEvent());
     }
 
     @Override
@@ -55,13 +55,19 @@ public class GetMessagesByUserIdAndReadStateAsyncTask extends BaseAsyncTask {
             ResponseEntity<Users> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, Users.class);
             final Users users = responseEntity.getBody();
 
-            //MessagesModel.getInstance().setUsers(users);
-            MessagesModel.getInstance().appendUsers(users);
+            if (!read) {
+                for (User user : users.getUsers()) {
+                    user.setHasNewMessages(true);
+                }
+            }
 
-            return new UserMessageResult(RestResult.ReturnType.SUCCESS, read);
+            MessagesModel messagesModel = MessagesModel.getInstance();
+            messagesModel.appendUsers(users);
+
+            return new RestResult(RestResult.ReturnType.SUCCESS);
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
-            return new UserMessageResult(RestResult.ReturnType.FAILED, read);
+            return new RestResult(RestResult.ReturnType.FAILED);
         }
     }
 
