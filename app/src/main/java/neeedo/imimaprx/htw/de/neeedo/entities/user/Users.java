@@ -33,6 +33,9 @@ public class Users implements Serializable, BaseEntity {
     }
 
     public ArrayList<User> getUsers() {
+        if (users == null) {
+            users = new ArrayList<>();
+        }
         return users;
     }
 

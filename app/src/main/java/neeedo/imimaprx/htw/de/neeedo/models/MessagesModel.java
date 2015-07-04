@@ -65,4 +65,8 @@ public class MessagesModel {
             }
         }
     }
+
+    public void clearUsers(){
+        users = new Users();
+    }
 }

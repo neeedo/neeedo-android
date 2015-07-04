@@ -62,7 +62,7 @@ public class MessageFragment extends SuperFragment implements View.OnClickListen
                 Bundle args = new Bundle();
                 args.putString("id", user.getId());
                 fragment.setArguments(args);
-
+                MessagesModel.getInstance().clearUsers();
                 fragmentManager.beginTransaction()
                         .addToBackStack(null)
                         .replace(R.id.container, fragment)
