@@ -97,9 +97,14 @@ public class MessageFragment extends SuperFragment implements View.OnClickListen
         if (users.size() > 0) {
             editText.setVisibility(View.INVISIBLE);
             messageView.setVisibility(View.VISIBLE);
+
         } else {
             editText.setVisibility(View.VISIBLE);
             messageView.setVisibility(View.INVISIBLE);
+            if (newState) {
+                loadOlderConversations();
+            }
+            return;
         }
 
 
@@ -122,16 +127,19 @@ public class MessageFragment extends SuperFragment implements View.OnClickListen
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.message_view_load_older_button: {
-
-                if (ActiveUser.getInstance().hasActiveUser()) {
-                    new GetMessagesByUserIdAndReadStateAsyncTask(UserModel.getInstance().getUser().getId(), true).execute();
-                    newState = false;
-                } else {
-                    editText.setVisibility(View.VISIBLE);
-                    messageView.setVisibility(View.INVISIBLE);
-                }
+                loadOlderConversations();
             }
             break;
+        }
+    }
+
+    private void loadOlderConversations() {
+        if (ActiveUser.getInstance().hasActiveUser() & newState) {
+            new GetMessagesByUserIdAndReadStateAsyncTask(UserModel.getInstance().getUser().getId(), true).execute();
+            newState = false;
+        } else {
+            editText.setVisibility(View.VISIBLE);
+            messageView.setVisibility(View.INVISIBLE);
         }
     }
 }
