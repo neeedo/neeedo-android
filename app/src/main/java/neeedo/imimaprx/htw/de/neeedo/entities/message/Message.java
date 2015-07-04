@@ -17,7 +17,7 @@ import neeedo.imimaprx.htw.de.neeedo.entities.util.BaseEntity;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Message implements Serializable, BaseEntity {
 
-    private static SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yy hh:mm");
+    private static SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yy HH:mm");
 
     @Element
     private String id;
