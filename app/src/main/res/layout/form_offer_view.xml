@@ -52,20 +52,6 @@
             android:hint="@string/new_card_tags" />
 
         <EditText
-            android:id="@+id/etLocationLon"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/new_card_location_lon"
-            android:inputType="numberDecimal" />
-
-        <EditText
-            android:id="@+id/etLocationLat"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/new_card_location_lat"
-            android:inputType="numberDecimal" />
-
-        <EditText
             android:id="@+id/etPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -79,7 +65,8 @@
             android:layout_height="120dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
-            android:gravity="center"></RelativeLayout>
+            android:gravity="center"
+            android:visibility="gone"/>
 
         <Button
             android:id="@+id/btnChooseLocation"

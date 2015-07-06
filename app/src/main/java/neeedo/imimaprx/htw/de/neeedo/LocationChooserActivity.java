@@ -135,8 +135,8 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
     private void closeActivityAndReturnData() {
         if (currentlySelectedGeoPoint != null) {
             Intent output = new Intent();
-            output.putExtra("latitude", currentlySelectedGeoPoint.getLatitude());
-            output.putExtra("longitude", currentlySelectedGeoPoint.getLongitude());
+            output.putExtra("latitude", Double.toString(currentlySelectedGeoPoint.getLatitude()));
+            output.putExtra("longitude", Double.toString(currentlySelectedGeoPoint.getLongitude()));
             setResult(RESULT_OK, output);
         } else {
             setResult(RESULT_CANCELED);
