@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -60,7 +61,7 @@ public class FindLocationSuggestionsHandler extends AsyncTask<Void, Void, FindLo
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"), 8);
             StringBuilder stringBuilder = new StringBuilder();
-            String line = null;
+            String line;
             while ((line = reader.readLine()) != null) {
                 stringBuilder.append(line + "\n");
             }
@@ -78,7 +79,9 @@ public class FindLocationSuggestionsHandler extends AsyncTask<Void, Void, FindLo
                 locationsArrayList.add(foundLocation);
             }
 
-            Log.d("foo", url + "\nreturned" + jsonString + "\nsize" + locationsArrayList.size());
+            Log.d("foo", url + "\n" +
+                    "returned" + jsonString + "\n" +
+                    "size" + locationsArrayList.size());
         } catch (Exception e) {
             return new FindLocationResult(RestResult.ReturnType.FAILED, requestNumberThisRequest, null);
         }
