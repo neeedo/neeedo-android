@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -37,7 +38,6 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
     public static final String NOMINATIM_SERVICE_URL = "http://nominatim.openstreetmap.org/";
     private MapView mapView;
     private LocationAutoCompleteTextView autoCompleteTextView;
-    private ArrayAdapter<FoundLocation> adapter;
     private DefaultResourceProxyImpl resourceProxy;
     private Activity that = this;
     private GeoPoint currentlySelectedGeoPoint = null;
@@ -75,12 +75,15 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
 
         autoCompleteTextView = (LocationAutoCompleteTextView) findViewById(R.id.autoCompleteAddress);
         autoCompleteTextView.setThreshold(3);//will start working after third character
-        autoCompleteTextView.setAdapter(adapter);
+        autoCompleteTextView.setAdapter(new ArrayAdapter<FoundLocation>(this, android.R.layout.simple_dropdown_item_1line));
         autoCompleteTextView.setHint(getString(R.string.location_chooser_search_hint));
         autoCompleteTextView.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence inputString, int start, int before, int count) {
-                new FindLocationSuggestionsHandler(inputString.toString(), adapter, autoCompleteTextView, that).execute();
+                if (autoCompleteTextView.isPerformingCompletion()) {
+                    return; // An item has been selected from the list. ignore.
+                }
+                new FindLocationSuggestionsHandler(inputString.toString(), (ArrayAdapter) autoCompleteTextView.getAdapter(), autoCompleteTextView, that).execute();
             }
 
             @Override
@@ -95,12 +98,14 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
         autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) {
-                FoundLocation selectedItem = adapter.getItem(position);
+                ListAdapter adapter = autoCompleteTextView.getAdapter();
+                FoundLocation selectedItem = (FoundLocation) adapter.getItem(position);
                 GeoPoint geoPoint = new GeoPoint(selectedItem.getLatitude(), selectedItem.getLongitude());
                 setLocationSelected(geoPoint);
                 InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(
                         Context.INPUT_METHOD_SERVICE);
                 inputMethodManager.hideSoftInputFromWindow(autoCompleteTextView.getWindowToken(), 0);
+                autoCompleteTextView.dismissDropDown();
             }
         });
 
