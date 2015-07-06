@@ -14,4 +14,8 @@ public class NewImageReceivedFromServer {
     public Bitmap getfinalOptimizedBitmap() {
         return finalOptimizedBitmap;
     }
+
+    public String getImageFileNameOnServer() {
+        return imageFileNameOnServer;
+    }
 }

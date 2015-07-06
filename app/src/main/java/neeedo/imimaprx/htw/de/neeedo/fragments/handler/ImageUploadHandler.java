@@ -2,6 +2,7 @@ package neeedo.imimaprx.htw.de.neeedo.fragments.handler;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -28,11 +29,14 @@ import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.events.NewImageReceivedFromServer;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
+import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.FindLocationResult;
+import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.RestResult;
+import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.UploadImageResult;
 import neeedo.imimaprx.htw.de.neeedo.service.EventService;
 import neeedo.imimaprx.htw.de.neeedo.utils.ImageUtils;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
-public class ImageUploadHandler extends AsyncTask<Void, Integer, Void> {
+public class ImageUploadHandler extends AsyncTask<Void, Integer, UploadImageResult> {
     private final Activity activity;
     private File photoFile;
     private String imageFileNameOnServer;
@@ -55,7 +59,6 @@ public class ImageUploadHandler extends AsyncTask<Void, Integer, Void> {
 
         progressDialog = new ProgressDialog(activity);
         progressDialog.setMessage(activity.getString(R.string.camera_uploading_progress));
-        progressDialog.setMessage("asd");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         progressDialog.setIndeterminate(false);
         progressDialog.setCancelable(false);
@@ -65,7 +68,7 @@ public class ImageUploadHandler extends AsyncTask<Void, Integer, Void> {
     }
 
     @Override
-    protected Void doInBackground(Void... params) {
+    protected UploadImageResult doInBackground(Void... params) {
         try {
             String lineEnd = "\r\n";
             String twoHyphens = "--";
@@ -133,7 +136,7 @@ public class ImageUploadHandler extends AsyncTask<Void, Integer, Void> {
 
             Log.i("uploadFile", "HTTP Response is : " + serverResponseMessage + ": " + serverResponseCode);
 
-            BufferedReader br = new BufferedReader(new InputStreamReader((connection.getInputStream())));
+            BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             StringBuilder sb = new StringBuilder();
 
             String responseString;
@@ -141,27 +144,18 @@ public class ImageUploadHandler extends AsyncTask<Void, Integer, Void> {
                 sb.append(responseString);
             }
 
-            JSONObject responseObject
-                    = new JSONObject(sb.toString());
+            JSONObject responseObject                    = new JSONObject(sb.toString());
 
             imageFileNameOnServer = responseObject.getString("image");
 
             byteArrayInputStream.close();
             dataOutputStream.flush();
             dataOutputStream.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (ProtocolException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            return new UploadImageResult(RestResult.ReturnType.FAILED);
         }
 
-        return null;
+        return new UploadImageResult(RestResult.ReturnType.SUCCESS);
     }
 
     private ByteArrayInputStream getFileInputStream() throws FileNotFoundException {
@@ -192,11 +186,10 @@ public class ImageUploadHandler extends AsyncTask<Void, Integer, Void> {
     }
 
     @Override
-    protected void onPostExecute(Void o) {
+    protected void onPostExecute(UploadImageResult o) {
         super.onPostExecute(o);
         progressDialog.dismiss();
 
-        offersModel.getDraft().addSingleImageURL(imageFileNameOnServer);
         eventService.post(new NewImageReceivedFromServer(imageFileNameOnServer, finalOptimizedBitmap));
     }
 }

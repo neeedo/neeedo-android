@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,31 +26,23 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.ItemizedIconOverlay;
 import org.osmdroid.views.overlay.OverlayItem;
-import org.springframework.core.io.Resource;
 
 import java.io.File;
 import java.util.ArrayList;
 
-import neeedo.imimaprx.htw.de.neeedo.MainActivity;
 import neeedo.imimaprx.htw.de.neeedo.R;
-import neeedo.imimaprx.htw.de.neeedo.entities.util.Location;
 import neeedo.imimaprx.htw.de.neeedo.events.NewEanTagsReceivedEvent;
 import neeedo.imimaprx.htw.de.neeedo.events.NewImageReceivedFromServer;
-import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.ImageUploadHandler;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.SendNewOfferHandler;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.StartCameraHandler;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.StartLocationChooserHandler;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.StartNewBarcodeScanHandler;
-import neeedo.imimaprx.htw.de.neeedo.helpers.LocationHelper;
-import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.rest.outpan.GetOutpanByEANAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.vo.RequestCodes;
 
 
 public class NewOfferFragment extends SuperFragment {
-    public static final String STATE_CAMERA_OUTPUT = "new_camera_output_file";
-    public static final String STATE_IMAGE_LIST = "image_file_list";
 
     private EditText etTags;
     private EditText etPrice;
@@ -61,8 +52,11 @@ public class NewOfferFragment extends SuperFragment {
     private MapView mapView;
     private Button btnSetLocation;
     private ImageButton addImageButton;
+
+    //stateful
     private File newCameraOutputFile;
-    private ArrayList<Bitmap> imageFiles;
+    private ArrayList<Bitmap> imageBitmaps = new ArrayList<Bitmap>();
+    private ArrayList<String> imageNamesOnServer = new ArrayList<String>();
     private GeoPoint selectedGeoPoint;
 
     public void setNewCameraOutputFile(File newCameraOutputFile) {
@@ -72,9 +66,6 @@ public class NewOfferFragment extends SuperFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //TODO extract and make async
-        imageFiles = new ArrayList<>();
     }
 
     @Override
@@ -90,14 +81,41 @@ public class NewOfferFragment extends SuperFragment {
         btnSetLocation = (Button) view.findViewById(R.id.btnChooseLocation);
         addImageButton = (ImageButton) view.findViewById(R.id.addImageButton);
 
-        initOrRestore(savedInstanceState);
-
         addImageButton.setOnClickListener(new StartCameraHandler(this));
         btnSubmit.setOnClickListener(new SendNewOfferHandler(this));
         btnBarcode.setOnClickListener(new StartNewBarcodeScanHandler(this));
         btnSetLocation.setOnClickListener(new StartLocationChooserHandler(this));
 
         return view;
+    }
+
+    @Override
+    public void onViewStateRestored(Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        initOrRestore(savedInstanceState);
+    }
+
+    private void initOrRestore(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            newCameraOutputFile = (File) savedInstanceState.getSerializable("newCameraOutputFile");
+            selectedGeoPoint = (GeoPoint) savedInstanceState.getSerializable("selectedGeoPoint");
+            imageNamesOnServer = (ArrayList<String>) savedInstanceState.getSerializable("imageNamesOnServer");
+            imageBitmaps = (ArrayList<Bitmap>) savedInstanceState.getSerializable("imageBitmaps");
+
+            for (Bitmap image : imageBitmaps) {
+                addImage(image);
+            }
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putSerializable("newCameraOutputFile", newCameraOutputFile);
+        savedInstanceState.putSerializable("selectedGeoPoint", selectedGeoPoint);
+        savedInstanceState.putSerializable("imageBitmaps", imageBitmaps);
+        savedInstanceState.putSerializable("imageNamesOnServer", imageNamesOnServer);
+
+        super.onSaveInstanceState(savedInstanceState);
     }
 
     @Override
@@ -122,33 +140,6 @@ public class NewOfferFragment extends SuperFragment {
         }
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putSerializable(STATE_CAMERA_OUTPUT, newCameraOutputFile);
-        savedInstanceState.putParcelableArrayList(STATE_IMAGE_LIST, imageFiles);
-
-        super.onSaveInstanceState(savedInstanceState);
-    }
-
-    @Override
-    public void onViewStateRestored(Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
-
-        initOrRestore(savedInstanceState);
-    }
-
-    private void initOrRestore(Bundle savedInstanceState) {
-        if (savedInstanceState != null) {
-            newCameraOutputFile = (File) savedInstanceState.get(STATE_CAMERA_OUTPUT);
-            ArrayList<Parcelable> imageFiles = savedInstanceState.getParcelableArrayList(STATE_IMAGE_LIST);
-            for (Parcelable image : imageFiles) {
-                imageFiles.add(image);
-
-                //TODO  addImageButton.setImageBitmap((Bitmap) image);
-            }
-        }
-    }
-
     @Subscribe
     public void handleNewEanTagsReceived(NewEanTagsReceivedEvent event) {
         etTags.setText(event.getOutpanResult().getTags());
@@ -156,15 +147,19 @@ public class NewOfferFragment extends SuperFragment {
 
     @Subscribe
     public void handleNewImageReceivedFromServer(NewImageReceivedFromServer event) {
+        String imageFileNamesOnServer = event.getImageFileNameOnServer();
+        imageNamesOnServer.add(imageFileNamesOnServer);
+
         Bitmap finalImageFile = event.getfinalOptimizedBitmap();
+        imageBitmaps.add(finalImageFile);
         addImage(finalImageFile);
-        imageFiles.add(finalImageFile);
     }
 
     private void addImage(Bitmap image) {
+        LayoutParams layoutParameters = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
+
         ImageButton imageButton = new ImageButton(getActivity());
         imageButton.setImageBitmap(image);
-        LayoutParams layoutParameters = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
         imageButton.setLayoutParams(layoutParameters);
         imageButton.setScaleType(ScaleType.FIT_START);
         imageButton.setAdjustViewBounds(true);
