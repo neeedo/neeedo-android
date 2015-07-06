@@ -50,6 +50,17 @@ public class SwipeFragment extends SuperFragment {
             swipeCardViewItems.add(new SwipeCardViewItem(currentOffer.getName(), currentOffer.getTagsString(), currentOffer.getImages()));
         }
 
+        ArrayList<String> sampleImageArray = new ArrayList<String>();
+        sampleImageArray.add("http://i.imgur.com/RVhlr3C.jpg");
+        sampleImageArray.add("http://i.imgur.com/ZGIRhB1.png");
+        sampleImageArray.add("http://i.imgur.com/DvpvklR.png");
+
+        swipeCardViewItems.add(new SwipeCardViewItem("bla", "desc", sampleImageArray));
+        swipeCardViewItems.add(new SwipeCardViewItem("bla", "desc", sampleImageArray));
+        swipeCardViewItems.add(new SwipeCardViewItem("bla", "desc", sampleImageArray));
+        swipeCardViewItems.add(new SwipeCardViewItem("bla", "desc", sampleImageArray));
+
+
         titleArrayAdapter = new OfferSwipeArrayListAdapter(getActivity(), R.layout.diolor_item, swipeCardViewItems);
 
         flingContainer.setAdapter(titleArrayAdapter);

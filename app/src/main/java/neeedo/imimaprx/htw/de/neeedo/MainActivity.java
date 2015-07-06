@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 
+
 import neeedo.imimaprx.htw.de.neeedo.fragments.SwipeFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.ListDemandsFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.ListOffersFragment;
@@ -41,6 +42,9 @@ public class MainActivity extends ActionBarActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+//        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
+//        ImageLoader.getInstance().init(config);
 
         setContentView(R.layout.activity_main);
         initOrRestoreState(savedInstanceState);

@@ -2,6 +2,8 @@ package neeedo.imimaprx.htw.de.neeedo.fragments.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,11 +12,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
+import neeedo.imimaprx.htw.de.neeedo.service.ImageDownloader;
 
 public class OfferSwipeArrayListAdapter extends ArrayAdapter {
 
@@ -43,8 +47,8 @@ public class OfferSwipeArrayListAdapter extends ArrayAdapter {
 
         SwipeCardViewItem offerItem = swipeCardViewItems.get(position);
 
-        if (offerItem.getImages().size() > 0) {
-            Picasso.with(activity).load(offerItem.getImages().get(0)).into(imageView);
+        if (!offerItem.getImages().isEmpty()) {
+            new ImageDownloader(imageView,offerItem.getImages().get(0)).execute();
         }
 
         titleTextView.setText(offerItem.getTitle());
