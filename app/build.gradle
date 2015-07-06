@@ -56,6 +56,7 @@ dependencies {
     compile 'com.journeyapps:zxing-android-integration:2.3.0@aar'
     compile 'com.google.zxing:core:3.2.0'
     compile 'org.apmem.tools:layouts:1.9'
+    compile 'com.squareup.picasso:picasso:2.5.2'
 
     compile('org.simpleframework:simple-xml:2.7.+') {
         exclude module: 'stax'

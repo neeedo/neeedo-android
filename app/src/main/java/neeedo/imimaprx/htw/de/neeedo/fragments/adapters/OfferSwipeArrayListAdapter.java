@@ -7,7 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -36,11 +39,16 @@ public class OfferSwipeArrayListAdapter extends ArrayAdapter {
 
         TextView titleTextView = (TextView) view.findViewById(R.id.card_title);
         TextView descriptionTextView = (TextView) view.findViewById(R.id.card_description);
+        ImageView imageView = (ImageView) view.findViewById(R.id.card_image);
 
-        SwipeCardViewItem item = swipeCardViewItems.get(position);
+        SwipeCardViewItem offerItem = swipeCardViewItems.get(position);
 
-        titleTextView.setText(item.getTitle());
-        descriptionTextView.setText(item.getDescription());
+        if (offerItem.getImages().size() > 0) {
+            Picasso.with(activity).load(offerItem.getImages().get(0)).into(imageView);
+        }
+
+        titleTextView.setText(offerItem.getTitle());
+        descriptionTextView.setText(offerItem.getDescription());
 
         return view;
     }

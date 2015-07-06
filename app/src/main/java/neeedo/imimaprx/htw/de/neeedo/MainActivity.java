@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 
-import neeedo.imimaprx.htw.de.neeedo.fragments.DiolorSwipeFragment;
+import neeedo.imimaprx.htw.de.neeedo.fragments.SwipeFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.ListDemandsFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.ListOffersFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.MainFragment;
@@ -137,7 +137,7 @@ public class MainActivity extends ActionBarActivity
                 mFragment = new NewDemandFragment();
                 break;
             case MENU_SWIPER:
-                mFragment = new DiolorSwipeFragment();
+                mFragment = new SwipeFragment();
                 break;
             case MENU_MESSAGE:
                 mFragment = new MessageFragment();
