@@ -4,8 +4,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 
-import java.util.ArrayList;
-
 import neeedo.imimaprx.htw.de.neeedo.fragments.FormFragment;
 import neeedo.imimaprx.htw.de.neeedo.rest.completion.GetCompletionAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;

@@ -12,7 +12,6 @@ import java.io.File;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.fragments.NewOfferFragment;
-import neeedo.imimaprx.htw.de.neeedo.fragments.SuperFragment;
 import neeedo.imimaprx.htw.de.neeedo.utils.ImageUtils;
 import neeedo.imimaprx.htw.de.neeedo.vo.RequestCodes;
 

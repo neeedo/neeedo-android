@@ -2,8 +2,6 @@ package neeedo.imimaprx.htw.de.neeedo;
 
 import org.json.JSONObject;
 
-import neeedo.imimaprx.htw.de.neeedo.utils.GeoLocationUtils;
-
 public class FoundLocation {
     private double importance;
     private String name;

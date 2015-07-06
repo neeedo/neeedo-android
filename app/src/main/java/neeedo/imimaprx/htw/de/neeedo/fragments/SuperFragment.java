@@ -15,8 +15,6 @@ import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 
-import java.io.File;
-
 import neeedo.imimaprx.htw.de.neeedo.LoginActivity;
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.events.UserStateChangedEvent;
