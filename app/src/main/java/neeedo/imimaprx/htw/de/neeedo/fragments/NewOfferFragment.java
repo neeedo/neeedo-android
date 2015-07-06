@@ -105,6 +105,10 @@ public class NewOfferFragment extends SuperFragment {
             for (Bitmap image : imageBitmaps) {
                 addImage(image);
             }
+
+            if (selectedGeoPoint != null) {
+                setLocation(selectedGeoPoint);
+            }
         }
     }
 
