@@ -155,6 +155,8 @@ public class NewOfferFragment extends SuperFragment {
         } else if (requestCode == RequestCodes.BARCODE_SCAN_REQUEST_CODE) {
             String barcodeEAN = intent.getStringExtra("SCAN_RESULT");
             new GetOutpanByEANAsyncTask(barcodeEAN, getActivity()).execute();
+        } else if (requestCode == RequestCodes.FIND_LOCATION_REQUEST_CODE) {
+            System.out.println();
         }
     }
 
@@ -180,7 +182,7 @@ public class NewOfferFragment extends SuperFragment {
             for (Parcelable image : imageFiles) {
                 this.imageFiles.add((Bitmap) image);
 
-              //TODO  addImageButton.setImageBitmap((Bitmap) image);
+                //TODO  addImageButton.setImageBitmap((Bitmap) image);
             }
         }
     }

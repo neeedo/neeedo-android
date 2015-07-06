@@ -114,13 +114,13 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
         mapView.invalidate();
     }
 
-    private void setLocationSelected(IGeoPoint geoPoint) {
+    private void setLocationSelected(GeoPoint geoPoint) {
         mapView.getController().animateTo(geoPoint);
+        currentlySelectedGeoPoint = geoPoint;
         deleteAllUiOverlays();
         ArrayList<OverlayItem> ownOverlay = new ArrayList<OverlayItem>();
         ownOverlay.add(new OverlayItem("", "", (GeoPoint) geoPoint));
         ItemizedIconOverlay userLocationOverlay = new ItemizedIconOverlay<OverlayItem>(ownOverlay, getResources().getDrawable(R.drawable.map_marker), null, resourceProxy);
-
         mapView.getOverlays().add(userLocationOverlay);
     }
 
