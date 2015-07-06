@@ -40,6 +40,7 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
     private ArrayAdapter<FoundLocation> adapter;
     private DefaultResourceProxyImpl resourceProxy;
     private Activity that = this;
+    private GeoPoint currentlySelectedGeoPoint = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,12 +128,15 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
     }
 
     private void closeActivityAndReturnData() {
-        //TODO use real values
-        GeoPoint geoPoint = new GeoPoint(52468277, 13425979);
-        Intent output = new Intent();
-        output.putExtra("latitude", geoPoint.getLatitude());
-        output.putExtra("longitude", geoPoint.getLongitude());
-        setResult(RESULT_OK, output);
+        if (currentlySelectedGeoPoint != null) {
+            Intent output = new Intent();
+            output.putExtra("latitude", currentlySelectedGeoPoint.getLatitude());
+            output.putExtra("longitude", currentlySelectedGeoPoint.getLongitude());
+            setResult(RESULT_OK, output);
+        } else {
+            setResult(RESULT_CANCELED);
+        }
+
         finish();
     }
 
@@ -147,7 +151,7 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
         int id = item.getItemId();
 
         if (id == R.id.location_chooser_done) {
-            finish();//TODO
+            closeActivityAndReturnData();
         }
         return super.onOptionsItemSelected(item);
     }
