@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:layout_margin="30dp">
+    android:layout_margin="10dp">
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -46,6 +46,32 @@
                 android:layout_height="fill_parent"
                 android:scaleType="centerCrop"
                 android:src="@drawable/sample_bike" />
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center_vertical">
+
+                <Button
+                    android:id="@+id/button_diolor_gallery_left"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="0dp"
+                    android:background="#064"
+                    android:layout_alignParentLeft="true"
+                    android:text="left" />
+
+                <Button
+                    android:id="@+id/button_diolor_gallery_right"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="0dp"
+                    android:background="#f44"
+                    android:layout_alignParentRight="true"
+                    android:text="right" />
+
+            </RelativeLayout>
+
         </RelativeLayout>
 
         <TextView

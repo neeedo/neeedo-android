@@ -6,9 +6,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -43,11 +46,23 @@ public class OfferSwipeArrayListAdapter extends ArrayAdapter {
 
         View view = inflater.inflate(layoutId, parent, false);
 
-        TextView titleTextView = (TextView) view.findViewById(R.id.card_title);
-        TextView descriptionTextView = (TextView) view.findViewById(R.id.card_description);
-        ImageView imageView = (ImageView) view.findViewById(R.id.card_image);
+        final TextView titleTextView = (TextView) view.findViewById(R.id.card_title);
+        final TextView descriptionTextView = (TextView) view.findViewById(R.id.card_description);
+        final ImageView imageView = (ImageView) view.findViewById(R.id.card_image);
 
-        SwipeCardViewItem offerItem = swipeCardViewItems.get(position);
+        Button leftButton = (Button) view.findViewById(R.id.button_diolor_gallery_left);
+        Button rightButton = (Button) view.findViewById(R.id.button_diolor_gallery_right);
+
+        final SwipeCardViewItem offerItem = swipeCardViewItems.get(position);
+
+        rightButton.setOnClickListener(new OnClickListener() {
+                                           @Override
+                                           public void onClick(View v) {
+                                               Picasso.with(getContext()).load(offerItem.getImages().get(1)).fit().centerInside().into(imageView);
+                                           }
+                                       }
+        );
+
 
         if (!offerItem.getImages().isEmpty()) {
             Picasso.with(getContext()).load(offerItem.getImages().get(0)).fit().centerInside().into(imageView);
