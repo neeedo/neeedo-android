@@ -57,6 +57,8 @@ public class GetOutpanByEANAsyncTask extends BaseAsyncTask {
             return new OutpanResult(RestResult.ReturnType.SUCCESS, tagsString);
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
+            String message = getErrorMessage(e.getMessage());
+            showToast(message);
             return new RestResult(RestResult.ReturnType.FAILED);
         }
     }

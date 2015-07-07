@@ -48,6 +48,15 @@
         technisch in einem sehr gutem Zustand. Wurde regelmäßig gepflegt mit natürlich kleinen
         Gebrauchsspuren.
     </string>
+
+    <string name="exception_message_error_unkown">An unkown error occured.</string>
+    <string name="exception_message_server_not_available">Server is not available.</string>
+    <string name="exception_message_no_internet">Internet is not available.</string>
+    <string name="exception_message_internal_server_error">An internal server error occured.</string>
+    <string name="exception_message_email_already_in_use">Your E-Mail is already in use.</string>
+    <string name="exception_message_login">You have to login to proceed.</string>
+
+
     <string name="no_camera">no camera available</string>
     <string name="fail">something went wrong</string>
     <string name="login">login</string>

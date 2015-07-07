@@ -72,6 +72,9 @@ public class GetCompletionAsyncTask extends BaseAsyncTask {
             return new TagResult(RestResult.ReturnType.SUCCESS, tag);
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
+            String message = getErrorMessage(e.getMessage());
+            showToast(message);
+
             return new RestResult( RestResult.ReturnType.FAILED);
         }
     }

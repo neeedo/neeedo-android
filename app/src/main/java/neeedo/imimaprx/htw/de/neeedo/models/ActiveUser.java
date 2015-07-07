@@ -11,7 +11,7 @@ import org.springframework.util.Base64Utils;
 public class ActiveUser {
 
     public static final String PREFS_FILE = "PrefsFile";
-    private static Context context;
+    private Context context;
 
     //Username is the Email here
     private boolean isStartup = false;
@@ -110,6 +110,10 @@ public class ActiveUser {
             userPassword = "";
         }
 
+    }
+
+    public Context getContext() {
+        return context;
     }
 
     public boolean userCredentialsAvailable() {

@@ -29,9 +29,9 @@ public class LoginActivity extends Activity {
     public EditText mPasswordView;
     private ImageView mLogo;
     private View mLoginFormView;
-    private View mLoginError;
+    private TextView mLoginError;
     private View mLoginRegisterFromView;
-    private TextView emailError;
+    private TextView errorMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public class LoginActivity extends Activity {
 
         mLoginFormView = findViewById(R.id.login_login);
         mLogo = (ImageView) findViewById(R.id.login_logo);
-        mLoginError = findViewById(R.id.login_error);
+        mLoginError = (TextView) findViewById(R.id.login_error);
 
         Button mSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mSignInButton.setOnClickListener(new OnClickListener() {
@@ -139,12 +139,12 @@ public class LoginActivity extends Activity {
 
         TextView passwordError = (TextView) findViewById(R.id.login_password_error_text);
         TextView fieldsError = (TextView) findViewById(R.id.login_error_fields_empty_text);
-        emailError = (TextView) findViewById(R.id.login_email_error_text);
+        errorMessage = (TextView) findViewById(R.id.login_email_error_text);
         TextView emailInvalidError = (TextView) findViewById(R.id.login_email_error_text);
 
         passwordError.setVisibility(View.GONE);
         fieldsError.setVisibility(View.GONE);
-        emailError.setVisibility(View.GONE);
+        errorMessage.setVisibility(View.GONE);
         emailInvalidError.setVisibility(View.GONE);
 
         String name;
@@ -214,17 +214,20 @@ public class LoginActivity extends Activity {
         }
     }
 
-    public void setWrongCredentials() {
+    public void setWrongCredentials(String message) {
         showProgress(false);
+        showProgress(false);
+        mLoginError.setText(message);
         mLoginError.setVisibility(View.VISIBLE);
         mPasswordView.requestFocus();
     }
 
-    public void setEmailAlreadyInUse() {
+    public void setErrorState(String message) {
         showProgress(false);
         openRegisterForm();
         clearPassword();
-        emailError.setVisibility(View.VISIBLE);
+        errorMessage.setText(message);
+        errorMessage.setVisibility(View.VISIBLE);
     }
 
     private void clearPassword() {

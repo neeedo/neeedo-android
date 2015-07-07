@@ -1,6 +1,7 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 
@@ -86,6 +88,8 @@ public class MessageFragment extends SuperFragment {
         } else {
             editText.setVisibility(View.VISIBLE);
             messageView.setVisibility(View.INVISIBLE);
+            Context context = ActiveUser.getInstance().getContext();
+            Toast.makeText(context, context.getString(R.string.exception_message_login), Toast.LENGTH_LONG).show();
         }
 
         return view;

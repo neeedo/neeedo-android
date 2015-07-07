@@ -1,5 +1,6 @@
 package neeedo.imimaprx.htw.de.neeedo.rest.user;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -14,6 +15,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.client.RestTemplate;
 
 import neeedo.imimaprx.htw.de.neeedo.LoginActivity;
+import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.user.SingleUser;
 import neeedo.imimaprx.htw.de.neeedo.entities.user.User;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
@@ -77,31 +79,41 @@ public class PostCreateUpdateUserAsyncTask extends AsyncTask {
             userModel.setUser(singleUser.getUser());
 
             loginActivity.finish();
-            return new RestResult( RestResult.ReturnType.SUCCESS);
+            return new RestResult(RestResult.ReturnType.SUCCESS);
 
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
-            String exception = e.getMessage();
-            if(exception.contains("503")){
-                Log.e(this.getClass().getSimpleName(), "Server kaputt");
-            }
-            if(exception.contains("409")){
-                Log.e(this.getClass().getSimpleName(), "Server email schon benutzt");
-            }
-            if(exception.contains("500")){
-                Log.e(this.getClass().getSimpleName(), "Internal Server Error");
-            }
-            if(exception.contains("Unable to resolve host")){
-                Log.e(this.getClass().getSimpleName(), "No internet available");
-            }
+            final String message = getErrorMessage(e.getMessage());
+
             //activeUser.clearUserInformation();
             loginActivity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    loginActivity.setEmailAlreadyInUse();
+                    loginActivity.setErrorState(message);
                 }
             });
             return new RestResult(RestResult.ReturnType.FAILED);
         }
     }
+
+    public String getErrorMessage(String exception) {
+        Context context = ActiveUser.getInstance().getContext();
+        String message = context.getString(R.string.exception_message_error_unkown);
+
+
+        if (exception.contains("503")) {
+            message = context.getString(R.string.exception_message_server_not_available);
+        }
+        if (exception.contains("409")) {
+            message = context.getString(R.string.exception_message_email_already_in_use);
+        }
+        if (exception.contains("500")) {
+            message = context.getString(R.string.exception_message_internal_server_error);
+        }
+        if (exception.contains("Unable to resolve host")) {
+            message = context.getString(R.string.exception_message_no_internet);
+        }
+        return message;
+    }
 }
+

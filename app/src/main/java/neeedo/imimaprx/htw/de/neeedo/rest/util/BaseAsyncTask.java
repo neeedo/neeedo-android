@@ -1,10 +1,13 @@
 package neeedo.imimaprx.htw.de.neeedo.rest.util;
 
+import android.content.Context;
 import android.os.AsyncTask;
+import android.widget.Toast;
 
 import org.springframework.http.HttpBasicAuthentication;
 import org.springframework.http.HttpHeaders;
 
+import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.RestResult;
@@ -24,7 +27,7 @@ public abstract class BaseAsyncTask extends AsyncTask {
         PHRASE, TAG
     }
 
-    public enum FavoritOption{
+    public enum FavoritOption {
         CREATE, DELETE
     }
 
@@ -51,4 +54,31 @@ public abstract class BaseAsyncTask extends AsyncTask {
         }
         return false;
     }
+
+    public String getErrorMessage(String exception) {
+        Context context = ActiveUser.getInstance().getContext();
+        String message = context.getString(R.string.exception_message_error_unkown);
+
+        if (exception.contains("403") | exception.contains("401")) {
+            message = context.getString(R.string.login_error_text);
+        }
+        if (exception.contains("503")) {
+            message = context.getString(R.string.exception_message_server_not_available);
+        }
+        if (exception.contains("409")) {
+            message = context.getString(R.string.exception_message_email_already_in_use);
+        }
+        if (exception.contains("500")) {
+            message = context.getString(R.string.exception_message_internal_server_error);
+        }
+        if (exception.contains("Unable to resolve host")) {
+            message = context.getString(R.string.exception_message_no_internet);
+        }
+        return message;
+    }
+
+    public void showToast(String message) {
+        Toast.makeText(ActiveUser.getInstance().getContext(), message, Toast.LENGTH_LONG).show();
+    }
+
 }

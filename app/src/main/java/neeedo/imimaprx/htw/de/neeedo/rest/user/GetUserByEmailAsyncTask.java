@@ -42,6 +42,8 @@ public class GetUserByEmailAsyncTask extends BaseAsyncTask {
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
             activeUser.clearUserInformation();
+            String message = getErrorMessage(e.getMessage());
+            showToast(message);
             return new RestResult(RestResult.ReturnType.FAILED);
         }
     }

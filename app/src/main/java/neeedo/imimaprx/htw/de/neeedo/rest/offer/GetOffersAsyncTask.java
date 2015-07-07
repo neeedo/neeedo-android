@@ -83,6 +83,8 @@ public class GetOffersAsyncTask extends BaseAsyncTask {
             return new RestResult( RestResult.ReturnType.SUCCESS);
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
+            String message = getErrorMessage(e.getMessage());
+            showToast(message);
             return new RestResult(RestResult.ReturnType.FAILED);
         }
     }
