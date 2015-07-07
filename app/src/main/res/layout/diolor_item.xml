@@ -6,61 +6,76 @@
 
     <View
         android:id="@+id/item_swipe_left_indicator"
-        android:alpha="0"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_margin="10dp"
+        android:alpha="0"
         android:background="#A5F" />
 
     <View
         android:id="@+id/item_swipe_right_indicator"
-        android:alpha="0"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:layout_margin="10dp"
         android:layout_gravity="right"
+        android:layout_margin="10dp"
+        android:alpha="0"
         android:background="#5AF" />
 
     <LinearLayout
+        android:id="@+id/asdf"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:orientation="vertical"
         android:background="#88BEB1"
-        android:id="@+id/asdf">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/card_title"
-            android:layout_marginTop="10dp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:textSize="40sp"
-            android:textColor="@android:color/white"
+            android:layout_marginTop="10dp"
             android:background="#FF006D"
             android:gravity="center"
-            android:text="@string/sample_title"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
+            android:textColor="@android:color/white"
+            android:textSize="40sp" />
 
-        <ImageView
-            android:id="@+id/card_image"
-            android:scaleType="centerCrop"
-            android:layout_margin="10dp"
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
             android:layout_height="240dp"
-            android:gravity="top"
-            android:src="@drawable/sample_bike" />
+            android:layout_margin="10dp"
+            android:gravity="top">
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/material_blue_grey_800" />
+
+            <ProgressBar
+                android:id="@+id/progressBar1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true" />
+
+            <ImageView
+                android:id="@+id/card_image"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/sample_bike" />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/card_description"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:textSize="13dp"
-            android:textColor="@android:color/black"
             android:background="#fff"
-            android:text="@string/sample_describtion"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent" />
+            android:textColor="@android:color/black"
+            android:textSize="13dp" />
 
     </LinearLayout>
 
