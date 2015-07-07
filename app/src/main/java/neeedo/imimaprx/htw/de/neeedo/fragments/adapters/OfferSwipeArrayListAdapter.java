@@ -55,25 +55,29 @@ public class OfferSwipeArrayListAdapter extends ArrayAdapter {
         final SwipeCardViewItem offerItem = swipeCardViewItems.get(position);
 
         Button leftButton = (Button) view.findViewById(R.id.button_diolor_gallery_left);
-        leftButton.setOnClickListener(new OnClickListener() {
-                                          @Override
-                                          public void onClick(View v) {
-                                              switchImageInGallery(-1, offerItem, imageView);
-                                          }
-                                      }
-        );
+        leftButton
+                .setOnClickListener(new OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            switchImageInGallery(-1, offerItem, imageView);
+                                        }
+                                    }
+                );
 
         Button rightButton = (Button) view.findViewById(R.id.button_diolor_gallery_right);
-        rightButton.setOnClickListener(new OnClickListener() {
-                                           @Override
-                                           public void onClick(View v) {
-                                               switchImageInGallery(+1, offerItem, imageView);
-                                           }
-                                       }
-        );
+        rightButton
+                .setOnClickListener(new OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            switchImageInGallery(+1, offerItem, imageView);
+                                        }
+                                    }
+                );
 
 
-        if (!offerItem.getImages().isEmpty()) {
+        if (offerItem.getImages().isEmpty()) {
+            Picasso.with(getContext()).load(R.drawable.no_image).fit().centerInside().into(imageView);
+        } else {
             Picasso.with(getContext()).load(offerItem.getImages().get(0)).fit().centerInside().into(imageView);
         }
 
