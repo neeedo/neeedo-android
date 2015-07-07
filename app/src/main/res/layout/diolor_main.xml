@@ -8,6 +8,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:gravity="center">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -20,11 +21,12 @@
         android:layout_height="fill_parent"
         app:rotation_degrees="15.5" />
 
-    <LinearLayout android:id="@+id/buttons_diolor_chooser"
+    <LinearLayout
+        android:id="@+id/buttons_diolor_chooser"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="#f00"
-        android:layout_alignParentBottom="true" >
+        android:layout_alignParentBottom="true"
+        android:background="#f00">
 
         <Button
             android:id="@+id/button_diolor_left"
