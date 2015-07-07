@@ -21,14 +21,8 @@ import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
 public class PostCreateUpdateOfferAsyncTask extends BaseAsyncTask {
 
-
     private SendMode sendMode;
 
-    /**
-     * Mode of sending UPDATE or CREATE is needed, available in {@link BaseAsyncTask}
-     *
-     * @param sendMode
-     */
     public PostCreateUpdateOfferAsyncTask(SendMode sendMode) {
         if (sendMode == null) {
             throw new IllegalArgumentException("No mode is given.");

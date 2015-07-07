@@ -27,16 +27,18 @@ public class SendNewOfferHandler implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        ArrayList<String> tags = newOfferFragment.getOfferTags();
-        Location location = newOfferFragment.getLocation();
-        Double price = newOfferFragment.getPrice();
+        if (!newOfferFragment.validateData()) {
+            return;
+        }
 
         User currentUser = UserModel.getInstance().getUser();
 
         Offer offer = new Offer();
-        offer.setTags(tags);
-        offer.setLocation(location);
-        offer.setPrice(price);
+        offer.setTags(newOfferFragment.getOfferTags());
+        offer.setLocation(newOfferFragment.getLocation());
+        offer.setPrice(newOfferFragment.getPrice());
+        offer.setImages(newOfferFragment.getImages());
+
         offer.setUserId(currentUser.getId());
         offer.setName(currentUser.getName());
 

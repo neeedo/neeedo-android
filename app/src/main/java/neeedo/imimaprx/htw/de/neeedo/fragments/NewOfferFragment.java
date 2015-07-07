@@ -46,8 +46,7 @@ import neeedo.imimaprx.htw.de.neeedo.vo.RequestCodes;
 
 public class NewOfferFragment extends SuperFragment {
 
-    private EditText etTags;
-    private EditText etPrice;
+
     private Button btnSubmit;
     private Button btnBarcode;
     private LinearLayout imagesContainer;
@@ -55,7 +54,12 @@ public class NewOfferFragment extends SuperFragment {
     private Button btnSetLocation;
     private ImageButton addImageButton;
 
+
     //stateful
+//TODO those 2
+    private EditText etTags;
+    private EditText etPrice;
+
     private File newCameraOutputFile;
     private ArrayList<Bitmap> imageBitmaps = new ArrayList<Bitmap>();
     private ArrayList<String> imageNamesOnServer = new ArrayList<String>();
@@ -212,5 +216,29 @@ public class NewOfferFragment extends SuperFragment {
 
     public Double getPrice() {
         return Double.parseDouble(etPrice.getText().toString());
+    }
+
+    public ArrayList<String> getImages() {
+        return imageNamesOnServer;
+    }
+
+    public boolean validateData() {
+        if (selectedGeoPoint == null) {
+            //TODO show error
+            return false;
+        }
+        if (imageNamesOnServer.isEmpty()) {
+            //TODO show error
+            return false;
+        }
+        if (etTags.getText().toString().matches("")) {
+            //TODO show error
+            return false;
+        }
+        if (etPrice.getText().toString().matches("")) {
+            //TODO show error
+            return false;
+        }
+        return true;
     }
 }
