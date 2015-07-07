@@ -56,6 +56,7 @@
     <string name="exception_message_email_already_in_use">Your E-Mail is already in use.</string>
     <string name="exception_message_login">You have to login to proceed.</string>
 
+    <string name="new_messages">You have $ new messages.</string>
 
     <string name="no_camera">no camera available</string>
     <string name="fail">something went wrong</string>

@@ -5,8 +5,17 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.widget.Toast;
 
 
+import com.squareup.otto.Subscribe;
+
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import neeedo.imimaprx.htw.de.neeedo.entities.message.Message;
+import neeedo.imimaprx.htw.de.neeedo.events.UserMessageContactsLoadedEvent;
 import neeedo.imimaprx.htw.de.neeedo.fragments.SwipeFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.ListDemandsFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.ListOffersFragment;
@@ -16,6 +25,8 @@ import neeedo.imimaprx.htw.de.neeedo.fragments.NavigationDrawerFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.NewDemandFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.NewOfferFragment;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
+import neeedo.imimaprx.htw.de.neeedo.models.MessagesModel;
+import neeedo.imimaprx.htw.de.neeedo.rest.message.GetMessagesByUserIdAndReadStateAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.user.GetUserByEmailAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.utils.CertificateTrustService;
 
@@ -26,6 +37,7 @@ public class MainActivity extends ActionBarActivity
     private FragmentManager mFragmentManager;
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private int mCurrentNavigationIndex = 0;
+    private static Timer timer = new Timer();
 
     private final ActiveUser activeUser = ActiveUser.getInstance();
 
@@ -55,6 +67,14 @@ public class MainActivity extends ActionBarActivity
         CertificateTrustService.trustAllCerts();
         initSingletons();
         attempLogin();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                if (activeUser.userCredentialsAvailable())
+                    new GetMessagesByUserIdAndReadStateAsyncTask(ActiveUser.getInstance().getUserId(), false, true).execute();
+            }
+        }, 30000, 30000);
+
     }
 
     @Override
@@ -81,7 +101,7 @@ public class MainActivity extends ActionBarActivity
 
     private void attempLogin() {
 
-        ActiveUser activeUser = ActiveUser.getInstance();
+
         if (activeUser.isAlreadyStarted()) {
             return;
         }
@@ -154,4 +174,6 @@ public class MainActivity extends ActionBarActivity
         changeFragment(mFragment, position);
         mCurrentNavigationIndex = position;
     }
+
+
 }

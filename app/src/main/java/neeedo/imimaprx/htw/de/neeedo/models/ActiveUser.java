@@ -45,6 +45,7 @@ public class ActiveUser {
 
     public void setUserId(String userId) {
         this.userId = userId;
+        saveValuesInPreferences();
     }
 
     public void setUsername(String username) {

@@ -1,6 +1,8 @@
 package neeedo.imimaprx.htw.de.neeedo.rest.message;
 
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -13,10 +15,14 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
+import neeedo.imimaprx.htw.de.neeedo.R;
+import neeedo.imimaprx.htw.de.neeedo.entities.message.Message;
+import neeedo.imimaprx.htw.de.neeedo.entities.message.Messages;
 import neeedo.imimaprx.htw.de.neeedo.entities.user.User;
 import neeedo.imimaprx.htw.de.neeedo.entities.user.Users;
 import neeedo.imimaprx.htw.de.neeedo.events.UserMessageContactsLoadedEvent;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
+import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.MessagesModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.RestResult;
@@ -26,10 +32,12 @@ public class GetMessagesByUserIdAndReadStateAsyncTask extends BaseAsyncTask {
 
     private String userId1;
     private boolean read;
+    private boolean statusRequest;
 
-    public GetMessagesByUserIdAndReadStateAsyncTask(String userId1, boolean read) {
+    public GetMessagesByUserIdAndReadStateAsyncTask(String userId1, boolean read, boolean statusRequest) {
         this.userId1 = userId1;
         this.read = read;
+        this.statusRequest = statusRequest;
     }
 
     @Override
@@ -60,6 +68,9 @@ public class GetMessagesByUserIdAndReadStateAsyncTask extends BaseAsyncTask {
                     user.setHasNewMessages(true);
                 }
             }
+            if (statusRequest) {
+                showMessage(users);
+            }
 
             MessagesModel messagesModel = MessagesModel.getInstance();
             messagesModel.appendUsers(users);
@@ -71,6 +82,17 @@ public class GetMessagesByUserIdAndReadStateAsyncTask extends BaseAsyncTask {
             showToast(message);
             return new RestResult(RestResult.ReturnType.FAILED);
         }
+    }
+
+    private void showMessage(Users users) {
+        ArrayList<User> list = users.getUsers();
+        if (!list.isEmpty()) {
+            Context context = ActiveUser.getInstance().getContext();
+            String text = context.getString(R.string.new_messages);
+            text.replace("$", "" + list.size());
+            Toast.makeText(context, text, Toast.LENGTH_LONG).show();
+        }
+
     }
 
 }

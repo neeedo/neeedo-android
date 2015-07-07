@@ -81,8 +81,8 @@ public class MessageFragment extends SuperFragment {
             } else {
                 userId1 = user.getId();
             }
-            new GetMessagesByUserIdAndReadStateAsyncTask(userId1, false).execute();
-            new GetMessagesByUserIdAndReadStateAsyncTask(userId1, true).execute();
+            new GetMessagesByUserIdAndReadStateAsyncTask(userId1, false, false).execute();
+            new GetMessagesByUserIdAndReadStateAsyncTask(userId1, true, false).execute();
 
 
         } else {
