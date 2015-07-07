@@ -223,22 +223,23 @@ public class NewOfferFragment extends SuperFragment {
     }
 
     public boolean validateData() {
+        boolean isValidInput = true;
         if (selectedGeoPoint == null) {
             //TODO show error
-            return false;
+            isValidInput = false;
         }
         if (imageNamesOnServer.isEmpty()) {
             //TODO show error
-            return false;
+            isValidInput = false;
         }
         if (etTags.getText().toString().matches("")) {
-            //TODO show error
-            return false;
+            etTags.setError(getString(R.string.error_empty_field));
+            isValidInput = false;
         }
         if (etPrice.getText().toString().matches("")) {
-            //TODO show error
-            return false;
+            etTags.setError(getString(R.string.error_empty_field));
+            isValidInput = false;
         }
-        return true;
+        return isValidInput;
     }
 }

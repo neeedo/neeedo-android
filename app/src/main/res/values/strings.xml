@@ -107,5 +107,6 @@
 
     <string name="message_view_new_message">New message from</string>
     <string name="message_view_load_older_btn">load older messages</string>
+    <string name="error_empty_field">This field can not be empty</string>
 
 </resources>
