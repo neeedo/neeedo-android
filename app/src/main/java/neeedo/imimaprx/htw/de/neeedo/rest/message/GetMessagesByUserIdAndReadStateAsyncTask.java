@@ -1,6 +1,8 @@
 package neeedo.imimaprx.htw.de.neeedo.rest.message;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -16,8 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
-import neeedo.imimaprx.htw.de.neeedo.entities.message.Message;
-import neeedo.imimaprx.htw.de.neeedo.entities.message.Messages;
 import neeedo.imimaprx.htw.de.neeedo.entities.user.User;
 import neeedo.imimaprx.htw.de.neeedo.entities.user.Users;
 import neeedo.imimaprx.htw.de.neeedo.events.UserMessageContactsLoadedEvent;
@@ -87,10 +87,18 @@ public class GetMessagesByUserIdAndReadStateAsyncTask extends BaseAsyncTask {
     private void showMessage(Users users) {
         ArrayList<User> list = users.getUsers();
         if (!list.isEmpty()) {
-            Context context = ActiveUser.getInstance().getContext();
-            String text = context.getString(R.string.new_messages);
-            text.replace("$", "" + list.size());
-            Toast.makeText(context, text, Toast.LENGTH_LONG).show();
+            final Context context = ActiveUser.getInstance().getContext();
+            final String text = context.getString(R.string.new_messages).replace("$", "" + list.size());
+
+            Handler mHandler = new Handler(Looper.getMainLooper());
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(context, text, Toast.LENGTH_LONG).show();
+                }
+            });
+
+
         }
 
     }

@@ -2,6 +2,8 @@ package neeedo.imimaprx.htw.de.neeedo.rest.util;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Looper;
 import android.widget.Toast;
 
 import org.springframework.http.HttpBasicAuthentication;
@@ -77,8 +79,17 @@ public abstract class BaseAsyncTask extends AsyncTask {
         return message;
     }
 
-    public void showToast(String message) {
-        Toast.makeText(ActiveUser.getInstance().getContext(), message, Toast.LENGTH_LONG).show();
+    public void showToast(final String message) {
+
+        Handler mHandler = new Handler(Looper.getMainLooper());
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(ActiveUser.getInstance().getContext(), message, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
 }
+
+
