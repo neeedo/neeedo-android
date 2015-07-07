@@ -19,6 +19,7 @@ import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.message.Message;
 import neeedo.imimaprx.htw.de.neeedo.events.MessagesLoadedEvent;
 import neeedo.imimaprx.htw.de.neeedo.events.UserMessageSendEvent;
+import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.MessagesModel;
 import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.message.GetMessagesAsyncTask;
@@ -41,8 +42,8 @@ public class MessagesFragment extends SuperFragment implements View.OnClickListe
         messageView = (ListView) view.findViewById(R.id.messages_view_list);
 
         Bundle args = getArguments();
-        user2Id = args.getString("id");
-        user1Id = UserModel.getInstance().getUser().getId();
+        user2Id = args.getString("userId2");
+        user1Id = args.getString("userId1");
         new GetMessagesAsyncTask(user1Id, user2Id).execute();
 
         return view;
@@ -53,14 +54,12 @@ public class MessagesFragment extends SuperFragment implements View.OnClickListe
     public void getMessages(MessagesLoadedEvent messagesLoadedEvent) {
         ArrayList<Message> messages = MessagesModel.getInstance().getMessages().getMessages();
 
-      //  if (!messages.isEmpty()) {
-            ArrayAdapter<Message> messageAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, messages);
-            messageView.setAdapter(messageAdapter);
-            for (Message m : messages) {
-                if (!m.isRead())
-                    new PutMessageReadStateAsyncTask(m.getId()).execute();
-            }
-      //  }
+        ArrayAdapter<Message> messageAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, messages);
+        messageView.setAdapter(messageAdapter);
+        for (Message m : messages) {
+            if (!m.isRead() & m.getRecipient().getId().equals(user1Id))
+                new PutMessageReadStateAsyncTask(m.getId()).execute();
+        }
     }
 
     @Override

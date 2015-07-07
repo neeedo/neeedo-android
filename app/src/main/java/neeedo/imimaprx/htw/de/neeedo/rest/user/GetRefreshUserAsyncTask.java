@@ -48,6 +48,7 @@ public class GetRefreshUserAsyncTask extends AsyncTask {
             SingleUser singleUser = responseEntity.getBody();
             activeUser.setUsername(username);
             activeUser.setUserPassword(password);
+            activeUser.setUserId(singleUser.getUser().getId());
             UserModel.getInstance().setUser(singleUser.getUser());
             loginActivity.finish();
             return new RestResult(RestResult.ReturnType.SUCCESS);

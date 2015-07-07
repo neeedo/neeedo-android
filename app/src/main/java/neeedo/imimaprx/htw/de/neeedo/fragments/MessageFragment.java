@@ -31,7 +31,7 @@ public class MessageFragment extends SuperFragment {
     private ArrayList<User> users;
     private ArrayAdapter<User> userAdapter;
     private EditText editText;
-
+    private String userId1;
 
 
     @Override
@@ -58,7 +58,8 @@ public class MessageFragment extends SuperFragment {
                 Fragment fragment = new MessagesFragment();
 
                 Bundle args = new Bundle();
-                args.putString("id", user.getId());
+                args.putString("userId2", user.getId());
+                args.putString("userId1", userId1);
                 fragment.setArguments(args);
                 MessagesModel.getInstance().clearUsers();
                 fragmentManager.beginTransaction()
@@ -70,8 +71,16 @@ public class MessageFragment extends SuperFragment {
 
         MessagesModel.getInstance().clearUsers();
         if (ActiveUser.getInstance().hasActiveUser()) {
-            new GetMessagesByUserIdAndReadStateAsyncTask(UserModel.getInstance().getUser().getId(), false).execute();
-            new GetMessagesByUserIdAndReadStateAsyncTask(UserModel.getInstance().getUser().getId(), true).execute();
+
+            User user = UserModel.getInstance().getUser();
+
+            if (user == null) {
+                userId1 = ActiveUser.getInstance().getUserId();
+            } else {
+                userId1 = user.getId();
+            }
+            new GetMessagesByUserIdAndReadStateAsyncTask(userId1, false).execute();
+            new GetMessagesByUserIdAndReadStateAsyncTask(userId1, true).execute();
 
 
         } else {
@@ -112,7 +121,6 @@ public class MessageFragment extends SuperFragment {
 
 
     }
-
 
 
 }

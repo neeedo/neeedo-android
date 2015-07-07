@@ -81,6 +81,19 @@ public class PostCreateUpdateUserAsyncTask extends AsyncTask {
 
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
+            String exception = e.getMessage();
+            if(exception.contains("503")){
+                Log.e(this.getClass().getSimpleName(), "Server kaputt");
+            }
+            if(exception.contains("409")){
+                Log.e(this.getClass().getSimpleName(), "Server email schon benutzt");
+            }
+            if(exception.contains("500")){
+                Log.e(this.getClass().getSimpleName(), "Internal Server Error");
+            }
+            if(exception.contains("Unable to resolve host")){
+                Log.e(this.getClass().getSimpleName(), "No internet available");
+            }
             //activeUser.clearUserInformation();
             loginActivity.runOnUiThread(new Runnable() {
                 @Override

@@ -17,6 +17,7 @@ public class ActiveUser {
     private boolean isStartup = false;
     private String username = "";
     private String userPassword = "";
+    private String userId = "";
 
     private static ActiveUser activeUser;
 
@@ -36,6 +37,14 @@ public class ActiveUser {
 
     public String getUsername() {
         return username;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public void setUsername(String username) {
@@ -62,6 +71,7 @@ public class ActiveUser {
     public void clearUserInformation() {
         username = "";
         userPassword = "";
+        userId = "";
         saveValuesInPreferences();
         UserModel.getInstance().setUser(null);
     }
@@ -78,6 +88,7 @@ public class ActiveUser {
         SharedPreferences.Editor editor = context.getSharedPreferences(PREFS_FILE, context.MODE_PRIVATE).edit();
         editor.putString("name", username);
         editor.putString("password", userPassword);
+        editor.putString("userId", userId);
         editor.commit();
     }
 
@@ -93,7 +104,8 @@ public class ActiveUser {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_FILE, context.MODE_PRIVATE);
         username = prefs.getString("name", null);
         userPassword = prefs.getString("password", null);
-        if (username == null & userPassword == null) {
+        userId = prefs.getString("userId", null);
+        if (username == null | userPassword == null) {
             username = "";
             userPassword = "";
         }

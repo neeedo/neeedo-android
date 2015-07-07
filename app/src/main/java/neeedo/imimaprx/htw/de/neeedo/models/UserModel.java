@@ -36,8 +36,8 @@ public class UserModel {
         ActiveUser activeUser = ActiveUser.getInstance();
         activeUser.setUserPassword(user.getPassword());
         activeUser.setUsername(user.getEmail());
+        activeUser.setUserId(user.getId());
     }
-
 
 
 }
