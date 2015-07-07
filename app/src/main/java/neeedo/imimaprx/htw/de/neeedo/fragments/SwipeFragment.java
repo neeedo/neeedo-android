@@ -39,7 +39,7 @@ public class SwipeFragment extends SuperFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) getActivity().findViewById(R.id.frame);
+        final SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) getActivity().findViewById(R.id.frame);
 
         Offers offers = OffersModel.getInstance().getOffers();
         ArrayList<Offer> offerArrayList = offers.getOffers();
@@ -91,8 +91,10 @@ public class SwipeFragment extends SuperFragment {
             }
 
             @Override
-            public void onScroll(float v) {
-
+            public void onScroll(float scrollProgressPercent) {
+                View view = flingContainer.getSelectedView();
+                view.findViewById(R.id.item_swipe_right_indicator).setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
+                view.findViewById(R.id.item_swipe_left_indicator).setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
             }
         });
 
@@ -100,6 +102,22 @@ public class SwipeFragment extends SuperFragment {
             @Override
             public void onItemClicked(int itemPosition, Object dataObject) {
                 makeToast(getActivity(), "Clicked!");
+            }
+        });
+
+        getActivity().findViewById(R.id.button_diolor_right).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                makeToast(getActivity(), "right from btn!");
+                flingContainer.getTopCardListener().selectRight();
+            }
+        });
+
+        getActivity().findViewById(R.id.button_diolor_left).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                makeToast(getActivity(), "left from btn!");
+                flingContainer.getTopCardListener().selectLeft();
             }
         });
     }
