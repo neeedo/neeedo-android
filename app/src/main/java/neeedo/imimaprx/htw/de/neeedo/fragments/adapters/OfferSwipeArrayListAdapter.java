@@ -32,6 +32,8 @@ public class OfferSwipeArrayListAdapter extends ArrayAdapter {
     private final int layoutId;
     private final Activity activity;
 
+    private int currentImageInPreview = 0;
+
     public OfferSwipeArrayListAdapter(FragmentActivity activity, int layoutId, ArrayList<SwipeCardViewItem> swipeCardViewItems) {
         super(activity, layoutId);
 
@@ -50,15 +52,22 @@ public class OfferSwipeArrayListAdapter extends ArrayAdapter {
         final TextView descriptionTextView = (TextView) view.findViewById(R.id.card_description);
         final ImageView imageView = (ImageView) view.findViewById(R.id.card_image);
 
-        Button leftButton = (Button) view.findViewById(R.id.button_diolor_gallery_left);
-        Button rightButton = (Button) view.findViewById(R.id.button_diolor_gallery_right);
-
         final SwipeCardViewItem offerItem = swipeCardViewItems.get(position);
 
+        Button leftButton = (Button) view.findViewById(R.id.button_diolor_gallery_left);
+        leftButton.setOnClickListener(new OnClickListener() {
+                                          @Override
+                                          public void onClick(View v) {
+                                              switchImageInGallery(-1, offerItem, imageView);
+                                          }
+                                      }
+        );
+
+        Button rightButton = (Button) view.findViewById(R.id.button_diolor_gallery_right);
         rightButton.setOnClickListener(new OnClickListener() {
                                            @Override
                                            public void onClick(View v) {
-                                               Picasso.with(getContext()).load(offerItem.getImages().get(1)).fit().centerInside().into(imageView);
+                                               switchImageInGallery(+1, offerItem, imageView);
                                            }
                                        }
         );
@@ -72,6 +81,18 @@ public class OfferSwipeArrayListAdapter extends ArrayAdapter {
         descriptionTextView.setText(offerItem.getDescription());
 
         return view;
+    }
+
+    private void switchImageInGallery(int direction, SwipeCardViewItem offerItem, ImageView imageView) {
+        currentImageInPreview += direction;
+
+        int numberOfImages = offerItem.getImages().size();
+        if (currentImageInPreview > numberOfImages - 1)
+            currentImageInPreview = 0;
+        if (currentImageInPreview < 0)
+            currentImageInPreview = numberOfImages - 1;
+
+        Picasso.with(getContext()).load(offerItem.getImages().get(currentImageInPreview)).fit().centerInside().into(imageView);
     }
 
     // the following methods are a bit of a hack due to the fact that swipe lib doesn't expose

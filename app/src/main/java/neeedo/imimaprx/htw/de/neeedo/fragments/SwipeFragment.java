@@ -108,7 +108,6 @@ public class SwipeFragment extends SuperFragment {
         getActivity().findViewById(R.id.button_diolor_right).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                makeToast(getActivity(), "right from btn!");
                 flingContainer.getTopCardListener().selectRight();
             }
         });
@@ -116,7 +115,6 @@ public class SwipeFragment extends SuperFragment {
         getActivity().findViewById(R.id.button_diolor_left).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                makeToast(getActivity(), "left from btn!");
                 flingContainer.getTopCardListener().selectLeft();
             }
         });
