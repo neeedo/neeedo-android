@@ -1,5 +1,6 @@
 package neeedo.imimaprx.htw.de.neeedo.entities.util;
 
+import org.osmdroid.util.GeoPoint;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
@@ -20,6 +21,11 @@ public class Location implements Serializable {
     public Location(double lat, double lon) {
         this.lat = lat;
         this.lon = lon;
+    }
+
+    public Location(GeoPoint selectedGeoPoint) {
+        this.lat = selectedGeoPoint.getLatitude();
+        this.lon = selectedGeoPoint.getLongitude();
     }
 
     public double getLat() {

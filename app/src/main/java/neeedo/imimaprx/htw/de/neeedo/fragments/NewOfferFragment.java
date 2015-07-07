@@ -29,8 +29,10 @@ import org.osmdroid.views.overlay.OverlayItem;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
+import neeedo.imimaprx.htw.de.neeedo.entities.util.Location;
 import neeedo.imimaprx.htw.de.neeedo.events.NewEanTagsReceivedEvent;
 import neeedo.imimaprx.htw.de.neeedo.events.NewImageReceivedFromServer;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.ImageUploadHandler;
@@ -198,5 +200,17 @@ public class NewOfferFragment extends SuperFragment {
                 mapView.getController().animateTo(geoPoint);
             }
         }, 200);
+    }
+
+    public ArrayList<String> getOfferTags() {
+        return new ArrayList<String>(Arrays.asList(etPrice.getText().toString().split(",")));
+    }
+
+    public Location getLocation() {
+        return new Location(selectedGeoPoint);
+    }
+
+    public Double getPrice() {
+        return Double.parseDouble(etPrice.getText().toString());
     }
 }
