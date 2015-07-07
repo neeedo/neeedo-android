@@ -144,7 +144,7 @@ public class ImageUploadHandler extends AsyncTask<Void, Integer, UploadImageResu
                 sb.append(responseString);
             }
 
-            JSONObject responseObject                    = new JSONObject(sb.toString());
+            JSONObject responseObject = new JSONObject(sb.toString());
 
             imageFileNameOnServer = responseObject.getString("image");
 
@@ -186,10 +186,15 @@ public class ImageUploadHandler extends AsyncTask<Void, Integer, UploadImageResu
     }
 
     @Override
-    protected void onPostExecute(UploadImageResult o) {
-        super.onPostExecute(o);
-        progressDialog.dismiss();
+    protected void onPostExecute(UploadImageResult result) {
+        super.onPostExecute(result);
 
-        eventService.post(new NewImageReceivedFromServer(imageFileNameOnServer, finalOptimizedBitmap));
+        if (result.getResult() == RestResult.ReturnType.SUCCESS) {
+            progressDialog.dismiss();
+            eventService.post(new NewImageReceivedFromServer(imageFileNameOnServer, finalOptimizedBitmap));
+        }else{
+//            progressDialog.setButton();
+            progressDialog.setProgress(0);
+        }
     }
 }

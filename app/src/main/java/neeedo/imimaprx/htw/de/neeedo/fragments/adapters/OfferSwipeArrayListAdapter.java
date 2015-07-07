@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.squareup.picasso.Picasso;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -48,7 +50,8 @@ public class OfferSwipeArrayListAdapter extends ArrayAdapter {
         SwipeCardViewItem offerItem = swipeCardViewItems.get(position);
 
         if (!offerItem.getImages().isEmpty()) {
-            new ImageDownloader(imageView,offerItem.getImages().get(0)).execute();
+//            new ImageDownloader(imageView, offerItem.getImages().get(0), getContext()).execute();
+            Picasso.with(getContext()).load(offerItem.getImages().get(0)).fit().centerInside().into(imageView);
         }
 
         titleTextView.setText(offerItem.getTitle());
