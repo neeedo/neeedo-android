@@ -47,7 +47,7 @@ public class SwipeFragment extends SuperFragment {
         swipeCardViewItems = new ArrayList<SwipeCardViewItem>();
 
         for (Offer currentOffer : offerArrayList) {
-            swipeCardViewItems.add(new SwipeCardViewItem(currentOffer.getName(), currentOffer.getTagsString(), currentOffer.getImages()));
+            swipeCardViewItems.add(new SwipeCardViewItem(currentOffer));
         }
 
         ArrayList<String> sampleImageArray = new ArrayList<String>();
@@ -55,10 +55,14 @@ public class SwipeFragment extends SuperFragment {
         sampleImageArray.add("http://i.imgur.com/ZGIRhB1.png");
         sampleImageArray.add("http://i.imgur.com/DvpvklR.png");
 
-        swipeCardViewItems.add(new SwipeCardViewItem("bla", "desc", sampleImageArray));
-        swipeCardViewItems.add(new SwipeCardViewItem("bla", "desc", sampleImageArray));
-        swipeCardViewItems.add(new SwipeCardViewItem("bla", "desc", sampleImageArray));
-        swipeCardViewItems.add(new SwipeCardViewItem("bla", "desc", sampleImageArray));
+        Offer testOffer = new Offer();
+        testOffer.setImages(sampleImageArray);
+        testOffer.setName("foo1");
+
+        swipeCardViewItems.add(new SwipeCardViewItem(testOffer));
+        swipeCardViewItems.add(new SwipeCardViewItem(testOffer));
+        swipeCardViewItems.add(new SwipeCardViewItem(testOffer));
+        swipeCardViewItems.add(new SwipeCardViewItem(testOffer));
 
 
         titleArrayAdapter = new OfferSwipeArrayListAdapter(getActivity(), R.layout.diolor_item, swipeCardViewItems);
@@ -75,19 +79,24 @@ public class SwipeFragment extends SuperFragment {
 
             @Override
             public void onLeftCardExit(Object dataObject) {
-                Toast.makeText(getActivity(), "Dismissed!", Toast.LENGTH_SHORT).show();
+                SwipeCardViewItem swipeCardViewItem = (SwipeCardViewItem) dataObject;
+                Offer offer = swipeCardViewItem.getOffer();
+                //TODO dismiss
             }
 
             @Override
             public void onRightCardExit(Object dataObject) {
-                Toast.makeText(getActivity(), "Liked!", Toast.LENGTH_SHORT).show();
+                SwipeCardViewItem swipeCardViewItem = (SwipeCardViewItem) dataObject;
+                Offer offer = swipeCardViewItem.getOffer();
+                //TODO fav
             }
 
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
-                swipeCardViewItems.add(new SwipeCardViewItem("", "", new ArrayList<String>()));
-                titleArrayAdapter.notifyDataSetChanged();
-                Log.d("LIST", "notified");
+//                swipeCardViewItems.add(new SwipeCardViewItem("", "", new ArrayList<String>()));
+//                titleArrayAdapter.notifyDataSetChanged();
+                if (itemsInAdapter == 0)
+                    getActivity().findViewById(R.id.buttons_diolor_chooser).setVisibility(View.GONE);
             }
 
             @Override

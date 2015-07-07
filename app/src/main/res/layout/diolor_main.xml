@@ -11,7 +11,7 @@
         android:background="#ffeee9e2"
         app:rotation_degrees="15.5" />
 
-    <LinearLayout
+    <LinearLayout android:id="@+id/buttons_diolor_chooser"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="#f00"
