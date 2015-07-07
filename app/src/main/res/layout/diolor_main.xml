@@ -4,11 +4,20 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/swiper_no_more_offers_to_show" />
+    </RelativeLayout>
+
     <com.lorentzos.flingswipe.SwipeFlingAdapterView
         android:id="@+id/frame"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:background="#ffeee9e2"
         app:rotation_degrees="15.5" />
 
     <LinearLayout android:id="@+id/buttons_diolor_chooser"

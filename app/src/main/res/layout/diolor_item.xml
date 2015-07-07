@@ -56,18 +56,18 @@
                     android:id="@+id/button_diolor_gallery_left"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
+                    android:layout_alignParentLeft="true"
                     android:layout_margin="0dp"
                     android:background="#064"
-                    android:layout_alignParentLeft="true"
                     android:text="left" />
 
                 <Button
                     android:id="@+id/button_diolor_gallery_right"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
+                    android:layout_alignParentRight="true"
                     android:layout_margin="0dp"
                     android:background="#f44"
-                    android:layout_alignParentRight="true"
                     android:text="right" />
 
             </RelativeLayout>
