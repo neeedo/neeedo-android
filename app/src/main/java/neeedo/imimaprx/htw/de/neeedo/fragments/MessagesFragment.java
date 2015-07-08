@@ -57,7 +57,7 @@ public class MessagesFragment extends SuperFragment implements View.OnClickListe
         ArrayAdapter<Message> messageAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, messages);
         messageView.setAdapter(messageAdapter);
         for (Message m : messages) {
-            if (!m.isRead() & m.getRecipient().getId().equals(user1Id))
+            if (!m.isRead() && m.getRecipient().getId().equals(user1Id))
                 new PutMessageReadStateAsyncTask(m.getId()).execute();
         }
     }

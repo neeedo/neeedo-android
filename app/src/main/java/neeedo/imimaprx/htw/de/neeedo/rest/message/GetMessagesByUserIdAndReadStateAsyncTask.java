@@ -1,10 +1,6 @@
 package neeedo.imimaprx.htw.de.neeedo.rest.message;
 
-import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
-import android.widget.Toast;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -17,12 +13,10 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.user.User;
 import neeedo.imimaprx.htw.de.neeedo.entities.user.Users;
 import neeedo.imimaprx.htw.de.neeedo.events.UserMessageContactsLoadedEvent;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
-import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.MessagesModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.RestResult;
@@ -69,7 +63,7 @@ public class GetMessagesByUserIdAndReadStateAsyncTask extends BaseAsyncTask {
                 }
             }
             if (statusRequest) {
-                showMessage(users);
+                checkForNewMessages(users);
             }
 
             MessagesModel messagesModel = MessagesModel.getInstance();
@@ -84,21 +78,11 @@ public class GetMessagesByUserIdAndReadStateAsyncTask extends BaseAsyncTask {
         }
     }
 
-    private void showMessage(Users users) {
+    private void checkForNewMessages(Users users) {
         ArrayList<User> list = users.getUsers();
         if (!list.isEmpty()) {
-            final Context context = ActiveUser.getInstance().getContext();
-            final String text = context.getString(R.string.new_messages).replace("$", "" + list.size());
-
-            Handler mHandler = new Handler(Looper.getMainLooper());
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(context, text, Toast.LENGTH_LONG).show();
-                }
-            });
-
-
+            for (User u : list)
+                new GetMessagesAsyncTask(userId1, u.getId(), true).execute();
         }
 
     }

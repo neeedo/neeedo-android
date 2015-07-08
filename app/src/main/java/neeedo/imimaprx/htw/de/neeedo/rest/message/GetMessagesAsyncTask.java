@@ -13,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
+import neeedo.imimaprx.htw.de.neeedo.entities.message.Message;
 import neeedo.imimaprx.htw.de.neeedo.entities.message.Messages;
 import neeedo.imimaprx.htw.de.neeedo.events.MessagesLoadedEvent;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
@@ -25,10 +26,17 @@ public class GetMessagesAsyncTask extends BaseAsyncTask {
 
     private String userId1;
     private String userId2;
+    private boolean statusRequest = false;
 
     public GetMessagesAsyncTask(String userId1, String userId2) {
         this.userId1 = userId1;
         this.userId2 = userId2;
+    }
+
+    public GetMessagesAsyncTask(String userId1, String userId2, boolean statusRequest) {
+        this.userId1 = userId1;
+        this.userId2 = userId2;
+        this.statusRequest = statusRequest;
     }
 
     @Override
@@ -55,16 +63,35 @@ public class GetMessagesAsyncTask extends BaseAsyncTask {
             ResponseEntity<Messages> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, Messages.class);
             final Messages messages = responseEntity.getBody();
 
-            MessagesModel.getInstance().setMessages(messages);
+            if (statusRequest) {
+                checkMessageSenderState(messages);
+            } else {
+                MessagesModel.getInstance().setMessages(messages);
+            }
 
-
-            return new RestResult( RestResult.ReturnType.SUCCESS);
+            return new RestResult(RestResult.ReturnType.SUCCESS);
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
             String message = getErrorMessage(e.getMessage());
             showToast(message);
-            return new RestResult( RestResult.ReturnType.FAILED);
+            return new RestResult(RestResult.ReturnType.FAILED);
         }
+    }
+
+    private void checkMessageSenderState(Messages messages) {
+
+        ArrayList<Message> list = messages.getMessages();
+
+        int counter = 0;
+        for (Message m : list) {
+            if (m.getRecipient().getId().equals(userId1) && !m.isRead()) {
+                counter++;
+            }
+        }
+        if (counter > 0) {
+            MessagesModel.getInstance().increaseMessageCounter(counter);
+        }
+
     }
 
 }

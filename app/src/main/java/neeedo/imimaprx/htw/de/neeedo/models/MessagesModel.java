@@ -1,6 +1,12 @@
 package neeedo.imimaprx.htw.de.neeedo.models;
 
 
+import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
+import android.widget.Toast;
+
+import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.message.Messages;
 import neeedo.imimaprx.htw.de.neeedo.entities.message.SingleMessage;
 import neeedo.imimaprx.htw.de.neeedo.entities.user.User;
@@ -12,6 +18,7 @@ public class MessagesModel {
     private SingleMessage singleMessage;
     private static MessagesModel messagesModel;
     private Users users;
+    private int newMessagesCounter = 0;
 
     public static MessagesModel getInstance() {
         if (messagesModel == null)
@@ -46,7 +53,7 @@ public class MessagesModel {
         this.users = users;
     }
 
-    public void appendUsers(Users newUsers ) {
+    public void appendUsers(Users newUsers) {
 
         if (this.users == null) {
             this.users = newUsers;
@@ -68,7 +75,30 @@ public class MessagesModel {
         }
     }
 
-    public void clearUsers(){
+    public void increaseMessageCounter(int count) {
+        newMessagesCounter += count;
+
+        final Context context = ActiveUser.getInstance().getContext();
+        final String text = context.getString(R.string.new_messages).replace("$", "" + newMessagesCounter);
+
+        Handler mHandler = new Handler(Looper.getMainLooper());
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(context, text, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    public int getNewMessagesCounter() {
+        return newMessagesCounter;
+    }
+
+    public void setNewMessagesCounter(int newMessagesCounter) {
+        this.newMessagesCounter = newMessagesCounter;
+    }
+
+    public void clearUsers() {
         users = new Users();
     }
 }

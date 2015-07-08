@@ -70,8 +70,10 @@ public class MainActivity extends ActionBarActivity
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                if (activeUser.userCredentialsAvailable())
+                if (activeUser.userCredentialsAvailable()) {
+                    MessagesModel.getInstance().setNewMessagesCounter(0);
                     new GetMessagesByUserIdAndReadStateAsyncTask(ActiveUser.getInstance().getUserId(), false, true).execute();
+                }
             }
         }, 30000, 30000);
 

@@ -99,7 +99,7 @@ public class User implements Serializable, BaseEntity {
 
         String text = name;
         if (hasNewMessages)
-            text = "New message from " + name;
+            text = "Conversation changed: " + name;
         return text;
     }
 
