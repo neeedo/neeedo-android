@@ -7,9 +7,11 @@ import android.view.ViewGroup;
 
 import com.squareup.otto.Subscribe;
 
+import neeedo.imimaprx.htw.de.neeedo.MainActivity;
 import neeedo.imimaprx.htw.de.neeedo.events.GetSuggestionEvent;
 import neeedo.imimaprx.htw.de.neeedo.events.NewEanTagsReceivedEvent;
 import neeedo.imimaprx.htw.de.neeedo.events.NewImageReceivedFromServer;
+import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.SendOfferHandler;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 
@@ -32,6 +34,12 @@ public class NewOfferFragment extends FormOfferFragment {
     @Subscribe
     public void handleNewImageReceivedFromServer(NewImageReceivedFromServer event) {
         super.handleNewImageReceivedFromServer(event);
+    }
+
+    @Subscribe
+    public void handleServerResponse(ServerResponseEvent e) {
+        // TODO redirect to detail view of new offer
+        redirectToFragment(ListOffersFragment.class, MainActivity.MENU_LIST_OFFERS);
     }
 
     @Subscribe
