@@ -9,7 +9,6 @@ import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
 
 import org.apmem.tools.layouts.FlowLayout;
-import org.osmdroid.util.GeoPoint;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,8 +25,6 @@ import neeedo.imimaprx.htw.de.neeedo.utils.AutocompletionOnFocusChangeListener;
 import neeedo.imimaprx.htw.de.neeedo.utils.AutocompletionTextWatcher;
 
 public class FormDemandFragment extends FormFragment {
-    protected final ActiveUser activeUser = ActiveUser.getInstance();
-
     protected MultiAutoCompleteTextView etMustTags;
     protected FlowLayout flMustTagSuggestions;
     protected MultiAutoCompleteTextView etShouldTags;
@@ -50,6 +47,7 @@ public class FormDemandFragment extends FormFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // TODO remove if added map location stuff
         locationHelper = new LocationHelper(getActivity());
         currentLocation = locationHelper.getLocation();
         locationLatitude = currentLocation.getLat();

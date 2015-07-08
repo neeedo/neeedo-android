@@ -11,25 +11,25 @@ import android.widget.Toast;
 import java.io.File;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
-import neeedo.imimaprx.htw.de.neeedo.fragments.NewOfferFragment;
+import neeedo.imimaprx.htw.de.neeedo.fragments.FormOfferFragment;
 import neeedo.imimaprx.htw.de.neeedo.utils.ImageUtils;
 import neeedo.imimaprx.htw.de.neeedo.vo.RequestCodes;
 
 public class StartCameraHandler implements View.OnClickListener {
 
-    private NewOfferFragment newOfferFragment;
+    private FormOfferFragment formOfferFragment;
     private File outputFile;
 
-    public StartCameraHandler(NewOfferFragment newOfferFragment) {
-        this.newOfferFragment = newOfferFragment;
+    public StartCameraHandler(FormOfferFragment formOfferFragment) {
+        this.formOfferFragment = formOfferFragment;
     }
 
     @Override
     public void onClick(View v) {
         outputFile = ImageUtils.getNewOutputImageFile();
-        newOfferFragment.setNewCameraOutputFile(outputFile);
+        formOfferFragment.setNewCameraOutputFile(outputFile);
 
-        Context context = newOfferFragment.getActivity();
+        Context context = formOfferFragment.getActivity();
         PackageManager packageManager = context.getPackageManager();
 
         if (packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA) == false) {
@@ -41,6 +41,6 @@ public class StartCameraHandler implements View.OnClickListener {
 
         Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageCaptureUri);
-        newOfferFragment.startActivityForResult(cameraIntent, RequestCodes.CAMERA_CAPTURE_IMAGE_REQUEST_CODE);
+        formOfferFragment.startActivityForResult(cameraIntent, RequestCodes.CAMERA_CAPTURE_IMAGE_REQUEST_CODE);
     }
 }

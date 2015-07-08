@@ -16,8 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.squareup.otto.Subscribe;
-
 import org.osmdroid.DefaultResourceProxyImpl;
 import org.osmdroid.ResourceProxy;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
@@ -35,11 +33,13 @@ import neeedo.imimaprx.htw.de.neeedo.entities.util.Location;
 import neeedo.imimaprx.htw.de.neeedo.events.NewEanTagsReceivedEvent;
 import neeedo.imimaprx.htw.de.neeedo.events.NewImageReceivedFromServer;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.ImageUploadHandler;
+import neeedo.imimaprx.htw.de.neeedo.fragments.handler.StartCameraHandler;
+import neeedo.imimaprx.htw.de.neeedo.fragments.handler.StartLocationChooserHandler;
+import neeedo.imimaprx.htw.de.neeedo.fragments.handler.StartNewBarcodeScanHandler;
 import neeedo.imimaprx.htw.de.neeedo.rest.outpan.GetOutpanByEANAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.vo.RequestCodes;
 
 public class FormOfferFragment extends FormFragment {
-
     protected Button btnSubmit;
     protected Button btnBarcode;
     protected LinearLayout imagesContainer;
@@ -73,6 +73,10 @@ public class FormOfferFragment extends FormFragment {
         imagesContainer = (LinearLayout) view.findViewById(R.id.imagesContainer);
         btnSetLocation = (Button) view.findViewById(R.id.btnChooseLocation);
         addImageButton = (ImageButton) view.findViewById(R.id.addImageButton);
+
+        addImageButton.setOnClickListener(new StartCameraHandler(this));
+        btnBarcode.setOnClickListener(new StartNewBarcodeScanHandler(this));
+        btnSetLocation.setOnClickListener(new StartLocationChooserHandler(this));
 
         return view;
     }
@@ -132,6 +136,10 @@ public class FormOfferFragment extends FormFragment {
         }
     }
 
+    public void setNewCameraOutputFile(File newCameraOutputFile) {
+        this.newCameraOutputFile = newCameraOutputFile;
+    }
+
     public void handleNewEanTagsReceived(NewEanTagsReceivedEvent event) {
         etTags.setText(event.getOutpanResult().getTags());
     }
@@ -159,7 +167,7 @@ public class FormOfferFragment extends FormFragment {
         imagesContainer.addView(imageButton);
     }
 
-    protected void setLocation(final GeoPoint geoPoint) {
+    protected void setLocation(final GeoPoint geoPoint) { // TODO put this into super class and use it also for demands form
         mapView = new MapView(getActivity(), null);
         mapView.setTileSource(TileSourceFactory.MAPNIK);
         mapView.setBuiltInZoomControls(true);
@@ -179,7 +187,7 @@ public class FormOfferFragment extends FormFragment {
         ItemizedIconOverlay userLocationOverlay = new ItemizedIconOverlay<OverlayItem>(ownOverlay, getResources().getDrawable(R.drawable.map_marker), null, resourceProxy);
         mapView.getOverlays().add(userLocationOverlay);
 
-        //this is a hack to get around one of the osmdroid bugs
+        // this is a hack to get around one of the osmdroid bugs
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
