@@ -39,7 +39,5 @@ public class NewDemandFragment extends FormDemandFragment {
     @Subscribe
     public void fillSuggestions(GetSuggestionEvent e) {
         super.fillSuggestions(e);
-
-        completionsAdapter.notifyDataSetChanged();
     }
 }

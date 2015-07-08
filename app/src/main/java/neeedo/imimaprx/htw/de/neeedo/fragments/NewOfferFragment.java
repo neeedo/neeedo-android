@@ -45,7 +45,5 @@ public class NewOfferFragment extends FormOfferFragment {
     @Subscribe
     public void fillSuggestions(GetSuggestionEvent e) {
         super.fillSuggestions(e);
-
-        completionsAdapter.notifyDataSetChanged();
     }
 }

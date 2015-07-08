@@ -105,6 +105,8 @@ public class FormOfferFragment extends FormFragment {
         etTags.setAdapter(completionsAdapter);
 
         super.showSuggestionTags(flTagSuggestions, etTags, e);
+
+        completionsAdapter.notifyDataSetChanged();
     }
 
     @Override

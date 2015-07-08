@@ -99,6 +99,8 @@ public class FormDemandFragment extends FormFragment {
 
         super.showSuggestionTags(flMustTagSuggestions, etMustTags, e);
         super.showSuggestionTags(flShouldTagSuggestions, etShouldTags, e);
+
+        completionsAdapter.notifyDataSetChanged();
     }
 
     public ArrayList<String> getMustTags() {
