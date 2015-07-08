@@ -1,12 +1,15 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments.handler;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -192,9 +195,18 @@ public class ImageUploadHandler extends AsyncTask<Void, Integer, UploadImageResu
         if (result.getResult() == RestResult.ReturnType.SUCCESS) {
             progressDialog.dismiss();
             eventService.post(new NewImageReceivedFromServer(imageFileNameOnServer, finalOptimizedBitmap));
-        }else{
-//            progressDialog.setButton();
-            progressDialog.setProgress(0);
+        } else {
+            progressDialog.dismiss();
+            new AlertDialog.Builder(activity)
+                    .setTitle(activity.getString(R.string.image_upload_failed_title))
+                    .setMessage(activity.getString(R.string.image_upload_failed_message))
+                    .setCancelable(false)
+                    .setPositiveButton(activity.getString(R.string.image_upload_failed_accept), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //do nothing
+                        }
+                    }).create().show();
         }
     }
 }
