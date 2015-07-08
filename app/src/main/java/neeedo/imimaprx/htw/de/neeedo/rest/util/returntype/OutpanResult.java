@@ -9,6 +9,10 @@ public class OutpanResult extends RestResult {
         this.tags = tags;
     }
 
+    public OutpanResult(ReturnType result) {
+        super(result);
+    }
+
     public String getTags() {
         return tags;
     }

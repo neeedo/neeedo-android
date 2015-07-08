@@ -1,6 +1,8 @@
 package neeedo.imimaprx.htw.de.neeedo.rest.outpan;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.util.Log;
 
 import org.springframework.http.HttpBasicAuthentication;
@@ -15,6 +17,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
+import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.Article;
 import neeedo.imimaprx.htw.de.neeedo.events.NewEanTagsReceivedEvent;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
@@ -56,17 +59,27 @@ public class GetOutpanByEANAsyncTask extends BaseAsyncTask {
 
             return new OutpanResult(RestResult.ReturnType.SUCCESS, tagsString);
         } catch (Exception e) {
-            Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
-            String message = getErrorMessage(e.getMessage());
-            showToast(message);
-            return new RestResult(RestResult.ReturnType.FAILED);
+            return new OutpanResult(RestResult.ReturnType.FAILED);
         }
     }
 
     @Override
     protected void onPostExecute(Object result) {
-        if (result instanceof OutpanResult)
-            eventService.post(new NewEanTagsReceivedEvent((OutpanResult) result));
+        OutpanResult outpanResult = (OutpanResult) result;
+        if (outpanResult.getResult() == RestResult.ReturnType.SUCCESS) {
+            eventService.post(new NewEanTagsReceivedEvent(outpanResult));
+        } else {
+            new AlertDialog.Builder(activity)
+                    .setTitle(activity.getString(R.string.outpan_failed_title))
+                    .setMessage(activity.getString(R.string.outpan_failed_message))
+                    .setCancelable(false)
+                    .setPositiveButton(activity.getString(R.string.outpan_failed_accept), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //do nothing
+                        }
+                    }).create().show();
+        }
     }
 
     private String getTagsFromArticle(Article article) {

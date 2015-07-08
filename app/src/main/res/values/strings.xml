@@ -112,5 +112,8 @@
     <string name="image_upload_failed_title">Image upload failed</string>
     <string name="image_upload_failed_message">Please try again.</string>
     <string name="image_upload_failed_accept">OK</string>
+    <string name="outpan_failed_accept">OK</string>
+    <string name="outpan_failed_message">We could find matching tags for the scanned product</string>
+    <string name="outpan_failed_title">Barcode scan failed</string>
 
 </resources>

@@ -141,7 +141,7 @@ public class NewOfferFragment extends SuperFragment {
             new ImageUploadHandler(newCameraOutputFile, getActivity()).execute();
         } else if (requestCode == RequestCodes.BARCODE_SCAN_REQUEST_CODE) {
             String barcodeEAN = intent.getStringExtra("SCAN_RESULT");
-            new GetOutpanByEANAsyncTask(barcodeEAN, getActivity()).execute();
+            new GetOutpanByEANAsyncTask(barcodeEAN,getActivity()).execute();
         } else if (requestCode == RequestCodes.FIND_LOCATION_REQUEST_CODE) {
             String latitude = intent.getStringExtra("latitude");
             String longitude = intent.getStringExtra("longitude");
