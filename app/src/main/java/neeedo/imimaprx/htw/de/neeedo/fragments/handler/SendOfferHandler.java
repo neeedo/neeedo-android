@@ -20,7 +20,7 @@ public class SendOfferHandler implements View.OnClickListener {
     private final FormOfferFragment formOfferFragment;
     private final BaseAsyncTask.SendMode sendMode;
 
-    public SendOfferHandler(BaseAsyncTask.SendMode sendMode, NewOfferFragment formOfferFragment) {
+    public SendOfferHandler(BaseAsyncTask.SendMode sendMode, FormOfferFragment formOfferFragment) {
         this.sendMode = sendMode;
         this.formOfferFragment = formOfferFragment;
     }

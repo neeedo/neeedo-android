@@ -133,10 +133,8 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
                 break;
 
             case R.id.btnEdit:
-                // TODO
-                Log.d("DEBUG", "Edit offer");
-//                OffersModel.getInstance().setDraft(currentOffer);
-//                redirectToFragment(EditOfferFragment.class);
+                OffersModel.getInstance().setDraft(currentOffer);
+                redirectToFragment(EditOfferFragment.class);
                 break;
             case R.id.btnMessage: {
                 btnMessage.setVisibility(View.GONE);

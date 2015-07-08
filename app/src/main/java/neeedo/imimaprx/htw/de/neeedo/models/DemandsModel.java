@@ -11,7 +11,7 @@ public class DemandsModel {
 
     private Demands demands;
     private SingleDemand singleDemand;
-    private Demand postDemand;
+    private Demand postDemand; // TODO rename to draft
 
     public static DemandsModel getInstance() {
         if (demandsModel == null)

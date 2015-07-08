@@ -39,6 +39,8 @@
     <string name="new_card_submit">Submit</string>
     <string name="new_card_demand">New Demand</string>
     <string name="edit_card_demand">Edit Demand</string>
+    <string name="edit_card_offer">Edit Offer</string>
+
 
     <!-- Error messages -->
     <string name="error_outpan_not_found">Your product was not found in the database</string>
