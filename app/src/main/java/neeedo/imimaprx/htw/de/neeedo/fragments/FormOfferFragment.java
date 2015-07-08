@@ -60,6 +60,8 @@ public class FormOfferFragment extends FormFragment {
 
     protected FlowLayout flTagSuggestions;
 
+    protected RelativeLayout mapContainer;
+
     protected File newCameraOutputFile;
     protected ArrayList<Bitmap> imageBitmaps = new ArrayList<Bitmap>();
     protected ArrayList<String> imageNamesOnServer = new ArrayList<String>();
@@ -82,6 +84,7 @@ public class FormOfferFragment extends FormFragment {
         imagesContainer = (LinearLayout) view.findViewById(R.id.imagesContainer);
         btnSetLocation = (Button) view.findViewById(R.id.btnChooseLocation);
         addImageButton = (ImageButton) view.findViewById(R.id.addImageButton);
+        mapContainer = (RelativeLayout) view.findViewById(R.id.mapContainer);
 
         addImageButton.setOnClickListener(new StartCameraHandler(this));
         btnBarcode.setOnClickListener(new StartNewBarcodeScanHandler(this));
@@ -205,7 +208,6 @@ public class FormOfferFragment extends FormFragment {
         mapView.setBuiltInZoomControls(true);
         mapView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-        RelativeLayout mapContainer = (RelativeLayout) getActivity().findViewById(R.id.mapContainer);
         mapContainer.setVisibility(View.VISIBLE);
         mapContainer.addView(mapView);
 

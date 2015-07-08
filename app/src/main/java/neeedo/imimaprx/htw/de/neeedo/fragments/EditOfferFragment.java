@@ -38,9 +38,8 @@ public class EditOfferFragment extends FormOfferFragment {
 
             // TODO add images
 
-            // TODO add location (map)
-//            Location location = currentOffer.getLocation();
-//            setLocation(new GeoPoint(location.getLat(), location.getLon()));
+            Location location = currentOffer.getLocation();
+            setLocation(new GeoPoint(location.getLat(), location.getLon()));
         }
 
         btnSubmit.setOnClickListener(new SendOfferHandler(BaseAsyncTask.SendMode.UPDATE, this));
