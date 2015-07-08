@@ -172,6 +172,7 @@ public class NewOfferFragment extends SuperFragment {
         imageButton.setImageBitmap(image);
         imageButton.setLayoutParams(layoutParameters);
         imageButton.setScaleType(ScaleType.FIT_START);
+        imageButton.setPadding(0, 0, 0, 0);
         imageButton.setAdjustViewBounds(true);
 
         imagesContainer.addView(imageButton);
