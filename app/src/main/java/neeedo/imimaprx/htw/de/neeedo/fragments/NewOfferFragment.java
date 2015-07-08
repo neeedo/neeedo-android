@@ -166,14 +166,15 @@ public class NewOfferFragment extends SuperFragment {
     }
 
     private void addImage(Bitmap image) {
-        LayoutParams layoutParameters = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
+        LinearLayout.LayoutParams layoutParameters = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
+        layoutParameters.setMargins(15, 0, 0, 0);
 
         ImageButton imageButton = new ImageButton(getActivity());
         imageButton.setImageBitmap(image);
-        imageButton.setLayoutParams(layoutParameters);
         imageButton.setScaleType(ScaleType.FIT_START);
         imageButton.setPadding(0, 0, 0, 0);
         imageButton.setAdjustViewBounds(true);
+        imageButton.setLayoutParams(layoutParameters);
 
         imagesContainer.addView(imageButton);
     }
