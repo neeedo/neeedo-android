@@ -80,7 +80,7 @@ public class MessagesFragment extends SuperFragment implements View.OnClickListe
             case R.id.messages_view_send_button: {
                 EditText editText = (EditText) activity.findViewById(R.id.messages_view_answer_text);
                 String text = editText.getText().toString();
-                if (text.isEmpty()) {
+                if (text.isEmpty() || text.matches("[ ]+")) {
                     return;
                 }
                 message.setSenderId(user1Id);

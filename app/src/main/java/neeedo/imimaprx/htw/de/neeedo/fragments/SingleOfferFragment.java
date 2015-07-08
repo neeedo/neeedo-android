@@ -57,7 +57,7 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
     }
 
     @Override
-        public void onActivityCreated(Bundle savedInstanceState) {
+    public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         Activity activity = getActivity();
@@ -147,7 +147,7 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
 
             case R.id.btnSend: {
                 String message = editTextSendMessage.getText().toString();
-                if (message.length() == 0) {
+                if (message.isEmpty() || message.matches("[ ]+")) {
                     return;
                 }
                 Message m = new Message();
