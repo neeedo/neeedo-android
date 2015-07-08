@@ -38,17 +38,7 @@ public class EditDemandFragment extends FormDemandFragment {
             etPriceMax.setText(String.valueOf(currentDemand.getPrice().getMax()));
         }
 
-        btnSubmit.setOnClickListener(new SendDemandHandler(
-                        BaseAsyncTask.SendMode.UPDATE,
-                        etMustTags,
-                        etShouldTags,
-                        etLocationLat,
-                        etLocationLon,
-                        etDistance,
-                        etPriceMin,
-                        etPriceMax
-                )
-        );
+        btnSubmit.setOnClickListener(new SendDemandHandler(BaseAsyncTask.SendMode.UPDATE, this));
 
         return view;
     }

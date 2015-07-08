@@ -28,8 +28,10 @@ import org.osmdroid.views.overlay.OverlayItem;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
+import neeedo.imimaprx.htw.de.neeedo.entities.util.Location;
 import neeedo.imimaprx.htw.de.neeedo.events.NewEanTagsReceivedEvent;
 import neeedo.imimaprx.htw.de.neeedo.events.NewImageReceivedFromServer;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.ImageUploadHandler;
@@ -184,5 +186,42 @@ public class FormOfferFragment extends FormFragment {
                 mapView.getController().animateTo(geoPoint);
             }
         }, 200);
+    }
+
+    public ArrayList<String> getOfferTags() {
+        return new ArrayList<String>(Arrays.asList(etTags.getText().toString().split(",")));
+    }
+
+    public Location getLocation() {
+        return new Location(selectedGeoPoint);
+    }
+
+    public Double getPrice() {
+        return Double.parseDouble(etPrice.getText().toString());
+    }
+
+    public ArrayList<String> getImages() {
+        return imageNamesOnServer;
+    }
+
+    public boolean validateData() {
+        boolean isValidInput = true;
+        if (selectedGeoPoint == null) {
+            //TODO show error
+            isValidInput = false;
+        }
+        if (imageNamesOnServer.isEmpty()) {
+            //TODO show error
+            isValidInput = false;
+        }
+        if (etTags.getText().toString().matches("")) {
+            etTags.setError(getString(R.string.error_empty_field));
+            isValidInput = false;
+        }
+        if (etPrice.getText().toString().matches("")) {
+            etTags.setError(getString(R.string.error_empty_field));
+            isValidInput = false;
+        }
+        return isValidInput;
     }
 }

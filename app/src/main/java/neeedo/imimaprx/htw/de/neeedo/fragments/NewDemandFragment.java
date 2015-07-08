@@ -25,17 +25,7 @@ public class NewDemandFragment extends FormDemandFragment {
             etLocationLon.setText(String.valueOf(locationLongitude));
         }
 
-        btnSubmit.setOnClickListener(new SendDemandHandler(
-                        BaseAsyncTask.SendMode.CREATE,
-                        etMustTags,
-                        etShouldTags,
-                        etLocationLat,
-                        etLocationLon,
-                        etDistance,
-                        etPriceMin,
-                        etPriceMax
-                )
-        );
+        btnSubmit.setOnClickListener(new SendDemandHandler(BaseAsyncTask.SendMode.CREATE, this));
 
         return view;
     }

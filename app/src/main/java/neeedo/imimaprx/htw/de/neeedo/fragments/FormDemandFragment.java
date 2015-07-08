@@ -9,9 +9,14 @@ import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
 
 import org.apmem.tools.layouts.FlowLayout;
+import org.osmdroid.util.GeoPoint;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.Location;
+import neeedo.imimaprx.htw.de.neeedo.entities.util.Price;
 import neeedo.imimaprx.htw.de.neeedo.events.GetSuggestionEvent;
 import neeedo.imimaprx.htw.de.neeedo.helpers.LocationHelper;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
@@ -96,5 +101,30 @@ public class FormDemandFragment extends FormFragment {
 
         super.showSuggestionTags(flMustTagSuggestions, etMustTags, e);
         super.showSuggestionTags(flShouldTagSuggestions, etShouldTags, e);
+    }
+
+    public ArrayList<String> getMustTags() {
+        return new ArrayList<String>(Arrays.asList(etMustTags.getText().toString().split(",")));
+    }
+
+    public ArrayList<String> getShouldTags() {
+        return new ArrayList<String>(Arrays.asList(etShouldTags.getText().toString().split(",")));
+    }
+
+    public Location getLocation() {
+        // TODO OpenStreetMaps stuff
+        return new Location(
+                Double.parseDouble(etLocationLat.getText().toString()),
+                Double.parseDouble(etLocationLon.getText().toString()));
+    }
+
+    public int getDistance() {
+        return Integer.parseInt(etDistance.getText().toString());
+    }
+
+    public Price getPrice() {
+        return new Price(
+                Double.parseDouble(etPriceMin.getText().toString()),
+                Double.parseDouble(etPriceMax.getText().toString()));
     }
 }
