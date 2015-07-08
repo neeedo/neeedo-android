@@ -13,9 +13,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import org.apmem.tools.layouts.FlowLayout;
 import org.osmdroid.DefaultResourceProxyImpl;
 import org.osmdroid.ResourceProxy;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
@@ -30,6 +32,7 @@ import java.util.Arrays;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.Location;
+import neeedo.imimaprx.htw.de.neeedo.events.GetSuggestionEvent;
 import neeedo.imimaprx.htw.de.neeedo.events.NewEanTagsReceivedEvent;
 import neeedo.imimaprx.htw.de.neeedo.events.NewImageReceivedFromServer;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.ImageUploadHandler;
@@ -37,6 +40,9 @@ import neeedo.imimaprx.htw.de.neeedo.fragments.handler.StartCameraHandler;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.StartLocationChooserHandler;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.StartNewBarcodeScanHandler;
 import neeedo.imimaprx.htw.de.neeedo.rest.outpan.GetOutpanByEANAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.utils.AutocompletionOnFocusChangeListener;
+import neeedo.imimaprx.htw.de.neeedo.utils.AutocompletionTextWatcher;
 import neeedo.imimaprx.htw.de.neeedo.vo.RequestCodes;
 
 public class FormOfferFragment extends FormFragment {
@@ -49,8 +55,10 @@ public class FormOfferFragment extends FormFragment {
 
     // stateful
     // TODO those 2
-    protected EditText etTags;
+    protected MultiAutoCompleteTextView etTags;
     protected EditText etPrice;
+
+    protected FlowLayout flTagSuggestions;
 
     protected File newCameraOutputFile;
     protected ArrayList<Bitmap> imageBitmaps = new ArrayList<Bitmap>();
@@ -66,8 +74,9 @@ public class FormOfferFragment extends FormFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.form_offer_view, container, false);
 
-        etTags = (EditText) view.findViewById(R.id.etTags);
+        etTags = (MultiAutoCompleteTextView) view.findViewById(R.id.etTags);
         etPrice = (EditText) view.findViewById(R.id.etPrice);
+        flTagSuggestions = (FlowLayout) view.findViewById(R.id.flTagSuggestions);
         btnBarcode = (Button) view.findViewById(R.id.newOffer_Barcode_Button);
         btnSubmit = (Button) view.findViewById(R.id.btnSubmit);
         imagesContainer = (LinearLayout) view.findViewById(R.id.imagesContainer);
@@ -78,7 +87,24 @@ public class FormOfferFragment extends FormFragment {
         btnBarcode.setOnClickListener(new StartNewBarcodeScanHandler(this));
         btnSetLocation.setOnClickListener(new StartLocationChooserHandler(this));
 
+        etTags.addTextChangedListener(new AutocompletionTextWatcher(this, etTags, BaseAsyncTask.CompletionType.TAG));
+
+        etTags.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+
+        etTags.addTextChangedListener(new AutocompletionTextWatcher(this, etTags, BaseAsyncTask.CompletionType.PHRASE));
+
+        etTags.setOnFocusChangeListener(new AutocompletionOnFocusChangeListener(flTagSuggestions));
+
         return view;
+    }
+
+    @Override
+    public void fillSuggestions(GetSuggestionEvent e) {
+        super.fillSuggestions(e);
+
+        etTags.setAdapter(completionsAdapter);
+
+        super.showSuggestionTags(flTagSuggestions, etTags, e);
     }
 
     @Override
