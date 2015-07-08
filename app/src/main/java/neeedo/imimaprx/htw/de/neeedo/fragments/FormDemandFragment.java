@@ -34,6 +34,7 @@ public class FormDemandFragment extends FormFragment {
     protected EditText etPriceMax;
     protected Button btnSubmit;
 
+    // TODO replace with mechanism of Offer Form
     protected double locationLatitude;
     protected double locationLongitude;
     protected boolean locationAvailable;
