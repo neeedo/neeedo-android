@@ -2,19 +2,27 @@ package neeedo.imimaprx.htw.de.neeedo.fragments.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
+
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demand;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offer;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.Price;
+import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
 public class ListProductsArrayAdapter<Object> extends ArrayAdapter<Object> {
     private Context context;
@@ -22,6 +30,7 @@ public class ListProductsArrayAdapter<Object> extends ArrayAdapter<Object> {
     private List<Object> products;
     private Class productType;
 
+    ImageView imageView;
     TextView tvPrimaryTags;
     TextView tvSecondaryTags;
     TextView tvDistance;
@@ -48,6 +57,7 @@ public class ListProductsArrayAdapter<Object> extends ArrayAdapter<Object> {
         LayoutInflater inflater = ((Activity) context).getLayoutInflater();
         row = inflater.inflate(layoutResourceId, parent, false);
 
+        imageView = (ImageView) row.findViewById(R.id.imageView);
         tvPrimaryTags = (TextView) row.findViewById(R.id.tvPrimaryTags);
         tvSecondaryTags = (TextView) row.findViewById(R.id.tvSecondaryTags);
         tvDistance = (TextView) row.findViewById(R.id.tvDistance);
@@ -98,6 +108,28 @@ public class ListProductsArrayAdapter<Object> extends ArrayAdapter<Object> {
 
             tvSecondaryTags.setVisibility(View.GONE);
             tvDistance.setVisibility(View.GONE);
+
+            ArrayList<String> images = offer.getImages();
+            if(!images.isEmpty()) {
+                Target imageTarget = new Target() {
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                        imageView.setImageBitmap(bitmap);
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Drawable errorDrawable) {
+
+                    }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                    }
+                };
+                String imageUrl = ServerConstantsUtils.getActiveServer() + "images/" + images.get(0);
+                Picasso.with(context).load(imageUrl).into(imageTarget);
+            }
 
         } else if(productType == null) {
 
