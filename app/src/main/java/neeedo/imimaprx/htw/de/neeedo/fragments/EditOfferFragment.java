@@ -1,12 +1,17 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.squareup.otto.Subscribe;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import org.osmdroid.util.GeoPoint;
 
@@ -21,8 +26,10 @@ import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.SendOfferHandler;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
 public class EditOfferFragment extends FormOfferFragment {
+    private Target imageTarget;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -36,7 +43,24 @@ public class EditOfferFragment extends FormOfferFragment {
             etTags.setText(currentOffer.getTagsString());
             etPrice.setText(String.valueOf(currentOffer.getPrice()));
 
-            // TODO add images
+            imageTarget = new Target() {
+                @Override
+                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                    addImage(bitmap);
+                }
+
+                @Override
+                public void onBitmapFailed(Drawable errorDrawable) {
+
+                }
+
+                @Override
+                public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                }
+            };
+            String imageUrl = ServerConstantsUtils.getActiveServer() + "images/" + currentOffer.getImages().get(0);
+            Picasso.with(view.getContext()).load(imageUrl).into(imageTarget);
 
             Location location = currentOffer.getLocation();
             setLocation(new GeoPoint(location.getLat(), location.getLon()));
