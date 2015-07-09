@@ -3,7 +3,6 @@ package neeedo.imimaprx.htw.de.neeedo.fragments;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +13,9 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import org.osmdroid.util.GeoPoint;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import neeedo.imimaprx.htw.de.neeedo.MainActivity;
 import neeedo.imimaprx.htw.de.neeedo.R;
@@ -29,7 +31,7 @@ import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
 public class EditOfferFragment extends FormOfferFragment {
-    private Target imageTarget;
+    private final Set<Target> imageTargets = new HashSet<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -43,24 +45,12 @@ public class EditOfferFragment extends FormOfferFragment {
             etTags.setText(currentOffer.getTagsString());
             etPrice.setText(String.valueOf(currentOffer.getPrice()));
 
-            imageTarget = new Target() {
-                @Override
-                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                    addImage(bitmap);
-                }
-
-                @Override
-                public void onBitmapFailed(Drawable errorDrawable) {
-
-                }
-
-                @Override
-                public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                }
-            };
-            String imageUrl = ServerConstantsUtils.getActiveServer() + "images/" + currentOffer.getImages().get(0);
-            Picasso.with(view.getContext()).load(imageUrl).into(imageTarget);
+            for(String image : currentOffer.getImages()) {
+                String imageUrl = ServerConstantsUtils.getActiveServer() + "images/" + image;
+                Target imageTarget = new ImageTarget();
+                imageTargets.add(imageTarget); // avoid garbage collection for target
+                Picasso.with(view.getContext()).load(imageUrl).into(imageTarget);
+            }
 
             Location location = currentOffer.getLocation();
             setLocation(new GeoPoint(location.getLat(), location.getLon()));
@@ -90,5 +80,23 @@ public class EditOfferFragment extends FormOfferFragment {
     @Subscribe
     public void fillSuggestions(GetSuggestionEvent e) {
         super.fillSuggestions(e);
+    }
+
+    private class ImageTarget implements Target {
+
+        @Override
+        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+            addImage(bitmap);
+        }
+
+        @Override
+        public void onBitmapFailed(Drawable errorDrawable) {
+
+        }
+
+        @Override
+        public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+        }
     }
 }
