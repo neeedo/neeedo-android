@@ -47,13 +47,17 @@ public class EditOfferFragment extends FormOfferFragment {
 
             for(String image : currentOffer.getImages()) {
                 String imageUrl = ServerConstantsUtils.getActiveServer() + "images/" + image;
+
                 Target imageTarget = new ImageTarget();
                 imageTargets.add(imageTarget); // avoid garbage collection for target
                 Picasso.with(view.getContext()).load(imageUrl).into(imageTarget);
+
+                imageNamesOnServer.add(image);
             }
 
             Location location = currentOffer.getLocation();
-            setLocation(new GeoPoint(location.getLat(), location.getLon()));
+            selectedGeoPoint = new GeoPoint(location.getLat(), location.getLon());
+            setLocation(selectedGeoPoint);
         }
 
         btnSubmit.setOnClickListener(new SendOfferHandler(BaseAsyncTask.SendMode.UPDATE, this));
