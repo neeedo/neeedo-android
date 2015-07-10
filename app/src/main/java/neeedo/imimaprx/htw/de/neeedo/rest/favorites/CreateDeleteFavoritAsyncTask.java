@@ -51,7 +51,7 @@ public class CreateDeleteFavoritAsyncTask extends BaseAsyncTask {
             List<MediaType> acceptableMediaTypes = new ArrayList<>();
             acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
             requestHeaders.setAccept(acceptableMediaTypes);
-            HttpEntity<?> requestEntity = null;
+            HttpEntity requestEntity = null;
             RestTemplate restTemplate = new RestTemplate(HttpRequestFactoryProviderImpl.getClientHttpRequestFactorySSLSupport(9000));
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
