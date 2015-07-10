@@ -115,6 +115,7 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
                 return;
             } else {
                 currentOffer = singleOffer.getOffer();
+                OffersModel.getInstance().setSingleOffer(null);
             }
 
         }
