@@ -12,6 +12,7 @@
     <string name="title_section_my_demands">My Demands</string>
     <string name="title_section_swiper">Swiper</string>
     <string name="title_section_message">Message</string>
+    <string name="title_section_favorites">Favorites</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -76,6 +77,7 @@
     <string name="login_error_fields_empty">All fields are necessary.</string>
     <string name="login_no_valid_email_error">Your given email isn\'t valid.</string>
     <string name="login_returned">Login returned</string>
+    <string name="authorization_error">You aren\'t allowed to do that sorry.</string>
 
     <string name="button_delete">Delete</string>
     <string name="button_edit">Edit</string>
@@ -101,6 +103,7 @@
     <string name="camera_uploading_progress">image is uploading</string>
     <string name="location_chooser_search_hint">Suche...</string>
     <string name="message_view_no_conversations_found">No conversations have been found.</string>
+    <string name="favorites_view_no_favorites_found">No favorites have been found.</string>
 
     <string name="single_offer_fragment_toast_message">Your message was send.</string>
     <string name="single_offer_message_edit_text_hint">Write your message here.</string>
@@ -117,5 +120,7 @@
     <string name="outpan_failed_accept">OK</string>
     <string name="outpan_failed_message">We could find matching tags for the scanned product</string>
     <string name="outpan_failed_title">Barcode scan failed</string>
+    <string name="single_offer_view_add_to_favorites_text">Add to Favorites</string>
+    <string name="single_offer_view_remove_from_favorites_text">Remove from favorites</string>
 
 </resources>

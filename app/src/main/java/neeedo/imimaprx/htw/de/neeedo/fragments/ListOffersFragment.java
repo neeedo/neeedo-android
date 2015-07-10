@@ -18,7 +18,7 @@ import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demand;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offer;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offers;
-import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
+import neeedo.imimaprx.htw.de.neeedo.events.GetOfferFinishedEvent;
 import neeedo.imimaprx.htw.de.neeedo.fragments.adapters.ListProductsArrayAdapter;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
@@ -61,7 +61,7 @@ public class ListOffersFragment extends SuperFragment {
     }
 
     @Subscribe
-    public void fillList(ServerResponseEvent e) {
+    public void fillList(GetOfferFinishedEvent e) {
 
         Offers offers = OffersModel.getInstance().getOffers();
         ArrayList<Offer> offerList = offers.getOffers();

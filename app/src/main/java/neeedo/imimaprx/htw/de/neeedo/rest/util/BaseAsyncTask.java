@@ -61,7 +61,10 @@ public abstract class BaseAsyncTask extends AsyncTask {
         Context context = ActiveUser.getInstance().getContext();
         String message = context.getString(R.string.exception_message_error_unkown);
 
-        if (exception.contains("403") | exception.contains("401")) {
+        if (exception.contains("401")) {
+            message = context.getString(R.string.authorization_error);
+        }
+        if (exception.contains("403")) {
             message = context.getString(R.string.login_error_text);
         }
         if (exception.contains("503")) {

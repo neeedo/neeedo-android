@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.favorites.Favorites;
+import neeedo.imimaprx.htw.de.neeedo.events.UserFavoritesLoadedEvent;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.models.FavoritesModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
@@ -26,6 +27,13 @@ public class GetFavoritesByIDAsyncTask extends BaseAsyncTask {
 
     public GetFavoritesByIDAsyncTask(String userId) {
         this.userId = userId;
+    }
+
+
+    @Override
+    protected void onPostExecute(Object result) {
+        if (result instanceof RestResult)
+            eventService.post(new UserFavoritesLoadedEvent());
     }
 
     @Override
@@ -44,12 +52,12 @@ public class GetFavoritesByIDAsyncTask extends BaseAsyncTask {
             ResponseEntity<Favorites> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, Favorites.class);
             final Favorites favorites = responseEntity.getBody();
             FavoritesModel.getInstance().setFavorites(favorites);
-            return new RestResult( RestResult.ReturnType.SUCCESS);
+            return new RestResult(RestResult.ReturnType.SUCCESS);
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
             String message = getErrorMessage(e.getMessage());
             showToast(message);
-            return new RestResult( RestResult.ReturnType.FAILED);
+            return new RestResult(RestResult.ReturnType.FAILED);
         }
     }
 

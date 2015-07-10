@@ -5,7 +5,6 @@ import org.simpleframework.xml.Root;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.util.BaseEntity;
 
@@ -13,16 +12,16 @@ import neeedo.imimaprx.htw.de.neeedo.entities.util.BaseEntity;
 public class Favorites implements Serializable, BaseEntity {
 
     @Element
-    private ArrayList<Favorit> favorites;
+    private ArrayList<Favorite> favorites = new ArrayList<>();
 
     public Favorites() {
     }
 
-    public List<Favorit> getFavorites() {
+    public ArrayList<Favorite> getFavorites() {
         return favorites;
     }
 
-    public void setFavorites(ArrayList<Favorit> favorites) {
+    public void setFavorites(ArrayList<Favorite> favorites) {
         this.favorites = favorites;
     }
 
@@ -33,11 +32,11 @@ public class Favorites implements Serializable, BaseEntity {
         return false;
     }
 
-    public void addSingleFavorit(Favorit favorit) {
+    public void addSingleFavorit(Favorite favorite) {
         if (favorites == null) {
             favorites = new ArrayList<>();
         }
-        favorites.add(favorit);
+        favorites.add(favorite);
     }
 
     @Override

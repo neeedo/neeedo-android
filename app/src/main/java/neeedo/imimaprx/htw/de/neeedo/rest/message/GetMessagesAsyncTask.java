@@ -20,6 +20,7 @@ import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.models.MessagesModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.RestResult;
+import neeedo.imimaprx.htw.de.neeedo.service.EventService;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
 public class GetMessagesAsyncTask extends BaseAsyncTask {
@@ -27,6 +28,7 @@ public class GetMessagesAsyncTask extends BaseAsyncTask {
     private String userId1;
     private String userId2;
     private boolean statusRequest = false;
+
 
     public GetMessagesAsyncTask(String userId1, String userId2) {
         this.userId1 = userId1;

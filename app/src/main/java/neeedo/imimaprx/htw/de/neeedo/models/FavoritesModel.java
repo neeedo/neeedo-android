@@ -3,12 +3,14 @@ package neeedo.imimaprx.htw.de.neeedo.models;
 
 import java.util.ArrayList;
 
-import neeedo.imimaprx.htw.de.neeedo.entities.favorites.Favorit;
+import neeedo.imimaprx.htw.de.neeedo.entities.favorites.Favorite;
 import neeedo.imimaprx.htw.de.neeedo.entities.favorites.Favorites;
+import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offers;
 
 public class FavoritesModel {
 
     private Favorites favorites;
+    private Offers offersToFavorites;
 
 
     public static FavoritesModel getInstance() {
@@ -25,7 +27,7 @@ public class FavoritesModel {
     public Favorites getFavorites() {
         if (favorites == null) {
             favorites = new Favorites();
-            favorites.setFavorites(new ArrayList<Favorit>());
+            favorites.setFavorites(new ArrayList<Favorite>());
         }
         return favorites;
     }

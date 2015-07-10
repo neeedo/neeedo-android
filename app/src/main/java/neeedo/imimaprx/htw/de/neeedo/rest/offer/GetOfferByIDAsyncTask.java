@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.SingleOffer;
+import neeedo.imimaprx.htw.de.neeedo.events.GetOfferFinishedEvent;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
@@ -27,6 +28,13 @@ public class GetOfferByIDAsyncTask extends BaseAsyncTask {
     public GetOfferByIDAsyncTask(String id) {
         this.id = id;
     }
+
+    @Override
+    protected void onPostExecute(Object result) {
+        if (result instanceof RestResult)
+            eventService.post(new GetOfferFinishedEvent());
+    }
+
 
     @Override
     protected Object doInBackground(Object[] params) {
@@ -49,7 +57,7 @@ public class GetOfferByIDAsyncTask extends BaseAsyncTask {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
             String message = getErrorMessage(e.getMessage());
             showToast(message);
-            return new RestResult( RestResult.ReturnType.FAILED);
+            return new RestResult(RestResult.ReturnType.FAILED);
         }
     }
 

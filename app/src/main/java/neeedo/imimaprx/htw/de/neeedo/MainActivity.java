@@ -16,6 +16,7 @@ import java.util.TimerTask;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.message.Message;
 import neeedo.imimaprx.htw.de.neeedo.events.UserMessageContactsLoadedEvent;
+import neeedo.imimaprx.htw.de.neeedo.fragments.ListFavoritesFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.SwipeFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.ListDemandsFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.ListOffersFragment;
@@ -50,6 +51,7 @@ public class MainActivity extends ActionBarActivity
     public static final int MENU_NEW_DEMAND = 4;
     public static final int MENU_SWIPER = 5;
     public static final int MENU_MESSAGE = 6;
+    public static final int FAVORITES = 7;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,6 +169,9 @@ public class MainActivity extends ActionBarActivity
                 break;
             case MENU_MESSAGE:
                 mFragment = new MessageFragment();
+                break;
+            case FAVORITES:
+                mFragment = new ListFavoritesFragment();
                 break;
 
             default:

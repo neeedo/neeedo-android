@@ -3,7 +3,6 @@ package neeedo.imimaprx.htw.de.neeedo.fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,14 +17,20 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
+import neeedo.imimaprx.htw.de.neeedo.entities.favorites.Favorite;
 import neeedo.imimaprx.htw.de.neeedo.entities.message.Message;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offer;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offers;
-import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
+import neeedo.imimaprx.htw.de.neeedo.entities.offer.SingleOffer;
+import neeedo.imimaprx.htw.de.neeedo.events.FavoritesActionEvent;
+import neeedo.imimaprx.htw.de.neeedo.events.GetOfferFinishedEvent;
 import neeedo.imimaprx.htw.de.neeedo.events.UserMessageSendEvent;
+import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
 import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
+import neeedo.imimaprx.htw.de.neeedo.rest.favorites.CreateDeleteFavoritAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.message.PostMessageAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.offer.GetOfferByIDAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.offer.GetOffersAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.DeleteAsyncTask;
@@ -36,6 +41,8 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
     private Button btnEditOffer;
     private Button btnMessage;
     private Button btnSend;
+    private Button btnAddToFavorites;
+    private Button btnRemoveFromFavorites;
     private TextView tvTags;
     private TextView tvPrice;
     private TextView tvUser;
@@ -65,11 +72,15 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
         btnEditOffer = (Button) activity.findViewById(R.id.btnEdit);
         btnMessage = (Button) activity.findViewById(R.id.btnMessage);
         btnSend = (Button) activity.findViewById(R.id.btnSend);
+        btnAddToFavorites = (Button) activity.findViewById(R.id.single_offer_view_add_to_favorites_button);
+        btnRemoveFromFavorites = (Button) activity.findViewById(R.id.single_offer_view_remove_from_favorites_button);
 
         btnDeleteOffer.setOnClickListener(this);
         btnEditOffer.setOnClickListener(this);
         btnMessage.setOnClickListener(this);
         btnSend.setOnClickListener(this);
+        btnAddToFavorites.setOnClickListener(this);
+        btnRemoveFromFavorites.setOnClickListener(this);
 
         BaseAsyncTask asyncTask;
 
@@ -94,9 +105,20 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
     }
 
     @Subscribe
-    public void fillText(ServerResponseEvent e) {
+    public void fillText(GetOfferFinishedEvent e) {
         String offerId = getArguments().getString("id");
         Offer currentOffer = findSingleOffer(offerId);
+        if (currentOffer == null) {
+            SingleOffer singleOffer = OffersModel.getInstance().getSingleOffer();
+            if (singleOffer == null) {
+                new GetOfferByIDAsyncTask(offerId).execute();
+                return;
+            } else {
+                currentOffer = singleOffer.getOffer();
+            }
+
+        }
+
         Context context = getActivity();
 
         DecimalFormat priceFormat = new DecimalFormat(context.getString(R.string.format_price));
@@ -160,11 +182,40 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
 
             }
             break;
+
+            case R.id.single_offer_view_add_to_favorites_button: {
+
+                Favorite favorite = new Favorite();
+                favorite.setUserId(ActiveUser.getInstance().getUserId());
+                favorite.setOfferId(getArguments().getString("id"));
+
+                new CreateDeleteFavoritAsyncTask(BaseAsyncTask.FavoritOption.CREATE, favorite).execute();
+            }
+            break;
+
+            case R.id.single_offer_view_remove_from_favorites_button: {
+                Favorite favorite = new Favorite();
+                favorite.setUserId(ActiveUser.getInstance().getUserId());
+                favorite.setOfferId(getArguments().getString("id"));
+
+                new CreateDeleteFavoritAsyncTask(BaseAsyncTask.FavoritOption.DELETE, favorite).execute();
+
+            }
+            break;
         }
+
+
     }
 
     @Subscribe
     public void messageSend(UserMessageSendEvent userMessageSendEvent) {
         Toast.makeText(getActivity(), getActivity().getString(R.string.single_offer_fragment_toast_message), Toast.LENGTH_SHORT).show();
     }
+
+    @Subscribe
+    public void favoriteActionDone(FavoritesActionEvent e) {
+        Toast.makeText(getActivity(), getActivity().getString(R.string.done), Toast.LENGTH_SHORT).show();
+    }
+
+
 }
