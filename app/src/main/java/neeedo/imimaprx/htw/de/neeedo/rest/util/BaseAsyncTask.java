@@ -29,10 +29,6 @@ public abstract class BaseAsyncTask extends AsyncTask {
         PHRASE, TAG
     }
 
-    public enum FavoritOption {
-        CREATE, DELETE
-    }
-
     protected EventService eventService = EventService.getInstance();
 
     @Override

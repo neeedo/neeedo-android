@@ -18,19 +18,20 @@ import neeedo.imimaprx.htw.de.neeedo.entities.favorites.Favorite;
 import neeedo.imimaprx.htw.de.neeedo.entities.favorites.SingleFavorite;
 import neeedo.imimaprx.htw.de.neeedo.events.FavoritesActionEvent;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
+import neeedo.imimaprx.htw.de.neeedo.models.FavoritesModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.RestResult;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
 
-public class CreateDeleteFavoritAsyncTask extends BaseAsyncTask {
+public class CreateFavoriteAsyncTask extends BaseAsyncTask {
 
     private Favorite favorite;
-    private FavoritOption favoritOption;
 
-    public CreateDeleteFavoritAsyncTask(FavoritOption favoritOption, Favorite favorite) {
+
+    public CreateFavoriteAsyncTask(Favorite favorite) {
         this.favorite = favorite;
-        this.favoritOption = favoritOption;
+
     }
 
     @Override
@@ -43,37 +44,26 @@ public class CreateDeleteFavoritAsyncTask extends BaseAsyncTask {
     protected Object doInBackground(Object[] params) {
         try {
             String url = ServerConstantsUtils.getActiveServer() + "favorites";
-            HttpMethod httpMethod = null;
+            HttpMethod httpMethod = HttpMethod.POST;
+
             HttpHeaders requestHeaders = new HttpHeaders();
+
             requestHeaders.setContentType(MediaType.APPLICATION_JSON);
 
             setAuthorisationHeaders(requestHeaders);
             List<MediaType> acceptableMediaTypes = new ArrayList<>();
             acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
             requestHeaders.setAccept(acceptableMediaTypes);
-            HttpEntity requestEntity = null;
+
             RestTemplate restTemplate = new RestTemplate(HttpRequestFactoryProviderImpl.getClientHttpRequestFactorySSLSupport(9000));
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 
-
-            switch (favoritOption) {
-                case CREATE:
-                    httpMethod = HttpMethod.POST;
-                    requestEntity = new HttpEntity<Favorite>(favorite, requestHeaders);
-                    break;
-
-                case DELETE:
-                    httpMethod = HttpMethod.DELETE;
-                    url += "/" + favorite.getUserId() + "/" + favorite.getOfferId();
-                    requestEntity = new HttpEntity(requestHeaders);
-                    break;
-            }
-
+            HttpEntity<Favorite> requestEntity = new HttpEntity<Favorite>(favorite, requestHeaders);
             ResponseEntity<SingleFavorite> response = restTemplate.exchange(url, httpMethod, requestEntity, SingleFavorite.class);
 
             SingleFavorite favorite = response.getBody();
-            //TODO something with the response body
+            FavoritesModel.getInstance().setSingleFavorite(favorite);
 
             return new RestResult(RestResult.ReturnType.SUCCESS);
         } catch (Exception e) {

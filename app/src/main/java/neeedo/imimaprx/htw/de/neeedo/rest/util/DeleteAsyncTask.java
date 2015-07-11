@@ -8,17 +8,20 @@ import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demand;
+import neeedo.imimaprx.htw.de.neeedo.entities.favorites.Favorite;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offer;
 import neeedo.imimaprx.htw.de.neeedo.entities.user.User;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.BaseEntity;
+import neeedo.imimaprx.htw.de.neeedo.events.DeleteFinishedEvent;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
+import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.RestResult;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
 public class DeleteAsyncTask extends BaseAsyncTask {
 
     private enum EntityType {
-        DEMAND, OFFER, USER
+        DEMAND, OFFER, USER, FAVORITE
     }
 
     private EntityType entityType;
@@ -32,6 +35,12 @@ public class DeleteAsyncTask extends BaseAsyncTask {
     }
 
     @Override
+    protected void onPostExecute(Object result) {
+        if (result instanceof RestResult)
+            eventService.post(new DeleteFinishedEvent());
+    }
+
+    @Override
     protected Object doInBackground(Object[] params) {
         try {
 
@@ -41,6 +50,8 @@ public class DeleteAsyncTask extends BaseAsyncTask {
                 entityType = EntityType.USER;
             } else if (baseEntity instanceof Offer) {
                 entityType = EntityType.OFFER;
+            } else if (baseEntity instanceof Favorite) {
+                entityType = EntityType.FAVORITE;
             }
 
             String url = ServerConstantsUtils.getActiveServer();
@@ -63,6 +74,11 @@ public class DeleteAsyncTask extends BaseAsyncTask {
                     url += "usersd/" + user.getId() + "/" + user.getVersion();
                 }
                 break;
+
+                case FAVORITE: {
+                    Favorite favorite = (Favorite) baseEntity;
+                    url += "favorites/" + favorite.getUserId() + "/" + favorite.getOfferId();
+                }
             }
 
             HttpHeaders requestHeaders = new HttpHeaders();

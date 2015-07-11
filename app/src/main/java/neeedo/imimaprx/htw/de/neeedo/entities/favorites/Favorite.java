@@ -37,13 +37,13 @@ public class Favorite implements Serializable, BaseEntity {
     private double price;
 
     @Element
-    private User user;
+    private User user = null;
 
     @Element
-    private String userId;
+    private String userId = "";
 
     @Element
-    private String offerId;
+    private String offerId = "";
 
     @Element
     private ArrayList<String> images;
@@ -146,10 +146,12 @@ public class Favorite implements Serializable, BaseEntity {
     public String toString() {
 
         String temp = "";
+
         for (String s : tags) {
             temp += s + ",";
         }
         temp = temp.substring(0, temp.length() - 1);
+        
         temp += "\nfrom " + user.getName();
         return temp;
     }

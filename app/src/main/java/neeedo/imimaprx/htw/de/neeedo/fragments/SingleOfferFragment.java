@@ -22,13 +22,14 @@ import neeedo.imimaprx.htw.de.neeedo.entities.message.Message;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offer;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offers;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.SingleOffer;
+import neeedo.imimaprx.htw.de.neeedo.events.DeleteFinishedEvent;
 import neeedo.imimaprx.htw.de.neeedo.events.FavoritesActionEvent;
 import neeedo.imimaprx.htw.de.neeedo.events.GetOfferFinishedEvent;
 import neeedo.imimaprx.htw.de.neeedo.events.UserMessageSendEvent;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
 import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
-import neeedo.imimaprx.htw.de.neeedo.rest.favorites.CreateDeleteFavoritAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.favorites.CreateFavoriteAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.message.PostMessageAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.offer.GetOfferByIDAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.offer.GetOffersAsyncTask;
@@ -186,26 +187,26 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
 
             case R.id.single_offer_view_add_to_favorites_button: {
 
-                Favorite favorite = new Favorite();
-                favorite.setUserId(ActiveUser.getInstance().getUserId());
-                favorite.setOfferId(getArguments().getString("id"));
-
-                new CreateDeleteFavoritAsyncTask(BaseAsyncTask.FavoritOption.CREATE, favorite).execute();
+                new CreateFavoriteAsyncTask(getCurrentFavorite()).execute();
             }
             break;
 
             case R.id.single_offer_view_remove_from_favorites_button: {
-                Favorite favorite = new Favorite();
-                favorite.setUserId(ActiveUser.getInstance().getUserId());
-                favorite.setOfferId(getArguments().getString("id"));
 
-                new CreateDeleteFavoritAsyncTask(BaseAsyncTask.FavoritOption.DELETE, favorite).execute();
+                new DeleteAsyncTask(getCurrentFavorite()).execute();
 
             }
             break;
         }
 
 
+    }
+
+    private Favorite getCurrentFavorite() {
+        Favorite favorite = new Favorite();
+        favorite.setUserId(ActiveUser.getInstance().getUserId());
+        favorite.setOfferId(getArguments().getString("id"));
+        return favorite;
     }
 
     @Subscribe
@@ -218,5 +219,9 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
         Toast.makeText(getActivity(), getActivity().getString(R.string.done), Toast.LENGTH_SHORT).show();
     }
 
+    @Subscribe
+    public void removeActionDone(DeleteFinishedEvent e) {
+        Toast.makeText(getActivity(), getActivity().getString(R.string.delete_success), Toast.LENGTH_SHORT).show();
+    }
 
 }

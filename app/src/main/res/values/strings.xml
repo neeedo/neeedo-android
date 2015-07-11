@@ -109,6 +109,7 @@
     <string name="single_offer_message_edit_text_hint">Write your message here.</string>
     <string name="done">done</string>
     <string name="messages_view_send">Send</string>
+    <string name="delete_success">removal done</string>
 
     <string name="message_view_new_message">New message from</string>
     <string name="message_view_load_older_btn">load older messages</string>

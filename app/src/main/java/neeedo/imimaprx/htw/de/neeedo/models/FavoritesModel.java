@@ -1,17 +1,19 @@
 package neeedo.imimaprx.htw.de.neeedo.models;
 
 
+import org.springframework.http.HttpMethod;
+
 import java.util.ArrayList;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.favorites.Favorite;
 import neeedo.imimaprx.htw.de.neeedo.entities.favorites.Favorites;
+import neeedo.imimaprx.htw.de.neeedo.entities.favorites.SingleFavorite;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offers;
 
 public class FavoritesModel {
 
     private Favorites favorites;
-    private Offers offersToFavorites;
-
+    private SingleFavorite singleFavorite;
 
     public static FavoritesModel getInstance() {
         if (favoritesModel == null)
@@ -34,5 +36,13 @@ public class FavoritesModel {
 
     public void setFavorites(Favorites favorites) {
         this.favorites = favorites;
+    }
+
+    public SingleFavorite getSingleFavorite() {
+        return singleFavorite;
+    }
+
+    public void setSingleFavorite(SingleFavorite singleFavorite) {
+        this.singleFavorite = singleFavorite;
     }
 }
