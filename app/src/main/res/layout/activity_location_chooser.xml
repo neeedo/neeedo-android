@@ -21,7 +21,7 @@
 
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" android:layout_gravity="left">
+            android:layout_height="fill_parent">
 
             <RelativeLayout
                 android:id="@+id/locationChooserMapContainer"
@@ -32,12 +32,18 @@
                 android:gravity="center" />
 
             <SeekBar
-                android:layout_width="match_parent"
+                android:id="@+id/distance_seek_bar"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
+                android:layout_centerVertical="true" />
 
-            />
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/distance_seek_bar"
+                android:text="Distance 20000000 km" />
         </RelativeLayout>
 
 
