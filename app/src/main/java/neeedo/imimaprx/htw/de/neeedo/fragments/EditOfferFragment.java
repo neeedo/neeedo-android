@@ -40,15 +40,13 @@ public class EditOfferFragment extends FormOfferFragment {
         header.setText(R.string.edit_card_offer);
 
         Offer currentOffer = OffersModel.getInstance().getDraft();
-        if(currentOffer != null) {
+        if (currentOffer != null) {
             etTags.setText(currentOffer.getTagsString());
             etPrice.setText(String.valueOf(currentOffer.getPrice()));
 
-            for(String image : currentOffer.getImages()) {
+            for (String image : currentOffer.getImages()) {
                 String imageUrl = ServerConstantsUtils.getActiveServer() + "images/" + image;
-
-                //Picasso.with(view.getContext()).load(imageUrl).into(imageTarget);
-
+                addImage(imageUrl);
                 imageNamesOnServer.add(image);
             }
 

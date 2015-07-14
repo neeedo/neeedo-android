@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -18,6 +19,8 @@ import android.widget.MultiAutoCompleteTextView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import org.apmem.tools.layouts.FlowLayout;
 import org.osmdroid.DefaultResourceProxyImpl;
 import org.osmdroid.ResourceProxy;
@@ -28,6 +31,8 @@ import org.osmdroid.views.overlay.ItemizedIconOverlay;
 import org.osmdroid.views.overlay.OverlayItem;
 
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -196,9 +201,21 @@ public class FormOfferFragment extends FormFragment {
         imagesContainer.addView(imageButton);
     }
 
-    protected void addImage(String url)
+    protected void addImage(String urlString)
     {
+        LinearLayout.LayoutParams layoutParameters = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        layoutParameters.setMargins(15, 0, 0, 0);
 
+        ImageButton imageButton = new ImageButton(getActivity());
+//        imageButton.setImageBitmap(bitmap);
+        imageButton.setScaleType(ImageView.ScaleType.FIT_START);
+        imageButton.setPadding(0, 0, 0, 0);
+        imageButton.setAdjustViewBounds(true);
+        imageButton.setLayoutParams(layoutParameters);
+
+        imagesContainer.addView(imageButton);
+
+        Picasso.with(getActivity()).load(urlString).into(imageButton);
     }
 
     public ArrayList<String> getOfferTags() {
