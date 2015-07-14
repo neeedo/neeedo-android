@@ -77,7 +77,7 @@ public class MainActivity extends ActionBarActivity
                     new GetMessagesByUserIdAndReadStateAsyncTask(ActiveUser.getInstance().getUserId(), false, true).execute();
                 }
             }
-        }, 30000, 30000);
+        }, 3000, 30000);
 
     }
 
