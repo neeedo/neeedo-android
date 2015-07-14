@@ -4,6 +4,8 @@ package neeedo.imimaprx.htw.de.neeedo.models;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -22,6 +24,7 @@ public class MessagesModel {
     private static MessagesModel messagesModel;
     private Users users;
     private int newMessagesCounter = 0;
+    private TextView messageCounter;
 
     public static MessagesModel getInstance() {
         if (messagesModel == null)
@@ -85,17 +88,32 @@ public class MessagesModel {
 
     public void increaseMessageCounter(int count) {
         newMessagesCounter += count;
+        changeCount();
 
         final Context context = ActiveUser.getInstance().getContext();
+
         final String text = context.getString(R.string.new_messages).replace("$", "" + newMessagesCounter);
 
         Handler mHandler = new Handler(Looper.getMainLooper());
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(context, text, Toast.LENGTH_LONG).show();
+                if (newMessagesCounter > 0) {
+                    messageCounter.setText("" + newMessagesCounter);
+                    messageCounter.setVisibility(View.VISIBLE);
+                } else {
+                    messageCounter.setVisibility(View.INVISIBLE);
+                }
             }
         });
+    }
+
+    private void changeCount() {
+
+    }
+
+    public void setMessageCounter(TextView messageCounter) {
+        this.messageCounter = messageCounter;
     }
 
     public int getNewMessagesCounter() {

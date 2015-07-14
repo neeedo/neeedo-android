@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +23,7 @@ import neeedo.imimaprx.htw.de.neeedo.MainActivity;
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.events.UserStateChangedEvent;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
+import neeedo.imimaprx.htw.de.neeedo.models.MessagesModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.service.EventService;
 import neeedo.imimaprx.htw.de.neeedo.vo.RequestCodes;
@@ -91,7 +93,11 @@ public class SuperFragment extends Fragment {
 
         RelativeLayout badgeLayout = (RelativeLayout) actionBarMessage.getActionView();
         TextView tvBadge = (TextView) badgeLayout.findViewById(R.id.tvBadge);
-        tvBadge.setText("42"); // TODO use correct count
+        tvBadge.setVisibility(View.INVISIBLE);
+
+        MessagesModel.getInstance().setMessageCounter(tvBadge);
+
+
     }
 
     @Override
