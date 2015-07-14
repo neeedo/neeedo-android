@@ -3,6 +3,7 @@ package neeedo.imimaprx.htw.de.neeedo;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
@@ -21,16 +22,20 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import org.osmdroid.DefaultResourceProxyImpl;
+import org.osmdroid.bonuspack.overlays.GroundOverlay;
 import org.osmdroid.bonuspack.overlays.MapEventsOverlay;
 import org.osmdroid.bonuspack.overlays.MapEventsReceiver;
+import org.osmdroid.bonuspack.overlays.Polygon;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.ItemizedIconOverlay;
 import org.osmdroid.views.overlay.Overlay;
 import org.osmdroid.views.overlay.OverlayItem;
+import org.osmdroid.views.overlay.PathOverlay;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class LocationChooserActivity extends ActionBarActivity implements MapEventsReceiver {
@@ -105,6 +110,8 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
                         Context.INPUT_METHOD_SERVICE);
                 inputMethodManager.hideSoftInputFromWindow(autoCompleteTextView.getWindowToken(), 0);
                 autoCompleteTextView.dismissDropDown();
+
+
             }
         });
 
@@ -117,16 +124,40 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
         mapView.getController().animateTo(geoPoint);
         currentlySelectedGeoPoint = geoPoint;
         deleteAllUiOverlays();
+
         ArrayList<OverlayItem> ownOverlay = new ArrayList<OverlayItem>();
         ownOverlay.add(new OverlayItem("", "", (GeoPoint) geoPoint));
         ItemizedIconOverlay userLocationOverlay = new ItemizedIconOverlay<OverlayItem>(ownOverlay, getResources().getDrawable(R.drawable.map_marker), null, resourceProxy);
         mapView.getOverlays().add(userLocationOverlay);
+
+        Polygon circle = new Polygon(this);
+
+        circle.setPoints(Polygon.pointsAsCircle(geoPoint, 2000.0));
+        circle.setFillColor(0x12121212);
+        circle.setStrokeColor(Color.RED);
+        circle.setStrokeWidth(2);
+
+        mapView.getOverlays().add(circle);
+
+//        GroundOverlay myGroundOverlay = new GroundOverlay(this);
+//        myGroundOverlay.setPosition(geoPoint);
+//        myGroundOverlay.setImage(getResources().getDrawable(R.drawable.ic_launcher).mutate());
+//        myGroundOverlay.setDimensions(2000.0f);
+//
+//        mapView.getOverlays().add(myGroundOverlay);
+
+        mapView.invalidate();
     }
 
     private void deleteAllUiOverlays() {
-        for (Overlay element : mapView.getOverlays()) {
-            if (element instanceof MapEventsOverlay)
+        List<Overlay> overlays = mapView.getOverlays();
+        int startIndex = overlays.size() - 1;
+        
+        for (int i = startIndex; i >= 0; i--) {
+            Overlay element = overlays.get(i);
+            if (element instanceof MapEventsOverlay) {
                 continue;
+            }
             mapView.getOverlays().remove(element);
         }
     }
