@@ -111,24 +111,8 @@ public class ListProductsArrayAdapter<Object> extends ArrayAdapter<Object> {
 
             ArrayList<String> images = offer.getImages();
             if(!images.isEmpty()) {
-                Target imageTarget = new Target() {
-                    @Override
-                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                        imageView.setImageBitmap(bitmap);
-                    }
-
-                    @Override
-                    public void onBitmapFailed(Drawable errorDrawable) {
-
-                    }
-
-                    @Override
-                    public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                    }
-                };
                 String imageUrl = ServerConstantsUtils.getActiveServer() + "images/" + images.get(0);
-                Picasso.with(context).load(imageUrl).into(imageTarget);
+                Picasso.with(context).load(imageUrl).into(imageView);
             }
 
         } else if(productType == null) {

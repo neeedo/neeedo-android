@@ -196,6 +196,10 @@ public class FormOfferFragment extends FormFragment {
         imagesContainer.addView(imageButton);
     }
 
+    protected void addImage(String url)
+    {
+
+    }
 
     public ArrayList<String> getOfferTags() {
         return new ArrayList<String>(Arrays.asList(etTags.getText().toString().split(",")));

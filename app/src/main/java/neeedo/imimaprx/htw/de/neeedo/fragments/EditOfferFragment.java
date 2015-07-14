@@ -31,7 +31,6 @@ import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
 public class EditOfferFragment extends FormOfferFragment {
-    private final Set<Target> imageTargets = new HashSet<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,9 +47,7 @@ public class EditOfferFragment extends FormOfferFragment {
             for(String image : currentOffer.getImages()) {
                 String imageUrl = ServerConstantsUtils.getActiveServer() + "images/" + image;
 
-                Target imageTarget = new ImageTarget();
-                imageTargets.add(imageTarget); // avoid garbage collection for target
-                Picasso.with(view.getContext()).load(imageUrl).into(imageTarget);
+                //Picasso.with(view.getContext()).load(imageUrl).into(imageTarget);
 
                 imageNamesOnServer.add(image);
             }
@@ -86,21 +83,4 @@ public class EditOfferFragment extends FormOfferFragment {
         super.fillSuggestions(e);
     }
 
-    private class ImageTarget implements Target {
-
-        @Override
-        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-            addImage(bitmap);
-        }
-
-        @Override
-        public void onBitmapFailed(Drawable errorDrawable) {
-
-        }
-
-        @Override
-        public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-        }
-    }
 }
