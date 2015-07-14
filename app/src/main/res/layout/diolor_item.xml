@@ -52,23 +52,23 @@
                 android:layout_height="fill_parent"
                 android:gravity="center_vertical">
 
-                <Button
+                <ImageButton
                     android:id="@+id/button_diolor_gallery_left"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_margin="0dp"
                     android:background="#064"
-                    android:text="left" />
+                    android:src="@drawable/gallery_left" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/button_diolor_gallery_right"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_margin="0dp"
                     android:background="#f44"
-                    android:text="right" />
+                    android:src="@drawable/gallery_right" />
 
             </RelativeLayout>
 
@@ -90,18 +90,19 @@
     <ImageView
 
         android:id="@+id/item_swipe_left_indicator"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
-
-        android:background="#A5F" />
+        android:alpha="0"
+        android:src="@drawable/fav_small" />
 
     <ImageView
         android:id="@+id/item_swipe_right_indicator"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:layout_margin="10dp"
-        android:background="#5AF" />
+        android:alpha="0"
+        android:src="@drawable/dismiss_small" />
 
 </FrameLayout>

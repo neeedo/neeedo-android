@@ -118,7 +118,6 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
                 currentOffer = singleOffer.getOffer();
                 OffersModel.getInstance().setSingleOffer(null);
             }
-
         }
 
         Context context = getActivity();
@@ -186,20 +185,15 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
             break;
 
             case R.id.single_offer_view_add_to_favorites_button: {
-
                 new CreateFavoriteAsyncTask(getCurrentFavorite()).execute();
             }
             break;
 
             case R.id.single_offer_view_remove_from_favorites_button: {
-
                 new DeleteAsyncTask(getCurrentFavorite()).execute();
-
             }
             break;
         }
-
-
     }
 
     private Favorite getCurrentFavorite() {

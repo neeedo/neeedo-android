@@ -31,7 +31,6 @@ public class CreateFavoriteAsyncTask extends BaseAsyncTask {
 
     public CreateFavoriteAsyncTask(Favorite favorite) {
         this.favorite = favorite;
-
     }
 
     @Override
