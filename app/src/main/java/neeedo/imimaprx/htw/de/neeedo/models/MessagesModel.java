@@ -6,9 +6,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.message.Message;
@@ -16,6 +13,7 @@ import neeedo.imimaprx.htw.de.neeedo.entities.message.Messages;
 import neeedo.imimaprx.htw.de.neeedo.entities.message.SingleMessage;
 import neeedo.imimaprx.htw.de.neeedo.entities.user.User;
 import neeedo.imimaprx.htw.de.neeedo.entities.user.Users;
+
 
 public class MessagesModel {
 
@@ -106,6 +104,7 @@ public class MessagesModel {
                 }
             }
         });
+
     }
 
     private void changeCount() {

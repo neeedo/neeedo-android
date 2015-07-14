@@ -39,6 +39,8 @@ public class SuperFragment extends Fragment {
 
     private MenuItem actionBarMessage;
 
+    private TextView tvBadge;
+
     private Menu menu;
 
     @Override
@@ -92,10 +94,18 @@ public class SuperFragment extends Fragment {
         }
 
         RelativeLayout badgeLayout = (RelativeLayout) actionBarMessage.getActionView();
-        TextView tvBadge = (TextView) badgeLayout.findViewById(R.id.tvBadge);
+        tvBadge = (TextView) badgeLayout.findViewById(R.id.tvBadge);
         tvBadge.setVisibility(View.INVISIBLE);
 
-        MessagesModel.getInstance().setMessageCounter(tvBadge);
+        MessagesModel messagesModel = MessagesModel.getInstance();
+        messagesModel.setMessageCounter(tvBadge);
+
+        if (messagesModel.getNewMessagesCounter() > 0) {
+            tvBadge.setText("" + messagesModel.getNewMessagesCounter());
+            tvBadge.setVisibility(View.VISIBLE);
+        } else {
+            tvBadge.setVisibility(View.INVISIBLE);
+        }
 
 
     }
