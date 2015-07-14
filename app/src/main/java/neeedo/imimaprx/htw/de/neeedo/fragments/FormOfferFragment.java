@@ -49,7 +49,6 @@ public class FormOfferFragment extends FormFragment {
     protected Button btnSubmit;
     protected Button btnBarcode;
     protected LinearLayout imagesContainer;
-    protected MapView mapView;
     protected Button btnSetLocation;
     protected ImageButton addImageButton;
 
@@ -91,11 +90,8 @@ public class FormOfferFragment extends FormFragment {
         btnSetLocation.setOnClickListener(new StartLocationChooserHandler(this));
 
         etTags.addTextChangedListener(new AutocompletionTextWatcher(this, etTags, BaseAsyncTask.CompletionType.TAG));
-
         etTags.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-
         etTags.addTextChangedListener(new AutocompletionTextWatcher(this, etTags, BaseAsyncTask.CompletionType.PHRASE));
-
         etTags.setOnFocusChangeListener(new AutocompletionOnFocusChangeListener(flTagSuggestions));
 
         return view;
@@ -198,33 +194,7 @@ public class FormOfferFragment extends FormFragment {
         imagesContainer.addView(imageButton);
     }
 
-    protected void setLocation(final GeoPoint geoPoint) { // TODO put this into super class and use it also for demands form
-        mapView = new MapView(getActivity(), null);
-        mapView.setTileSource(TileSourceFactory.MAPNIK);
-        mapView.setBuiltInZoomControls(true);
-        mapView.setMultiTouchControls(true);
-        mapView.getController().setZoom(18);
-        mapView.setClickable(true);
-        mapView.setBuiltInZoomControls(true);
-        mapView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-        mapContainer.setVisibility(View.VISIBLE);
-        mapContainer.addView(mapView);
-
-        ResourceProxy resourceProxy = new DefaultResourceProxyImpl(getActivity());
-        ArrayList<OverlayItem> ownOverlay = new ArrayList<OverlayItem>();
-        ownOverlay.add(new OverlayItem("", "", (GeoPoint) geoPoint));
-        ItemizedIconOverlay userLocationOverlay = new ItemizedIconOverlay<OverlayItem>(ownOverlay, getResources().getDrawable(R.drawable.map_marker), null, resourceProxy);
-        mapView.getOverlays().add(userLocationOverlay);
-
-        // this is a hack to get around one of the osmdroid bugs
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mapView.getController().animateTo(geoPoint);
-            }
-        }, 200);
-    }
 
     public ArrayList<String> getOfferTags() {
         return new ArrayList<String>(Arrays.asList(etTags.getText().toString().split(",")));
@@ -261,5 +231,33 @@ public class FormOfferFragment extends FormFragment {
             isValidInput = false;
         }
         return isValidInput;
+    }
+
+    protected void setLocation(final GeoPoint geoPoint) {
+     final MapView  mapView = new MapView(getActivity(), null);
+        mapView.setTileSource(TileSourceFactory.MAPNIK);
+        mapView.setBuiltInZoomControls(true);
+        mapView.setMultiTouchControls(true);
+        mapView.getController().setZoom(18);
+        mapView.setClickable(true);
+        mapView.setBuiltInZoomControls(true);
+        mapView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+        mapContainer.setVisibility(View.VISIBLE);
+        mapContainer.addView(mapView);
+
+        ResourceProxy resourceProxy = new DefaultResourceProxyImpl(getActivity());
+        ArrayList<OverlayItem> ownOverlay = new ArrayList<OverlayItem>();
+        ownOverlay.add(new OverlayItem("", "", (GeoPoint) geoPoint));
+        ItemizedIconOverlay userLocationOverlay = new ItemizedIconOverlay<OverlayItem>(ownOverlay, getResources().getDrawable(R.drawable.map_marker), null, resourceProxy);
+        mapView.getOverlays().add(userLocationOverlay);
+
+        // this is a hack to get around one of the osmdroid bugs
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mapView.getController().animateTo(geoPoint);
+            }
+        }, 200);
     }
 }

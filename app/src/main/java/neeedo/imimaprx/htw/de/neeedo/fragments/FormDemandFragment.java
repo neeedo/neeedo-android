@@ -1,14 +1,26 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import org.apmem.tools.layouts.FlowLayout;
+import org.osmdroid.DefaultResourceProxyImpl;
+import org.osmdroid.ResourceProxy;
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.ItemizedIconOverlay;
+import org.osmdroid.views.overlay.OverlayItem;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,12 +29,16 @@ import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.Location;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.Price;
 import neeedo.imimaprx.htw.de.neeedo.events.GetSuggestionEvent;
+import neeedo.imimaprx.htw.de.neeedo.fragments.handler.ImageUploadHandler;
+import neeedo.imimaprx.htw.de.neeedo.fragments.handler.StartLocationChooserHandler;
 import neeedo.imimaprx.htw.de.neeedo.helpers.LocationHelper;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
+import neeedo.imimaprx.htw.de.neeedo.rest.outpan.GetOutpanByEANAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.utils.AutocompletionOnClickListener;
 import neeedo.imimaprx.htw.de.neeedo.utils.AutocompletionOnFocusChangeListener;
 import neeedo.imimaprx.htw.de.neeedo.utils.AutocompletionTextWatcher;
+import neeedo.imimaprx.htw.de.neeedo.vo.RequestCodes;
 
 public class FormDemandFragment extends FormFragment {
     protected MultiAutoCompleteTextView etMustTags;
@@ -35,6 +51,8 @@ public class FormDemandFragment extends FormFragment {
     protected EditText etPriceMin;
     protected EditText etPriceMax;
     protected Button btnSubmit;
+    protected Button btnSetLocation;
+    protected RelativeLayout mapContainer;
 
     // TODO replace with mechanism of Offer Form
     protected double locationLatitude;
@@ -42,6 +60,7 @@ public class FormDemandFragment extends FormFragment {
     protected boolean locationAvailable;
     protected LocationHelper locationHelper;
     protected Location currentLocation;
+    protected GeoPoint selectedGeoPoint;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,6 +90,8 @@ public class FormDemandFragment extends FormFragment {
         etPriceMin = (EditText) view.findViewById(R.id.etPriceMin);
         etPriceMax = (EditText) view.findViewById(R.id.etPriceMax);
         btnSubmit = (Button) view.findViewById(R.id.btnSubmit);
+        btnSetLocation = (Button) view.findViewById(R.id.btnChooseLocation);
+        mapContainer = (RelativeLayout) view.findViewById(R.id.mapContainer);
 
         etMustTags.addTextChangedListener(new AutocompletionTextWatcher(this, etMustTags, BaseAsyncTask.CompletionType.TAG));
         etShouldTags.addTextChangedListener(new AutocompletionTextWatcher(this, etShouldTags, BaseAsyncTask.CompletionType.TAG));
@@ -86,6 +107,8 @@ public class FormDemandFragment extends FormFragment {
 
         etMustTags.setOnFocusChangeListener(new AutocompletionOnFocusChangeListener(flMustTagSuggestions));
         etShouldTags.setOnFocusChangeListener(new AutocompletionOnFocusChangeListener(flShouldTagSuggestions));
+
+        btnSetLocation.setOnClickListener(new StartLocationChooserHandler(this));
 
         return view;
     }
@@ -126,5 +149,50 @@ public class FormDemandFragment extends FormFragment {
         return new Price(
                 Double.parseDouble(etPriceMin.getText().toString()),
                 Double.parseDouble(etPriceMax.getText().toString()));
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+
+        if (resultCode != Activity.RESULT_OK) {
+            Toast.makeText(getActivity(), R.string.fail, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (requestCode == RequestCodes.FIND_LOCATION_REQUEST_CODE) {
+            String latitude = intent.getStringExtra("latitude");
+            String longitude = intent.getStringExtra("longitude");
+            selectedGeoPoint = new GeoPoint(Double.parseDouble(latitude), Double.parseDouble(longitude));
+            setLocation(selectedGeoPoint);
+        }
+    }
+
+    protected void setLocation(final GeoPoint geoPoint) {
+        final MapView mapView = new MapView(getActivity(), null);
+        mapView.setTileSource(TileSourceFactory.MAPNIK);
+        mapView.setBuiltInZoomControls(true);
+        mapView.setMultiTouchControls(true);
+        mapView.getController().setZoom(18);
+        mapView.setClickable(true);
+        mapView.setBuiltInZoomControls(true);
+        mapView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+        mapContainer.setVisibility(View.VISIBLE);
+        mapContainer.addView(mapView);
+
+        ResourceProxy resourceProxy = new DefaultResourceProxyImpl(getActivity());
+        ArrayList<OverlayItem> ownOverlay = new ArrayList<OverlayItem>();
+        ownOverlay.add(new OverlayItem("", "", (GeoPoint) geoPoint));
+        ItemizedIconOverlay userLocationOverlay = new ItemizedIconOverlay<OverlayItem>(ownOverlay, getResources().getDrawable(R.drawable.map_marker), null, resourceProxy);
+        mapView.getOverlays().add(userLocationOverlay);
+
+        // this is a hack to get around one of the osmdroid bugs
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mapView.getController().animateTo(geoPoint);
+            }
+        }, 200);
     }
 }
