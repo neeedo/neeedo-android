@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.squareup.otto.Subscribe;
 
 import neeedo.imimaprx.htw.de.neeedo.LoginActivity;
+import neeedo.imimaprx.htw.de.neeedo.MainActivity;
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.events.UserStateChangedEvent;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
@@ -101,6 +102,8 @@ public class SuperFragment extends Fragment {
             ActiveUser.getInstance().clearUserInformation();
             Toast.makeText(getActivity(), "Logout finished.", Toast.LENGTH_SHORT).show();
             setLoginButtonState();
+        } else if (id == R.id.new_messages_icon) {
+            redirectToFragment(MessageFragment.class, MainActivity.MENU_MESSAGE);
         }
 
         return super.onOptionsItemSelected(item);
