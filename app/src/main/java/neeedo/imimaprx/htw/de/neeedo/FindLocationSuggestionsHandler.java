@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;

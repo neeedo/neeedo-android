@@ -14,7 +14,6 @@ import neeedo.imimaprx.htw.de.neeedo.entities.user.User;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.BaseEntity;
 import neeedo.imimaprx.htw.de.neeedo.events.DeleteFinishedEvent;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
-import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.RestResult;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 

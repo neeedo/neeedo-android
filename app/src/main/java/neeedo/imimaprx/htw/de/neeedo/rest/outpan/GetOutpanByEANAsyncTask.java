@@ -3,7 +3,6 @@ package neeedo.imimaprx.htw.de.neeedo.rest.outpan;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.util.Log;
 
 import org.springframework.http.HttpBasicAuthentication;
 import org.springframework.http.HttpEntity;

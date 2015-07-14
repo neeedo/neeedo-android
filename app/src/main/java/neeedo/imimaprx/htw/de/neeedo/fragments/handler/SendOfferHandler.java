@@ -1,12 +1,9 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments.handler;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
-
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offer;

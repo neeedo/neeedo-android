@@ -4,29 +4,20 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.os.Environment;
 import android.util.Log;
-import android.view.View;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -34,8 +25,6 @@ import javax.net.ssl.HttpsURLConnection;
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.events.NewImageReceivedFromServer;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
-import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
-import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.FindLocationResult;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.RestResult;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.UploadImageResult;
 import neeedo.imimaprx.htw.de.neeedo.service.EventService;

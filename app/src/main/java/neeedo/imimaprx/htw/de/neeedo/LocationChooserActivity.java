@@ -21,7 +21,6 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import org.osmdroid.DefaultResourceProxyImpl;
-import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.bonuspack.overlays.MapEventsOverlay;
 import org.osmdroid.bonuspack.overlays.MapEventsReceiver;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;

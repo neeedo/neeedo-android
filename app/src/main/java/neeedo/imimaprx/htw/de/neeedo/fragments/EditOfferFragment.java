@@ -1,7 +1,5 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments;
 
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,13 +7,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.squareup.otto.Subscribe;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import org.osmdroid.util.GeoPoint;
-
-import java.util.HashSet;
-import java.util.Set;
 
 import neeedo.imimaprx.htw.de.neeedo.MainActivity;
 import neeedo.imimaprx.htw.de.neeedo.R;

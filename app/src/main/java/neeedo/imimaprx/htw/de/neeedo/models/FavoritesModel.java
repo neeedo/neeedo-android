@@ -1,14 +1,11 @@
 package neeedo.imimaprx.htw.de.neeedo.models;
 
 
-import org.springframework.http.HttpMethod;
-
 import java.util.ArrayList;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.favorites.Favorite;
 import neeedo.imimaprx.htw.de.neeedo.entities.favorites.Favorites;
 import neeedo.imimaprx.htw.de.neeedo.entities.favorites.SingleFavorite;
-import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offers;
 
 public class FavoritesModel {
 

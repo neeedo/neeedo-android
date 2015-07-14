@@ -20,7 +20,6 @@ import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.models.MessagesModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.RestResult;
-import neeedo.imimaprx.htw.de.neeedo.service.EventService;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
 public class GetMessagesAsyncTask extends BaseAsyncTask {

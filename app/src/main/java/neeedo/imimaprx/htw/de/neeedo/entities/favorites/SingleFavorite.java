@@ -5,7 +5,6 @@ import org.simpleframework.xml.Root;
 
 import java.io.Serializable;
 
-import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demand;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.BaseEntity;
 
 @Root(name = "favorite")
