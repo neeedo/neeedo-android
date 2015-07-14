@@ -10,6 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="193dp"
         android:layout_weight="0.68"
+        android:stackFromBottom="true"
+        android:transcriptMode="alwaysScroll"
         android:visibility="visible" />
 
     <EditText
@@ -18,8 +20,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.13"
         android:editable="true"
-        android:hint="@string/single_offer_message_edit_text_hint"
-        android:gravity="center" />
+        android:gravity="center"
+        android:hint="@string/single_offer_message_edit_text_hint" />
 
     <Button
         android:id="@+id/messages_view_send_button"
