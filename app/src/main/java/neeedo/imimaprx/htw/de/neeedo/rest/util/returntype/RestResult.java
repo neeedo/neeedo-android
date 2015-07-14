@@ -16,4 +16,11 @@ public class RestResult {
     public ReturnType getResult() {
         return result;
     }
+
+    public boolean getResultBoolean() {
+        if (result == ReturnType.SUCCESS) {
+            return true;
+        }
+        return false;
+    }
 }

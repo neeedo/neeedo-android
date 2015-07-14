@@ -37,7 +37,12 @@ public class DeleteAsyncTask extends BaseAsyncTask {
     @Override
     protected void onPostExecute(Object result) {
         if (result instanceof RestResult)
-            eventService.post(new DeleteFinishedEvent());
+
+            if (((RestResult) result).getResultBoolean()) {
+                eventService.post(new DeleteFinishedEvent(true));
+            } else {
+                eventService.post(new DeleteFinishedEvent(false));
+            }
     }
 
     @Override
