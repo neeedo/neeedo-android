@@ -11,6 +11,8 @@ import android.support.v4.app.FragmentManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
@@ -86,6 +88,10 @@ public class SuperFragment extends Fragment {
             actionBarLogin.setVisible(true);
             actionBarLogout.setVisible(false);
         }
+
+        RelativeLayout badgeLayout = (RelativeLayout) actionBarMessage.getActionView();
+        TextView tvBadge = (TextView) badgeLayout.findViewById(R.id.tvBadge);
+        tvBadge.setText("42"); // TODO use correct count
     }
 
     @Override
