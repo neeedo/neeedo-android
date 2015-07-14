@@ -50,7 +50,7 @@ import neeedo.imimaprx.htw.de.neeedo.vo.RequestCodes;
 
 public class FormOfferFragment extends FormFragment {
     protected Button btnSubmit;
-    protected Button btnBarcode;
+    protected ImageButton btnBarcode;
     protected LinearLayout imagesContainer;
     protected Button btnSetLocation;
     protected ImageButton addImageButton;
@@ -82,7 +82,7 @@ public class FormOfferFragment extends FormFragment {
         etTags = (MultiAutoCompleteTextView) view.findViewById(R.id.etTags);
         etPrice = (EditText) view.findViewById(R.id.etPrice);
         flTagSuggestions = (FlowLayout) view.findViewById(R.id.flTagSuggestions);
-        btnBarcode = (Button) view.findViewById(R.id.newOffer_Barcode_Button);
+        btnBarcode = (ImageButton) view.findViewById(R.id.newOffer_Barcode_Button);
         btnSubmit = (Button) view.findViewById(R.id.btnSubmit);
         imagesContainer = (LinearLayout) view.findViewById(R.id.imagesContainer);
         btnSetLocation = (Button) view.findViewById(R.id.btnChooseLocation);

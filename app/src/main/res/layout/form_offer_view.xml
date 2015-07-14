@@ -53,16 +53,16 @@
                 android:layout_weight="99999"
                 android:hint="@string/new_card_tags" />
 
-            <Button
-                android:layout_weight="1"
+            <ImageButton
+                android:src="@drawable/scan_barcode"
                 android:id="@+id/newOffer_Barcode_Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="66dp"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
                 android:text="@string/start_barcode_scan"
                 android:layout_alignParentRight="true" />
 
         </LinearLayout>
-
 
         <org.apmem.tools.layouts.FlowLayout
             android:id="@+id/flTagSuggestions"
