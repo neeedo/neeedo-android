@@ -10,7 +10,7 @@
         android:layout_alignParentTop="true"
         android:layout_width="95dp"
         android:layout_height="95dp"
-        android:gravity="top"
+        android:gravity="top"  android:scaleType="centerCrop"
         />
 
     <ImageView android:id="@+id/imageView"
@@ -21,8 +21,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginRight="10dp"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:scaleType="fitStart"
+        android:layout_marginBottom="5dp"  android:scaleType="centerCrop"
         android:adjustViewBounds="true"/>
 
     <LinearLayout
@@ -41,9 +40,11 @@
             android:textStyle="bold"
             android:textSize="16dp"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="0dp" />
+            android:layout_marginBottom="0dp"
+            android:text="tag, tag, tag, tag"/>
 
         <TextView android:id="@+id/tvSecondaryTags"
+            android:text="sectag, sectag, sectag, sectag"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:gravity="center_vertical"
@@ -63,7 +64,8 @@
             android:textStyle="normal"
             android:textSize="12dp"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp" />
+            android:layout_marginBottom="5dp"
+            android:text="Distance: 9.9 km"/>
 
         <TextView android:id="@+id/tvPrice"
             android:layout_width="fill_parent"
@@ -74,7 +76,8 @@
             android:textStyle="normal"
             android:textSize="12dp"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp" />
+            android:layout_marginBottom="5dp"
+            android:text="Price: 9.99 €"/>
 
         <TextView android:id="@+id/tvUser"
             android:layout_width="fill_parent"
@@ -85,7 +88,8 @@
             android:textStyle="italic"
             android:textSize="10dp"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp" />
+            android:layout_marginBottom="5dp"
+            android:text="Peter Lustig"/>
 
     </LinearLayout>
 

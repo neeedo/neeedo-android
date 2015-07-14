@@ -54,8 +54,7 @@ public class ListProductsArrayAdapter<Object> extends ArrayAdapter<Object> {
 
     @Override
     public View getView(int position, View row, ViewGroup parent) {
-        LayoutInflater inflater = LayoutInflater.from(context);
-        row = inflater.inflate(layoutResourceId, parent, false);
+                row = LayoutInflater.from(context).inflate(layoutResourceId, parent, false);
 
         imageView = (ImageView) row.findViewById(R.id.imageView);
         tvPrimaryTags = (TextView) row.findViewById(R.id.tvPrimaryTags);
@@ -81,17 +80,9 @@ public class ListProductsArrayAdapter<Object> extends ArrayAdapter<Object> {
             primaryTagsText = demand.getMustTagsString();
             secondaryTagsText = demand.getShouldTagsString();
             distanceText = context.getString(
-                    R.string.item_distance) +
-                    ": " +
-                    distanceFormat.format(demand.getDistance()
-                    );
+                    R.string.item_distance) + ": " + distanceFormat.format(demand.getDistance());
             priceText = context.getString(
-                    R.string.item_price) +
-                    ": " +
-                    priceFormat.format(price.getMin()) +
-                    " - " +
-                    priceFormat.format(price.getMax()
-                    );
+                    R.string.item_price) + ": " + priceFormat.format(price.getMin()) + " - " + priceFormat.format(price.getMax());
             userText = demand.getUser().getName();
 
         } else if (productType.equals(Offer.class)) {
