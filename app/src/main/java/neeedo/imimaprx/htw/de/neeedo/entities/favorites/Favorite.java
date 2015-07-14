@@ -14,7 +14,7 @@ import neeedo.imimaprx.htw.de.neeedo.entities.util.BaseEntity;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.Location;
 
 
-@Root(name = "favorit")
+@Root(name = "favorite")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Favorite implements Serializable, BaseEntity {
 
