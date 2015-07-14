@@ -1,5 +1,6 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,7 +39,7 @@ public class NewOfferFragment extends FormOfferFragment {
 
     @Subscribe
     public void handleServerResponse(ServerResponseEvent e) {
-        // TODO redirect to detail view of new offer
+        hideProgressDialog();
         redirectToFragment(ListOffersFragment.class, MainActivity.MENU_LIST_OFFERS);
     }
 

@@ -1,6 +1,7 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -51,6 +52,7 @@ public class FormOfferFragment extends FormFragment {
     protected LinearLayout imagesContainer;
     protected Button btnSetLocation;
     protected ImageButton addImageButton;
+    protected ProgressDialog progressDialog;
 
     // stateful
     // TODO those 2
@@ -258,5 +260,18 @@ public class FormOfferFragment extends FormFragment {
                 mapView.getController().animateTo(geoPoint);
             }
         }, 200);
+    }
+
+    public void showProgressDialog() {
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
+    }
+
+    public void hideProgressDialog() {
+        if (progressDialog != null)
+            progressDialog.dismiss();
     }
 }
