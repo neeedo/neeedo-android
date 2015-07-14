@@ -48,6 +48,7 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
     private TextView tvPrice;
     private TextView tvUser;
     private EditText editTextSendMessage;
+    private Offer currentOffer;
 
 
     @Override
@@ -108,7 +109,7 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
     @Subscribe
     public void fillText(GetOfferFinishedEvent e) {
         String offerId = getArguments().getString("id");
-        Offer currentOffer = findSingleOffer(offerId);
+        currentOffer = findSingleOffer(offerId);
         if (currentOffer == null) {
             SingleOffer singleOffer = OffersModel.getInstance().getSingleOffer();
             if (singleOffer == null) {
@@ -140,8 +141,6 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
 
     @Override
     public void onClick(View view) {
-        String offerId = getArguments().getString("id");
-        Offer currentOffer = findSingleOffer(offerId);
 
         switch (view.getId()) {
             case R.id.btnDelete:

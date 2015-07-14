@@ -17,7 +17,7 @@ import neeedo.imimaprx.htw.de.neeedo.entities.user.Users;
 
 public class MessagesModel {
 
-    private Messages messages;
+    private Messages messages = new Messages();
     private SingleMessage singleMessage;
     private static MessagesModel messagesModel;
     private Users users;
