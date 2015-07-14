@@ -40,20 +40,6 @@
             android:visibility="gone"></org.apmem.tools.layouts.FlowLayout>
 
         <EditText
-            android:id="@+id/etLocationLon"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/new_card_location_lon"
-            android:inputType="numberDecimal" />
-
-        <EditText
-            android:id="@+id/etLocationLat"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/new_card_location_lat"
-            android:inputType="numberDecimal" />
-
-        <EditText
             android:id="@+id/etDistance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

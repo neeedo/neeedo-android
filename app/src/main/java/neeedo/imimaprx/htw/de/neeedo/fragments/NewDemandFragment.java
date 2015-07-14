@@ -20,11 +20,6 @@ public class NewDemandFragment extends FormDemandFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        if (locationAvailable) {
-            etLocationLat.setText(String.valueOf(locationLatitude));
-            etLocationLon.setText(String.valueOf(locationLongitude));
-        }
-
         btnSubmit.setOnClickListener(new SendDemandHandler(BaseAsyncTask.SendMode.CREATE, this));
 
         return view;

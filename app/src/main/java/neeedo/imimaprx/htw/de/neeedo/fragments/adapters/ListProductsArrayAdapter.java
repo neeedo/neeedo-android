@@ -112,7 +112,7 @@ public class ListProductsArrayAdapter<Object> extends ArrayAdapter<Object> {
             ArrayList<String> images = offer.getImages();
             if(!images.isEmpty()) {
                 String imageUrl = ServerConstantsUtils.getActiveServer() + "images/" + images.get(0);
-                Picasso.with(context).load(imageUrl).into(imageView);
+                Picasso.with(context).load(imageUrl).fit().centerInside().into(imageView);
             }
 
         } else if(productType == null) {

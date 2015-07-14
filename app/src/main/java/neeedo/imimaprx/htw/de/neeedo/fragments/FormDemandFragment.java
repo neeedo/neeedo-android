@@ -45,8 +45,6 @@ public class FormDemandFragment extends FormFragment {
     protected FlowLayout flMustTagSuggestions;
     protected MultiAutoCompleteTextView etShouldTags;
     protected FlowLayout flShouldTagSuggestions;
-    protected EditText etLocationLat;
-    protected EditText etLocationLon;
     protected EditText etDistance;
     protected EditText etPriceMin;
     protected EditText etPriceMax;
@@ -84,8 +82,6 @@ public class FormDemandFragment extends FormFragment {
         flMustTagSuggestions = (FlowLayout) view.findViewById(R.id.flMustTagSuggestions);
         etShouldTags = (MultiAutoCompleteTextView) view.findViewById(R.id.etShouldTags);
         flShouldTagSuggestions = (FlowLayout) view.findViewById(R.id.flShouldTagSuggestions);
-        etLocationLat = (EditText) view.findViewById(R.id.etLocationLat);
-        etLocationLon = (EditText) view.findViewById(R.id.etLocationLon);
         etDistance = (EditText) view.findViewById(R.id.etDistance);
         etPriceMin = (EditText) view.findViewById(R.id.etPriceMin);
         etPriceMax = (EditText) view.findViewById(R.id.etPriceMax);
@@ -136,9 +132,7 @@ public class FormDemandFragment extends FormFragment {
 
     public Location getLocation() {
         // TODO OpenStreetMaps stuff
-        return new Location(
-                Double.parseDouble(etLocationLat.getText().toString()),
-                Double.parseDouble(etLocationLon.getText().toString()));
+        return new Location(0.0, 0.0);
     }
 
     public int getDistance() {
