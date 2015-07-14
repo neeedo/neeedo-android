@@ -12,7 +12,7 @@ import neeedo.imimaprx.htw.de.neeedo.entities.util.BaseEntity;
 public class Messages implements Serializable, BaseEntity {
 
     @Element
-    private ArrayList<Message> messages;
+    private ArrayList<Message> messages = new ArrayList<Message>();
 
     public Messages() {
     }
