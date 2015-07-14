@@ -11,7 +11,7 @@ public class AutocompletionOnFocusChangeListener implements View.OnFocusChangeLi
 
     @Override
     public void onFocusChange(View view, boolean hasFocus) {
-        if(hasFocus) {
+        if (hasFocus) {
             layout.setVisibility(View.VISIBLE);
         } else {
             layout.setVisibility(View.GONE);

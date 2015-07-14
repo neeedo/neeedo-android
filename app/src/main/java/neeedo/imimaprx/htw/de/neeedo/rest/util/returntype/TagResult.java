@@ -6,7 +6,7 @@ public class TagResult extends RestResult {
 
     private Tag tag;
 
-    public TagResult( ReturnType restResult, Tag tag) {
+    public TagResult(ReturnType restResult, Tag tag) {
         super(restResult);
         this.tag = tag;
     }

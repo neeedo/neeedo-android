@@ -151,7 +151,7 @@ public class Favorite implements Serializable, BaseEntity {
             temp += s + ",";
         }
         temp = temp.substring(0, temp.length() - 1);
-        
+
         temp += "\nfrom " + user.getName();
         return temp;
     }

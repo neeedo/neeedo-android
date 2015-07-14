@@ -65,7 +65,7 @@ public class PostCreateUpdateOfferAsyncTask extends BaseAsyncTask {
             offersModel.setSingleOffer(singleOffer);
             offersModel.getOffers().getOffers().add(singleOffer.getOffer());
             offersModel.setDraft(null);
-            return new RestResult( RestResult.ReturnType.SUCCESS);
+            return new RestResult(RestResult.ReturnType.SUCCESS);
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
             String message = getErrorMessage(e.getMessage());

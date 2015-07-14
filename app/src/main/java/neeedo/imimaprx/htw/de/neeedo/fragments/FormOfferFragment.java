@@ -201,8 +201,7 @@ public class FormOfferFragment extends FormFragment {
         imagesContainer.addView(imageButton);
     }
 
-    protected void addImage(String urlString)
-    {
+    protected void addImage(String urlString) {
         LinearLayout.LayoutParams layoutParameters = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
         layoutParameters.setMargins(15, 0, 0, 0);
 

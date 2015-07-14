@@ -25,7 +25,7 @@ public class DemandsModel {
     private static DemandsModel demandsModel;
 
     public Demands getDemands() {
-        if(demands == null){
+        if (demands == null) {
             demands = new Demands();
             demands.setDemands(new ArrayList<Demand>());
         }

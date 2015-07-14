@@ -25,16 +25,20 @@ public class LocationHelper {
 
         locationManager.requestLocationUpdates(locationProvider, 0, 0, new LocationListener() {
             @Override
-            public void onLocationChanged(android.location.Location location) {}
+            public void onLocationChanged(android.location.Location location) {
+            }
 
             @Override
-            public void onStatusChanged(String s, int i, Bundle bundle) {}
+            public void onStatusChanged(String s, int i, Bundle bundle) {
+            }
 
             @Override
-            public void onProviderEnabled(String s) {}
+            public void onProviderEnabled(String s) {
+            }
 
             @Override
-            public void onProviderDisabled(String s) {}
+            public void onProviderDisabled(String s) {
+            }
         });
 
         lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
@@ -42,7 +46,7 @@ public class LocationHelper {
             locationLatitude = lastKnownLocation.getLatitude();
             locationLongitude = lastKnownLocation.getLongitude();
             locationAvailable = true;
-        } catch(NullPointerException e) {
+        } catch (NullPointerException e) {
             //TODO when would that happen?
             //TODO show message that no data is available
             locationAvailable = false;

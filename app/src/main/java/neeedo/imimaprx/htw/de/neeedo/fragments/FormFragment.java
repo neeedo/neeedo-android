@@ -30,7 +30,7 @@ public class FormFragment extends SuperFragment {
     }
 
     public void fillSuggestions(GetSuggestionEvent e) {
-        Log.d("Suggestion Event", e.getCompletionType()+" called");
+        Log.d("Suggestion Event", e.getCompletionType() + " called");
 
         suggestions = e.getTagResult().getTag().getSuggestedTags();
         completions = e.getTagResult().getTag().getCompletedTags();
@@ -40,16 +40,16 @@ public class FormFragment extends SuperFragment {
     }
 
     protected void showSuggestionTags(final ViewGroup layout, final MultiAutoCompleteTextView etInput, GetSuggestionEvent e) {
-        if(e.getCompletionType().equals(BaseAsyncTask.CompletionType.PHRASE)) {
+        if (e.getCompletionType().equals(BaseAsyncTask.CompletionType.PHRASE)) {
             layout.removeAllViewsInLayout();
         }
 
-        if(!suggestions.isEmpty() && etInput.hasFocus())  {
+        if (!suggestions.isEmpty() && etInput.hasFocus()) {
             layout.setVisibility(View.VISIBLE);
 
             final CharSequence charSequence = e.getCharSequence();
 
-            for(final String suggestion : suggestions) {
+            for (final String suggestion : suggestions) {
                 final TextView tvTag = new TextView(getActivity());
                 tvTag.setText(suggestion);
                 tvTag.setPadding(25, 20, 25, 20);

@@ -12,7 +12,7 @@ public class SwipeCardViewItem {
     private final String title;
     private final ArrayList<String> images;
 
-    public SwipeCardViewItem( Offer offer) {
+    public SwipeCardViewItem(Offer offer) {
         this.offer = offer;
         this.title = offer.getName();
         this.description = offer.getTagsString();

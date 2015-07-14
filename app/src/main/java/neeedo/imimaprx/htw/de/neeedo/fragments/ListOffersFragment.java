@@ -52,7 +52,7 @@ public class ListOffersFragment extends SuperFragment {
         super.onActivityCreated(savedInstanceState);
 
         BaseAsyncTask.GetEntitiesMode listMode = BaseAsyncTask.GetEntitiesMode.GET_RANDOM;
-        if(activeUser.hasActiveUser()) {
+        if (activeUser.hasActiveUser()) {
             listMode = BaseAsyncTask.GetEntitiesMode.GET_BY_USER;
         }
 
@@ -68,7 +68,7 @@ public class ListOffersFragment extends SuperFragment {
 
         TextView tvEmpty = (TextView) view.findViewById(R.id.tvEmpty);
 
-        if(!offerList.isEmpty()) {
+        if (!offerList.isEmpty()) {
             ListProductsArrayAdapter<Demand> adapter = new ListProductsArrayAdapter(getActivity(),
                     R.layout.list_products_item, offerList);
             listView.setAdapter(adapter);

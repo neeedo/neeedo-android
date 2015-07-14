@@ -6,5 +6,5 @@ public class RequestCodes {
     public static final int BARCODE_SCAN_REQUEST_CODE = 54321;
     public static final int LOGIN_REQUEST_CODE = 8945;
 
-    public static final int FIND_LOCATION_REQUEST_CODE = 54821 ;
+    public static final int FIND_LOCATION_REQUEST_CODE = 54821;
 }

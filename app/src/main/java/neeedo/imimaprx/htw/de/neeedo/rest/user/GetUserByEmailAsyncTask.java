@@ -37,7 +37,7 @@ public class GetUserByEmailAsyncTask extends BaseAsyncTask {
             SingleUser singleUser = responseEntity.getBody();
             UserModel.getInstance().setUser(singleUser.getUser());
 
-            return new RestResult( RestResult.ReturnType.SUCCESS);
+            return new RestResult(RestResult.ReturnType.SUCCESS);
 
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);

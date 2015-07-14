@@ -28,7 +28,7 @@ public class EditDemandFragment extends FormDemandFragment {
         header.setText(R.string.edit_card_demand);
 
         Demand currentDemand = DemandsModel.getInstance().getPostDemand();
-        if(currentDemand != null) {
+        if (currentDemand != null) {
             etMustTags.setText(currentDemand.getMustTagsString());
             etShouldTags.setText(currentDemand.getShouldTagsString());
             etDistance.setText(String.valueOf(currentDemand.getDistance()));

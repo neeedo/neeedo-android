@@ -34,7 +34,7 @@ public class GetCompletionAsyncTask extends BaseAsyncTask {
 
     @Override
     protected void onPostExecute(Object result) {
-        if(result instanceof TagResult)
+        if (result instanceof TagResult)
             eventService.post(new GetSuggestionEvent((TagResult) result, completionType, charSequence));
     }
 
@@ -75,7 +75,7 @@ public class GetCompletionAsyncTask extends BaseAsyncTask {
             String message = getErrorMessage(e.getMessage());
             showToast(message);
 
-            return new RestResult( RestResult.ReturnType.FAILED);
+            return new RestResult(RestResult.ReturnType.FAILED);
         }
     }
 

@@ -39,12 +39,12 @@ public class Tag implements Serializable, BaseEntity {
     public ArrayList<String> getAvailableTags() {
         ArrayList<String> temp = new ArrayList<>();
         for (String s : suggestedTags) {
-            if(!temp.contains(s)) {
+            if (!temp.contains(s)) {
                 temp.add(s);
             }
         }
         for (String s : completedTags) {
-            if(!temp.contains(s)) {
+            if (!temp.contains(s)) {
                 temp.add(s);
             }
         }

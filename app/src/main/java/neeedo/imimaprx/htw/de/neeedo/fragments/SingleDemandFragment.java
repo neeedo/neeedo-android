@@ -202,7 +202,7 @@ public class SingleDemandFragment extends SuperFragment implements View.OnClickL
 
     @Override
     public void onClick(View view) {
-        
+
         switch (view.getId()) {
             case R.id.btnDelete:
                 DemandsModel.getInstance().setPostDemand(currentDemand);

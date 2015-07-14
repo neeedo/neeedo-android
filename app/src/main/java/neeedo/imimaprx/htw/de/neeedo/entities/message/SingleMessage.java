@@ -13,7 +13,7 @@ public class SingleMessage implements Serializable, BaseEntity {
     @Element
     private Message message;
 
-    public SingleMessage(){
+    public SingleMessage() {
 
     }
 
