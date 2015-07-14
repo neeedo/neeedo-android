@@ -22,6 +22,7 @@ import java.util.List;
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demand;
 import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demands;
+import neeedo.imimaprx.htw.de.neeedo.entities.demand.SingleDemand;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offer;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offers;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.Price;
@@ -30,6 +31,7 @@ import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.fragments.adapters.ListProductsArrayAdapter;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
+import neeedo.imimaprx.htw.de.neeedo.rest.demand.GetDemandByIDAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.demand.GetDemandsAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.matching.GetOffersToDemandAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.offer.GetOffersAsyncTask;
@@ -38,15 +40,16 @@ import neeedo.imimaprx.htw.de.neeedo.rest.util.DeleteAsyncTask;
 
 
 public class SingleDemandFragment extends SuperFragment implements View.OnClickListener {
-    Button btnDeleteDemand;
-    Button btnEditDemand;
-    View view;
-    ListView matchingView;
-    TextView tvMustTags;
-    TextView tvShouldTags;
-    TextView tvDistance;
-    TextView tvPrice;
-    TextView tvUser;
+    private Button btnDeleteDemand;
+    private Button btnEditDemand;
+    private View view;
+    private ListView matchingView;
+    private TextView tvMustTags;
+    private TextView tvShouldTags;
+    private TextView tvDistance;
+    private TextView tvPrice;
+    private TextView tvUser;
+    private Demand currentDemand;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -104,7 +107,19 @@ public class SingleDemandFragment extends SuperFragment implements View.OnClickL
     @Subscribe
     public void fillText(ServerResponseEvent e) {
         String demandId = getArguments().getString("id");
-        Demand currentDemand = findSingleDemand(demandId);
+        currentDemand = findSingleDemand(demandId);
+        if (currentDemand == null) {
+            SingleDemand singleDemand = DemandsModel.getInstance().getSingleDemand();
+            if (singleDemand == null) {
+                new GetDemandByIDAsyncTask(demandId).execute();
+                return;
+            } else {
+                currentDemand = singleDemand.getDemand();
+                DemandsModel.getInstance().setSingleDemand(null);
+            }
+        }
+
+
         Context context = getActivity();
 
         DecimalFormat priceFormat = new DecimalFormat(context.getString(R.string.format_price));
@@ -187,9 +202,7 @@ public class SingleDemandFragment extends SuperFragment implements View.OnClickL
 
     @Override
     public void onClick(View view) {
-        String demandId = getArguments().getString("id");
-        Demand currentDemand = findSingleDemand(demandId);
-
+        
         switch (view.getId()) {
             case R.id.btnDelete:
                 DemandsModel.getInstance().setPostDemand(currentDemand);
