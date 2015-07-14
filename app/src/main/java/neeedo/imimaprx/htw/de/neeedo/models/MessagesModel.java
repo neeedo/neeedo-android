@@ -46,16 +46,11 @@ public class MessagesModel {
 
     public void setMessages(Messages messages) {
         this.messages = messages;
+        messages.reverseOrder();
     }
 
     public void addMessageOnTop(Message message) {
-        ArrayList<Message> locList = new ArrayList<>();
-
-        locList.add(message);
-        for (Message m : messages.getMessages()) {
-            locList.add(m);
-        }
-        messages.setMessages(locList);
+        messages.addSingleMessage(message);
     }
 
     public Users getUsers() {

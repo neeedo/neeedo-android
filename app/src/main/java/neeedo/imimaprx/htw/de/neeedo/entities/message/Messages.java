@@ -25,7 +25,7 @@ public class Messages implements Serializable, BaseEntity {
         return false;
     }
 
-    public void addSingleDemand(Message message) {
+    public void addSingleMessage(Message message) {
         if (messages == null) {
             messages = new ArrayList<>();
         }
@@ -61,5 +61,16 @@ public class Messages implements Serializable, BaseEntity {
     @Override
     public int hashCode() {
         return messages != null ? messages.hashCode() : 0;
+    }
+
+
+    public void reverseOrder() {
+        ArrayList<Message> temp = new ArrayList<>();
+        int i = messages.size();
+        i--;
+        for (; i > -1; i--) {
+            temp.add(messages.get(i));
+        }
+        messages = temp;
     }
 }

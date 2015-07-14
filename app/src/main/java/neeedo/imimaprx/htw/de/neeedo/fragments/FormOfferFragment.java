@@ -1,6 +1,7 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -51,6 +52,7 @@ public class FormOfferFragment extends FormFragment {
     protected LinearLayout imagesContainer;
     protected Button btnSetLocation;
     protected ImageButton addImageButton;
+    protected ProgressDialog progressDialog;
 
     // stateful
     // TODO those 2
@@ -154,11 +156,11 @@ public class FormOfferFragment extends FormFragment {
             new ImageUploadHandler(newCameraOutputFile, getActivity()).execute();
         } else if (requestCode == RequestCodes.BARCODE_SCAN_REQUEST_CODE) {
             String barcodeEAN = intent.getStringExtra("SCAN_RESULT");
-            new GetOutpanByEANAsyncTask(barcodeEAN,getActivity()).execute();
+            new GetOutpanByEANAsyncTask(barcodeEAN, getActivity()).execute();
         } else if (requestCode == RequestCodes.FIND_LOCATION_REQUEST_CODE) {
-            String latitude = intent.getStringExtra("latitude");
-            String longitude = intent.getStringExtra("longitude");
-            selectedGeoPoint = new GeoPoint(Double.parseDouble(latitude), Double.parseDouble(longitude));
+            selectedGeoPoint = new GeoPoint(
+                    Double.parseDouble(intent.getStringExtra("latitude")),
+                    Double.parseDouble(intent.getStringExtra("longitude")));
             setLocation(selectedGeoPoint);
         }
     }
@@ -193,7 +195,6 @@ public class FormOfferFragment extends FormFragment {
 
         imagesContainer.addView(imageButton);
     }
-
 
 
     public ArrayList<String> getOfferTags() {
@@ -234,7 +235,7 @@ public class FormOfferFragment extends FormFragment {
     }
 
     protected void setLocation(final GeoPoint geoPoint) {
-     final MapView  mapView = new MapView(getActivity(), null);
+        final MapView mapView = new MapView(getActivity(), null);
         mapView.setTileSource(TileSourceFactory.MAPNIK);
         mapView.setBuiltInZoomControls(true);
         mapView.setMultiTouchControls(true);
@@ -259,5 +260,18 @@ public class FormOfferFragment extends FormFragment {
                 mapView.getController().animateTo(geoPoint);
             }
         }, 200);
+    }
+
+    public void showProgressDialog() {
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
+    }
+
+    public void hideProgressDialog() {
+        if (progressDialog != null)
+            progressDialog.dismiss();
     }
 }
