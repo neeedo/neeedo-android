@@ -32,6 +32,8 @@ public class SuperFragment extends Fragment {
 
     private MenuItem actionBarLogin;
 
+    private MenuItem actionBarMessage;
+
     private Menu menu;
 
     @Override
@@ -74,6 +76,7 @@ public class SuperFragment extends Fragment {
 
         actionBarLogin = menu.findItem(R.id.action_bar_login);
         actionBarLogout = menu.findItem(R.id.action_bar_logout);
+        actionBarMessage = menu.findItem(R.id.new_messages_icon);
 
         if (isUserLoggedIn) {
             actionBarLogin.setVisible(false);
@@ -115,7 +118,7 @@ public class SuperFragment extends Fragment {
         }
 
         String backstackItem = null;
-        if(navItem != null) {
+        if (navItem != null) {
             backstackItem = String.valueOf(navItem);
         }
 

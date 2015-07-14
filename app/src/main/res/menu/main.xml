@@ -3,6 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
 
+    <item android:id="@+id/new_messages_icon"
+        android:icon="@android:drawable/ic_dialog_email"
+        android:title="Open Messages"
+     
+        app:showAsAction="always"
+        />
+
     <item
         android:id="@+id/action_bar_login"
         android:title="@string/login"
