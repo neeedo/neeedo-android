@@ -33,15 +33,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:background="#00000000"
             android:padding="0dp"
             android:src="@drawable/dismiss_large" />
 
         <ImageButton
-            android:padding="0dp"
             android:id="@+id/button_diolor_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:background="#00000000"
+            android:padding="0dp"
             android:src="@drawable/fav_large" />
 
     </LinearLayout>
