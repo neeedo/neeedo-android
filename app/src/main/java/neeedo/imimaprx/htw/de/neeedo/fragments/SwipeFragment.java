@@ -73,7 +73,10 @@ public class SwipeFragment extends SuperFragment {
             @Override
             public void removeFirstObjectInAdapter() {
                 Log.d("LIST", "removed object!");
-                swipeCardViewItems.remove(0);
+                if (swipeCardViewItems.size() > 0){
+                    swipeCardViewItems.remove(0);
+                }
+
                 titleArrayAdapter.notifyDataSetChanged();
             }
 

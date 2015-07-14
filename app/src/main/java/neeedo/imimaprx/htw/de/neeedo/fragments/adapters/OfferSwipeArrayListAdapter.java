@@ -12,6 +12,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -54,7 +55,7 @@ public class OfferSwipeArrayListAdapter extends ArrayAdapter {
 
         final SwipeCardViewItem offerItem = swipeCardViewItems.get(position);
 
-        Button leftButton = (Button) view.findViewById(R.id.button_diolor_gallery_left);
+        ImageButton leftButton = (ImageButton) view.findViewById(R.id.button_diolor_gallery_left);
         leftButton
                 .setOnClickListener(new OnClickListener() {
                                         @Override
@@ -64,7 +65,7 @@ public class OfferSwipeArrayListAdapter extends ArrayAdapter {
                                     }
                 );
 
-        Button rightButton = (Button) view.findViewById(R.id.button_diolor_gallery_right);
+        ImageButton rightButton = (ImageButton) view.findViewById(R.id.button_diolor_gallery_right);
         rightButton
                 .setOnClickListener(new OnClickListener() {
                                         @Override
