@@ -54,7 +54,7 @@ public class ListProductsArrayAdapter<Object> extends ArrayAdapter<Object> {
 
     @Override
     public View getView(int position, View row, ViewGroup parent) {
-        LayoutInflater inflater = ((Activity) context).getLayoutInflater();
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         row = inflater.inflate(layoutResourceId, parent, false);
 
         imageView = (ImageView) row.findViewById(R.id.imageView);
