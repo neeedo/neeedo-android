@@ -107,6 +107,13 @@ public class SuperFragment extends Fragment {
             tvBadge.setVisibility(View.INVISIBLE);
         }
 
+        badgeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                redirectToFragment(MessageFragment.class, MainActivity.MENU_MESSAGE);
+            }
+        });
+
 
     }
 
