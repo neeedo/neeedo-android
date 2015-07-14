@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 
@@ -19,7 +20,9 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
@@ -45,7 +48,6 @@ public class ImageUploadHandler extends AsyncTask<Void, Integer, UploadImageResu
     private String imageFileNameOnServer;
     private Bitmap finalOptimizedBitmap;
 
-    private OffersModel offersModel = OffersModel.getInstance();
     private EventService eventService = EventService.getInstance();
 
     private int totalAmountBytesToUpload;
@@ -111,7 +113,7 @@ public class ImageUploadHandler extends AsyncTask<Void, Integer, UploadImageResu
             dataOutputStream.writeBytes("Content-Transfer-Encoding: binary" + lineEnd);
             dataOutputStream.writeBytes(lineEnd);
 
-            ByteArrayInputStream byteArrayInputStream = getFileInputStream();
+            FileInputStream byteArrayInputStream = getFileInputStream();
 
             totalAmountBytesToUpload = byteArrayInputStream.available();
 
@@ -161,19 +163,26 @@ public class ImageUploadHandler extends AsyncTask<Void, Integer, UploadImageResu
         return new UploadImageResult(RestResult.ReturnType.SUCCESS);
     }
 
-    private ByteArrayInputStream getFileInputStream() throws FileNotFoundException {
-        Bitmap rotatedBitmap = ImageUtils.rotateBitmap(photoFile);
-        Bitmap scaledBitmap = ImageUtils.resize(rotatedBitmap, 1024, 1024);
+    private FileInputStream getFileInputStream() throws FileNotFoundException {
+        FileInputStream fileInputStream = null;
+        try {
+            Bitmap rotatedBitmap = ImageUtils.rotateBitmap(photoFile);
+            Bitmap scaledBitmap = ImageUtils.resize(rotatedBitmap, 1024, 1024);
 
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            File file = ImageUtils.getNewOutputImageFile();
+            FileOutputStream fOut = new FileOutputStream(file);
+            scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 80, fOut);
+            fOut.flush();
+            fOut.close();
 
-        scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream);
+            finalOptimizedBitmap = BitmapFactory.decodeFile(file.getPath());
 
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
+            fileInputStream = new FileInputStream(file);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
 
-        finalOptimizedBitmap = BitmapFactory.decodeStream(byteArrayInputStream);
-
-        return byteArrayInputStream;
+        return fileInputStream;
     }
 
     @Override

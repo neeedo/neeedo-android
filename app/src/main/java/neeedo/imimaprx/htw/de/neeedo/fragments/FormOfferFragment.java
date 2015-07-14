@@ -154,11 +154,11 @@ public class FormOfferFragment extends FormFragment {
             new ImageUploadHandler(newCameraOutputFile, getActivity()).execute();
         } else if (requestCode == RequestCodes.BARCODE_SCAN_REQUEST_CODE) {
             String barcodeEAN = intent.getStringExtra("SCAN_RESULT");
-            new GetOutpanByEANAsyncTask(barcodeEAN,getActivity()).execute();
+            new GetOutpanByEANAsyncTask(barcodeEAN, getActivity()).execute();
         } else if (requestCode == RequestCodes.FIND_LOCATION_REQUEST_CODE) {
-            String latitude = intent.getStringExtra("latitude");
-            String longitude = intent.getStringExtra("longitude");
-            selectedGeoPoint = new GeoPoint(Double.parseDouble(latitude), Double.parseDouble(longitude));
+            selectedGeoPoint = new GeoPoint(
+                    Double.parseDouble(intent.getStringExtra("latitude")),
+                    Double.parseDouble(intent.getStringExtra("longitude")));
             setLocation(selectedGeoPoint);
         }
     }
@@ -193,7 +193,6 @@ public class FormOfferFragment extends FormFragment {
 
         imagesContainer.addView(imageButton);
     }
-
 
 
     public ArrayList<String> getOfferTags() {
@@ -234,7 +233,7 @@ public class FormOfferFragment extends FormFragment {
     }
 
     protected void setLocation(final GeoPoint geoPoint) {
-     final MapView  mapView = new MapView(getActivity(), null);
+        final MapView mapView = new MapView(getActivity(), null);
         mapView.setTileSource(TileSourceFactory.MAPNIK);
         mapView.setBuiltInZoomControls(true);
         mapView.setMultiTouchControls(true);
