@@ -15,6 +15,7 @@ import java.util.List;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.message.Message;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
+import neeedo.imimaprx.htw.de.neeedo.models.MessagesModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.RestResult;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
@@ -44,14 +45,14 @@ public class PutMessageReadStateAsyncTask extends BaseAsyncTask {
             ResponseEntity<Message> responseEntity = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, Message.class);
             final Message message = responseEntity.getBody();
 
-            //TODO what to do with the recived message ? It's just some kind of "Yes it worked" response
+            MessagesModel.getInstance().reduceMessageCounter();
 
-            return new RestResult( RestResult.ReturnType.SUCCESS);
+            return new RestResult(RestResult.ReturnType.SUCCESS);
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
             String message = getErrorMessage(e.getMessage());
             showToast(message);
-            return new RestResult( RestResult.ReturnType.FAILED);
+            return new RestResult(RestResult.ReturnType.FAILED);
         }
     }
 

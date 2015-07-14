@@ -99,13 +99,7 @@ public class SuperFragment extends Fragment {
 
         MessagesModel messagesModel = MessagesModel.getInstance();
         messagesModel.setMessageCounter(tvBadge);
-
-        if (messagesModel.getNewMessagesCounter() > 0) {
-            tvBadge.setText("" + messagesModel.getNewMessagesCounter());
-            tvBadge.setVisibility(View.VISIBLE);
-        } else {
-            tvBadge.setVisibility(View.INVISIBLE);
-        }
+        messagesModel.changeCount();
 
         badgeLayout.setOnClickListener(new View.OnClickListener() {
             @Override

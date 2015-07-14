@@ -87,11 +87,14 @@ public class MessagesModel {
     public void increaseMessageCounter(int count) {
         newMessagesCounter += count;
         changeCount();
+    }
 
-        final Context context = ActiveUser.getInstance().getContext();
+    public void reduceMessageCounter() {
+        newMessagesCounter--;
+        changeCount();
+    }
 
-        final String text = context.getString(R.string.new_messages).replace("$", "" + newMessagesCounter);
-
+    public void changeCount() {
         Handler mHandler = new Handler(Looper.getMainLooper());
         mHandler.post(new Runnable() {
             @Override
@@ -104,11 +107,6 @@ public class MessagesModel {
                 }
             }
         });
-
-    }
-
-    private void changeCount() {
-
     }
 
     public void setMessageCounter(TextView messageCounter) {
