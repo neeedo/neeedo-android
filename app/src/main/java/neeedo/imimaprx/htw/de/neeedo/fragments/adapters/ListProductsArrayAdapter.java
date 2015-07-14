@@ -73,7 +73,7 @@ public class ListProductsArrayAdapter<Object> extends ArrayAdapter<Object> {
         String priceText = null;
         String userText = null;
 
-        if(productType.equals(Demand.class)) {
+        if (productType.equals(Demand.class)) {
 
             Demand demand = (Demand) products.get(position);
             Price price = demand.getPrice();
@@ -94,7 +94,7 @@ public class ListProductsArrayAdapter<Object> extends ArrayAdapter<Object> {
                     );
             userText = demand.getUser().getName();
 
-        } else if(productType.equals(Offer.class)) {
+        } else if (productType.equals(Offer.class)) {
 
             Offer offer = (Offer) products.get(position);
 
@@ -110,12 +110,14 @@ public class ListProductsArrayAdapter<Object> extends ArrayAdapter<Object> {
             tvDistance.setVisibility(View.GONE);
 
             ArrayList<String> images = offer.getImages();
-            if(!images.isEmpty()) {
+            if (images.isEmpty()) {
+                Picasso.with(context).load(R.drawable.no_image).fit().centerInside().into(imageView);
+            } else {
                 String imageUrl = ServerConstantsUtils.getActiveServer() + "images/" + images.get(0);
                 Picasso.with(context).load(imageUrl).fit().centerInside().into(imageView);
             }
 
-        } else if(productType == null) {
+        } else if (productType == null) {
 
             tvPrimaryTags.setVisibility(View.GONE);
             tvSecondaryTags.setVisibility(View.GONE);

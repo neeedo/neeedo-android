@@ -41,24 +41,34 @@
 
         </HorizontalScrollView>
 
-        <Button
-            android:id="@+id/newOffer_Barcode_Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/start_barcode_scan" />
-
-        <MultiAutoCompleteTextView
-            android:id="@+id/etTags"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/new_card_tags" />
-
-        <org.apmem.tools.layouts.FlowLayout
+        <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <MultiAutoCompleteTextView
+                android:id="@+id/etTags"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="99999"
+                android:hint="@string/new_card_tags" />
+
+            <Button
+                android:layout_weight="1"
+                android:id="@+id/newOffer_Barcode_Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/start_barcode_scan"
+                android:layout_alignParentRight="true"/>
+
+        </LinearLayout>
+
+
+        <org.apmem.tools.layouts.FlowLayout
             android:id="@+id/flTagSuggestions"
-            android:visibility="gone" ></org.apmem.tools.layouts.FlowLayout>
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"></org.apmem.tools.layouts.FlowLayout>
 
         <EditText
             android:id="@+id/etPrice"
