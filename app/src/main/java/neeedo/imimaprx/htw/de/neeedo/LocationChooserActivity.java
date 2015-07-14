@@ -139,20 +139,13 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
 
         mapView.getOverlays().add(circle);
 
-//        GroundOverlay myGroundOverlay = new GroundOverlay(this);
-//        myGroundOverlay.setPosition(geoPoint);
-//        myGroundOverlay.setImage(getResources().getDrawable(R.drawable.ic_launcher).mutate());
-//        myGroundOverlay.setDimensions(2000.0f);
-//
-//        mapView.getOverlays().add(myGroundOverlay);
-
         mapView.invalidate();
     }
 
     private void deleteAllUiOverlays() {
         List<Overlay> overlays = mapView.getOverlays();
         int startIndex = overlays.size() - 1;
-        
+
         for (int i = startIndex; i >= 0; i--) {
             Overlay element = overlays.get(i);
             if (element instanceof MapEventsOverlay) {
