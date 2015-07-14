@@ -60,7 +60,7 @@ public class PostMessageAsyncTask extends BaseAsyncTask {
 
             SingleMessage singleMessage = response.getBody();
 
-            MessagesModel.getInstance().setSingleMessage(singleMessage);
+            MessagesModel.getInstance().addMessageOnTop(singleMessage.getMessage());
 
             return new RestResult(RestResult.ReturnType.SUCCESS);
 
