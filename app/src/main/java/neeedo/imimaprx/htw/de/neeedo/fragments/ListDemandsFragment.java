@@ -79,7 +79,7 @@ public class ListDemandsFragment extends SuperFragment {
                     Demand demand = (Demand) listView.getItemAtPosition(position);
 
                     FragmentManager fragmentManager = getFragmentManager();
-                    Fragment fragment = new SingleDemandFragment();
+                    Fragment fragment = new SingleDemandFragmentSwiper();
 
                     Bundle args = new Bundle();
                     args.putString("id", demand.getId());

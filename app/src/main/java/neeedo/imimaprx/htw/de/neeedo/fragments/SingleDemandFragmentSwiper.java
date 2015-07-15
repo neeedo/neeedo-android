@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,11 +38,10 @@ import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.DeleteAsyncTask;
 
 
-public class SingleDemandFragment extends SuperFragment implements View.OnClickListener {
+public class SingleDemandFragmentSwiper extends SuperFragment implements View.OnClickListener {
     private Button btnDeleteDemand;
     private Button btnEditDemand;
     private View view;
-    private ListView matchingView;
     private TextView tvMustTags;
     private TextView tvShouldTags;
     private TextView tvDistance;
@@ -55,15 +53,13 @@ public class SingleDemandFragment extends SuperFragment implements View.OnClickL
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        view = inflater.inflate(R.layout.single_demand_view, container, false);
+        view = inflater.inflate(R.layout.single_demand_view_swiper, container, false);
 
         tvMustTags = (TextView) view.findViewById(R.id.tvMustTags);
         tvShouldTags = (TextView) view.findViewById(R.id.tvShouldTags);
         tvDistance = (TextView) view.findViewById(R.id.tvDistance);
         tvPrice = (TextView) view.findViewById(R.id.tvPrice);
         tvUser = (TextView) view.findViewById(R.id.tvUser);
-
-        matchingView = (ListView) view.findViewById(R.id.matchingview);
 
         return view;
     }
