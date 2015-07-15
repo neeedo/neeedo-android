@@ -24,9 +24,6 @@ import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.RestResult;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
-/**
- * Creates experimental Offerslist to the given Demand in DemandModel
- */
 public class GetOffersToDemandAsyncTask extends BaseAsyncTask {
 
     private Demand demand;
@@ -43,7 +40,6 @@ public class GetOffersToDemandAsyncTask extends BaseAsyncTask {
     @Override
     protected Object doInBackground(Object[] params) {
         try {
-
             final String url = ServerConstantsUtils.getActiveServer() + "matching/demand";
             HttpHeaders requestHeaders = new HttpHeaders();
             setAuthorisationHeaders(requestHeaders);
