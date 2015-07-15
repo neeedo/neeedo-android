@@ -129,7 +129,7 @@
             </RelativeLayout>
 
             <com.lorentzos.flingswipe.SwipeFlingAdapterView
-                android:id="@+id/frame"
+                android:id="@+id/swipe_frame"
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
                 app:rotation_degrees="15.5" />

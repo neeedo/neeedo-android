@@ -51,4 +51,15 @@ public class DemandsModel {
     public void setPostDemand(Demand postDemand) {
         this.postDemand = postDemand;
     }
+
+    public Demand getDemandById(String demandId) {
+        Demand foundDemand = null;
+        for (Demand demand : getDemands().getDemands()) {
+            if (demand.getId().equals(demandId)) {
+                foundDemand = demand;
+                break;
+            }
+        }
+        return foundDemand;
+    }
 }

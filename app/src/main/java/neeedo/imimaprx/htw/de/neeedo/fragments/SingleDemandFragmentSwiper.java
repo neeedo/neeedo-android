@@ -3,31 +3,32 @@ package neeedo.imimaprx.htw.de.neeedo.fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 import com.squareup.otto.Subscribe;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demand;
-import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demands;
 import neeedo.imimaprx.htw.de.neeedo.entities.demand.SingleDemand;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offer;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offers;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.Price;
 import neeedo.imimaprx.htw.de.neeedo.events.FoundMatchesEvent;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
-import neeedo.imimaprx.htw.de.neeedo.fragments.adapters.ListProductsArrayAdapter;
+import neeedo.imimaprx.htw.de.neeedo.fragments.adapters.OfferSwipeArrayListAdapter;
+import neeedo.imimaprx.htw.de.neeedo.fragments.adapters.SwipeCardViewItem;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.demand.GetDemandByIDAsyncTask;
@@ -49,6 +50,8 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
     private TextView tvUser;
     private Demand currentDemand;
 
+    private DemandsModel demandsModel = DemandsModel.getInstance();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -68,42 +71,22 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        Activity activity = getActivity();
-        btnDeleteDemand = (Button) activity.findViewById(R.id.btnDelete);
-        btnEditDemand = (Button) activity.findViewById(R.id.btnEdit);
+        btnDeleteDemand = (Button) getActivity().findViewById(R.id.btnDelete);
+        btnEditDemand = (Button) getActivity().findViewById(R.id.btnEdit);
 
         btnDeleteDemand.setOnClickListener(this);
         btnEditDemand.setOnClickListener(this);
 
-        BaseAsyncTask asyncTask;
-
-        asyncTask = new GetDemandsAsyncTask(BaseAsyncTask.GetEntitiesMode.GET_RANDOM);
-        asyncTask.execute();
+        new GetDemandsAsyncTask(BaseAsyncTask.GetEntitiesMode.GET_RANDOM).execute();
 
         // TODO launch matching task here
         new GetOffersAsyncTask(BaseAsyncTask.GetEntitiesMode.GET_RANDOM).execute();
     }
 
-    private Demand findSingleDemand(String demandId) {
-        Demands demands = DemandsModel.getInstance().getDemands();
-
-        List<Demand> demandList = demands.getDemands();
-        Demand currentDemand = null;
-
-        for (Demand demand : demandList) {
-            if (demand.getId().equals(demandId)) {
-                currentDemand = demand;
-                break;
-            }
-        }
-
-        return currentDemand;
-    }
-
     @Subscribe
     public void fillText(ServerResponseEvent e) {
         String demandId = getArguments().getString("id");
-        currentDemand = findSingleDemand(demandId);
+        currentDemand = demandsModel.getDemandById(demandId);
         if (currentDemand == null) {
             SingleDemand singleDemand = DemandsModel.getInstance().getSingleDemand();
             if (singleDemand == null) {
@@ -123,10 +106,8 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
 
         String mustTagsText = currentDemand.getMustTagsString();
         String shouldTagsText = currentDemand.getShouldTagsString();
-        String distanceText = context.getString(
-                R.string.item_distance) + ": " + distanceFormat.format(currentDemand.getDistance());
-        String priceText = context.getString(
-                R.string.item_price) + ": " + priceFormat.format(price.getMin()) + " - " + priceFormat.format(price.getMax());
+        String distanceText = context.getString(R.string.item_distance) + ": " + distanceFormat.format(currentDemand.getDistance());
+        String priceText = context.getString(R.string.item_price) + ": " + priceFormat.format(price.getMin()) + " - " + priceFormat.format(price.getMax());
         String userText = currentDemand.getUser().getName();
 
         tvMustTags.setText(mustTagsText);
@@ -135,53 +116,104 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
         tvPrice.setText(priceText);
         tvUser.setText(userText);
 
-        // TODO handle exception if demand not found
-
         OffersModel.getInstance().setOffers(null);
-
         new GetOffersToDemandAsyncTask(currentDemand).execute();
     }
 
     @Subscribe
     public void fillMatches(FoundMatchesEvent e) {
         Offers offers = OffersModel.getInstance().getOffers();
-        List<Offer> offerList = offers.getOffers();
+        List<Offer> offerArrayList = offers.getOffers();
 
-        TextView tvEmpty = (TextView) view.findViewById(R.id.tvEmpty);
-        final ListView matchingView = (ListView) view.findViewById(R.id.matchingview);
 
-        if (!offerList.isEmpty()) {
-            ListProductsArrayAdapter<Offer> adapter = new ListProductsArrayAdapter(getActivity(),
-                    R.layout.list_products_item, offerList);
-            matchingView.setAdapter(adapter);
+        final SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) getActivity().findViewById(R.id.swipe_frame);
+        final ArrayList<SwipeCardViewItem> swipeCardViewItems = new ArrayList<SwipeCardViewItem>();
 
-            matchingView.setClickable(true);
-            matchingView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                    Offer offer = (Offer) matchingView.getItemAtPosition(position);
-
-                    FragmentManager fragmentManager = getFragmentManager();
-                    Fragment fragment = new SingleOfferFragment();
-
-                    Bundle args = new Bundle();
-                    args.putString("id", offer.getId());
-                    fragment.setArguments(args);
-
-                    fragmentManager.beginTransaction()
-                            .addToBackStack(null)
-                            .replace(R.id.container, fragment)
-                            .commit();
-                }
-            });
-
-            tvEmpty.setVisibility(View.GONE);
-            matchingView.setVisibility(View.VISIBLE);
-        } else {
-            matchingView.setVisibility(View.GONE);
-            tvEmpty.setVisibility(View.VISIBLE);
-            tvEmpty.setText(getActivity().getString(R.string.empty_matching_message));
+        for (Offer currentOffer : offerArrayList) {
+            swipeCardViewItems.add(new SwipeCardViewItem(currentOffer));
         }
+
+        ArrayList<String> sampleImageArray = new ArrayList<String>();
+        sampleImageArray.add("http://i.imgur.com/RVhlr3C.jpg");
+        sampleImageArray.add("http://i.imgur.com/ZGIRhB1.png");
+        sampleImageArray.add("http://i.imgur.com/DvpvklR.png");
+
+        Offer testOffer = new Offer();
+        testOffer.setImages(sampleImageArray);
+        testOffer.setName("foo1");
+
+        swipeCardViewItems.add(new SwipeCardViewItem(testOffer));
+        swipeCardViewItems.add(new SwipeCardViewItem(testOffer));
+        swipeCardViewItems.add(new SwipeCardViewItem(testOffer));
+        swipeCardViewItems.add(new SwipeCardViewItem(testOffer));
+
+        final ArrayAdapter<String> titleArrayAdapter = new OfferSwipeArrayListAdapter(getActivity(), R.layout.diolor_item, swipeCardViewItems);
+
+        flingContainer.setAdapter(titleArrayAdapter);
+
+        flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
+            @Override
+            public void removeFirstObjectInAdapter() {
+                Log.d("LIST", "removed object!");
+                if (swipeCardViewItems.size() > 0) {
+                    swipeCardViewItems.remove(0);
+                }
+
+                titleArrayAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onLeftCardExit(Object dataObject) {
+                SwipeCardViewItem swipeCardViewItem = (SwipeCardViewItem) dataObject;
+                Offer offer = swipeCardViewItem.getOffer();
+                //TODO dismiss
+            }
+
+            @Override
+            public void onRightCardExit(Object dataObject) {
+                SwipeCardViewItem swipeCardViewItem = (SwipeCardViewItem) dataObject;
+                Offer offer = swipeCardViewItem.getOffer();
+                //TODO fav
+            }
+
+            @Override
+            public void onAdapterAboutToEmpty(int itemsInAdapter) {
+//                swipeCardViewItems.add(new SwipeCardViewItem("", "", new ArrayList<String>()));
+//                titleArrayAdapter.notifyDataSetChanged();
+                if (itemsInAdapter == 0)
+                    getActivity().findViewById(R.id.buttons_diolor_chooser).setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onScroll(float scrollProgressPercent) {
+                View view = flingContainer.getSelectedView();
+                view.findViewById(R.id.item_swipe_right_indicator).setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
+                view.findViewById(R.id.item_swipe_left_indicator).setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
+            }
+        });
+
+        flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClicked(int itemPosition, Object dataObject) {
+                Toast.makeText(getActivity(), "Clicked!", Toast.LENGTH_LONG);
+            }
+        });
+
+        getActivity().findViewById(R.id.button_diolor_right).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                flingContainer.getTopCardListener().selectRight();
+            }
+        });
+
+        getActivity().findViewById(R.id.button_diolor_left).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                flingContainer.getTopCardListener().selectLeft();
+            }
+        });
+
+
     }
 
     @Override

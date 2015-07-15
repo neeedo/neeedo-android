@@ -17,7 +17,6 @@ import neeedo.imimaprx.htw.de.neeedo.fragments.MessageFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.NavigationDrawerFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.NewDemandFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.NewOfferFragment;
-import neeedo.imimaprx.htw.de.neeedo.fragments.SwipeFragment;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.MessagesModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.message.GetMessagesByUserIdAndReadStateAsyncTask;
@@ -158,7 +157,7 @@ public class MainActivity extends ActionBarActivity
                 mFragment = new NewDemandFragment();
                 break;
             case MENU_SWIPER:
-                mFragment = new SwipeFragment();
+//                mFragment = new SwipeFragment();
                 break;
             case MENU_MESSAGE:
                 mFragment = new MessageFragment();
