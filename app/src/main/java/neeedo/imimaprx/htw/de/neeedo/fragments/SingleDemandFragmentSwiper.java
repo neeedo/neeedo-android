@@ -1,7 +1,5 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments;
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,17 +22,13 @@ import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demand;
 import neeedo.imimaprx.htw.de.neeedo.entities.demand.SingleDemand;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offer;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offers;
-import neeedo.imimaprx.htw.de.neeedo.entities.util.Price;
 import neeedo.imimaprx.htw.de.neeedo.events.FoundMatchesEvent;
-import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.fragments.adapters.OfferSwipeArrayListAdapter;
 import neeedo.imimaprx.htw.de.neeedo.fragments.adapters.SwipeCardViewItem;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.demand.GetDemandByIDAsyncTask;
-import neeedo.imimaprx.htw.de.neeedo.rest.demand.GetDemandsAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.matching.GetOffersToDemandAsyncTask;
-import neeedo.imimaprx.htw.de.neeedo.rest.offer.GetOffersAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.DeleteAsyncTask;
 
@@ -43,11 +37,12 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
     private Button btnDeleteDemand;
     private Button btnEditDemand;
 
-    private TextView tvMustTags;
-    private TextView tvShouldTags;
-    private TextView tvDistance;
-    private TextView tvPrice;
-    private TextView tvUser;
+    private TextView textViewMustTags;
+    private TextView textViewShouldTags;
+    private TextView textViewDistance;
+    private TextView textViewPrice;
+    private TextView textViewUser;
+
     private View view;
     private Demand currentDemand;
 
@@ -59,13 +54,14 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
 
         view = inflater.inflate(R.layout.single_demand_view_swiper, container, false);
 
-        tvMustTags = (TextView) view.findViewById(R.id.tvMustTags);
-        tvShouldTags = (TextView) view.findViewById(R.id.tvShouldTags);
-        tvDistance = (TextView) view.findViewById(R.id.tvDistance);
-        tvPrice = (TextView) view.findViewById(R.id.tvPrice);
-        tvUser = (TextView) view.findViewById(R.id.tvUser);
         btnDeleteDemand = (Button) view.findViewById(R.id.btnDelete);
         btnEditDemand = (Button) view.findViewById(R.id.btnEdit);
+
+        textViewMustTags = (TextView) view.findViewById(R.id.tvMustTags);
+        textViewShouldTags = (TextView) view.findViewById(R.id.tvShouldTags);
+        textViewDistance = (TextView) view.findViewById(R.id.tvDistance);
+        textViewPrice = (TextView) view.findViewById(R.id.tvPrice);
+        textViewUser = (TextView) view.findViewById(R.id.tvUser);
 
         return view;
     }
@@ -95,13 +91,12 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
         DecimalFormat priceFormat = new DecimalFormat(getActivity().getString(R.string.format_price));
         DecimalFormat distanceFormat = new DecimalFormat(getActivity().getString(R.string.format_distance));
 
-        tvMustTags.setText(currentDemand.getMustTagsString());
-        tvShouldTags.setText(currentDemand.getShouldTagsString());
-        tvDistance.setText(getActivity().getString(R.string.item_distance) + ": " + distanceFormat.format(currentDemand.getDistance()));
-        tvPrice.setText(getActivity().getString(R.string.item_price) + ": " + priceFormat.format(currentDemand.getPrice().getMin()) + " - " + priceFormat.format(currentDemand.getPrice()));
-        tvUser.setText(currentDemand.getUser().getName());
+        textViewMustTags.setText(currentDemand.getMustTagsString());
+        textViewShouldTags.setText(currentDemand.getShouldTagsString());
+        textViewDistance.setText(getActivity().getString(R.string.item_distance) + ": " + distanceFormat.format(currentDemand.getDistance()));
+        textViewPrice.setText(getActivity().getString(R.string.item_price) + ": " + priceFormat.format(currentDemand.getPrice().getMin()) + " - " + priceFormat.format(currentDemand.getPrice()));
+        textViewUser.setText(currentDemand.getUser().getName());
 
-        OffersModel.getInstance().setOffers(null);
         new GetOffersToDemandAsyncTask(currentDemand).execute();
     }
 
@@ -109,7 +104,6 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
     public void fillMatches(FoundMatchesEvent e) {
         Offers offers = OffersModel.getInstance().getOffers();
         List<Offer> offerArrayList = offers.getOffers();
-
 
         final SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) getActivity().findViewById(R.id.swipe_frame);
         final ArrayList<SwipeCardViewItem> swipeCardViewItems = new ArrayList<SwipeCardViewItem>();
