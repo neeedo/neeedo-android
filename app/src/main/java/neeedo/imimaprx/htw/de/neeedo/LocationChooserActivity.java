@@ -3,7 +3,6 @@ package neeedo.imimaprx.htw.de.neeedo;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
@@ -19,10 +18,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.osmdroid.DefaultResourceProxyImpl;
-import org.osmdroid.bonuspack.overlays.GroundOverlay;
 import org.osmdroid.bonuspack.overlays.MapEventsOverlay;
 import org.osmdroid.bonuspack.overlays.MapEventsReceiver;
 import org.osmdroid.bonuspack.overlays.Polygon;
@@ -32,7 +32,6 @@ import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.ItemizedIconOverlay;
 import org.osmdroid.views.overlay.Overlay;
 import org.osmdroid.views.overlay.OverlayItem;
-import org.osmdroid.views.overlay.PathOverlay;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,12 +43,35 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
     private LocationAutoCompleteTextView autoCompleteTextView;
     private DefaultResourceProxyImpl resourceProxy;
     private Activity that = this;
-    private GeoPoint currentlySelectedGeoPoint = null;
+    private GeoPoint selectedGeoPoint = null;
+    private int selectedDistanceInKm;
+    private TextView distanceTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location_chooser);
+
+        final SeekBar distanceSeekBar = (SeekBar) findViewById(R.id.distance_seek_bar);
+        distanceTextView = (TextView) findViewById(R.id.distance_text_view);
+        setNewDistance(1);
+
+        distanceSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                setNewDistance(progress + 1);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
+
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -120,20 +142,32 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
         mapView.invalidate();
     }
 
+    private void setNewDistance(int distanceInKm) {
+        selectedDistanceInKm = distanceInKm;
+        distanceTextView.setText(getText(R.string.kilometer_radius ) + String.valueOf(distanceInKm));
+        if (selectedGeoPoint != null)
+            refreshViewToNewSettings();
+    }
+
     private void setLocationSelected(GeoPoint geoPoint) {
-        mapView.getController().animateTo(geoPoint);
-        currentlySelectedGeoPoint = geoPoint;
+        selectedGeoPoint = geoPoint;
+        refreshViewToNewSettings();
+    }
+
+    private void refreshViewToNewSettings() {
+        mapView.getController().animateTo(selectedGeoPoint);
+
         deleteAllUiOverlays();
 
         Polygon circle = new Polygon(this);
-        circle.setPoints(Polygon.pointsAsCircle(geoPoint, 2000.0));
+        circle.setPoints(Polygon.pointsAsCircle(selectedGeoPoint, selectedDistanceInKm * 1000));
         circle.setFillColor(0xaa88BEB1);
         circle.setStrokeColor(0x88BEB1);
         circle.setStrokeWidth(2);
         mapView.getOverlays().add(circle);
 
         ArrayList<OverlayItem> ownOverlay = new ArrayList<OverlayItem>();
-        ownOverlay.add(new OverlayItem("", "", (GeoPoint) geoPoint));
+        ownOverlay.add(new OverlayItem("", "", (GeoPoint) selectedGeoPoint));
         ItemizedIconOverlay userLocationOverlay = new ItemizedIconOverlay<OverlayItem>(ownOverlay, getResources().getDrawable(R.drawable.map_marker), null, resourceProxy);
         mapView.getOverlays().add(userLocationOverlay);
 
@@ -154,10 +188,10 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
     }
 
     private void closeActivityAndReturnData() {
-        if (currentlySelectedGeoPoint != null) {
+        if (selectedGeoPoint != null) {
             Intent output = new Intent();
-            output.putExtra("latitude", Double.toString(currentlySelectedGeoPoint.getLatitude()));
-            output.putExtra("longitude", Double.toString(currentlySelectedGeoPoint.getLongitude()));
+            output.putExtra("latitude", Double.toString(selectedGeoPoint.getLatitude()));
+            output.putExtra("longitude", Double.toString(selectedGeoPoint.getLongitude()));
             setResult(RESULT_OK, output);
         } else {
             setResult(RESULT_CANCELED);
