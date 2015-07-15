@@ -216,5 +216,11 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
     public void removeActionDone(DeleteFinishedEvent e) {
         if (e.isFinished())
             Toast.makeText(getActivity(), getActivity().getString(R.string.delete_success), Toast.LENGTH_SHORT).show();
+        Offers offers = OffersModel.getInstance().getOffers();
+        for (Offer offer : offers.getOffers()) {
+            if (offer.getId().equals(currentOffer.getId())) {
+                offers.getOffers().remove(offer);
+            }
+        }
     }
 }
