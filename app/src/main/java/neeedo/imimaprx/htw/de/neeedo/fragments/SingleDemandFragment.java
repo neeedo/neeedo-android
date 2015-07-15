@@ -119,7 +119,6 @@ public class SingleDemandFragment extends SuperFragment implements View.OnClickL
             }
         }
 
-
         Context context = getActivity();
 
         DecimalFormat priceFormat = new DecimalFormat(context.getString(R.string.format_price));
@@ -129,17 +128,9 @@ public class SingleDemandFragment extends SuperFragment implements View.OnClickL
         String mustTagsText = currentDemand.getMustTagsString();
         String shouldTagsText = currentDemand.getShouldTagsString();
         String distanceText = context.getString(
-                R.string.item_distance) +
-                ": " +
-                distanceFormat.format(currentDemand.getDistance()
-                );
+                R.string.item_distance) + ": " + distanceFormat.format(currentDemand.getDistance());
         String priceText = context.getString(
-                R.string.item_price) +
-                ": " +
-                priceFormat.format(price.getMin()) +
-                " - " +
-                priceFormat.format(price.getMax()
-                );
+                R.string.item_price) + ": " + priceFormat.format(price.getMin()) + " - " + priceFormat.format(price.getMax());
         String userText = currentDemand.getUser().getName();
 
         tvMustTags.setText(mustTagsText);
@@ -150,16 +141,13 @@ public class SingleDemandFragment extends SuperFragment implements View.OnClickL
 
         // TODO handle exception if demand not found
 
-        //DemandsModel.getInstance().setPostDemand(currentDemand);
         OffersModel.getInstance().setOffers(null);
-        new GetOffersToDemandAsyncTask(currentDemand).execute();
 
+        new GetOffersToDemandAsyncTask(currentDemand).execute();
     }
 
     @Subscribe
     public void fillMatches(FoundMatchesEvent e) {
-        Log.d("Matching", "Event called");
-
         Offers offers = OffersModel.getInstance().getOffers();
         List<Offer> offerList = offers.getOffers();
 
@@ -202,7 +190,6 @@ public class SingleDemandFragment extends SuperFragment implements View.OnClickL
 
     @Override
     public void onClick(View view) {
-
         switch (view.getId()) {
             case R.id.btnDelete:
                 DemandsModel.getInstance().setPostDemand(currentDemand);
