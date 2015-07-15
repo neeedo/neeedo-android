@@ -33,11 +33,6 @@ public class GetOffersToDemandAsyncTask extends BaseAsyncTask {
     }
 
     @Override
-    protected void onPostExecute(Object o) {
-        eventService.post(new FoundMatchesEvent());
-    }
-
-    @Override
     protected Object doInBackground(Object[] params) {
         try {
             final String url = ServerConstantsUtils.getActiveServer() + "matching/demand";
@@ -64,4 +59,10 @@ public class GetOffersToDemandAsyncTask extends BaseAsyncTask {
             return new RestResult(RestResult.ReturnType.FAILED);
         }
     }
+
+    @Override
+    protected void onPostExecute(Object o) {
+        eventService.post(new FoundMatchesEvent());
+    }
+
 }
