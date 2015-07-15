@@ -88,8 +88,10 @@ public class MessagesModel {
     }
 
     public void reduceMessageCounter() {
-        newMessagesCounter--;
-        changeCount();
+        if (newMessagesCounter > 0) {
+            newMessagesCounter--;
+            changeCount();
+        }
     }
 
     public void changeCount() {
