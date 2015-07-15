@@ -145,6 +145,9 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
         switch (view.getId()) {
             case R.id.btnDelete:
                 OffersModel.getInstance().setDraft(currentOffer);
+                if(currentOffer == null){
+                    return;
+                }
                 BaseAsyncTask asyncTask = new DeleteAsyncTask(currentOffer);
                 ConfirmDialogFragment confirmDialog = ConfirmDialogFragment.newInstance(
                         asyncTask,

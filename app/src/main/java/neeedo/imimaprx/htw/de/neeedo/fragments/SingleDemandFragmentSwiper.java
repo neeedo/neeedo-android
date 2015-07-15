@@ -189,6 +189,9 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
         switch (view.getId()) {
             case R.id.btnDelete:
                 DemandsModel.getInstance().setPostDemand(currentDemand);
+                if (currentDemand == null) {
+                    return;
+                }
                 BaseAsyncTask asyncTask = new DeleteAsyncTask(currentDemand);
                 ConfirmDialogFragment confirmDialog = ConfirmDialogFragment.newInstance(
                         asyncTask,
