@@ -19,9 +19,7 @@ public class OffersModel {
         return offersModel;
     }
 
-
     private OffersModel() {
-
     }
 
     private static OffersModel offersModel;
