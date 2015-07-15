@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
     <item
         android:id="@+id/location_chooser_done"
-        android:icon="@drawable/checked"
+        android:icon="@drawable/ic_done_white_24dp"
         android:title="@string/done"
         app:showAsAction="always" />
 </menu>
