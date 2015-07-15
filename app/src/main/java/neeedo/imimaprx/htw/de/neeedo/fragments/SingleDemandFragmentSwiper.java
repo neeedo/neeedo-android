@@ -42,12 +42,13 @@ import neeedo.imimaprx.htw.de.neeedo.rest.util.DeleteAsyncTask;
 public class SingleDemandFragmentSwiper extends SuperFragment implements View.OnClickListener {
     private Button btnDeleteDemand;
     private Button btnEditDemand;
-    private View view;
+
     private TextView tvMustTags;
     private TextView tvShouldTags;
     private TextView tvDistance;
     private TextView tvPrice;
     private TextView tvUser;
+    private View view;
     private Demand currentDemand;
 
     private DemandsModel demandsModel = DemandsModel.getInstance();
@@ -63,6 +64,8 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
         tvDistance = (TextView) view.findViewById(R.id.tvDistance);
         tvPrice = (TextView) view.findViewById(R.id.tvPrice);
         tvUser = (TextView) view.findViewById(R.id.tvUser);
+        btnDeleteDemand = (Button) view.findViewById(R.id.btnDelete);
+        btnEditDemand = (Button) view.findViewById(R.id.btnEdit);
 
         return view;
     }
@@ -71,24 +74,15 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        btnDeleteDemand = (Button) getActivity().findViewById(R.id.btnDelete);
-        btnEditDemand = (Button) getActivity().findViewById(R.id.btnEdit);
-
         btnDeleteDemand.setOnClickListener(this);
         btnEditDemand.setOnClickListener(this);
 
-        new GetDemandsAsyncTask(BaseAsyncTask.GetEntitiesMode.GET_RANDOM).execute();
-
-        // TODO launch matching task here
-        new GetOffersAsyncTask(BaseAsyncTask.GetEntitiesMode.GET_RANDOM).execute();
-    }
-
-    @Subscribe
-    public void fillText(ServerResponseEvent e) {
         String demandId = getArguments().getString("id");
+
         currentDemand = demandsModel.getDemandById(demandId);
+
         if (currentDemand == null) {
-            SingleDemand singleDemand = DemandsModel.getInstance().getSingleDemand();
+            SingleDemand singleDemand = demandsModel.getSingleDemand();
             if (singleDemand == null) {
                 new GetDemandByIDAsyncTask(demandId).execute();
                 return;
@@ -98,23 +92,14 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
             }
         }
 
-        Context context = getActivity();
+        DecimalFormat priceFormat = new DecimalFormat(getActivity().getString(R.string.format_price));
+        DecimalFormat distanceFormat = new DecimalFormat(getActivity().getString(R.string.format_distance));
 
-        DecimalFormat priceFormat = new DecimalFormat(context.getString(R.string.format_price));
-        DecimalFormat distanceFormat = new DecimalFormat(context.getString(R.string.format_distance));
-        Price price = currentDemand.getPrice();
-
-        String mustTagsText = currentDemand.getMustTagsString();
-        String shouldTagsText = currentDemand.getShouldTagsString();
-        String distanceText = context.getString(R.string.item_distance) + ": " + distanceFormat.format(currentDemand.getDistance());
-        String priceText = context.getString(R.string.item_price) + ": " + priceFormat.format(price.getMin()) + " - " + priceFormat.format(price.getMax());
-        String userText = currentDemand.getUser().getName();
-
-        tvMustTags.setText(mustTagsText);
-        tvShouldTags.setText(shouldTagsText);
-        tvDistance.setText(distanceText);
-        tvPrice.setText(priceText);
-        tvUser.setText(userText);
+        tvMustTags.setText(currentDemand.getMustTagsString());
+        tvShouldTags.setText(currentDemand.getShouldTagsString());
+        tvDistance.setText(getActivity().getString(R.string.item_distance) + ": " + distanceFormat.format(currentDemand.getDistance()));
+        tvPrice.setText(getActivity().getString(R.string.item_price) + ": " + priceFormat.format(currentDemand.getPrice().getMin()) + " - " + priceFormat.format(currentDemand.getPrice()));
+        tvUser.setText(currentDemand.getUser().getName());
 
         OffersModel.getInstance().setOffers(null);
         new GetOffersToDemandAsyncTask(currentDemand).execute();
