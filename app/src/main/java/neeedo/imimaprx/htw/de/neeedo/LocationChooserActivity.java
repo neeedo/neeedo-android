@@ -125,19 +125,17 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
         currentlySelectedGeoPoint = geoPoint;
         deleteAllUiOverlays();
 
+        Polygon circle = new Polygon(this);
+        circle.setPoints(Polygon.pointsAsCircle(geoPoint, 2000.0));
+        circle.setFillColor(0xaa88BEB1);
+        circle.setStrokeColor(0x88BEB1);
+        circle.setStrokeWidth(2);
+        mapView.getOverlays().add(circle);
+
         ArrayList<OverlayItem> ownOverlay = new ArrayList<OverlayItem>();
         ownOverlay.add(new OverlayItem("", "", (GeoPoint) geoPoint));
         ItemizedIconOverlay userLocationOverlay = new ItemizedIconOverlay<OverlayItem>(ownOverlay, getResources().getDrawable(R.drawable.map_marker), null, resourceProxy);
         mapView.getOverlays().add(userLocationOverlay);
-
-        Polygon circle = new Polygon(this);
-
-        circle.setPoints(Polygon.pointsAsCircle(geoPoint, 2000.0));
-        circle.setFillColor(0x12121212);
-        circle.setStrokeColor(Color.RED);
-        circle.setStrokeWidth(2);
-
-        mapView.getOverlays().add(circle);
 
         mapView.invalidate();
     }
