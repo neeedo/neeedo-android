@@ -1,167 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:columnCount="2"
-        android:rowCount="3">
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
 
         <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/btnEdit"
-            android:text="@string/button_edit"
-            android:layout_row="0"
-            android:layout_column="0"
-            android:layout_gravity="right" />
-
-        <Button
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/button_delete"
-            android:id="@+id/btnDelete"
-            android:layout_column="1"
-            android:layout_row="0" />
+            android:text="@string/button_edit" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:layout_column="0"
-            android:layout_row="1"
-            android:layout_columnSpan="2"
-            android:orientation="vertical"
-            android:padding="10dp">
-
-            <TextView
-                android:id="@+id/tvMustTags"
-                android:layout_width="match_parent"
-                android:layout_height="21dp"
-                android:gravity="center_vertical"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentBottom="true"
-                android:textStyle="bold"
-                android:textSize="16dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="0dp" />
-
-            <TextView
-                android:id="@+id/tvShouldTags"
-                android:layout_width="match_parent"
-                android:layout_height="29dp"
-                android:gravity="center_vertical"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentBottom="true"
-                android:textStyle="normal"
-                android:textSize="14dp"
-                android:layout_marginTop="0dp"
-                android:layout_marginBottom="5dp" />
-
-            <TextView
-                android:id="@+id/tvDistance"
-                android:layout_width="match_parent"
-                android:layout_height="22dp"
-                android:gravity="center_vertical"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentBottom="true"
-                android:textStyle="normal"
-                android:textSize="12dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp" />
-
-            <TextView
-                android:id="@+id/tvPrice"
-                android:layout_width="match_parent"
-                android:layout_height="22dp"
-                android:gravity="center_vertical"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentBottom="true"
-                android:textStyle="normal"
-                android:textSize="12dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp" />
-
-            <TextView
-                android:id="@+id/tvUser"
-                android:layout_width="match_parent"
-                android:layout_height="22dp"
-                android:gravity="center_vertical"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentBottom="true"
-                android:textStyle="italic"
-                android:textSize="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp" />
-
-        </LinearLayout>
+        <Button
+            android:id="@+id/btnDemandDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_delete" />
 
         <TextView
-            android:id="@+id/tvEmpty"
+            android:id="@+id/tvMustTags"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="must Tags" />
+
+        <TextView
+            android:id="@+id/tvShouldTags"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="should Tags" />
+    </RelativeLayout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:layout_column="0"
-            android:layout_row="2"
-            android:layout_columnSpan="2"
-            android:visibility="gone"
-            android:layout_gravity="center"
-            android:gravity="center" />
+            android:layout_height="fill_parent"
+            android:gravity="center">
 
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:gravity="center">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/swiper_no_more_offers_to_show" />
-            </RelativeLayout>
-
-            <com.lorentzos.flingswipe.SwipeFlingAdapterView
-                android:id="@+id/swipe_frame"
-                android:layout_width="match_parent"
-                android:layout_height="fill_parent"
-                app:rotation_degrees="15.5" />
-
-            <LinearLayout
-                android:id="@+id/buttons_diolor_chooser"
-                android:layout_width="fill_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:gravity="center_horizontal">
+                android:text="@string/swiper_no_more_offers_to_show" />
 
-                <ImageButton
-                    android:id="@+id/button_diolor_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:background="#00000000"
-                    android:padding="0dp"
-                    android:src="@drawable/dismiss_large" />
-
-                <ImageButton
-                    android:id="@+id/button_diolor_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:background="#00000000"
-                    android:padding="0dp"
-                    android:src="@drawable/fav_large" />
-
-            </LinearLayout>
         </RelativeLayout>
 
-    </GridLayout>
+        <com.lorentzos.flingswipe.SwipeFlingAdapterView
+            android:id="@+id/swipe_frame"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            app:rotation_degrees="15.5" />
+
+        <LinearLayout
+            android:id="@+id/buttons_diolor_chooser"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="#00000000"
+            android:gravity="center_horizontal">
+
+            <ImageButton
+                android:id="@+id/button_diolor_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="#00000000"
+                android:padding="0dp"
+                android:src="@drawable/dismiss_large" />
+
+            <ImageButton
+                android:id="@+id/button_diolor_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="#00000000"
+                android:padding="0dp"
+                android:src="@drawable/fav_large" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
 
 </LinearLayout>

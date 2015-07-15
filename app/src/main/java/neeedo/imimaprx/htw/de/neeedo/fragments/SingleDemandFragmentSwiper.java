@@ -39,9 +39,6 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
 
     private TextView textViewMustTags;
     private TextView textViewShouldTags;
-    private TextView textViewDistance;
-    private TextView textViewPrice;
-    private TextView textViewUser;
 
     private View view;
     private Demand currentDemand;
@@ -54,14 +51,11 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
 
         view = inflater.inflate(R.layout.single_demand_view_swiper, container, false);
 
-        btnDeleteDemand = (Button) view.findViewById(R.id.btnDelete);
+        btnDeleteDemand = (Button) view.findViewById(R.id.btnDemandDelete);
         btnEditDemand = (Button) view.findViewById(R.id.btnEdit);
 
         textViewMustTags = (TextView) view.findViewById(R.id.tvMustTags);
         textViewShouldTags = (TextView) view.findViewById(R.id.tvShouldTags);
-        textViewDistance = (TextView) view.findViewById(R.id.tvDistance);
-        textViewPrice = (TextView) view.findViewById(R.id.tvPrice);
-        textViewUser = (TextView) view.findViewById(R.id.tvUser);
 
         return view;
     }
@@ -88,20 +82,11 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
             }
         }
 
-        DecimalFormat priceFormat = new DecimalFormat(getActivity().getString(R.string.format_price));
-        DecimalFormat distanceFormat = new DecimalFormat(getActivity().getString(R.string.format_distance));
-
         textViewMustTags.setText(currentDemand.getMustTagsString());
         textViewShouldTags.setText(currentDemand.getShouldTagsString());
-        textViewDistance.setText(getActivity().getString(R.string.item_distance) + ": " + distanceFormat.format(currentDemand.getDistance()));
-        textViewPrice.setText(getActivity().getString(R.string.item_price) + ": " + priceFormat.format(currentDemand.getPrice().getMin()) + " - " + priceFormat.format(currentDemand.getPrice()));
-        textViewUser.setText(currentDemand.getUser().getName());
 
         new GetOffersToDemandAsyncTask(currentDemand).execute();
-    }
 
-    @Subscribe
-    public void fillMatches(FoundMatchesEvent e) {
         Offers offers = OffersModel.getInstance().getOffers();
         List<Offer> offerArrayList = offers.getOffers();
 
