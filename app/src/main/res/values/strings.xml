@@ -119,7 +119,7 @@
     <string name="image_upload_failed_message">Please try again.</string>
     <string name="image_upload_failed_accept">OK</string>
     <string name="outpan_failed_accept">OK</string>
-    <string name="outpan_failed_message">We could find matching tags for the scanned product</string>
+    <string name="outpan_failed_message">no matching products for scanned product</string>
     <string name="outpan_failed_title">Barcode scan failed</string>
     <string name="single_offer_view_add_to_favorites_text">Add to Favorites</string>
     <string name="single_offer_view_remove_from_favorites_text">Remove from favorites</string>

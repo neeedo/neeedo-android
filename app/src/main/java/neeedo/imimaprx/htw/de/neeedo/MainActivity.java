@@ -36,21 +36,18 @@ public class MainActivity extends ActionBarActivity
 
     public static final String STATE_NAVIGATION_INDEX = "current_navigation_state_index";
     public static final String STATE_FRAGMENT = "current_fragment_state";
+
     public static final int MENU_HOME = 0;
     public static final int MENU_LIST_OFFERS = 1;
     public static final int MENU_NEW_OFFER = 2;
     public static final int MENU_LIST_DEMANDS = 3;
     public static final int MENU_NEW_DEMAND = 4;
-    public static final int MENU_SWIPER = 5;
     public static final int MENU_MESSAGE = 6;
     public static final int FAVORITES = 7;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-//        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
-//        ImageLoader.getInstance().init(config);
 
         setContentView(R.layout.activity_main);
         initOrRestoreState(savedInstanceState);
@@ -59,8 +56,10 @@ public class MainActivity extends ActionBarActivity
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
 
         CertificateTrustService.trustAllCerts();
+
         initSingletons();
         attempLogin();
+
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
@@ -156,16 +155,12 @@ public class MainActivity extends ActionBarActivity
             case MENU_NEW_DEMAND:
                 mFragment = new NewDemandFragment();
                 break;
-            case MENU_SWIPER:
-//                mFragment = new SwipeFragment();
-                break;
             case MENU_MESSAGE:
                 mFragment = new MessageFragment();
                 break;
             case FAVORITES:
                 mFragment = new ListFavoritesFragment();
                 break;
-
             default:
                 mFragment = new MainFragment();
                 break;
