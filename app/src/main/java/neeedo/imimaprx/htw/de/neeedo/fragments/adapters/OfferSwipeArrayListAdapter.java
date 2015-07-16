@@ -70,6 +70,8 @@ public class OfferSwipeArrayListAdapter extends ArrayAdapter {
 
         if (offerItem.getImages().isEmpty()) {
             Picasso.with(getContext()).load(R.drawable.no_image).fit().centerInside().into(imageView);
+            rightButton.setVisibility(View.GONE);
+            leftButton.setVisibility(View.GONE);
         } else {
             Picasso.with(getContext()).load(offerItem.getImages().get(0)).fit().centerInside().into(imageView);
         }
