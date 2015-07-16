@@ -17,6 +17,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
+import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
 public class OfferSwipeArrayListAdapter extends ArrayAdapter {
 
@@ -72,8 +73,12 @@ public class OfferSwipeArrayListAdapter extends ArrayAdapter {
             Picasso.with(getContext()).load(R.drawable.no_image).fit().centerInside().into(imageView);
             rightButton.setVisibility(View.GONE);
             leftButton.setVisibility(View.GONE);
+        } else if (offerItem.getImages().size() == 1) {
+            Picasso.with(getContext()).load(ServerConstantsUtils.getActiveServer() + "images/" + offerItem.getImages().get(0)).fit().centerInside().into(imageView);
+            rightButton.setVisibility(View.GONE);
+            leftButton.setVisibility(View.GONE);
         } else {
-            Picasso.with(getContext()).load(offerItem.getImages().get(0)).fit().centerInside().into(imageView);
+            Picasso.with(getContext()).load(ServerConstantsUtils.getActiveServer() + "images/" + offerItem.getImages().get(0)).fit().centerInside().into(imageView);
         }
 
         titleTextView.setText(offerItem.getTitle());
@@ -91,7 +96,7 @@ public class OfferSwipeArrayListAdapter extends ArrayAdapter {
         if (currentImageInPreview < 0)
             currentImageInPreview = numberOfImages - 1;
 
-        Picasso.with(getContext()).load(offerItem.getImages().get(currentImageInPreview)).fit().centerInside().into(imageView);
+        Picasso.with(getContext()).load(ServerConstantsUtils.getActiveServer() + "images/" + offerItem.getImages().get(currentImageInPreview)).fit().centerInside().into(imageView);
     }
 
     // the following methods are a bit of a hack due to the fact that swipe lib doesn't expose
