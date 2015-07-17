@@ -98,8 +98,7 @@ public class MessageFragment extends SuperFragment {
     @Subscribe
     public void getUsers(UserMessageContactsLoadedEvent userMessageContactsLoadedEvent) {
 
-        users = MessagesModel.getInstance().getUsers().getUsers();
-
+        users = MessagesModel.getInstance().getUsers();
 
         if (users.size() > 0) {
             editText.setVisibility(View.INVISIBLE);

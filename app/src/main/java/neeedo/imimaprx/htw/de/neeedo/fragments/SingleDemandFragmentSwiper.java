@@ -72,12 +72,12 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
         currentDemand = demandsModel.getDemandById(demandId);
 
         if (currentDemand == null) {
-            SingleDemand singleDemand = demandsModel.getSingleDemand();
+            Demand singleDemand = demandsModel.getSingleDemand();
             if (singleDemand == null) {
                 new GetDemandByIDAsyncTask(demandId).execute();
                 return;
             } else {
-                currentDemand = singleDemand.getDemand();
+                currentDemand = singleDemand;
                 DemandsModel.getInstance().setSingleDemand(null);
             }
         }
@@ -87,8 +87,7 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
 
         new GetOffersToDemandAsyncTask(currentDemand).execute();
 
-        Offers offers = OffersModel.getInstance().getOffers();
-        List<Offer> offerArrayList = offers.getOffers();
+        List<Offer> offerArrayList = OffersModel.getInstance().getOffers();
 
         final SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) getActivity().findViewById(R.id.swipe_frame);
         final ArrayList<SwipeCardViewItem> swipeCardViewItems = new ArrayList<SwipeCardViewItem>();

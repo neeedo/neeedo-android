@@ -24,20 +24,23 @@ public class DemandsModel {
 
     private static DemandsModel demandsModel;
 
-    public Demands getDemands() {
+    public ArrayList<Demand> getDemands() {
         if (demands == null) {
             demands = new Demands();
             demands.setDemands(new ArrayList<Demand>());
         }
-        return demands;
+        return demands.getDemands();
     }
 
     public void setDemands(Demands demands) {
         this.demands = demands;
     }
 
-    public SingleDemand getSingleDemand() {
-        return singleDemand;
+    public Demand getSingleDemand() {
+        if (singleDemand == null) {
+            return null;
+        }
+        return singleDemand.getDemand();
     }
 
     public void setSingleDemand(SingleDemand singleDemand) {
@@ -54,7 +57,7 @@ public class DemandsModel {
 
     public Demand getDemandById(String demandId) {
         Demand foundDemand = null;
-        for (Demand demand : getDemands().getDemands()) {
+        for (Demand demand : getDemands()) {
             if (demand.getId().equals(demandId)) {
                 foundDemand = demand;
                 break;

@@ -24,20 +24,23 @@ public class OffersModel {
 
     private static OffersModel offersModel;
 
-    public Offers getOffers() {
+    public ArrayList<Offer> getOffers() {
         if (offers == null) {
             offers = new Offers();
             offers.setOffers(new ArrayList<Offer>());
         }
-        return offers;
+        return offers.getOffers();
     }
 
     public void setOffers(Offers offers) {
         this.offers = offers;
     }
 
-    public SingleOffer getSingleOffer() {
-        return singleOffer;
+    public Offer getSingleOffer() {
+        if (singleOffer == null) {
+            return null;
+        }
+        return singleOffer.getOffer();
     }
 
     public void setSingleOffer(SingleOffer singleOffer) {

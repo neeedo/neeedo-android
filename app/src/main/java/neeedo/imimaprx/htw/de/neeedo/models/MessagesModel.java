@@ -6,6 +6,8 @@ import android.os.Looper;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import neeedo.imimaprx.htw.de.neeedo.entities.message.Message;
 import neeedo.imimaprx.htw.de.neeedo.entities.message.Messages;
 import neeedo.imimaprx.htw.de.neeedo.entities.message.SingleMessage;
@@ -31,16 +33,23 @@ public class MessagesModel {
     private MessagesModel() {
     }
 
-    public SingleMessage getSingleMessage() {
-        return singleMessage;
+    public Message getSingleMessage() {
+        if (singleMessage == null) {
+            return null;
+        }
+        return singleMessage.getMessage();
     }
 
     public void setSingleMessage(SingleMessage singleMessage) {
         this.singleMessage = singleMessage;
     }
 
-    public Messages getMessages() {
-        return messages;
+    public ArrayList<Message> getMessages() {
+        if (messages == null) {
+            messages = new Messages();
+            messages.setMessages(new ArrayList<Message>());
+        }
+        return messages.getMessages();
     }
 
     public void setMessages(Messages messages) {
@@ -52,8 +61,14 @@ public class MessagesModel {
         messages.addSingleMessage(message);
     }
 
-    public Users getUsers() {
-        return users;
+    public ArrayList<User> getUsers() {
+
+        if (users == null) {
+            users = new Users();
+            users.setUsers(new ArrayList<User>());
+        }
+
+        return users.getUsers();
     }
 
     public void setUsers(Users users) {

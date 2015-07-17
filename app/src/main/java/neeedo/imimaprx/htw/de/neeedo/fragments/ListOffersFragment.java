@@ -63,8 +63,7 @@ public class ListOffersFragment extends SuperFragment {
     @Subscribe
     public void fillList(GetOfferFinishedEvent e) {
 
-        Offers offers = OffersModel.getInstance().getOffers();
-        ArrayList<Offer> offerList = offers.getOffers();
+        ArrayList<Offer> offerList = OffersModel.getInstance().getOffers();
 
         TextView tvEmpty = (TextView) view.findViewById(R.id.tvEmpty);
 

@@ -23,20 +23,23 @@ public class FavoritesModel {
 
     private static FavoritesModel favoritesModel;
 
-    public Favorites getFavorites() {
+    public ArrayList<Favorite> getFavorites() {
         if (favorites == null) {
             favorites = new Favorites();
             favorites.setFavorites(new ArrayList<Favorite>());
         }
-        return favorites;
+        return favorites.getFavorites();
     }
 
     public void setFavorites(Favorites favorites) {
         this.favorites = favorites;
     }
 
-    public SingleFavorite getSingleFavorite() {
-        return singleFavorite;
+    public Favorite getSingleFavorite() {
+        if (singleFavorite == null) {
+            return null;
+        }
+        return singleFavorite.getFavorite();
     }
 
     public void setSingleFavorite(SingleFavorite singleFavorite) {

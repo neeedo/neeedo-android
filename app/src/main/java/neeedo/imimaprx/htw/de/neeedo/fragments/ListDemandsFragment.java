@@ -61,8 +61,7 @@ public class ListDemandsFragment extends SuperFragment {
     @Subscribe
     public void fillList(ServerResponseEvent e) {
 
-        Demands demands = DemandsModel.getInstance().getDemands();
-        List<Demand> demandList = demands.getDemands();
+        List<Demand> demandList = DemandsModel.getInstance().getDemands();
 
         TextView tvEmpty = (TextView) view.findViewById(R.id.tvEmpty);
 

@@ -90,8 +90,7 @@ public class ListFavoritesFragment extends SuperFragment {
     @Subscribe
     public void fillList(UserFavoritesLoadedEvent e) {
 
-        Favorites favorites = FavoritesModel.getInstance().getFavorites();
-        favoriteList = favorites.getFavorites();
+        favoriteList = FavoritesModel.getInstance().getFavorites();
 
         if (favoriteList.isEmpty()) {
             listView.setVisibility(View.INVISIBLE);

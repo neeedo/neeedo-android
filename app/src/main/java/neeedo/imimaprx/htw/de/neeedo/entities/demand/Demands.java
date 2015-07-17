@@ -18,7 +18,7 @@ public class Demands implements Serializable, BaseEntity {
     public Demands() {
     }
 
-    public List<Demand> getDemands() {
+    public ArrayList<Demand> getDemands() {
         return demands;
     }
 

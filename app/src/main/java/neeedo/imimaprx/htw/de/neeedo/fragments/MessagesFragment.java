@@ -50,7 +50,7 @@ public class MessagesFragment extends SuperFragment implements View.OnClickListe
 
     @Subscribe
     public void getMessages(MessagesLoadedEvent messagesLoadedEvent) {
-        ArrayList<Message> messages = MessagesModel.getInstance().getMessages().getMessages();
+        ArrayList<Message> messages = MessagesModel.getInstance().getMessages();
 
         ArrayAdapter<Message> messageAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, messages);
         messageView.setAdapter(messageAdapter);

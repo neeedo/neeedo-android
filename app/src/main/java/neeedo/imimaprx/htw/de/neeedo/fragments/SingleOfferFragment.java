@@ -91,9 +91,8 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
     }
 
     private Offer findSingleOffer(String offerId) {
-        Offers offers = OffersModel.getInstance().getOffers();
 
-        List<Offer> offerList = offers.getOffers();
+        List<Offer> offerList = OffersModel.getInstance().getOffers();
         Offer currentOffer = null;
 
         for (Offer offer : offerList) {
@@ -111,12 +110,12 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
         String offerId = getArguments().getString("id");
         currentOffer = findSingleOffer(offerId);
         if (currentOffer == null) {
-            SingleOffer singleOffer = OffersModel.getInstance().getSingleOffer();
+            Offer singleOffer = OffersModel.getInstance().getSingleOffer();
             if (singleOffer == null) {
                 new GetOfferByIDAsyncTask(offerId).execute();
                 return;
             } else {
-                currentOffer = singleOffer.getOffer();
+                currentOffer = singleOffer;
                 OffersModel.getInstance().setSingleOffer(null);
             }
         }
@@ -145,7 +144,7 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
         switch (view.getId()) {
             case R.id.btnDelete:
                 OffersModel.getInstance().setDraft(currentOffer);
-                if(currentOffer == null){
+                if (currentOffer == null) {
                     return;
                 }
                 BaseAsyncTask asyncTask = new DeleteAsyncTask(currentOffer);
@@ -219,10 +218,10 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
     public void removeActionDone(DeleteFinishedEvent e) {
         if (e.isFinished())
             Toast.makeText(getActivity(), getActivity().getString(R.string.delete_success), Toast.LENGTH_SHORT).show();
-        Offers offers = OffersModel.getInstance().getOffers();
-        for (Offer offer : offers.getOffers()) {
+        OffersModel offersModel = OffersModel.getInstance();
+        for (Offer offer : offersModel.getOffers()) {
             if (offer.getId().equals(currentOffer.getId())) {
-                offers.getOffers().remove(offer);
+                offersModel.getOffers().remove(offer);
             }
         }
     }
