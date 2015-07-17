@@ -29,6 +29,10 @@ public abstract class BaseAsyncTask extends AsyncTask {
         PHRASE, TAG
     }
 
+    public enum EntityType {
+        DEMAND, OFFER, USER, FAVORITE
+    }
+
     protected EventService eventService = EventService.getInstance();
 
     @Override

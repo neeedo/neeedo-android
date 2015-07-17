@@ -19,10 +19,6 @@ import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
 public class DeleteAsyncTask extends BaseAsyncTask {
 
-    private enum EntityType {
-        DEMAND, OFFER, USER, FAVORITE
-    }
-
     private EntityType entityType;
     private BaseEntity baseEntity;
 

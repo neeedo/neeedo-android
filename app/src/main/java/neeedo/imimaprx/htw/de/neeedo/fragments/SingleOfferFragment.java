@@ -83,6 +83,15 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
         btnSend.setOnClickListener(this);
         btnAddToFavorites.setOnClickListener(this);
         btnRemoveFromFavorites.setOnClickListener(this);
+
+        btnRemoveFromFavorites.setVisibility(View.GONE);
+        btnAddToFavorites.setVisibility(View.GONE);
+        btnMessage.setVisibility(View.GONE);
+        btnDeleteOffer.setVisibility(View.GONE);
+        btnEditOffer.setVisibility(View.GONE);
+
+        fillText(null);
+
     }
 
     private Offer findSingleOffer(String offerId) {
@@ -114,7 +123,7 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
                 OffersModel.getInstance().setSingleOffer(null);
             }
         }
-
+        setVisibility();
         Context context = getActivity();
 
         DecimalFormat priceFormat = new DecimalFormat(context.getString(R.string.format_price));
@@ -130,6 +139,20 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
         tvPrice.setText(priceText);
         tvUser.setText(userText);
 
+    }
+
+    private void setVisibility() {
+
+        boolean owerShip = UserModel.getInstance().checkIfEntityOwnerIsActiveUser(currentOffer);
+
+        if (owerShip) {
+            btnDeleteOffer.setVisibility(View.VISIBLE);
+            btnEditOffer.setVisibility(View.VISIBLE);
+        } else {
+            btnRemoveFromFavorites.setVisibility(View.VISIBLE);
+            btnAddToFavorites.setVisibility(View.VISIBLE);
+            btnMessage.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
