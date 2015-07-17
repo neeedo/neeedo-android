@@ -130,7 +130,6 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
         tvPrice.setText(priceText);
         tvUser.setText(userText);
 
-        // TODO handle exception if offer not found
     }
 
     @Override
