@@ -16,12 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demand;
-import neeedo.imimaprx.htw.de.neeedo.entities.demand.SingleDemand;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offers;
 import neeedo.imimaprx.htw.de.neeedo.events.FoundMatchesEvent;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
-import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.RestResult;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
@@ -51,12 +49,9 @@ public class GetOffersToDemandAsyncTask extends BaseAsyncTask {
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             ResponseEntity<Offers> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity, Offers.class);
-
             Offers offers = responseEntity.getBody();
-            OffersModel.getInstance().setOffers(offers);
 
-            demand.setMatchingOfferList(offers.getOffers());
-            DemandsModel.getInstance().setSingleDemand(new SingleDemand(demand));
+            DemandsModel.getInstance().addOffersToCurrentDemand(demand, offers);
 
             return new RestResult(RestResult.ReturnType.SUCCESS);
         } catch (Exception e) {

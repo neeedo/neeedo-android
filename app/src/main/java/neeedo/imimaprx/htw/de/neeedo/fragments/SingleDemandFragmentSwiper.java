@@ -203,13 +203,4 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
 
     }
 
-    /**
-     * You may remove this function, it's just to see if matches are in the Demand.
-     */
-    @Subscribe
-    public void printOutMatches(FoundMatchesEvent e) {
-        for (Offer offer : DemandsModel.getInstance().getMatchingOffersToSingleDemand()) {
-            System.out.print("Matching Offer:" + offer);
-        }
-    }
 }

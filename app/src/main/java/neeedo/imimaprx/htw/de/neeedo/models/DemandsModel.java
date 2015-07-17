@@ -7,6 +7,7 @@ import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demand;
 import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demands;
 import neeedo.imimaprx.htw.de.neeedo.entities.demand.SingleDemand;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offer;
+import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offers;
 
 public class DemandsModel {
 
@@ -44,13 +45,22 @@ public class DemandsModel {
         return singleDemand.getDemand();
     }
 
-    public ArrayList<Offer> getMatchingOffersToSingleDemand() {
+    public void addOffersToCurrentDemand(Demand demand, Offers offers) {
 
-        if (singleDemand == null) {
-            return null;
+        ArrayList<Offer> list = offers.getOffers();
+        for (Demand d : demands.getDemands()) {
+            if (d.getId().equals(demand.getId())) {
+                d.setMatchingOfferList(list);
+                break;
+            }
         }
-        return singleDemand.getDemand().getMatchingOfferList();
     }
+
+    public ArrayList<Offer> getOfferlistToDemandById(String demandId) {
+        Demand demand = getDemandById(demandId);
+        return demand.getMatchingOfferList();
+    }
+
 
     public void setSingleDemand(SingleDemand singleDemand) {
         this.singleDemand = singleDemand;
@@ -66,7 +76,7 @@ public class DemandsModel {
 
     public Demand getDemandById(String demandId) {
         Demand foundDemand = null;
-        for (Demand demand : getDemands()) {
+        for (Demand demand : demands.getDemands()) {
             if (demand.getId().equals(demandId)) {
                 foundDemand = demand;
                 break;
