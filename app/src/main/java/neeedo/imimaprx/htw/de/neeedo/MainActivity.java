@@ -42,8 +42,8 @@ public class MainActivity extends ActionBarActivity
     public static final int MENU_NEW_OFFER = 2;
     public static final int MENU_LIST_DEMANDS = 3;
     public static final int MENU_NEW_DEMAND = 4;
-    public static final int MENU_MESSAGE = 6;
-    public static final int FAVORITES = 7;
+    public static final int MENU_MESSAGE = 5;
+    public static final int FAVORITES = 6;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
