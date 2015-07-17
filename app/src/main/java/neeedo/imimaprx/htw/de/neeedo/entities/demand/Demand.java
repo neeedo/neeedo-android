@@ -9,6 +9,7 @@ import org.simpleframework.xml.Root;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offer;
 import neeedo.imimaprx.htw.de.neeedo.entities.user.User;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.BaseEntity;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.Location;
@@ -45,6 +46,9 @@ public class Demand implements Serializable, BaseEntity {
 
     @Element
     private User user;
+
+    @Element
+    private ArrayList<Offer> matchingOfferList = new ArrayList<>();
 
     public Demand() {
 
@@ -129,6 +133,15 @@ public class Demand implements Serializable, BaseEntity {
         return userId;
     }
 
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+    public ArrayList<Offer> getMatchingOfferList() {
+        return matchingOfferList;
+    }
+
+    public void setMatchingOfferList(ArrayList<Offer> matchingOfferList) {
+        this.matchingOfferList = matchingOfferList;
+    }
+
     public void setUserId(String userId) {
         this.userId = userId;
     }
@@ -149,6 +162,7 @@ public class Demand implements Serializable, BaseEntity {
         return returnString;
     }
 
+
     @Override
     public String toString() {
         return "Demand{" +
@@ -161,6 +175,7 @@ public class Demand implements Serializable, BaseEntity {
                 ", price=" + price +
                 ", userId='" + userId + '\'' +
                 ", user=" + user +
+                ", matchingOfferList=" + matchingOfferList +
                 '}';
     }
 
@@ -182,7 +197,8 @@ public class Demand implements Serializable, BaseEntity {
             return false;
         if (price != null ? !price.equals(demand.price) : demand.price != null) return false;
         if (userId != null ? !userId.equals(demand.userId) : demand.userId != null) return false;
-        return !(user != null ? !user.equals(demand.user) : demand.user != null);
+        if (user != null ? !user.equals(demand.user) : demand.user != null) return false;
+        return !(matchingOfferList != null ? !matchingOfferList.equals(demand.matchingOfferList) : demand.matchingOfferList != null);
 
     }
 
@@ -197,6 +213,7 @@ public class Demand implements Serializable, BaseEntity {
         result = 31 * result + (price != null ? price.hashCode() : 0);
         result = 31 * result + (userId != null ? userId.hashCode() : 0);
         result = 31 * result + (user != null ? user.hashCode() : 0);
+        result = 31 * result + (matchingOfferList != null ? matchingOfferList.hashCode() : 0);
         return result;
     }
 }

@@ -13,15 +13,14 @@ import android.widget.Toast;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 import com.squareup.otto.Subscribe;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demand;
-import neeedo.imimaprx.htw.de.neeedo.entities.demand.SingleDemand;
+
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offer;
-import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offers;
+
 import neeedo.imimaprx.htw.de.neeedo.events.FoundMatchesEvent;
 import neeedo.imimaprx.htw.de.neeedo.fragments.adapters.OfferSwipeArrayListAdapter;
 import neeedo.imimaprx.htw.de.neeedo.fragments.adapters.SwipeCardViewItem;
@@ -78,7 +77,7 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
                 return;
             } else {
                 currentDemand = singleDemand;
-                DemandsModel.getInstance().setSingleDemand(null);
+                demandsModel.setSingleDemand(null);
             }
         }
 
@@ -183,7 +182,7 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnDelete:
-                DemandsModel.getInstance().setPostDemand(currentDemand);
+                demandsModel.setPostDemand(currentDemand);
                 if (currentDemand == null) {
                     return;
                 }
@@ -197,10 +196,20 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
                 break;
 
             case R.id.btnEdit:
-                DemandsModel.getInstance().setPostDemand(currentDemand);
+                demandsModel.setPostDemand(currentDemand);
                 redirectToFragment(EditDemandFragment.class);
                 break;
         }
 
+    }
+
+    /**
+     * You may remove this function, it's just to see if matches are in the Demand.
+     */
+    @Subscribe
+    public void printOutMatches(FoundMatchesEvent e) {
+        for (Offer offer : DemandsModel.getInstance().getMatchingOffersToSingleDemand()) {
+            System.out.print("Matching Offer:" + offer);
+        }
     }
 }

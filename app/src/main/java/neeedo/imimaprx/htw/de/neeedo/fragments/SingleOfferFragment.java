@@ -83,11 +83,6 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
         btnSend.setOnClickListener(this);
         btnAddToFavorites.setOnClickListener(this);
         btnRemoveFromFavorites.setOnClickListener(this);
-
-        BaseAsyncTask asyncTask;
-
-        asyncTask = new GetOffersAsyncTask(BaseAsyncTask.GetEntitiesMode.GET_RANDOM);
-        asyncTask.execute();
     }
 
     private Offer findSingleOffer(String offerId) {

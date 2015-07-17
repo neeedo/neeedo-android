@@ -10,11 +10,21 @@ import neeedo.imimaprx.htw.de.neeedo.entities.util.BaseEntity;
 @Root(name = "demand")
 public class SingleDemand implements Serializable, BaseEntity {
 
+
     @Element
     private Demand demand;
 
     public Demand getDemand() {
         return demand;
+    }
+
+
+    public SingleDemand() {
+
+    }
+
+    public SingleDemand(Demand demand) {
+        this.demand = demand;
     }
 
     public void setDemand(Demand demand) {

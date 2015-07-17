@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demand;
 import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demands;
 import neeedo.imimaprx.htw.de.neeedo.entities.demand.SingleDemand;
+import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offer;
 
 public class DemandsModel {
 
@@ -41,6 +42,14 @@ public class DemandsModel {
             return null;
         }
         return singleDemand.getDemand();
+    }
+
+    public ArrayList<Offer> getMatchingOffersToSingleDemand() {
+
+        if (singleDemand == null) {
+            return null;
+        }
+        return singleDemand.getDemand().getMatchingOfferList();
     }
 
     public void setSingleDemand(SingleDemand singleDemand) {
