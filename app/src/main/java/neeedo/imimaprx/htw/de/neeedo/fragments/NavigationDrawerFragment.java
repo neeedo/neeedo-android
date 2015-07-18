@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
@@ -33,7 +34,7 @@ public class NavigationDrawerFragment extends SuperFragment {
     private ActionBarDrawerToggle mDrawerToggle;
 
     private DrawerLayout mDrawerLayout;
-    private ListView mDrawerListView;
+    private LinearLayout mDrawerListView;
     private View mFragmentContainerView;
 
     private int mCurrentSelectedPosition = 0;
@@ -68,7 +69,7 @@ public class NavigationDrawerFragment extends SuperFragment {
                         String backstackEntryName = backstackEntry.getName();
                         if (backstackEntryName != null) {
                             int backStackNavigationEntry = Integer.parseInt(backstackEntryName);
-                            mDrawerListView.setItemChecked(backStackNavigationEntry, true);
+//                            mDrawerListView.setItemChecked(backStackNavigationEntry, true);
                         }
                     }
                 });
@@ -83,28 +84,30 @@ public class NavigationDrawerFragment extends SuperFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mDrawerListView = (ListView) inflater.inflate(
+        mDrawerListView = (LinearLayout) inflater.inflate(
                 R.layout.fragment_navigation_drawer, container, false);
-        mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                selectItem(position);
-            }
-        });
-        mDrawerListView.setAdapter(new ArrayAdapter<String>(
-                getActionBar().getThemedContext(),
-                android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1,
-                new String[]{
-                        getString(R.string.title_section_home),
-                        getString(R.string.title_section_my_offers),
-                        getString(R.string.title_section_new_offer),
-                        getString(R.string.title_section_my_demands),
-                        getString(R.string.title_section_new_demand),
-                        getString(R.string.title_section_message),
-                        getString(R.string.title_section_favorites)
-                }));
-        mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
+
+
+//        mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                selectItem(position);
+//            }
+//        });
+//        mDrawerListView.setAdapter(new ArrayAdapter<String>(
+//                getActionBar().getThemedContext(),
+//                android.R.layout.simple_list_item_activated_1,
+//                android.R.id.text1,
+//                new String[]{
+//                        getString(R.string.title_section_home),
+//                        getString(R.string.title_section_my_offers),
+//                        getString(R.string.title_section_new_offer),
+//                        getString(R.string.title_section_my_demands),
+//                        getString(R.string.title_section_new_demand),
+//                        getString(R.string.title_section_message),
+//                        getString(R.string.title_section_favorites)
+//                }));
+//        mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
     }
 
@@ -178,15 +181,15 @@ public class NavigationDrawerFragment extends SuperFragment {
 
     private void selectItem(int position) {
         mCurrentSelectedPosition = position;
-        if (mDrawerListView != null) {
-            mDrawerListView.setItemChecked(position, true);
-        }
-        if (mDrawerLayout != null) {
-            mDrawerLayout.closeDrawer(mFragmentContainerView);
-        }
-        if (mCallbacks != null) {
-            mCallbacks.onNavigationDrawerItemSelected(position);
-        }
+//        if (mDrawerListView != null) {
+//            mDrawerListView.setItemChecked(position, true);
+//        }
+//        if (mDrawerLayout != null) {
+//            mDrawerLayout.closeDrawer(mFragmentContainerView);
+//        }
+//        if (mCallbacks != null) {
+//            mCallbacks.onNavigationDrawerItemSelected(position);
+//        }
     }
 
     @Override
