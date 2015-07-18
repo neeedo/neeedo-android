@@ -29,8 +29,6 @@ public class NavigationDrawerFragment extends SuperFragment {
     private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
     private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
 
-    private NavigationDrawerCallbacks mCallbacks;
-
     private ActionBarDrawerToggle mDrawerToggle;
 
     private DrawerLayout mDrawerLayout;
@@ -56,7 +54,7 @@ public class NavigationDrawerFragment extends SuperFragment {
             mFromSavedInstanceState = true;
         }
 
-        selectItem(mCurrentSelectedPosition);
+//        selectItem(mCurrentSelectedPosition);
 
         final FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 
@@ -87,27 +85,6 @@ public class NavigationDrawerFragment extends SuperFragment {
         mDrawerListView = (LinearLayout) inflater.inflate(
                 R.layout.fragment_navigation_drawer, container, false);
 
-
-//        mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                selectItem(position);
-//            }
-//        });
-//        mDrawerListView.setAdapter(new ArrayAdapter<String>(
-//                getActionBar().getThemedContext(),
-//                android.R.layout.simple_list_item_activated_1,
-//                android.R.id.text1,
-//                new String[]{
-//                        getString(R.string.title_section_home),
-//                        getString(R.string.title_section_my_offers),
-//                        getString(R.string.title_section_new_offer),
-//                        getString(R.string.title_section_my_demands),
-//                        getString(R.string.title_section_new_demand),
-//                        getString(R.string.title_section_message),
-//                        getString(R.string.title_section_favorites)
-//                }));
-//        mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
     }
 
@@ -179,33 +156,10 @@ public class NavigationDrawerFragment extends SuperFragment {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
-    private void selectItem(int position) {
-        mCurrentSelectedPosition = position;
-//        if (mDrawerListView != null) {
-//            mDrawerListView.setItemChecked(position, true);
-//        }
-//        if (mDrawerLayout != null) {
-//            mDrawerLayout.closeDrawer(mFragmentContainerView);
-//        }
-//        if (mCallbacks != null) {
-//            mCallbacks.onNavigationDrawerItemSelected(position);
-//        }
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mCallbacks = (NavigationDrawerCallbacks) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException("Activity must implement NavigationDrawerCallbacks.");
-        }
-    }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mCallbacks = null;
     }
 
     @Override
@@ -230,18 +184,4 @@ public class NavigationDrawerFragment extends SuperFragment {
         return super.onOptionsItemSelected(item);
     }
 
-    private void showGlobalContextActionBar() {
-        ActionBar actionBar = getActionBar();
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        actionBar.setTitle(R.string.app_name);
-    }
-
-    private ActionBar getActionBar() {
-        return ((ActionBarActivity) getActivity()).getSupportActionBar();
-    }
-
-    public static interface NavigationDrawerCallbacks {
-        void onNavigationDrawerItemSelected(int position);
-    }
 }

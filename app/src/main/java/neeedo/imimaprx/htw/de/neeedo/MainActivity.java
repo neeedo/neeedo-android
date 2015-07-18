@@ -23,8 +23,7 @@ import neeedo.imimaprx.htw.de.neeedo.rest.message.GetMessagesByUserIdAndReadStat
 import neeedo.imimaprx.htw.de.neeedo.rest.user.GetUserByEmailAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.utils.CertificateTrustService;
 
-public class MainActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class MainActivity extends ActionBarActivity {
 
     private Fragment mFragment;
     private FragmentManager mFragmentManager;
@@ -128,18 +127,7 @@ public class MainActivity extends ActionBarActivity
         changeFragment(mFragment, mCurrentNavigationIndex);
     }
 
-    private void changeFragment(Fragment fragment, int navigationIndex) {
-        try {
-            mFragmentManager.beginTransaction()
-                    .addToBackStack(String.valueOf(navigationIndex))
-                    .replace(R.id.container, fragment)
-                    .commit();
-        } catch (NullPointerException e) {
-            // TODO is there a way to avoid this exception?
-        }
-    }
-
-    @Override
+//    @Override
     public void onNavigationDrawerItemSelected(int position) {
         switch (position) {
             case MENU_HOME:
@@ -171,5 +159,16 @@ public class MainActivity extends ActionBarActivity
         mCurrentNavigationIndex = position;
     }
 
+
+    private void changeFragment(Fragment fragment, int navigationIndex) {
+        try {
+            mFragmentManager.beginTransaction()
+                    .addToBackStack(String.valueOf(navigationIndex))
+                    .replace(R.id.container, fragment)
+                    .commit();
+        } catch (NullPointerException e) {
+            // TODO is there a way to avoid this exception?
+        }
+    }
 
 }
