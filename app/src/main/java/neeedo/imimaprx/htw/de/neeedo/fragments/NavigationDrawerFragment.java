@@ -46,16 +46,6 @@ public class NavigationDrawerFragment extends SuperFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        mUserLearnedDrawer = sp.getBoolean(PREF_USER_LEARNED_DRAWER, false);
-
-        if (savedInstanceState != null) {
-            mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION);
-            mFromSavedInstanceState = true;
-        }
-
-//        selectItem(mCurrentSelectedPosition);
-
         final FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 
         fragmentManager.addOnBackStackChangedListener(
@@ -86,10 +76,6 @@ public class NavigationDrawerFragment extends SuperFragment {
                 R.layout.fragment_navigation_drawer, container, false);
 
         return mDrawerListView;
-    }
-
-    public boolean isDrawerOpen() {
-        return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(mFragmentContainerView);
     }
 
     public void setUp(int fragmentId, DrawerLayout drawerLayout) {
@@ -161,9 +147,6 @@ public class NavigationDrawerFragment extends SuperFragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
-        // TODO do we need this here? It's now handled by the MainActivity and working there
-        outState.putInt(STATE_SELECTED_POSITION, mCurrentSelectedPosition);
     }
 
     @Override
