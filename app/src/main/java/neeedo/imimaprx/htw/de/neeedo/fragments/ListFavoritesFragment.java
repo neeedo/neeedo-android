@@ -20,6 +20,7 @@ import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.favorites.Favorite;
 import neeedo.imimaprx.htw.de.neeedo.entities.favorites.Favorites;
 import neeedo.imimaprx.htw.de.neeedo.events.UserFavoritesLoadedEvent;
+import neeedo.imimaprx.htw.de.neeedo.fragments.adapters.ListProductsArrayAdapter;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.FavoritesModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.favorites.GetFavoritesByIDAsyncTask;
@@ -31,7 +32,7 @@ public class ListFavoritesFragment extends SuperFragment {
     private View view;
     private EditText text;
     private List<Favorite> favoriteList;
-    private ArrayAdapter<Favorite> favoritArrayAdapter;
+    private ListProductsArrayAdapter<Favorite> favoritArrayAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,8 +51,8 @@ public class ListFavoritesFragment extends SuperFragment {
 
         favoriteList = new ArrayList<>();
 
-        favoritArrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, favoriteList);
-        listView.setAdapter(favoritArrayAdapter);
+//        favoritArrayAdapter = new ListProductsArrayAdapter<>(getActivity(), R.layout.list_products_item, favoriteList);
+//        listView.setAdapter(favoritArrayAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -101,7 +102,7 @@ public class ListFavoritesFragment extends SuperFragment {
             text.setVisibility(View.INVISIBLE);
         }
 
-        favoritArrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, favoriteList);
+        favoritArrayAdapter = new ListProductsArrayAdapter<>(getActivity(), R.layout.list_products_item, favoriteList);
         listView.setAdapter(favoritArrayAdapter);
 
     }

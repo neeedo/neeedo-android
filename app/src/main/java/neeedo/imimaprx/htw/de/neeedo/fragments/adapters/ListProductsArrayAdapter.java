@@ -16,6 +16,7 @@ import java.util.List;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demand;
+import neeedo.imimaprx.htw.de.neeedo.entities.favorites.Favorite;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offer;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.Price;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
@@ -97,6 +98,29 @@ public class ListProductsArrayAdapter<Object> extends ArrayAdapter<Object> {
             tvDistance.setVisibility(View.GONE);
 
             ArrayList<String> images = offer.getImages();
+            if (images.isEmpty()) {
+                Picasso.with(context).load(R.drawable.no_image).fit().centerInside().into(imageView);
+            } else {
+                String imageUrl = ServerConstantsUtils.getActiveServer() + "images/" + images.get(0);
+                Picasso.with(context).load(imageUrl).fit().centerInside().into(imageView);
+            }
+
+        } else if (productType.equals(Favorite.class)) {
+
+            Favorite favorite = (Favorite) products.get(position);
+
+            primaryTagsText = favorite.getTagsString();
+            priceText = context.getString(
+                    R.string.item_price) +
+                    ": " +
+                    priceFormat.format(favorite.getPrice()
+                    );
+            userText = favorite.getUser().getName();
+
+            tvSecondaryTags.setVisibility(View.GONE);
+            tvDistance.setVisibility(View.GONE);
+
+            ArrayList<String> images = favorite.getImages();
             if (images.isEmpty()) {
                 Picasso.with(context).load(R.drawable.no_image).fit().centerInside().into(imageView);
             } else {

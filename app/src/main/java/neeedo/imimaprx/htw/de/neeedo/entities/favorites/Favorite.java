@@ -142,6 +142,10 @@ public class Favorite implements Serializable, BaseEntity {
         this.images = images;
     }
 
+    public String getTagsString() {
+        return tagsToString(tags);
+    }
+
     @Override
     public String toString() {
 
@@ -195,5 +199,21 @@ public class Favorite implements Serializable, BaseEntity {
         result = 31 * result + (offerId != null ? offerId.hashCode() : 0);
         result = 31 * result + (images != null ? images.hashCode() : 0);
         return result;
+    }
+
+    private String tagsToString(ArrayList<String> tags) {
+        String returnString = "";
+        int counter = 0;
+
+        for (String tag : tags) {
+            if (counter == 0) {
+                returnString = tag;
+            } else {
+                returnString = returnString + ", " + tag;
+            }
+            counter++;
+        }
+
+        return returnString;
     }
 }
