@@ -142,8 +142,6 @@ public class ListProductsArrayAdapter<Object> extends ArrayAdapter<Object> {
 
         }
 
-        // TODO add image (for offers)
-
         tvPrimaryTags.setText(primaryTagsText);
         tvSecondaryTags.setText(secondaryTagsText);
         tvDistance.setText(distanceText);
