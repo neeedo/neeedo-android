@@ -53,6 +53,5 @@ public class MainFragment extends SuperFragment implements View.OnClickListener 
                 navigationIndex = MainActivity.MENU_NEW_OFFER;
                 break;
         }
-        ((MainActivity) getActivity()).onNavigationDrawerItemSelected(navigationIndex);
     }
 }

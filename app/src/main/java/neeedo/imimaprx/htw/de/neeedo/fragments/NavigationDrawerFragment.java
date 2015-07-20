@@ -88,7 +88,7 @@ public class NavigationDrawerFragment extends SuperFragment {
         newOfferBtn.setOnClickListener(new OnClickListener() {
                                            @Override
                                            public void onClick(View v) {
-                                               redirectToFragment(new NewOfferFragment());
+                                               openFragmentAndCloseDrawer(NewOfferFragment.class);
                                            }
                                        }
         );
@@ -97,7 +97,7 @@ public class NavigationDrawerFragment extends SuperFragment {
         listOffersBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                redirectToFragment(new ListOffersFragment());
+                openFragmentAndCloseDrawer(ListOffersFragment.class);
             }
         });
 
@@ -105,28 +105,23 @@ public class NavigationDrawerFragment extends SuperFragment {
         newDemandBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                redirectToFragment(new NewDemandFragment());
+                openFragmentAndCloseDrawer(NewDemandFragment.class);
             }
         });
 
-        final View listDemandsBtn = navigationDrawerLayout.findViewById(R.id.list_demands);
+        View listDemandsBtn = navigationDrawerLayout.findViewById(R.id.list_demands);
         listDemandsBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                redirectToFragment(new ListDemandsFragment());
+                openFragmentAndCloseDrawer(ListDemandsFragment.class);
             }
         });
 
         return navigationDrawerLayout;
     }
 
-    private void redirectToFragment(SuperFragment fragment) {
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-
-        fragmentManager.beginTransaction()
-                .addToBackStack(String.valueOf(2))
-                .replace(R.id.container, fragment)
-                .commit();
+    private void openFragmentAndCloseDrawer(Class clazz) {
+        redirectToFragment(clazz, 1);
         drawerLayout.closeDrawers();
     }
 

@@ -122,39 +122,6 @@ public class MainActivity extends ActionBarActivity {
         changeFragment(mFragment, mCurrentNavigationIndex);
     }
 
-    //    @Override
-    public void onNavigationDrawerItemSelected(int position) {
-        switch (position) {
-            case MENU_HOME:
-                mFragment = new MainFragment();
-                break;
-            case MENU_LIST_OFFERS:
-                mFragment = new ListOffersFragment();
-                break;
-            case MENU_NEW_OFFER:
-                mFragment = new NewOfferFragment();
-                break;
-            case MENU_LIST_DEMANDS:
-                mFragment = new ListDemandsFragment();
-                break;
-            case MENU_NEW_DEMAND:
-                mFragment = new NewDemandFragment();
-                break;
-            case MENU_MESSAGE:
-                mFragment = new MessageFragment();
-                break;
-            case FAVORITES:
-                mFragment = new ListFavoritesFragment();
-                break;
-            default:
-                mFragment = new MainFragment();
-                break;
-        }
-        changeFragment(mFragment, position);
-        mCurrentNavigationIndex = position;
-    }
-
-
     private void changeFragment(Fragment fragment, int navigationIndex) {
         try {
             mFragmentManager.beginTransaction()
