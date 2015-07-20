@@ -1,8 +1,8 @@
 package neeedo.imimaprx.htw.de.neeedo;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
-public class ImageActivity extends Activity {
+public class ImageActivity extends ActionBarActivity {
     public final static String IMAGES_LIST_EXTRA = "images-list-intent-data";
     public final static String IMAGES_LIST_POSITION_EXTRA = "images-list-position-intent-data";
     private View view;
