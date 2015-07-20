@@ -15,6 +15,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -46,6 +47,20 @@ public class NavigationDrawerFragment extends SuperFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mDrawerListView = (LinearLayout) inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
+
+        mDrawerListView.findViewById(R.id.create_new_offer).setOnClickListener(new OnClickListener() {
+                                                                                   @Override
+                                                                                   public void onClick(View v) {
+                                                                                       FragmentManager mFragmentManager = getActivity().getSupportFragmentManager();
+
+                                                                                       mFragmentManager.beginTransaction()
+                                                                                               .addToBackStack(String.valueOf(2))
+                                                                                               .replace(R.id.container, new NewOfferFragment())
+                                                                                               .commit();
+                                                                                       mDrawerLayout.closeDrawers();
+                                                                                   }
+                                                                               }
+        );
         return mDrawerListView;
     }
 
