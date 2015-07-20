@@ -32,35 +32,6 @@ public class NavigationDrawerFragment extends SuperFragment {
         super.onActivityCreated(savedInstanceState);
 
         drawerLayout = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
-        setUp();
-
-        setHasOptionsMenu(true);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        LinearLayout navigationDrawerLayout = (LinearLayout) inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
-
-        navigationDrawerLayout.findViewById(R.id.create_new_offer).setOnClickListener(new OnClickListener() {
-                                                                                          @Override
-                                                                                          public void onClick(View v) {
-                                                                                              FragmentManager mFragmentManager = getActivity().getSupportFragmentManager();
-
-                                                                                              mFragmentManager.beginTransaction()
-                                                                                                      .addToBackStack(String.valueOf(2))
-                                                                                                      .replace(R.id.container, new NewOfferFragment())
-                                                                                                      .commit();
-                                                                                              drawerLayout.closeDrawers();
-                                                                                          }
-                                                                                      }
-        );
-
-
-        return navigationDrawerLayout;
-    }
-
-    private void setUp() {
 
         drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         drawerToggle = new ActionBarDrawerToggle(
@@ -98,15 +69,38 @@ public class NavigationDrawerFragment extends SuperFragment {
         };
 
 
-        this.drawerLayout.post(new Runnable() {
+        drawerLayout.post(new Runnable() {
             @Override
             public void run() {
                 drawerToggle.syncState();
             }
         });
-        this.drawerLayout.setDrawerListener(drawerToggle);
+        drawerLayout.setDrawerListener(drawerToggle);
+        setHasOptionsMenu(true);
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        LinearLayout navigationDrawerLayout = (LinearLayout) inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
+
+        navigationDrawerLayout.findViewById(R.id.create_new_offer).setOnClickListener(new OnClickListener() {
+                                                                                          @Override
+                                                                                          public void onClick(View v) {
+                                                                                              FragmentManager mFragmentManager = getActivity().getSupportFragmentManager();
+
+                                                                                              mFragmentManager.beginTransaction()
+                                                                                                      .addToBackStack(String.valueOf(2))
+                                                                                                      .replace(R.id.container, new NewOfferFragment())
+                                                                                                      .commit();
+                                                                                              drawerLayout.closeDrawers();
+                                                                                          }
+                                                                                      }
+        );
+
+
+        return navigationDrawerLayout;
+    }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {

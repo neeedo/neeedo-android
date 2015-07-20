@@ -95,7 +95,6 @@
                 android:padding="8dip"
                 android:text="list your demands"
                 android:textColor="#ddd" />
-            
 
         </LinearLayout>
     </ScrollView>
