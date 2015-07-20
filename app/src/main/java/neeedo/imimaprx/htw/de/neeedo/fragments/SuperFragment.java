@@ -111,9 +111,7 @@ public class SuperFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
-            //do nothing for now
-        } else if (id == R.id.action_bar_login) {
+        if (id == R.id.action_bar_login) {
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             startActivityForResult(intent, RequestCodes.LOGIN_REQUEST_CODE);
             return true;
