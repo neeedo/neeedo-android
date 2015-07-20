@@ -82,11 +82,9 @@ public class NavigationDrawerFragment extends SuperFragment {
             @Override
             public void onDrawerStateChanged(int newState) {
                 super.onDrawerStateChanged(newState);
-                if (newState == DrawerLayout.STATE_IDLE)
+                if (newState == DrawerLayout.STATE_SETTLING || newState == DrawerLayout.STATE_IDLE)
                     highlightCurrentFragment();
             }
-
-            
         };
 
         drawerLayout.post(new Runnable() {
@@ -158,6 +156,7 @@ public class NavigationDrawerFragment extends SuperFragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+//        highlightCurrentFragment();
         if (drawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
