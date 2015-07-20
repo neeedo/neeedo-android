@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:f="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -74,12 +75,18 @@
                 android:textSize="10dp"
                 android:textStyle="italic" />
 
-            <org.apmem.tools.layouts.FlowLayout
-                android:id="@+id/layoutImages"
+            <HorizontalScrollView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content">
 
-            </org.apmem.tools.layouts.FlowLayout>
+                <org.apmem.tools.layouts.FlowLayout
+                    android:id="@+id/layoutImages"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
+
+                </org.apmem.tools.layouts.FlowLayout>
+
+            </HorizontalScrollView>
 
         </LinearLayout>
 

@@ -136,14 +136,16 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
 
             for(int i = 0; i < images.size(); i++) {
                 FlowLayout.LayoutParams imageLayoutParams = new FlowLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                imageLayoutParams.setMargins(0, 0, 15, 0);
+                imageLayoutParams.setMargins(0, 0, 15, 15);
                 ImageView imageView = new ImageView(context);
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                imageView.setPadding(0, 0, 0, 0);
+                imageView.setPadding(0, 0, 0, 20);
                 imageView.setAdjustViewBounds(true);
                 imageView.setLayoutParams(imageLayoutParams);
-                imageView.setMinimumHeight(150);
-                imageView.setMinimumWidth(150);
+                imageView.setMinimumHeight(300);
+                imageView.setMinimumWidth(300);
+                imageView.setMaxHeight(300);
+                imageView.setMaxWidth(300);
 
                 String imageUrl = ServerConstantsUtils.getActiveServer() + "images/" + images.get(i);
                 Picasso.with(context).load(imageUrl).fit().centerInside().into(imageView);
