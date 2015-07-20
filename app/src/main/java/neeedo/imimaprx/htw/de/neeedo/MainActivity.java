@@ -53,7 +53,7 @@ public class MainActivity extends ActionBarActivity {
         initOrRestoreState(savedInstanceState);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment) mFragmentManager.findFragmentById(R.id.navigation_drawer);
-        mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
+        mNavigationDrawerFragment.setUp((DrawerLayout) findViewById(R.id.drawer_layout));
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -95,13 +95,7 @@ public class MainActivity extends ActionBarActivity {
         initOrRestoreState(savedInstanceState);
     }
 
-    public void setFragment(Fragment fragment) {
-        mFragment = fragment;
-    }
-
     private void attempLogin() {
-
-
         if (activeUser.isAlreadyStarted()) {
             return;
         }
@@ -131,7 +125,7 @@ public class MainActivity extends ActionBarActivity {
         changeFragment(mFragment, mCurrentNavigationIndex);
     }
 
-//    @Override
+    //    @Override
     public void onNavigationDrawerItemSelected(int position) {
         switch (position) {
             case MENU_HOME:
