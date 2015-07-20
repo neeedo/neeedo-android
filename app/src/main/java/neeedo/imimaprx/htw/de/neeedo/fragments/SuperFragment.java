@@ -101,7 +101,7 @@ public class SuperFragment extends Fragment {
         badgeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                redirectToFragment(MessageFragment.class, MainActivity.MENU_MESSAGE);
+                redirectToFragment(MessageFragment.class);
             }
         });
 
@@ -122,15 +122,15 @@ public class SuperFragment extends Fragment {
             Toast.makeText(getActivity(), "Logout finished.", Toast.LENGTH_SHORT).show();
             setLoginButtonState();
         } else if (id == R.id.new_messages_icon) {
-            redirectToFragment(MessageFragment.class, MainActivity.MENU_MESSAGE);
+            redirectToFragment(MessageFragment.class);
         } else if (id == R.id.favorites_icon) {
-            redirectToFragment(ListFavoritesFragment.class, MainActivity.MENU_FAVORITES);
+            redirectToFragment(ListFavoritesFragment.class);
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    public void redirectToFragment(Class type, Integer navItem) {
+    public void redirectToFragment(Class type) {
         FragmentManager fragmentManager = getFragmentManager();
         Fragment fragment = null;
 
@@ -141,19 +141,10 @@ public class SuperFragment extends Fragment {
             return;
         }
 
-        String backstackItem = null;
-        if (navItem != null) {
-            backstackItem = String.valueOf(navItem);
-        }
-
         fragmentManager.beginTransaction()
                 .replace(R.id.container, fragment)
                 .addToBackStack(null)
                 .commit();
-    }
-
-    public void redirectToFragment(Class type) {
-        redirectToFragment(type, null);
     }
 
     @Subscribe
@@ -186,7 +177,7 @@ public class SuperFragment extends Fragment {
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     task.execute();
                                     SuperFragment fragment = (SuperFragment) getFragmentManager().findFragmentById(R.id.container);
-                                    fragment.redirectToFragment(fragmentRedirect, null);
+                                    fragment.redirectToFragment(fragmentRedirect);
                                 }
                             }).
                     setNegativeButton(R.string.dialog_no,

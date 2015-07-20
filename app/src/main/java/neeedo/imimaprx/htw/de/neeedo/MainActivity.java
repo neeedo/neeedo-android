@@ -28,22 +28,12 @@ public class MainActivity extends ActionBarActivity {
 
     private Fragment mFragment;
     private FragmentManager mFragmentManager;
-    private NavigationDrawerFragment mNavigationDrawerFragment;
-    private int mCurrentNavigationIndex = 0;
     private static Timer timer = new Timer();
 
     private final ActiveUser activeUser = ActiveUser.getInstance();
 
     public static final String STATE_NAVIGATION_INDEX = "current_navigation_state_index";
     public static final String STATE_FRAGMENT = "current_fragment_state";
-
-    public static final int MENU_HOME = 0;
-    public static final int MENU_LIST_OFFERS = 1;
-    public static final int MENU_NEW_OFFER = 2;
-    public static final int MENU_LIST_DEMANDS = 3;
-    public static final int MENU_NEW_DEMAND = 4;
-    public static final int MENU_MESSAGE = 5;
-    public static final int MENU_FAVORITES = 6;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,8 +68,6 @@ public class MainActivity extends ActionBarActivity {
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
 
-        savedInstanceState.putInt(STATE_NAVIGATION_INDEX, mCurrentNavigationIndex);
-
         if (mFragment != null && mFragment.isAdded()) {
             mFragmentManager.putFragment(savedInstanceState, STATE_FRAGMENT, mFragment);
         }
@@ -113,57 +101,17 @@ public class MainActivity extends ActionBarActivity {
 
         if (savedInstanceState != null) {
             mFragment = mFragmentManager.getFragment(savedInstanceState, STATE_FRAGMENT);
-            mCurrentNavigationIndex = savedInstanceState.getInt(STATE_NAVIGATION_INDEX);
         } else {
             mFragment = new MainFragment();
-            mCurrentNavigationIndex = 0;
         }
 
-        changeFragment(mFragment, mCurrentNavigationIndex);
+        changeFragment(mFragment);
     }
 
-    //    @Override
-    public void onNavigationDrawerItemSelected(int position) {
-        switch (position) {
-            case MENU_HOME:
-                mFragment = new MainFragment();
-                break;
-            case MENU_LIST_OFFERS:
-                mFragment = new ListOffersFragment();
-                break;
-            case MENU_NEW_OFFER:
-                mFragment = new NewOfferFragment();
-                break;
-            case MENU_LIST_DEMANDS:
-                mFragment = new ListDemandsFragment();
-                break;
-            case MENU_NEW_DEMAND:
-                mFragment = new NewDemandFragment();
-                break;
-            case MENU_MESSAGE:
-                mFragment = new MessageFragment();
-                break;
-            case MENU_FAVORITES:
-                mFragment = new ListFavoritesFragment();
-                break;
-            default:
-                mFragment = new MainFragment();
-                break;
-        }
-        changeFragment(mFragment, position);
-        mCurrentNavigationIndex = position;
-    }
-
-
-    private void changeFragment(Fragment fragment, int navigationIndex) {
-        try {
+    private void changeFragment(Fragment fragment) {
             mFragmentManager.beginTransaction()
-                    .addToBackStack(String.valueOf(navigationIndex))
+                    .addToBackStack(null)
                     .replace(R.id.container, fragment)
                     .commit();
-        } catch (NullPointerException e) {
-            // TODO is there a way to avoid this exception?
-        }
     }
-
 }

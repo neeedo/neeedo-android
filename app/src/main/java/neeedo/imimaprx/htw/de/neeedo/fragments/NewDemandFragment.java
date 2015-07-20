@@ -28,7 +28,7 @@ public class NewDemandFragment extends FormDemandFragment {
     @Subscribe
     public void handleServerResponse(ServerResponseEvent e) {
         // TODO redirect to detail view of new demand
-        redirectToFragment(ListDemandsFragment.class, MainActivity.MENU_LIST_DEMANDS);
+        redirectToFragment(ListDemandsFragment.class);
     }
 
     @Subscribe

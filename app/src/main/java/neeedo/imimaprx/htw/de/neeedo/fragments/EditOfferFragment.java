@@ -66,7 +66,7 @@ public class EditOfferFragment extends FormOfferFragment {
     @Subscribe
     public void handleServerResponse(ServerResponseEvent e) {
         // TODO redirect to detail view
-        redirectToFragment(ListOffersFragment.class, MainActivity.MENU_LIST_OFFERS);
+        redirectToFragment(ListOffersFragment.class);
     }
 
     @Subscribe

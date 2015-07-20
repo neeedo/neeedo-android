@@ -17,9 +17,6 @@ public class MainFragment extends SuperFragment implements View.OnClickListener 
     private Button btnNewDemandOperation;
     private Activity activity;
 
-    public MainFragment() {
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -43,16 +40,14 @@ public class MainFragment extends SuperFragment implements View.OnClickListener 
     @Override
     public void onClick(View v) {
         //TODO extract whole function into proper controller
-        int navigationIndex = 0;
         switch (v.getId()) {
             case R.id.btnNewDemand:
-                navigationIndex = MainActivity.MENU_NEW_DEMAND;
+                redirectToFragment(NewDemandFragment.class);
                 break;
 
             case R.id.btnNewOffer:
-                navigationIndex = MainActivity.MENU_NEW_OFFER;
+                redirectToFragment(NewOfferFragment.class);
                 break;
         }
-        ((MainActivity) getActivity()).onNavigationDrawerItemSelected(navigationIndex);
     }
 }
