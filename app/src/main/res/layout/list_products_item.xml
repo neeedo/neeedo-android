@@ -6,6 +6,7 @@
     android:padding="10dp">
 
     <RelativeLayout
+        android:id="@+id/layoutImage"
         android:layout_width="95dp"
         android:layout_height="95dp"
         android:background="#999999">
@@ -28,6 +29,7 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/layoutText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
