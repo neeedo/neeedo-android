@@ -70,7 +70,7 @@ public class ImageActivity extends Activity {
 
             Picasso.with(this).
                     load(imageUrl).
-                    resize(screenWidth, screenHeight-160).
+                    resize(screenWidth, screenHeight).
                     centerCrop().
                     into(imageView, new Callback() {
                         @Override
