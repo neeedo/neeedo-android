@@ -151,7 +151,6 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
 
                 final int position = i;
 
-                // TODO click to open image
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
