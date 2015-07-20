@@ -1,9 +1,101 @@
-<ListView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:choiceMode="singleChoice"
-    android:divider="@android:color/transparent"
-    android:dividerHeight="0dp"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_gravity="start"
     android:background="#c333"
-    tools:context=".NavigationDrawerFragment" />
+    android:clickable="true">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+
+
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center"
+                android:src="@drawable/home_logo" />
+
+            <TextView
+                android:id="@+id/offer_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="30dp"
+                android:background="#c111"
+                android:padding="8dip"
+                android:text="Offers"
+                android:textColor="#ddd"
+                android:textSize="28dip" />
+
+            <TextView
+                android:id="@+id/create_new_offer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:background="#c111"
+                android:padding="8dip"
+                android:text="create a new one!!!"
+                android:textColor="#ddd" />
+
+            <TextView
+                android:id="@+id/list_offers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="5dp"
+                android:background="#c111"
+                android:padding="8dip"
+                android:text="list your offers"
+                android:textColor="#ddd" />
+
+            <TextView
+                android:id="@+id/demands_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="30dp"
+                android:background="#c111"
+                android:padding="8dip"
+                android:text="Demands"
+                android:textColor="#ddd"
+                android:textSize="28dip" />
+
+            <TextView
+                android:id="@+id/create_new_demand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:background="#c111"
+                android:padding="8dip"
+                android:text="create a new one!!!"
+                android:textColor="#ddd" />
+
+            <TextView
+                android:id="@+id/list_demands"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="5dp"
+                android:background="#c111"
+                android:padding="8dip"
+                android:text="list your demands"
+                android:textColor="#ddd" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

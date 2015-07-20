@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 
 import java.util.Timer;
@@ -23,8 +24,7 @@ import neeedo.imimaprx.htw.de.neeedo.rest.message.GetMessagesByUserIdAndReadStat
 import neeedo.imimaprx.htw.de.neeedo.rest.user.GetUserByEmailAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.utils.CertificateTrustService;
 
-public class MainActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class MainActivity extends ActionBarActivity {
 
     private Fragment mFragment;
     private FragmentManager mFragmentManager;
@@ -52,8 +52,8 @@ public class MainActivity extends ActionBarActivity
         setContentView(R.layout.activity_main);
         initOrRestoreState(savedInstanceState);
 
-        mNavigationDrawerFragment = (NavigationDrawerFragment) mFragmentManager.findFragmentById(R.id.navigation_drawer);
-        mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         CertificateTrustService.trustAllCerts();
 
@@ -92,13 +92,7 @@ public class MainActivity extends ActionBarActivity
         initOrRestoreState(savedInstanceState);
     }
 
-    public void setFragment(Fragment fragment) {
-        mFragment = fragment;
-    }
-
     private void attempLogin() {
-
-
         if (activeUser.isAlreadyStarted()) {
             return;
         }
@@ -128,18 +122,7 @@ public class MainActivity extends ActionBarActivity
         changeFragment(mFragment, mCurrentNavigationIndex);
     }
 
-    private void changeFragment(Fragment fragment, int navigationIndex) {
-        try {
-            mFragmentManager.beginTransaction()
-                    .addToBackStack(String.valueOf(navigationIndex))
-                    .replace(R.id.container, fragment)
-                    .commit();
-        } catch (NullPointerException e) {
-            // TODO is there a way to avoid this exception?
-        }
-    }
-
-    @Override
+    //    @Override
     public void onNavigationDrawerItemSelected(int position) {
         switch (position) {
             case MENU_HOME:
@@ -171,5 +154,16 @@ public class MainActivity extends ActionBarActivity
         mCurrentNavigationIndex = position;
     }
 
+
+    private void changeFragment(Fragment fragment, int navigationIndex) {
+        try {
+            mFragmentManager.beginTransaction()
+                    .addToBackStack(String.valueOf(navigationIndex))
+                    .replace(R.id.container, fragment)
+                    .commit();
+        } catch (NullPointerException e) {
+            // TODO is there a way to avoid this exception?
+        }
+    }
 
 }
