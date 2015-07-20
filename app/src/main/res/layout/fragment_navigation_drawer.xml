@@ -29,10 +29,10 @@
                 android:layout_gravity="right"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="30dp"
-                android:background="#c111"
+                android:background="#cc111111"
                 android:padding="8dip"
                 android:text="Offers"
-                android:textColor="#ddd"
+                android:textColor="#dddddd"
                 android:textSize="28dip" />
 
             <TextView
@@ -42,10 +42,10 @@
                 android:layout_gravity="right"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="10dp"
-                android:background="#c111"
+                android:background="#cc111111"
                 android:padding="8dip"
                 android:text="create a new one!!!"
-                android:textColor="#ddd" />
+                android:textColor="#dddddd" />
 
             <TextView
                 android:id="@+id/list_offers"
@@ -54,10 +54,10 @@
                 android:layout_gravity="right"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="5dp"
-                android:background="#c111"
+                android:background="#cc111111"
                 android:padding="8dip"
                 android:text="list your offers"
-                android:textColor="#ddd" />
+                android:textColor="#dddddd" />
 
             <TextView
                 android:id="@+id/demands_title"
@@ -66,10 +66,10 @@
                 android:layout_gravity="right"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="30dp"
-                android:background="#c111"
+                android:background="#cc111111"
                 android:padding="8dip"
                 android:text="Demands"
-                android:textColor="#ddd"
+                android:textColor="#dddddd"
                 android:textSize="28dip" />
 
             <TextView
@@ -79,10 +79,10 @@
                 android:layout_gravity="right"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="10dp"
-                android:background="#c111"
+                android:background="#cc111111"
                 android:padding="8dip"
                 android:text="create a new one!!!"
-                android:textColor="#ddd" />
+                android:textColor="#dddddd" />
 
             <TextView
                 android:id="@+id/list_demands"
@@ -91,10 +91,10 @@
                 android:layout_gravity="right"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="5dp"
-                android:background="#c111"
+                android:background="#cc111111"
                 android:padding="8dip"
                 android:text="list your demands"
-                android:textColor="#ddd" />
+                android:textColor="#dddddd" />
 
         </LinearLayout>
     </ScrollView>
