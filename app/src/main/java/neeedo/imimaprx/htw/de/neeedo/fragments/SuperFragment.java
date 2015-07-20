@@ -32,11 +32,9 @@ public class SuperFragment extends Fragment {
 
     protected EventService eventService = EventService.getInstance();
 
-
     private MenuItem actionBarLogout;
     private MenuItem actionBarLogin;
     private MenuItem actionBarMessage;
-    private MenuItem actionBarFavorites;
 
     private TextView tvBadge;
 
@@ -83,7 +81,6 @@ public class SuperFragment extends Fragment {
         actionBarLogin = menu.findItem(R.id.action_bar_login);
         actionBarLogout = menu.findItem(R.id.action_bar_logout);
         actionBarMessage = menu.findItem(R.id.new_messages_icon);
-        actionBarFavorites = menu.findItem(R.id.favorites_icon);
 
         if (isUserLoggedIn) {
             actionBarLogin.setVisible(false);
@@ -108,14 +105,6 @@ public class SuperFragment extends Fragment {
             }
         });
 
-        actionBarFavorites.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                redirectToFragment(ListFavoritesFragment.class, MainActivity.MENU_FAVORITES);
-                return true;
-            }
-        });
-
     }
 
     @Override
@@ -134,6 +123,8 @@ public class SuperFragment extends Fragment {
             setLoginButtonState();
         } else if (id == R.id.new_messages_icon) {
             redirectToFragment(MessageFragment.class, MainActivity.MENU_MESSAGE);
+        } else if (id == R.id.favorites_icon) {
+            redirectToFragment(ListFavoritesFragment.class, MainActivity.MENU_FAVORITES);
         }
 
         return super.onOptionsItemSelected(item);
