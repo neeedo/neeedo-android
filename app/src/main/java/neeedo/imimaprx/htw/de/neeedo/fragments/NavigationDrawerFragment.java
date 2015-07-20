@@ -84,22 +84,50 @@ public class NavigationDrawerFragment extends SuperFragment {
                              Bundle savedInstanceState) {
         LinearLayout navigationDrawerLayout = (LinearLayout) inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
 
-        navigationDrawerLayout.findViewById(R.id.create_new_offer).setOnClickListener(new OnClickListener() {
-                                                                                          @Override
-                                                                                          public void onClick(View v) {
-                                                                                              FragmentManager mFragmentManager = getActivity().getSupportFragmentManager();
-
-                                                                                              mFragmentManager.beginTransaction()
-                                                                                                      .addToBackStack(String.valueOf(2))
-                                                                                                      .replace(R.id.container, new NewOfferFragment())
-                                                                                                      .commit();
-                                                                                              drawerLayout.closeDrawers();
-                                                                                          }
-                                                                                      }
+        View newOfferBtn = navigationDrawerLayout.findViewById(R.id.create_new_offer);
+        newOfferBtn.setOnClickListener(new OnClickListener() {
+                                           @Override
+                                           public void onClick(View v) {
+                                               redirectToFragment(new NewOfferFragment());
+                                           }
+                                       }
         );
 
+        View listOffersBtn = navigationDrawerLayout.findViewById(R.id.list_offers);
+        listOffersBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectToFragment(new ListOffersFragment());
+            }
+        });
+
+        View newDemandBtn = navigationDrawerLayout.findViewById(R.id.create_new_demand);
+        newDemandBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectToFragment(new NewDemandFragment());
+            }
+        });
+
+        final View listDemandsBtn = navigationDrawerLayout.findViewById(R.id.list_demands);
+        listDemandsBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectToFragment(new ListDemandsFragment());
+            }
+        });
 
         return navigationDrawerLayout;
+    }
+
+    private void redirectToFragment(SuperFragment fragment) {
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+
+        fragmentManager.beginTransaction()
+                .addToBackStack(String.valueOf(2))
+                .replace(R.id.container, fragment)
+                .commit();
+        drawerLayout.closeDrawers();
     }
 
     @Override
@@ -115,5 +143,4 @@ public class NavigationDrawerFragment extends SuperFragment {
         }
         return super.onOptionsItemSelected(item);
     }
-
 }
