@@ -52,9 +52,6 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         initOrRestoreState(savedInstanceState);
 
-        mNavigationDrawerFragment = (NavigationDrawerFragment) mFragmentManager.findFragmentById(R.id.navigation_drawer);
-        mNavigationDrawerFragment.setUp((DrawerLayout) findViewById(R.id.drawer_layout));
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 

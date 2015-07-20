@@ -30,7 +30,6 @@ public class NavigationDrawerFragment extends SuperFragment {
     private ActionBarDrawerToggle mDrawerToggle;
 
     private DrawerLayout mDrawerLayout;
-    private LinearLayout mDrawerListView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,31 +39,36 @@ public class NavigationDrawerFragment extends SuperFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        setUp((DrawerLayout) getActivity().findViewById(R.id.drawer_layout));
+
         setHasOptionsMenu(true);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mDrawerListView = (LinearLayout) inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
+        LinearLayout navigationDrawerLayout = (LinearLayout) inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
 
-        mDrawerListView.findViewById(R.id.create_new_offer).setOnClickListener(new OnClickListener() {
-                                                                                   @Override
-                                                                                   public void onClick(View v) {
-                                                                                       FragmentManager mFragmentManager = getActivity().getSupportFragmentManager();
+        navigationDrawerLayout.findViewById(R.id.create_new_offer).setOnClickListener(new OnClickListener() {
+                                                                                          @Override
+                                                                                          public void onClick(View v) {
+                                                                                              FragmentManager mFragmentManager = getActivity().getSupportFragmentManager();
 
-                                                                                       mFragmentManager.beginTransaction()
-                                                                                               .addToBackStack(String.valueOf(2))
-                                                                                               .replace(R.id.container, new NewOfferFragment())
-                                                                                               .commit();
-                                                                                       mDrawerLayout.closeDrawers();
-                                                                                   }
-                                                                               }
+                                                                                              mFragmentManager.beginTransaction()
+                                                                                                      .addToBackStack(String.valueOf(2))
+                                                                                                      .replace(R.id.container, new NewOfferFragment())
+                                                                                                      .commit();
+                                                                                              mDrawerLayout.closeDrawers();
+                                                                                          }
+                                                                                      }
         );
-        return mDrawerListView;
+
+
+        return navigationDrawerLayout;
     }
 
-    public void setUp(DrawerLayout drawerLayout) {
+    private void setUp(DrawerLayout drawerLayout) {
         mDrawerLayout = drawerLayout;
 
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
