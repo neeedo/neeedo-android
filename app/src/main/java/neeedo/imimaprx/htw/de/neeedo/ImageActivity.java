@@ -3,8 +3,10 @@ package neeedo.imimaprx.htw.de.neeedo;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -28,6 +30,8 @@ public class ImageActivity extends Activity {
     private Button btnPrev;
     private ArrayList<String> imageList;
     private int position;
+    private int screenWidth;
+    private int screenHeight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,12 @@ public class ImageActivity extends Activity {
 
         view = getLayoutInflater().inflate(R.layout.activity_image, null);
         intent = getIntent();
+
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        screenWidth = size.x;
+        screenHeight = size.y;
 
         if(intent != null) {
             imageList = intent.getStringArrayListExtra(IMAGES_LIST_EXTRA);
@@ -58,18 +68,22 @@ public class ImageActivity extends Activity {
 
             Log.d("Image", imageUrl);
 
-            Picasso.with(this).load(imageUrl).into(imageView, new Callback() {
-                @Override
-                public void onSuccess() {
-                    progressBar.setVisibility(View.GONE);
-                }
+            Picasso.with(this).
+                    load(imageUrl).
+                    resize(screenWidth, screenHeight-160).
+                    centerCrop().
+                    into(imageView, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            progressBar.setVisibility(View.GONE);
+                        }
 
-                @Override
-                public void onError() {
-                    progressBar.setVisibility(View.GONE);
-                    imageView.setImageDrawable(Resources.getSystem().getDrawable(R.drawable.no_image));
-                }
-            });
+                        @Override
+                        public void onError() {
+                            progressBar.setVisibility(View.GONE);
+                            imageView.setImageDrawable(Resources.getSystem().getDrawable(R.drawable.no_image));
+                        }
+                    });
 
             if (position == 0) {
                 btnPrev.setVisibility(View.INVISIBLE);
