@@ -124,7 +124,7 @@ public class NavigationDrawerFragment extends SuperFragment {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 
         fragmentManager.beginTransaction()
-                .addToBackStack(String.valueOf(2))
+                .addToBackStack(null)
                 .replace(R.id.container, fragment)
                 .commit();
         drawerLayout.closeDrawers();
