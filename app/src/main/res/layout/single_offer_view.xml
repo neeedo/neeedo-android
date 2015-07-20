@@ -74,6 +74,13 @@
                 android:textSize="10dp"
                 android:textStyle="italic" />
 
+            <org.apmem.tools.layouts.FlowLayout
+                android:id="@+id/layoutImages"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+            </org.apmem.tools.layouts.FlowLayout>
+
         </LinearLayout>
 
         <Button

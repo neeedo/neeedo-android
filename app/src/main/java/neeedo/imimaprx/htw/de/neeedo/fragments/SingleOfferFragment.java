@@ -8,20 +8,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
+import com.squareup.picasso.Picasso;
+
+import org.apmem.tools.layouts.FlowLayout;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.favorites.Favorite;
 import neeedo.imimaprx.htw.de.neeedo.entities.message.Message;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offer;
-import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offers;
-import neeedo.imimaprx.htw.de.neeedo.entities.offer.SingleOffer;
 import neeedo.imimaprx.htw.de.neeedo.events.DeleteFinishedEvent;
 import neeedo.imimaprx.htw.de.neeedo.events.FavoritesActionEvent;
 import neeedo.imimaprx.htw.de.neeedo.events.GetOfferFinishedEvent;
@@ -32,9 +36,9 @@ import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.favorites.CreateFavoriteAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.message.PostMessageAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.offer.GetOfferByIDAsyncTask;
-import neeedo.imimaprx.htw.de.neeedo.rest.offer.GetOffersAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.DeleteAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
 
 public class SingleOfferFragment extends SuperFragment implements View.OnClickListener {
@@ -48,19 +52,24 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
     private TextView tvPrice;
     private TextView tvUser;
     private EditText editTextSendMessage;
+    private FlowLayout layoutImages;
     private Offer currentOffer;
     private String offerId = "";
+    private ArrayList<String> images;
+    private Context context;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
         View view = inflater.inflate(R.layout.single_offer_view, container, false);
+        context = getActivity().getApplicationContext();
 
         tvTags = (TextView) view.findViewById(R.id.tvTags);
         tvPrice = (TextView) view.findViewById(R.id.tvPrice);
         tvUser = (TextView) view.findViewById(R.id.tvUser);
         editTextSendMessage = (EditText) view.findViewById(R.id.getMessage);
+        layoutImages = (FlowLayout) view.findViewById(R.id.layoutImages);
 
         return view;
     }
@@ -118,6 +127,28 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
         if (currentOffer == null) {
             new GetOfferByIDAsyncTask(offerId).execute();
             return;
+        }
+
+        images = currentOffer.getImages();
+        if(images != null && images.size() > 0) {
+
+            for(int i = 0; i < images.size(); i++) {
+                FlowLayout.LayoutParams imageLayoutParams = new FlowLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                imageLayoutParams.setMargins(0, 0, 15, 0);
+                ImageView imageView = new ImageView(context);
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                imageView.setPadding(0, 0, 0, 0);
+                imageView.setAdjustViewBounds(true);
+                imageView.setLayoutParams(imageLayoutParams);
+                imageView.setMinimumHeight(150);
+                imageView.setMinimumWidth(150);
+
+                String imageUrl = ServerConstantsUtils.getActiveServer() + "images/" + images.get(i);
+                Picasso.with(context).load(imageUrl).fit().centerInside().into(imageView);
+                layoutImages.addView(imageView);
+
+                // TODO click to open image
+            }
         }
 
         setVisibility();
