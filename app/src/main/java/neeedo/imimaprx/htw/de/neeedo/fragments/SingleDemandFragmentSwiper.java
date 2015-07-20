@@ -11,7 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
-import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +20,6 @@ import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demand;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offer;
 
-import neeedo.imimaprx.htw.de.neeedo.events.FoundMatchesEvent;
 import neeedo.imimaprx.htw.de.neeedo.fragments.adapters.OfferSwipeArrayListAdapter;
 import neeedo.imimaprx.htw.de.neeedo.fragments.adapters.SwipeCardViewItem;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
@@ -70,16 +68,15 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
 
         currentDemand = demandsModel.getDemandById(demandId);
 
+        //TODO wenn das demand zu der ID nicht in der liste existiert,
+        // wird ein neuer service gestartet um es nachzuladen und in die Liste zu adden.
+        // Ist also besser wenn das auch hier irgendwie auf GetDemandFinishedEvent reagiert
+
         if (currentDemand == null) {
-            Demand singleDemand = demandsModel.getSingleDemand();
-            if (singleDemand == null) {
-                new GetDemandByIDAsyncTask(demandId).execute();
-                return;
-            } else {
-                currentDemand = singleDemand;
-                demandsModel.setSingleDemand(null);
-            }
+            new GetDemandByIDAsyncTask(demandId).execute();
+            return;
         }
+
 
         textViewMustTags.setText(currentDemand.getMustTagsString());
         textViewShouldTags.setText(currentDemand.getShouldTagsString());
@@ -182,7 +179,7 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnDelete:
-                demandsModel.setPostDemand(currentDemand);
+                demandsModel.setDraft(currentDemand);
                 if (currentDemand == null) {
                     return;
                 }
@@ -196,7 +193,7 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
                 break;
 
             case R.id.btnEdit:
-                demandsModel.setPostDemand(currentDemand);
+                demandsModel.setDraft(currentDemand);
                 redirectToFragment(EditDemandFragment.class);
                 break;
         }

@@ -27,7 +27,7 @@ public class EditDemandFragment extends FormDemandFragment {
         TextView header = (TextView) view.findViewById(R.id.tvHeader);
         header.setText(R.string.edit_card_demand);
 
-        Demand currentDemand = DemandsModel.getInstance().getPostDemand();
+        Demand currentDemand = DemandsModel.getInstance().getDraft();
         if (currentDemand != null) {
             etMustTags.setText(currentDemand.getMustTagsString());
             etShouldTags.setText(currentDemand.getShouldTagsString());

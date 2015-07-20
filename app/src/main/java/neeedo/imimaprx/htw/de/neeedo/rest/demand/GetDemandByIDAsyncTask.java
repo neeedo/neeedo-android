@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.demand.SingleDemand;
+import neeedo.imimaprx.htw.de.neeedo.events.GetDemandFinishedEvent;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
@@ -26,6 +27,12 @@ public class GetDemandByIDAsyncTask extends BaseAsyncTask {
 
     public GetDemandByIDAsyncTask(String id) {
         this.id = id;
+    }
+
+    @Override
+    protected void onPostExecute(Object result) {
+        if (result instanceof RestResult)
+            eventService.post(new GetDemandFinishedEvent());
     }
 
     @Override
@@ -42,8 +49,11 @@ public class GetDemandByIDAsyncTask extends BaseAsyncTask {
             RestTemplate restTemplate = new RestTemplate(HttpRequestFactoryProviderImpl.getClientHttpRequestFactorySSLSupport(5000));
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             ResponseEntity<SingleDemand> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, SingleDemand.class);
-            final SingleDemand singleDemand = responseEntity.getBody();
-            DemandsModel.getInstance().setSingleDemand(singleDemand);
+
+            SingleDemand singleDemand = responseEntity.getBody();
+
+            DemandsModel.getInstance().addDemand(singleDemand.getDemand());
+
             return new RestResult(RestResult.ReturnType.SUCCESS);
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);

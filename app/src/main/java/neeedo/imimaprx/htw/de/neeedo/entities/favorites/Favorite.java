@@ -142,6 +142,7 @@ public class Favorite implements Serializable, BaseEntity {
         this.images = images;
     }
 
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     public String getTagsString() {
         return tagsToString(tags);
     }

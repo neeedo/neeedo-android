@@ -49,7 +49,7 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
     private TextView tvUser;
     private EditText editTextSendMessage;
     private Offer currentOffer;
-
+    private String offerId = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -90,6 +90,7 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
         btnDeleteOffer.setVisibility(View.GONE);
         btnEditOffer.setVisibility(View.GONE);
 
+        offerId = getArguments().getString("id");
         fillText(null);
 
     }
@@ -111,18 +112,14 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
 
     @Subscribe
     public void fillText(GetOfferFinishedEvent e) {
-        String offerId = getArguments().getString("id");
+
+        //try to find it in the list, if not available reload the offer and add it to the list
         currentOffer = findSingleOffer(offerId);
         if (currentOffer == null) {
-            Offer singleOffer = OffersModel.getInstance().getSingleOffer();
-            if (singleOffer == null) {
-                new GetOfferByIDAsyncTask(offerId).execute();
-                return;
-            } else {
-                currentOffer = singleOffer;
-                OffersModel.getInstance().setSingleOffer(null);
-            }
+            new GetOfferByIDAsyncTask(offerId).execute();
+            return;
         }
+
         setVisibility();
         Context context = getActivity();
 
