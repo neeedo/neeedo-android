@@ -3,11 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
 
-    <item android:id="@+id/new_messages_icon"
+    <item
+        android:id="@+id/new_messages_icon"
         app:actionLayout="@layout/batch_icon_layout"
         android:title="Open Messages"
-        app:showAsAction="always"
-        />
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/favorites_icon"
+        android:icon="@android:drawable/btn_star"
+        android:title="@string/title_section_favorites"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/action_bar_login"

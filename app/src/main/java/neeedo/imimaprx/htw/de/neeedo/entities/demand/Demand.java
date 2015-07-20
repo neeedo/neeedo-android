@@ -14,6 +14,7 @@ import neeedo.imimaprx.htw.de.neeedo.entities.user.User;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.BaseEntity;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.Location;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.Price;
+import neeedo.imimaprx.htw.de.neeedo.utils.ProductUtils;
 
 
 @Root(name = "demand")
@@ -99,8 +100,9 @@ public class Demand implements Serializable, BaseEntity {
         return mustTags;
     }
 
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     public String getMustTagsString() {
-        return tagsToString(mustTags);
+        return ProductUtils.tagsToString(mustTags);
     }
 
     public void setMustTags(ArrayList<String> mustTags) {
@@ -111,8 +113,9 @@ public class Demand implements Serializable, BaseEntity {
         return shouldTags;
     }
 
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     public String getShouldTagsString() {
-        return tagsToString(shouldTags);
+        return ProductUtils.tagsToString(shouldTags);
     }
 
     public void setShouldTags(ArrayList<String> shouldTags) {
@@ -145,23 +148,6 @@ public class Demand implements Serializable, BaseEntity {
     public void setUserId(String userId) {
         this.userId = userId;
     }
-
-    private String tagsToString(ArrayList<String> tags) {
-        String returnString = "";
-        int counter = 0;
-
-        for (String tag : tags) {
-            if (counter == 0) {
-                returnString = tag;
-            } else {
-                returnString = returnString + ", " + tag;
-            }
-            counter++;
-        }
-
-        return returnString;
-    }
-
 
     @Override
     public String toString() {

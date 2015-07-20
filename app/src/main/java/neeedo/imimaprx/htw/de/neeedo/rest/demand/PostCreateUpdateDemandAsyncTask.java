@@ -36,7 +36,7 @@ public class PostCreateUpdateDemandAsyncTask extends BaseAsyncTask {
             String url = ServerConstantsUtils.getActiveServer();
             HttpMethod httpMethod = HttpMethod.POST;
             DemandsModel demandsModel = DemandsModel.getInstance();
-            Demand postDemand = demandsModel.getPostDemand();
+            Demand postDemand = demandsModel.getDraft();
             switch (sendMode) {
                 case CREATE: {
                     url += "demands";
@@ -61,9 +61,10 @@ public class PostCreateUpdateDemandAsyncTask extends BaseAsyncTask {
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             ResponseEntity<SingleDemand> response = restTemplate.exchange(url, httpMethod, requestEntity, SingleDemand.class);
             SingleDemand singleDemand = response.getBody();
-            demandsModel.setSingleDemand(singleDemand);
-            demandsModel.getDemands().add(singleDemand.getDemand());
-            demandsModel.setPostDemand(null);
+
+            demandsModel.replaceDemand(singleDemand.getDemand());
+            demandsModel.setDraft(null);
+
             return new RestResult(RestResult.ReturnType.SUCCESS);
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);

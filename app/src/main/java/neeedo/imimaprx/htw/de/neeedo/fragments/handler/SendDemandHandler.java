@@ -29,7 +29,7 @@ public class SendDemandHandler implements View.OnClickListener {
         // TODO validation (like Offer Handler)
 
         User currentUser = UserModel.getInstance().getUser();
-        Demand currentDemand = DemandsModel.getInstance().getPostDemand();
+        Demand currentDemand = DemandsModel.getInstance().getDraft();
 
         Demand demand = new Demand();
         demand.setMustTags(formDemandFragment.getMustTags());
@@ -53,7 +53,7 @@ public class SendDemandHandler implements View.OnClickListener {
         Log.d("DEMAND", demand.toString());
 
         try {
-            DemandsModel.getInstance().setPostDemand(demand);
+            DemandsModel.getInstance().setDraft(demand);
             BaseAsyncTask asyncTask = new PostCreateUpdateDemandAsyncTask(sendMode);
             asyncTask.execute();
         } catch (Exception e) {

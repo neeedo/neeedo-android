@@ -9,7 +9,6 @@ import neeedo.imimaprx.htw.de.neeedo.entities.offer.SingleOffer;
 public class OffersModel {
 
     private Offers offers;
-    private SingleOffer singleOffer;
 
     private Offer draft;
 
@@ -36,17 +35,6 @@ public class OffersModel {
         this.offers = offers;
     }
 
-    public Offer getSingleOffer() {
-        if (singleOffer == null) {
-            return null;
-        }
-        return singleOffer.getOffer();
-    }
-
-    public void setSingleOffer(SingleOffer singleOffer) {
-        this.singleOffer = singleOffer;
-    }
-
     public Offer getDraft() {
         if (draft == null)
             draft = new Offer();
@@ -56,4 +44,13 @@ public class OffersModel {
     public void setDraft(Offer draft) {
         this.draft = draft;
     }
+
+    public void addOffer(Offer offer) {
+        offers.addSingleOfferOnFirstPostion(offer);
+    }
+
+    public void replaceOffer(Offer offer) {
+        offers.replaceOffer(offer);
+    }
+
 }

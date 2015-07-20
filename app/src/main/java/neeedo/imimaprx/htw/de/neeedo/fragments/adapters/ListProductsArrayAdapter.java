@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -16,6 +18,7 @@ import java.util.List;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demand;
+import neeedo.imimaprx.htw.de.neeedo.entities.favorites.Favorite;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offer;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.Price;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
@@ -26,12 +29,15 @@ public class ListProductsArrayAdapter<Object> extends ArrayAdapter<Object> {
     private List<Object> products;
     private Class productType;
 
-    ImageView imageView;
-    TextView tvPrimaryTags;
-    TextView tvSecondaryTags;
-    TextView tvDistance;
-    TextView tvPrice;
-    TextView tvUser;
+    private RelativeLayout layoutImage;
+    private LinearLayout layoutText;
+
+    private ImageView imageView;
+    private TextView tvPrimaryTags;
+    private TextView tvSecondaryTags;
+    private TextView tvDistance;
+    private TextView tvPrice;
+    private TextView tvUser;
 
     public ListProductsArrayAdapter(Context context, int layoutResourceId, List<Object> products) {
         super(context, layoutResourceId, products);
@@ -51,6 +57,9 @@ public class ListProductsArrayAdapter<Object> extends ArrayAdapter<Object> {
     @Override
     public View getView(int position, View row, ViewGroup parent) {
         row = LayoutInflater.from(context).inflate(layoutResourceId, parent, false);
+
+        layoutImage = (RelativeLayout) row.findViewById(R.id.layoutImage);
+        layoutText = (LinearLayout) row.findViewById(R.id.layoutText);
 
         imageView = (ImageView) row.findViewById(R.id.imageView);
         tvPrimaryTags = (TextView) row.findViewById(R.id.tvPrimaryTags);
@@ -81,6 +90,12 @@ public class ListProductsArrayAdapter<Object> extends ArrayAdapter<Object> {
                     R.string.item_price) + ": " + priceFormat.format(price.getMin()) + " - " + priceFormat.format(price.getMax());
             userText = demand.getUser().getName();
 
+            // hide image
+            RelativeLayout.LayoutParams parentLayoutParams = (RelativeLayout.LayoutParams) layoutText.getLayoutParams();
+            parentLayoutParams.setMargins(0, 0, 0, 0);
+            layoutImage.setVisibility(View.GONE);
+            layoutText.setLayoutParams(parentLayoutParams);
+
         } else if (productType.equals(Offer.class)) {
 
             Offer offer = (Offer) products.get(position);
@@ -104,6 +119,29 @@ public class ListProductsArrayAdapter<Object> extends ArrayAdapter<Object> {
                 Picasso.with(context).load(imageUrl).fit().centerInside().into(imageView);
             }
 
+        } else if (productType.equals(Favorite.class)) {
+
+            Favorite favorite = (Favorite) products.get(position);
+
+            primaryTagsText = favorite.getTagsString();
+            priceText = context.getString(
+                    R.string.item_price) +
+                    ": " +
+                    priceFormat.format(favorite.getPrice()
+                    );
+            userText = favorite.getUser().getName();
+
+            tvSecondaryTags.setVisibility(View.GONE);
+            tvDistance.setVisibility(View.GONE);
+
+            ArrayList<String> images = favorite.getImages();
+            if (images.isEmpty()) {
+                Picasso.with(context).load(R.drawable.no_image).fit().centerInside().into(imageView);
+            } else {
+                String imageUrl = ServerConstantsUtils.getActiveServer() + "images/" + images.get(0);
+                Picasso.with(context).load(imageUrl).fit().centerInside().into(imageView);
+            }
+
         } else if (productType == null) {
 
             tvPrimaryTags.setVisibility(View.GONE);
@@ -117,8 +155,6 @@ public class ListProductsArrayAdapter<Object> extends ArrayAdapter<Object> {
             throw new IllegalArgumentException();
 
         }
-
-        // TODO add image (for offers)
 
         tvPrimaryTags.setText(primaryTagsText);
         tvSecondaryTags.setText(secondaryTagsText);

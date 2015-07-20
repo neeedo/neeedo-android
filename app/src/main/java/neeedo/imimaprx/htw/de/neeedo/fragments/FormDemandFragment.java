@@ -30,7 +30,6 @@ import neeedo.imimaprx.htw.de.neeedo.entities.util.Location;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.Price;
 import neeedo.imimaprx.htw.de.neeedo.events.GetSuggestionEvent;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.StartLocationChooserHandler;
-import neeedo.imimaprx.htw.de.neeedo.helpers.LocationHelper;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.utils.AutocompletionOnClickListener;
 import neeedo.imimaprx.htw.de.neeedo.utils.AutocompletionOnFocusChangeListener;
@@ -49,24 +48,11 @@ public class FormDemandFragment extends FormFragment {
     protected Button btnSetLocation;
     protected RelativeLayout mapContainer;
 
-    // TODO replace with mechanism of Offer Form
-    protected double locationLatitude;
-    protected double locationLongitude;
-    protected boolean locationAvailable;
-    protected LocationHelper locationHelper;
-    protected Location currentLocation;
     protected GeoPoint selectedGeoPoint;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // TODO remove if added map location stuff
-        locationHelper = new LocationHelper(getActivity());
-        currentLocation = locationHelper.getLocation();
-        locationLatitude = currentLocation.getLat();
-        locationLongitude = currentLocation.getLon();
-        locationAvailable = locationHelper.isLocationAvailable();
     }
 
     @Override

@@ -32,11 +32,8 @@ public class SuperFragment extends Fragment {
 
     protected EventService eventService = EventService.getInstance();
 
-
     private MenuItem actionBarLogout;
-
     private MenuItem actionBarLogin;
-
     private MenuItem actionBarMessage;
 
     private TextView tvBadge;
@@ -108,7 +105,6 @@ public class SuperFragment extends Fragment {
             }
         });
 
-
     }
 
     @Override
@@ -127,6 +123,8 @@ public class SuperFragment extends Fragment {
             setLoginButtonState();
         } else if (id == R.id.new_messages_icon) {
             redirectToFragment(MessageFragment.class, MainActivity.MENU_MESSAGE);
+        } else if (id == R.id.favorites_icon) {
+            redirectToFragment(ListFavoritesFragment.class, MainActivity.MENU_FAVORITES);
         }
 
         return super.onOptionsItemSelected(item);

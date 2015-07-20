@@ -33,11 +33,21 @@ public class Demands implements Serializable, BaseEntity {
         return false;
     }
 
-    public void addSingleDemand(Demand demand) {
+    public void addSingleDemandOnFirstPostion(Demand demand) {
         if (demands == null) {
             demands = new ArrayList<>();
         }
-        demands.add(demand);
+        demands.add(0, demand);
+    }
+
+    public void replaceDemand(Demand demand) {
+
+        String id = demand.getId();
+        for (int i = 0; i < demands.size(); i++) {
+            if (demands.get(i).getId().equals(id)) {
+                demands.set(i, demand);
+            }
+        }
     }
 
     @Override

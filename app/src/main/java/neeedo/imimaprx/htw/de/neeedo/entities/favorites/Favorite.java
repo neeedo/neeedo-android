@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import neeedo.imimaprx.htw.de.neeedo.entities.user.User;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.BaseEntity;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.Location;
+import neeedo.imimaprx.htw.de.neeedo.utils.ProductUtils;
 
 
 @Root(name = "favorite")
@@ -140,6 +141,11 @@ public class Favorite implements Serializable, BaseEntity {
 
     public void setImages(ArrayList<String> images) {
         this.images = images;
+    }
+
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+    public String getTagsString() {
+        return ProductUtils.tagsToString(tags);
     }
 
     @Override

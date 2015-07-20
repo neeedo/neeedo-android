@@ -50,8 +50,10 @@ public class GetOfferByIDAsyncTask extends BaseAsyncTask {
             RestTemplate restTemplate = new RestTemplate(HttpRequestFactoryProviderImpl.getClientHttpRequestFactorySSLSupport(5000));
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             ResponseEntity<SingleOffer> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, SingleOffer.class);
-            final SingleOffer singleOffer = responseEntity.getBody();
-            OffersModel.getInstance().setSingleOffer(singleOffer);
+            SingleOffer singleOffer = responseEntity.getBody();
+
+            OffersModel.getInstance().addOffer(singleOffer.getOffer());
+
             return new RestResult(RestResult.ReturnType.SUCCESS);
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
