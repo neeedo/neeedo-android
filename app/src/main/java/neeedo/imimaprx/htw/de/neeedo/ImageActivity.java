@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
@@ -26,8 +26,8 @@ public class ImageActivity extends Activity {
     private Intent intent;
     private ImageView imageView;
     private ProgressBar progressBar;
-    private Button btnNext;
-    private Button btnPrev;
+    private ImageButton btnNext;
+    private ImageButton btnPrev;
     private ArrayList<String> imageList;
     private int position;
     private int screenWidth;
@@ -58,8 +58,8 @@ public class ImageActivity extends Activity {
     private void loadImageView() {
         imageView = (ImageView) view.findViewById(R.id.imageView);
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
-        btnNext = (Button) view.findViewById(R.id.btnNext);
-        btnPrev = (Button) view.findViewById(R.id.btnPrev);
+        btnNext = (ImageButton) view.findViewById(R.id.btnNext);
+        btnPrev = (ImageButton) view.findViewById(R.id.btnPrev);
 
         progressBar.setVisibility(View.VISIBLE);
 
@@ -70,7 +70,7 @@ public class ImageActivity extends Activity {
 
             Picasso.with(this).
                     load(imageUrl).
-                    resize(screenWidth, screenHeight).
+                    resize(screenWidth+40, screenHeight).
                     centerCrop().
                     into(imageView, new Callback() {
                         @Override
