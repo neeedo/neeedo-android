@@ -27,7 +27,7 @@
         android:layout_row="1"
         android:text="@string/button_previous"
         android:layout_columnWeight="1"
-        android:layout_gravity="center_horizontal|right" />
+        android:layout_gravity="bottom|center_horizontal|right" />
 
     <Button
         android:id="@+id/btnNext"
@@ -38,5 +38,5 @@
         android:layout_row="1"
         android:text="@string/button_next"
         android:layout_columnWeight="1"
-        android:layout_gravity="left|center_horizontal" />
+        android:layout_gravity="left|bottom|center_horizontal" />
 </GridLayout>
