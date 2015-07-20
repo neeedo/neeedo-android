@@ -42,6 +42,11 @@
             android:name=".LocationChooserActivity"
             android:label="@string/title_activity_location_chooser"  android:parentActivityName=".MainActivity">
         </activity>
+
+        <activity
+            android:name=".ImageActivity"
+            android:label="@string/title_activity_image"  android:parentActivityName=".MainActivity">
+        </activity>
     </application>
 
 </manifest>

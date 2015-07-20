@@ -2,6 +2,7 @@ package neeedo.imimaprx.htw.de.neeedo.fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import neeedo.imimaprx.htw.de.neeedo.ImageActivity;
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.favorites.Favorite;
 import neeedo.imimaprx.htw.de.neeedo.entities.message.Message;
@@ -147,7 +149,18 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
                 Picasso.with(context).load(imageUrl).fit().centerInside().into(imageView);
                 layoutImages.addView(imageView);
 
+                final int position = i;
+
                 // TODO click to open image
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent imageActivityIntent = new Intent(context, ImageActivity.class);
+                        imageActivityIntent.putExtra(ImageActivity.IMAGES_LIST_EXTRA, images);
+                        imageActivityIntent.putExtra(ImageActivity.IMAGES_LIST_POSITION_EXTRA, position);
+                        startActivity(imageActivityIntent);
+                    }
+                });
             }
         }
 

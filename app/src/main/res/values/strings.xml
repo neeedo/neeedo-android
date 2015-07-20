@@ -125,4 +125,6 @@
     <string name="single_offer_view_remove_from_favorites_text">Remove from favorites</string>
     <string name="kilometer_radius">radius in km:</string>
 
+    <string name="title_activity_image">Display image</string>
+
 </resources>
