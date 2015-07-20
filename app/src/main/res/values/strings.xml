@@ -129,4 +129,10 @@
     <string name="button_previous">Previous</string>
     <string name="button_next">Next</string>
 
+    <string name="validation_empty_field">This field is obligatory</string>
+    <string name="validation_no_tag">Please define at least one tag</string>
+    <string name="validation_value_negative">This value can\'t be negative</string>
+    <string name="validation_price_max_low">Maximal price is lower than minimal price</string>
+    <string name="validation_price_min_high">Minimal price is higher than maximal price</string>
+
 </resources>

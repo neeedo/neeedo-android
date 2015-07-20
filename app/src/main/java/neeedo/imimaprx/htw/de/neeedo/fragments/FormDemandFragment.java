@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
@@ -24,6 +25,7 @@ import org.osmdroid.views.overlay.OverlayItem;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.Location;
@@ -88,6 +90,8 @@ public class FormDemandFragment extends FormFragment {
         etShouldTags.setOnFocusChangeListener(new AutocompletionOnFocusChangeListener(flShouldTagSuggestions));
 
         btnSetLocation.setOnClickListener(new StartLocationChooserHandler(this));
+
+        validation();
 
         return view;
     }
@@ -171,5 +175,90 @@ public class FormDemandFragment extends FormFragment {
                 mapView.getController().animateTo(geoPoint);
             }
         }, 200);
+    }
+
+    private void validation() {
+        // TODO more validation
+        // TODO validate on submit
+        etMustTags.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean focus) {
+                String mustTags = etMustTags.getText().toString();
+                if (!focus) {
+                    if (mustTags.length() > 0 && !mustTags.contains(",")) {
+                        etMustTags.setError(getResources().getString(R.string.validation_no_tag));
+                    }
+                    if (mustTags.length() == 0) {
+                        etMustTags.setError(getResources().getString(R.string.validation_empty_field));
+                    }
+                }
+            }
+        });
+        etShouldTags.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean focus) {
+                String shouldTags = etShouldTags.getText().toString();
+                if(!focus) {
+                    if (shouldTags.length() > 0 && !shouldTags.contains(",")) {
+                        etShouldTags.setError(getResources().getString(R.string.validation_no_tag));
+                    }
+                    if (shouldTags.length() == 0) {
+                        etShouldTags.setError(getResources().getString(R.string.validation_empty_field));
+                    }
+                }
+            }
+        });
+        etDistance.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean focus) {
+                String distance = etDistance.getText().toString();
+                if (!focus) {
+                    if (distance.length() > 0 && Double.valueOf(distance) < 0) {
+                        etDistance.setError(getResources().getString(R.string.validation_value_negative));
+                    }
+                    if (distance.length() == 0) {
+                        etDistance.setError(getResources().getString(R.string.validation_empty_field));
+                    }
+                }
+            }
+        });
+        etPriceMin.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean focus) {
+                String priceMin = etPriceMin.getText().toString();
+                String priceMax = etPriceMax.getText().toString();
+                if (!focus) {
+                    if (priceMin.length() > 0 && Double.valueOf(priceMin) < 0) {
+                        etPriceMin.setError(getResources().getString(R.string.validation_value_negative));
+                    }
+                    if (priceMin.length() > 0 && priceMax.length() > 0 &&
+                            Double.valueOf(priceMin) > Double.valueOf(priceMax)) {
+                        etPriceMin.setError(getResources().getString(R.string.validation_price_min_high));
+                    }
+                    if (priceMin.length() == 0) {
+                        etPriceMin.setError(getResources().getString(R.string.validation_empty_field));
+                    }
+                }
+            }
+        });
+        etPriceMax.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean focus) {
+                String priceMin = etPriceMin.getText().toString();
+                String priceMax = etPriceMax.getText().toString();
+                if (!focus) {
+                    if (priceMax.length() > 0 && Double.valueOf(priceMax) < 0) {
+                        etPriceMax.setError(getResources().getString(R.string.validation_value_negative));
+                    }
+                    if (priceMax.length() > 0 && priceMin.length() > 0 &&
+                            Double.valueOf(priceMin) > Double.valueOf(priceMax)) {
+                        etPriceMax.setError(getResources().getString(R.string.validation_price_max_low));
+                    }
+                    if (priceMax.length() == 0) {
+                        etPriceMax.setError(getResources().getString(R.string.validation_empty_field));
+                    }
+                }
+            }
+        });
     }
 }
