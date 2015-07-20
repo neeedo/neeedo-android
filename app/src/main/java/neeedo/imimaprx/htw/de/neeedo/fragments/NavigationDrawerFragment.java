@@ -26,41 +26,14 @@ import neeedo.imimaprx.htw.de.neeedo.R;
 
 public class NavigationDrawerFragment extends SuperFragment {
 
-    private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
-    private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
-
     private ActionBarDrawerToggle mDrawerToggle;
 
     private DrawerLayout mDrawerLayout;
     private LinearLayout mDrawerListView;
-    private View mFragmentContainerView;
-
-    private int mCurrentSelectedPosition = 0;
-    private boolean mFromSavedInstanceState;
-    private boolean mUserLearnedDrawer;
-
-    public NavigationDrawerFragment() {
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        final FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-
-        fragmentManager.addOnBackStackChangedListener(
-                new FragmentManager.OnBackStackChangedListener() {
-                    public void onBackStackChanged() {
-                        // select correct navigation item after backstack operation (back)
-                        int backstackIndex = fragmentManager.getBackStackEntryCount() - 1;
-                        FragmentManager.BackStackEntry backstackEntry = fragmentManager.getBackStackEntryAt(backstackIndex);
-                        String backstackEntryName = backstackEntry.getName();
-                        if (backstackEntryName != null) {
-                            int backStackNavigationEntry = Integer.parseInt(backstackEntryName);
-//                            mDrawerListView.setItemChecked(backStackNavigationEntry, true);
-                        }
-                    }
-                });
     }
 
     @Override
@@ -72,14 +45,12 @@ public class NavigationDrawerFragment extends SuperFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mDrawerListView = (LinearLayout) inflater.inflate(
-                R.layout.fragment_navigation_drawer, container, false);
+        mDrawerListView = (LinearLayout) inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
 
         return mDrawerListView;
     }
 
     public void setUp(int fragmentId, DrawerLayout drawerLayout) {
-        mFragmentContainerView = getActivity().findViewById(fragmentId);
         mDrawerLayout = drawerLayout;
 
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
@@ -108,13 +79,6 @@ public class NavigationDrawerFragment extends SuperFragment {
                     return;
                 }
 
-                if (!mUserLearnedDrawer) {
-                    mUserLearnedDrawer = true;
-                    SharedPreferences sp = PreferenceManager
-                            .getDefaultSharedPreferences(getActivity());
-                    sp.edit().putBoolean(PREF_USER_LEARNED_DRAWER, true).apply();
-                }
-
                 getActivity().supportInvalidateOptionsMenu();
 
                 // close soft keyboard if open
@@ -125,10 +89,6 @@ public class NavigationDrawerFragment extends SuperFragment {
             }
         };
 
-        if (!mUserLearnedDrawer && !mFromSavedInstanceState) {
-            mDrawerLayout.openDrawer(mFragmentContainerView);
-        }
-
         mDrawerLayout.post(new Runnable() {
             @Override
             public void run() {
@@ -138,16 +98,6 @@ public class NavigationDrawerFragment extends SuperFragment {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
