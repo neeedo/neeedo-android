@@ -114,16 +114,5 @@ public class MessageFragment extends SuperFragment {
         userAdapter = new ArrayAdapter<User>(getActivity(), android.R.layout.simple_list_item_1, users);
         messageView.setAdapter(userAdapter);
         userAdapter.notifyDataSetChanged();
-
-
     }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-
-    }
-
-
 }
