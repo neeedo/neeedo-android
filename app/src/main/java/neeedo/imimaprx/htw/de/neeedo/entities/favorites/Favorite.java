@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import neeedo.imimaprx.htw.de.neeedo.entities.user.User;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.BaseEntity;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.Location;
+import neeedo.imimaprx.htw.de.neeedo.utils.ProductUtils;
 
 
 @Root(name = "favorite")
@@ -144,7 +145,7 @@ public class Favorite implements Serializable, BaseEntity {
 
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     public String getTagsString() {
-        return tagsToString(tags);
+        return ProductUtils.tagsToString(tags);
     }
 
     @Override
@@ -200,21 +201,5 @@ public class Favorite implements Serializable, BaseEntity {
         result = 31 * result + (offerId != null ? offerId.hashCode() : 0);
         result = 31 * result + (images != null ? images.hashCode() : 0);
         return result;
-    }
-
-    private String tagsToString(ArrayList<String> tags) {
-        String returnString = "";
-        int counter = 0;
-
-        for (String tag : tags) {
-            if (counter == 0) {
-                returnString = tag;
-            } else {
-                returnString = returnString + ", " + tag;
-            }
-            counter++;
-        }
-
-        return returnString;
     }
 }

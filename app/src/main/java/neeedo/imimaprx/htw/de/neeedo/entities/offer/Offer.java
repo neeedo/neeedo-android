@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import neeedo.imimaprx.htw.de.neeedo.entities.user.User;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.BaseEntity;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.Location;
+import neeedo.imimaprx.htw.de.neeedo.utils.ProductUtils;
 
 
 @Root(name = "offer")
@@ -33,7 +34,7 @@ public class Offer implements Serializable, BaseEntity {
     private Location location;
 
     @Element
-    private Double price = 0d; // TODO price entity without min and max?
+    private Double price = 0d;
 
     @Element
     private Offer offer;
@@ -88,8 +89,9 @@ public class Offer implements Serializable, BaseEntity {
         return tags;
     }
 
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     public String getTagsString() {
-        return tagsToString(tags);
+        return ProductUtils.tagsToString(tags);
     }
 
     public void setTags(ArrayList<String> tags) {
@@ -144,22 +146,4 @@ public class Offer implements Serializable, BaseEntity {
     public void setUser(User user) {
         this.user = user;
     }
-
-    private String tagsToString(ArrayList<String> tags) {
-        String returnString = "";
-        int counter = 0;
-
-        for (String tag : tags) {
-            if (counter == 0) {
-                returnString = tag;
-            } else {
-                returnString = returnString + ", " + tag;
-            }
-            counter++;
-        }
-
-        return returnString;
-    }
-
-
 }
