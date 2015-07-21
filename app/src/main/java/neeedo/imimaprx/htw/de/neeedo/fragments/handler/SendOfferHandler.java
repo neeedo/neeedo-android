@@ -31,8 +31,6 @@ public class SendOfferHandler implements View.OnClickListener {
             return;
         }
 
-        formOfferFragment.showProgressDialog();
-
         User currentUser = UserModel.getInstance().getUser();
         Offer currentOffer = OffersModel.getInstance().getDraft();
 
