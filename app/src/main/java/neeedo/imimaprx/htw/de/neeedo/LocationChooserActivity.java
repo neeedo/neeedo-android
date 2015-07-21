@@ -38,7 +38,6 @@ import java.util.List;
 
 
 public class LocationChooserActivity extends ActionBarActivity implements MapEventsReceiver {
-    public static final String NOMINATIM_SERVICE_URL = "http://nominatim.openstreetmap.org/";
     private MapView mapView;
     private LocationAutoCompleteTextView autoCompleteTextView;
     private DefaultResourceProxyImpl resourceProxy;
@@ -144,7 +143,7 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
 
     private void setNewDistance(int distanceInKm) {
         selectedDistanceInKm = distanceInKm;
-        distanceTextView.setText(getText(R.string.kilometer_radius ) + String.valueOf(distanceInKm));
+        distanceTextView.setText(getText(R.string.kilometer_radius) + String.valueOf(distanceInKm));
         if (selectedGeoPoint != null)
             refreshViewToNewSettings();
     }
@@ -172,6 +171,29 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
         mapView.getOverlays().add(userLocationOverlay);
 
         mapView.invalidate();
+
+        int newZoomLevel = mapView.getZoomLevel();
+
+
+        if (selectedDistanceInKm <= 3)
+            newZoomLevel = 14;
+        else if (selectedDistanceInKm <= 6)
+            newZoomLevel = 13;
+        else if (selectedDistanceInKm <= 12)
+            newZoomLevel = 12;
+        else if (selectedDistanceInKm <= 25)
+            newZoomLevel = 11;
+        else if (selectedDistanceInKm <= 50)
+            newZoomLevel = 10;
+        else if (selectedDistanceInKm <= 95)
+            newZoomLevel = 9;
+        else if (selectedDistanceInKm <= 100)
+            newZoomLevel = 8;
+
+
+        mapView.getController().setZoom(newZoomLevel);
+
+
     }
 
     private void deleteAllUiOverlays() {

@@ -156,7 +156,6 @@ public class NavigationDrawerFragment extends SuperFragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-//        highlightCurrentFragment();
         if (drawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
