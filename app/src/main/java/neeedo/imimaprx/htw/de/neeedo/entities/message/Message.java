@@ -1,5 +1,7 @@
 package neeedo.imimaprx.htw.de.neeedo.entities.message;
 
+import android.content.Context;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import org.simpleframework.xml.Element;
@@ -9,8 +11,10 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.user.User;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.BaseEntity;
+import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 
 
 @Root(name = "message")
@@ -45,6 +49,9 @@ public class Message implements Serializable, BaseEntity {
 
     @Element
     private String body;
+
+    @Element
+    private boolean matchFoundMassage = false;
 
     public Message() {
 
@@ -135,10 +142,27 @@ public class Message implements Serializable, BaseEntity {
         this.messageId = messageId;
     }
 
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+    public boolean isMatchFoundMassage() {
+        return matchFoundMassage;
+    }
+
+    public void setMatchFoundMassage(boolean matchFoundMassage) {
+        this.matchFoundMassage = matchFoundMassage;
+    }
+
     @Override
     public String toString() {
-        Date date = new Date(timestamp);
-        return formatter.format(date) + ": " + body;
+        String text = "";
+
+        if (!matchFoundMassage) {
+            Date date = new Date(timestamp);
+            text = formatter.format(date) + ": " + body;
+        } else {
+            Context context = ActiveUser.getInstance().getContext();
+            text = context.getString(R.string.new_match_text);
+        }
+        return text;
     }
 
     @Override
@@ -149,6 +173,7 @@ public class Message implements Serializable, BaseEntity {
         Message message = (Message) o;
 
         if (read != message.read) return false;
+        if (matchFoundMassage != message.matchFoundMassage) return false;
         if (id != null ? !id.equals(message.id) : message.id != null) return false;
         if (sender != null ? !sender.equals(message.sender) : message.sender != null) return false;
         if (recipient != null ? !recipient.equals(message.recipient) : message.recipient != null)
@@ -176,6 +201,7 @@ public class Message implements Serializable, BaseEntity {
         result = 31 * result + (recipientId != null ? recipientId.hashCode() : 0);
         result = 31 * result + (messageId != null ? messageId.hashCode() : 0);
         result = 31 * result + (body != null ? body.hashCode() : 0);
+        result = 31 * result + (matchFoundMassage ? 1 : 0);
         return result;
     }
 }

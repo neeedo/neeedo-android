@@ -2,9 +2,12 @@ package neeedo.imimaprx.htw.de.neeedo.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,6 +33,8 @@ public class MessagesFragment extends SuperFragment implements View.OnClickListe
     private Activity activity;
     private String user1Id;
     private String user2Id;
+    private String matchUser = "Neeedo";
+    private EditText editText;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,10 +52,15 @@ public class MessagesFragment extends SuperFragment implements View.OnClickListe
         return view;
     }
 
-
     @Subscribe
     public void getMessages(MessagesLoadedEvent messagesLoadedEvent) {
         ArrayList<Message> messages = MessagesModel.getInstance().getMessages();
+
+        if (user2Id.equals(matchUser)) {
+            for (Message message : messages) {
+                message.setMatchFoundMassage(true);
+            }
+        }
 
         ArrayAdapter<Message> messageAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, messages);
         messageView.setAdapter(messageAdapter);
@@ -68,6 +78,38 @@ public class MessagesFragment extends SuperFragment implements View.OnClickListe
         sendBtn = (Button) activity.findViewById(R.id.messages_view_send_button);
         sendBtn.setOnClickListener(this);
 
+        editText = (EditText) activity.findViewById(R.id.messages_view_answer_text);
+
+        if (user2Id.equals(matchUser)) {
+            matchMessageActions();
+        }
+    }
+
+
+    private void matchMessageActions() {
+        sendBtn.setVisibility(View.GONE);
+        editText.setVisibility(View.GONE);
+
+        messageView.setClickable(true);
+        messageView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Message message = (Message) messageView.getItemAtPosition(position);
+
+                FragmentManager fragmentManager = getFragmentManager();
+                Fragment fragment = new SingleOfferFragment();
+
+                Bundle args = new Bundle();
+                args.putString("id", message.getBody());
+                fragment.setArguments(args);
+                fragmentManager.beginTransaction()
+                        .addToBackStack(null)
+                        .replace(R.id.container, fragment)
+                        .commit();
+            }
+        });
     }
 
     @Override
@@ -76,7 +118,7 @@ public class MessagesFragment extends SuperFragment implements View.OnClickListe
 
         switch (view.getId()) {
             case R.id.messages_view_send_button: {
-                EditText editText = (EditText) activity.findViewById(R.id.messages_view_answer_text);
+
                 String text = editText.getText().toString();
                 if (text.isEmpty() || text.matches("[ ]+")) {
                     return;

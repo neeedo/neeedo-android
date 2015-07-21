@@ -1,5 +1,7 @@
 package neeedo.imimaprx.htw.de.neeedo.entities.user;
 
+import android.content.Context;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import org.simpleframework.xml.Element;
@@ -7,7 +9,9 @@ import org.simpleframework.xml.Root;
 
 import java.io.Serializable;
 
+import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.BaseEntity;
+import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 
 @Root(name = "user")
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -98,8 +102,11 @@ public class User implements Serializable, BaseEntity {
     public String toString() {
 
         String text = name;
-        if (hasNewMessages)
-            text = "New Message from: " + name;
+        if (hasNewMessages) {
+            Context context = ActiveUser.getInstance().getContext();
+            String s = context.getString(R.string.new_message_text);
+            text = s + name;
+        }
         return text;
     }
 
