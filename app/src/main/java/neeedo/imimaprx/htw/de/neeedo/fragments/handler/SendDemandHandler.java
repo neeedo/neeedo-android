@@ -26,7 +26,13 @@ public class SendDemandHandler implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        // TODO validation (like Offer Handler)
+        view.requestFocusFromTouch(); // workaround for checking last field by focus change listener
+
+        if(!formDemandFragment.checkValidation()) {
+            // TODO show Toast error
+            // TODO set errors for fields
+            return;
+        }
 
         User currentUser = UserModel.getInstance().getUser();
         Demand currentDemand = DemandsModel.getInstance().getDraft();

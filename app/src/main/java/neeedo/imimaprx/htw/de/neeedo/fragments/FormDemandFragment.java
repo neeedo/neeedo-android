@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +53,9 @@ public class FormDemandFragment extends FormFragment {
 
     protected GeoPoint selectedGeoPoint;
 
+    protected boolean isValid;
+    HashMap<View, Boolean> validViews;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,6 +95,7 @@ public class FormDemandFragment extends FormFragment {
 
         btnSetLocation.setOnClickListener(new StartLocationChooserHandler(this));
 
+        isValid = false;
         validation();
 
         return view;
@@ -178,6 +183,13 @@ public class FormDemandFragment extends FormFragment {
     }
 
     private void validation() {
+        validViews = new HashMap<>();
+        validViews.put(etMustTags, false);
+        validViews.put(etShouldTags, false);
+        validViews.put(etDistance, false);
+        validViews.put(etPriceMin, false);
+        validViews.put(etPriceMax, false);
+
         // TODO more validation
         // TODO validate on submit
         etMustTags.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -190,6 +202,9 @@ public class FormDemandFragment extends FormFragment {
                     }
                     if (mustTags.length() == 0) {
                         etMustTags.setError(getResources().getString(R.string.validation_empty_field));
+                    }
+                    if(etMustTags.getError() == null) {
+                        validViews.put(etMustTags, true);
                     }
                 }
             }
@@ -205,6 +220,9 @@ public class FormDemandFragment extends FormFragment {
                     if (shouldTags.length() == 0) {
                         etShouldTags.setError(getResources().getString(R.string.validation_empty_field));
                     }
+                    if(etShouldTags.getError() == null) {
+                        validViews.put(etShouldTags, true);
+                    }
                 }
             }
         });
@@ -218,6 +236,9 @@ public class FormDemandFragment extends FormFragment {
                     }
                     if (distance.length() == 0) {
                         etDistance.setError(getResources().getString(R.string.validation_empty_field));
+                    }
+                    if(etDistance.getError() == null) {
+                        validViews.put(etDistance, true);
                     }
                 }
             }
@@ -238,6 +259,9 @@ public class FormDemandFragment extends FormFragment {
                     if (priceMin.length() == 0) {
                         etPriceMin.setError(getResources().getString(R.string.validation_empty_field));
                     }
+                    if(etPriceMin.getError() == null) {
+                        validViews.put(etPriceMin, true);
+                    }
                 }
             }
         });
@@ -257,8 +281,22 @@ public class FormDemandFragment extends FormFragment {
                     if (priceMax.length() == 0) {
                         etPriceMax.setError(getResources().getString(R.string.validation_empty_field));
                     }
+                    if (etPriceMax.getError() == null) {
+                        validViews.put(etPriceMax, true);
+                    }
                 }
             }
         });
+    }
+
+    public boolean checkValidation() {
+        if(validViews.containsValue(false)) {
+            isValid = false;
+            Log.d("Validation", "Invalid");
+        } else {
+            isValid = true;
+            Log.d("Validation", "Valid");
+        }
+        return isValid;
     }
 }
