@@ -16,7 +16,7 @@
         android:layout_height="160dp"
         android:layout_gravity="top|center_horizontal"
         android:layout_marginBottom="32dp"
-        android:background="@drawable/home_logo" />
+        android:background="@drawable/logo" />
 
     <LinearLayout
         android:id="@+id/login_login"
