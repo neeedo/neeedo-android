@@ -1,5 +1,6 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.squareup.otto.Subscribe;
@@ -30,6 +32,7 @@ public class ListOffersFragment extends SuperFragment {
     private final ActiveUser activeUser = ActiveUser.getInstance();
     ListView listView;
     View view;
+    ProgressBar progressBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,7 @@ public class ListOffersFragment extends SuperFragment {
         view = inflater.inflate(R.layout.list_products_view, container, false);
 
         listView = (ListView) view.findViewById(R.id.listview);
+        progressBar = (ProgressBar) view.findViewById(R.id.list_offers_progessbar);
 
         return view;
     }
@@ -62,7 +66,6 @@ public class ListOffersFragment extends SuperFragment {
 
     @Subscribe
     public void fillList(GetOfferFinishedEvent e) {
-
         ArrayList<Offer> offerList = OffersModel.getInstance().getOffers();
 
         TextView tvEmpty = (TextView) view.findViewById(R.id.tvEmpty);
@@ -98,5 +101,6 @@ public class ListOffersFragment extends SuperFragment {
             tvEmpty.setText(getActivity().getString(R.string.empty_offers_message));
             tvEmpty.setVisibility(View.VISIBLE);
         }
+        progressBar.setVisibility(View.GONE);
     }
 }
