@@ -278,17 +278,4 @@ public class FormOfferFragment extends FormFragment {
             }
         }, 200);
     }
-
-    public void showProgressDialog() {
-        progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.show();
-    }
-
-    public void hideProgressDialog() {
-        if (progressDialog != null)
-            progressDialog.dismiss();
-    }
 }

@@ -38,7 +38,6 @@ public class NewOfferFragment extends FormOfferFragment {
 
     @Subscribe
     public void handleServerResponse(ServerResponseEvent e) {
-        hideProgressDialog();
         redirectToFragment(ListOffersFragment.class);
     }
 
