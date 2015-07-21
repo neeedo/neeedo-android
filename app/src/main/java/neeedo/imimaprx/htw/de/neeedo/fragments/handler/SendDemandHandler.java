@@ -30,7 +30,6 @@ public class SendDemandHandler implements View.OnClickListener {
 
         if(!formDemandFragment.checkValidation()) {
             // TODO show Toast error
-            // TODO set errors for fields
             return;
         }
 

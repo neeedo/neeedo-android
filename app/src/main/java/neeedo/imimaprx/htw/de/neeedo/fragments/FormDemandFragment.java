@@ -191,7 +191,6 @@ public class FormDemandFragment extends FormFragment {
         validViews.put(etPriceMax, false);
 
         // TODO more validation
-        // TODO validate on submit
         etMustTags.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean focus) {
@@ -290,6 +289,14 @@ public class FormDemandFragment extends FormFragment {
     }
 
     public boolean checkValidation() {
+        // force re-focus all textviews for showing errors from above
+        etMustTags.requestFocusFromTouch();
+        etShouldTags.requestFocusFromTouch();
+        etDistance.requestFocusFromTouch();
+        etPriceMin.requestFocusFromTouch();
+        etPriceMax.requestFocusFromTouch();
+        btnSubmit.requestFocusFromTouch();
+
         if(validViews.containsValue(false)) {
             isValid = false;
             Log.d("Validation", "Invalid");
