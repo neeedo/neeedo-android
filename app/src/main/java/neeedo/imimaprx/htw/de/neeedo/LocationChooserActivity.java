@@ -88,7 +88,8 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
 
         final SeekBar distanceSeekBar = (SeekBar) findViewById(R.id.distance_seek_bar);
         distanceTextView = (TextView) findViewById(R.id.distance_text_view);
-        setNewDistance(1);
+        setNewDistance(10);
+        distanceSeekBar.setProgress(9);
 
         distanceSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
