@@ -142,7 +142,7 @@ public class FormDemandFragment extends FormFragment {
         super.onActivityResult(requestCode, resultCode, intent);
 
         if (resultCode != Activity.RESULT_OK) {
-            Toast.makeText(getActivity(), R.string.fail, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), R.string.fail, Toast.LENGTH_SHORT).show();
             return;
         }
 
