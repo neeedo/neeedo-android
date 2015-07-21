@@ -31,6 +31,7 @@
 
         <activity
             android:name=".LoginActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_login"
             android:windowSoftInputMode="adjustPan"/>
 
@@ -40,6 +41,7 @@
 
         <activity
             android:name=".LocationChooserActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_location_chooser"
             android:parentActivityName=".MainActivity"/>
 
