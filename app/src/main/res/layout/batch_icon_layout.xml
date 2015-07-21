@@ -9,7 +9,7 @@
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_marginTop="10dp"
-        android:src="@android:drawable/ic_dialog_email" />
+        android:src="@drawable/mail" />
 
     <TextView
         android:id="@+id/tvBadge"

@@ -33,7 +33,6 @@ public class MainActivity extends ActionBarActivity {
 
     private final ActiveUser activeUser = ActiveUser.getInstance();
 
-    public static final String STATE_NAVIGATION_INDEX = "current_navigation_state_index";
     public static final String STATE_FRAGMENT = "current_fragment_state";
 
     @Override
