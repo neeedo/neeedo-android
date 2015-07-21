@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -211,7 +212,8 @@ public class NavigationDrawerFragment extends SuperFragment {
     }
 
     private void setColorsToTextField(TextView textView, int backgroundColor, int textColor) {
-        textView.setBackgroundColor(backgroundColor);
+        LinearLayout buttonWrapper = (LinearLayout) textView.getParent();
+        buttonWrapper.setBackgroundColor(backgroundColor);
         textView.setTextColor(textColor);
     }
 }
