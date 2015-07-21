@@ -59,6 +59,11 @@
     <string name="exception_message_email_already_in_use">Your E-Mail is already in use.</string>
     <string name="exception_message_login">You have to login to proceed.</string>
 
+    <string name="password_length_error">Your password is to short, use at least 8 characters.</string>
+    <string name="password_match_error">Your given passwords do not match.</string>
+
+    <string name="username_has_whitespaces">Your username contains whitespaces please remove them.</string>
+
     <string name="new_messages">You have $ new messages.</string>
 
     <string name="no_camera">no camera available</string>

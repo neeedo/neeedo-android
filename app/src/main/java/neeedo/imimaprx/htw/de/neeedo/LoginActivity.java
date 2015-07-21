@@ -32,6 +32,7 @@ public class LoginActivity extends Activity {
     private TextView mLoginError;
     private View mLoginRegisterFromView;
     private TextView errorMessage;
+    private static int minPasswordLength = 8;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,12 +138,12 @@ public class LoginActivity extends Activity {
 
     private void sendRegister() {
 
-        TextView passwordError = (TextView) findViewById(R.id.login_password_error_text);
+        TextView errorTextView = (TextView) findViewById(R.id.login_password_error_text);
         TextView fieldsError = (TextView) findViewById(R.id.login_error_fields_empty_text);
         errorMessage = (TextView) findViewById(R.id.login_email_error_text);
         TextView emailInvalidError = (TextView) findViewById(R.id.login_email_error_text);
 
-        passwordError.setVisibility(View.GONE);
+        errorTextView.setVisibility(View.GONE);
         fieldsError.setVisibility(View.GONE);
         errorMessage.setVisibility(View.GONE);
         emailInvalidError.setVisibility(View.GONE);
@@ -172,7 +173,20 @@ public class LoginActivity extends Activity {
         }
 
         if (!(password.equals(passwordConfirm))) {
-            passwordError.setVisibility(View.VISIBLE);
+            errorTextView.setText(R.string.password_match_error);
+            errorTextView.setVisibility(View.VISIBLE);
+            return;
+        }
+
+        if (password.length() < minPasswordLength) {
+            errorTextView.setText(R.string.password_length_error);
+            errorTextView.setVisibility(View.VISIBLE);
+            return;
+        }
+
+        if (name.contains(" ")) {
+            errorTextView.setText(R.string.username_has_whitespaces);
+            errorTextView.setVisibility(View.VISIBLE);
             return;
         }
 
