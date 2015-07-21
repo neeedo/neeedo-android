@@ -3,6 +3,9 @@ package neeedo.imimaprx.htw.de.neeedo;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
@@ -16,6 +19,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
@@ -50,6 +54,37 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location_chooser);
+
+        ImageButton findOwnLocationButton = (ImageButton) findViewById(R.id.find_own_location);
+        findOwnLocationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final LocationManager mLocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                final LocationListener mLocListener = new LocationListener() {
+                    @Override
+                    public void onLocationChanged(Location location) {
+                        float accuracy = location.getAccuracy();
+                        if (accuracy < 15) {//if pretty sure to have found location in a radius of 15 meters
+                            mLocManager.removeUpdates(this);
+                            setLocationSelected(new GeoPoint(location.getLatitude(), location.getLongitude()));
+                        }
+                    }
+
+                    @Override
+                    public void onStatusChanged(String provider, int status, Bundle extras) {
+                    }
+
+                    @Override
+                    public void onProviderEnabled(String provider) {
+                    }
+
+                    @Override
+                    public void onProviderDisabled(String provider) {
+                    }
+                };
+                mLocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocListener);
+            }
+        });
 
         final SeekBar distanceSeekBar = (SeekBar) findViewById(R.id.distance_seek_bar);
         distanceTextView = (TextView) findViewById(R.id.distance_text_view);
@@ -89,7 +124,6 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
         RelativeLayout mapContainer = (RelativeLayout) findViewById(R.id.locationChooserMapContainer);
         mapContainer.addView(mapView);
 
-        //this is a hack to get around one of the osmdroid bugs
         //TODO make last known location
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -131,8 +165,6 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
                         Context.INPUT_METHOD_SERVICE);
                 inputMethodManager.hideSoftInputFromWindow(autoCompleteTextView.getWindowToken(), 0);
                 autoCompleteTextView.dismissDropDown();
-
-
             }
         });
 
@@ -146,12 +178,12 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
         distanceTextView.setText(getText(R.string.kilometer_radius) + String.valueOf(distanceInKm));
 
         if (selectedGeoPoint != null) {
-            setZoomAccordingToZoom();
+            setZoomAccordingToDistance();
             refreshViewToNewSettings();
         }
     }
 
-    private void setZoomAccordingToZoom() {
+    private void setZoomAccordingToDistance() {
         int newZoomLevel = mapView.getZoomLevel();
 
         if (selectedDistanceInKm <= 3)
@@ -215,6 +247,7 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
             Intent output = new Intent();
             output.putExtra("latitude", Double.toString(selectedGeoPoint.getLatitude()));
             output.putExtra("longitude", Double.toString(selectedGeoPoint.getLongitude()));
+            output.putExtra("distance", Integer.toString(selectedDistanceInKm));
             setResult(RESULT_OK, output);
         } else {
             setResult(RESULT_CANCELED);
