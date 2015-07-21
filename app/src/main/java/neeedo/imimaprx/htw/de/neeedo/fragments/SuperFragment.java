@@ -119,6 +119,8 @@ public class SuperFragment extends Fragment {
             ActiveUser.getInstance().clearUserInformation();
             Toast.makeText(getActivity(), "Logout finished.", Toast.LENGTH_SHORT).show();
             setLoginButtonState();
+            redirectToFragment(MainFragment.class);
+            
         } else if (id == R.id.new_messages_icon) {
             redirectToFragment(MessageFragment.class);
         } else if (id == R.id.favorites_icon) {
