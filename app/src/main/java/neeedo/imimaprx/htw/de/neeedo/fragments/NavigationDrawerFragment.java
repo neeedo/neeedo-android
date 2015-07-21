@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -29,6 +30,7 @@ public class NavigationDrawerFragment extends SuperFragment {
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
 
+    private ImageView imageView;
     private TextView newOfferBtn;
     private TextView listOffersBtn;
     private TextView newDemandBtn;
@@ -101,6 +103,15 @@ public class NavigationDrawerFragment extends SuperFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         LinearLayout navigationDrawerLayout = (LinearLayout) inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
+
+        imageView = (ImageView) navigationDrawerLayout.findViewById(R.id.navigation_drawer_logo);
+        imageView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectToFragment(new MainFragment());
+            }
+        });
+
 
         newOfferBtn = (TextView) navigationDrawerLayout.findViewById(R.id.create_new_offer);
         newOfferBtn.setOnClickListener(new OnClickListener() {
