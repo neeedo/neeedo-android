@@ -45,7 +45,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:padding="8dip"
-                    android:text="Offers"
+                    android:text="@string/offers"
                     android:textColor="#dddddd"
                     android:textSize="28dip" />
 
@@ -73,7 +73,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dip"
-                    android:text="angebot anlegen"
+                    android:text="@string/create_new_offer"
                     android:textColor="#dddddd" />
             </LinearLayout>
 
@@ -100,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:padding="8dip"
-                    android:text="list offers"
+                    android:text="@string/list_offers"
                     android:textColor="#dddddd" />
             </LinearLayout>
 
@@ -125,7 +125,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:padding="8dip"
-                    android:text="Demands"
+                    android:text="@string/demands"
                     android:textColor="#dddddd"
                     android:textSize="28dip" />
 
@@ -154,7 +154,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:padding="8dip"
-                    android:text="create a new one!!!"
+                    android:text="@string/create_new_demand"
                     android:textColor="#dddddd" />
             </LinearLayout>
 
@@ -181,7 +181,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:padding="8dip"
-                    android:text="list your demands"
+                    android:text="@string/list_demand"
                     android:textColor="#dddddd" />
             </LinearLayout>
 
