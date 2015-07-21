@@ -174,7 +174,6 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
 
         int newZoomLevel = mapView.getZoomLevel();
 
-
         if (selectedDistanceInKm <= 3)
             newZoomLevel = 14;
         else if (selectedDistanceInKm <= 6)
@@ -190,10 +189,7 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
         else if (selectedDistanceInKm <= 100)
             newZoomLevel = 8;
 
-
         mapView.getController().setZoom(newZoomLevel);
-
-
     }
 
     private void deleteAllUiOverlays() {
