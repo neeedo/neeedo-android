@@ -15,6 +15,7 @@ import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.user.User;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.BaseEntity;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
+import neeedo.imimaprx.htw.de.neeedo.models.ApplicationContextModel;
 
 
 @Root(name = "message")
@@ -159,7 +160,7 @@ public class Message implements Serializable, BaseEntity {
             Date date = new Date(timestamp);
             text = formatter.format(date) + ": " + body;
         } else {
-            Context context = ActiveUser.getInstance().getContext();
+            Context context = ApplicationContextModel.getInstance().getApplicationContext();
             text = context.getString(R.string.new_match_text);
         }
         return text;

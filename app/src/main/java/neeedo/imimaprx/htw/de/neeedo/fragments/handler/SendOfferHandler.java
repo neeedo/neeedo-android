@@ -10,6 +10,7 @@ import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offer;
 import neeedo.imimaprx.htw.de.neeedo.entities.user.User;
 import neeedo.imimaprx.htw.de.neeedo.fragments.FormOfferFragment;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
+import neeedo.imimaprx.htw.de.neeedo.models.ApplicationContextModel;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
 import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.offer.PostCreateUpdateOfferAsyncTask;
@@ -42,7 +43,7 @@ public class SendOfferHandler implements View.OnClickListener {
         offer.setImages(formOfferFragment.getImages());
 
         if (currentUser == null) {
-            Context context = ActiveUser.getInstance().getContext();
+            Context context = ApplicationContextModel.getInstance().getApplicationContext();
             Toast.makeText(context, context.getString(R.string.exception_message_login), Toast.LENGTH_LONG).show();
             return;
         }

@@ -22,6 +22,7 @@ import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.user.User;
 import neeedo.imimaprx.htw.de.neeedo.events.UserMessageContactsLoadedEvent;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
+import neeedo.imimaprx.htw.de.neeedo.models.ApplicationContextModel;
 import neeedo.imimaprx.htw.de.neeedo.models.MessagesModel;
 import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.message.GetMessagesByUserIdAndReadStateAsyncTask;
@@ -88,7 +89,7 @@ public class MessageFragment extends SuperFragment {
         } else {
             editText.setVisibility(View.VISIBLE);
             messageView.setVisibility(View.INVISIBLE);
-            Context context = ActiveUser.getInstance().getContext();
+            Context context = ApplicationContextModel.getInstance().getApplicationContext();
             Toast.makeText(context, context.getString(R.string.exception_message_login), Toast.LENGTH_LONG).show();
         }
 

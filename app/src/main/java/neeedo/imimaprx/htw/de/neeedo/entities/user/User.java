@@ -12,6 +12,7 @@ import java.io.Serializable;
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.BaseEntity;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
+import neeedo.imimaprx.htw.de.neeedo.models.ApplicationContextModel;
 
 @Root(name = "user")
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -103,7 +104,7 @@ public class User implements Serializable, BaseEntity {
 
         String text = name;
         if (hasNewMessages) {
-            Context context = ActiveUser.getInstance().getContext();
+            Context context = ApplicationContextModel.getInstance().getApplicationContext();
             String s = context.getString(R.string.new_message_text);
             text = s + name;
         }

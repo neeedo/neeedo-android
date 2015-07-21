@@ -19,6 +19,7 @@ import neeedo.imimaprx.htw.de.neeedo.fragments.NavigationDrawerFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.NewDemandFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.NewOfferFragment;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
+import neeedo.imimaprx.htw.de.neeedo.models.ApplicationContextModel;
 import neeedo.imimaprx.htw.de.neeedo.models.MessagesModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.message.GetMessagesByUserIdAndReadStateAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.user.GetUserByEmailAsyncTask;
@@ -76,7 +77,6 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-
         initOrRestoreState(savedInstanceState);
     }
 
@@ -93,7 +93,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void initSingletons() {
-        activeUser.setContext(getApplicationContext());
+        ApplicationContextModel.getInstance().setApplicationContext(getApplicationContext());
     }
 
     private void initOrRestoreState(Bundle savedInstanceState) {
@@ -109,9 +109,9 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void changeFragment(Fragment fragment) {
-            mFragmentManager.beginTransaction()
-                    .addToBackStack(null)
-                    .replace(R.id.container, fragment)
-                    .commit();
+        mFragmentManager.beginTransaction()
+                .addToBackStack(null)
+                .replace(R.id.container, fragment)
+                .commit();
     }
 }

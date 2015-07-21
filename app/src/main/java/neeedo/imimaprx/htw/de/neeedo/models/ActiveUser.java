@@ -113,10 +113,6 @@ public class ActiveUser {
 
     }
 
-    public Context getContext() {
-        return context;
-    }
-
     public boolean userCredentialsAvailable() {
         if (userPassword.equals("") | username.equals("")) {
             return false;

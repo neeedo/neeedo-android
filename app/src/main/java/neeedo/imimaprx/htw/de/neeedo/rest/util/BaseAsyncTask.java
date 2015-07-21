@@ -12,6 +12,7 @@ import org.springframework.http.HttpHeaders;
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
+import neeedo.imimaprx.htw.de.neeedo.models.ApplicationContextModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.RestResult;
 import neeedo.imimaprx.htw.de.neeedo.service.EventService;
 
@@ -58,7 +59,7 @@ public abstract class BaseAsyncTask extends AsyncTask {
     }
 
     public String getErrorMessage(String exception) {
-        Context context = ActiveUser.getInstance().getContext();
+        Context context = ApplicationContextModel.getInstance().getApplicationContext();
         String message = context.getString(R.string.exception_message_error_unkown);
 
         if (exception.contains("401")) {
@@ -88,7 +89,7 @@ public abstract class BaseAsyncTask extends AsyncTask {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(ActiveUser.getInstance().getContext(), message, Toast.LENGTH_LONG).show();
+                Toast.makeText(ApplicationContextModel.getInstance().getApplicationContext(), message, Toast.LENGTH_LONG).show();
             }
         });
     }

@@ -10,6 +10,7 @@ import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demand;
 import neeedo.imimaprx.htw.de.neeedo.entities.user.User;
 import neeedo.imimaprx.htw.de.neeedo.fragments.FormDemandFragment;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
+import neeedo.imimaprx.htw.de.neeedo.models.ApplicationContextModel;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.demand.PostCreateUpdateDemandAsyncTask;
@@ -44,7 +45,7 @@ public class SendDemandHandler implements View.OnClickListener {
         demand.setPrice(formDemandFragment.getPrice());
 
         if (currentUser == null) {
-            Context context = ActiveUser.getInstance().getContext();
+            Context context = ApplicationContextModel.getInstance().getApplicationContext();
             Toast.makeText(context, context.getString(R.string.exception_message_login), Toast.LENGTH_LONG).show();
             return;
         }

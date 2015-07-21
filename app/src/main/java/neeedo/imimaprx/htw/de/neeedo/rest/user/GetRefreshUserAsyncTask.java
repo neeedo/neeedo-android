@@ -17,6 +17,7 @@ import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.user.SingleUser;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
+import neeedo.imimaprx.htw.de.neeedo.models.ApplicationContextModel;
 import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.RestResult;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
@@ -76,7 +77,7 @@ public class GetRefreshUserAsyncTask extends AsyncTask {
     }
 
     public String getErrorMessage(String exception) {
-        Context context = ActiveUser.getInstance().getContext();
+        Context context = ApplicationContextModel.getInstance().getApplicationContext();
         String message = context.getString(R.string.exception_message_error_unkown);
 
         if (exception.contains("403")) {
