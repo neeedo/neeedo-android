@@ -31,7 +31,6 @@ public class EditDemandFragment extends FormDemandFragment {
         if (currentDemand != null) {
             etMustTags.setText(currentDemand.getMustTagsString());
             etShouldTags.setText(currentDemand.getShouldTagsString());
-            etDistance.setText(String.valueOf(currentDemand.getDistance()));
             etPriceMin.setText(String.valueOf(currentDemand.getPrice().getMin()));
             etPriceMax.setText(String.valueOf(currentDemand.getPrice().getMax()));
         }

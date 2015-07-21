@@ -37,14 +37,7 @@
             android:id="@+id/flShouldTagSuggestions"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"></org.apmem.tools.layouts.FlowLayout>
-
-        <EditText
-            android:id="@+id/etDistance"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/new_card_distance"
-            android:inputType="number" />
+            android:visibility="gone"/>
 
         <EditText
             android:id="@+id/etPriceMin"

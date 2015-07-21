@@ -44,7 +44,6 @@ public class FormDemandFragment extends FormFragment {
     protected FlowLayout flMustTagSuggestions;
     protected MultiAutoCompleteTextView etShouldTags;
     protected FlowLayout flShouldTagSuggestions;
-    protected EditText etDistance;
     protected EditText etPriceMin;
     protected EditText etPriceMax;
     protected Button btnSubmit;
@@ -55,6 +54,7 @@ public class FormDemandFragment extends FormFragment {
 
     protected boolean isValid;
     HashMap<View, Boolean> validViews;
+    private int selectedDistance;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,7 +71,6 @@ public class FormDemandFragment extends FormFragment {
         flMustTagSuggestions = (FlowLayout) view.findViewById(R.id.flMustTagSuggestions);
         etShouldTags = (MultiAutoCompleteTextView) view.findViewById(R.id.etShouldTags);
         flShouldTagSuggestions = (FlowLayout) view.findViewById(R.id.flShouldTagSuggestions);
-        etDistance = (EditText) view.findViewById(R.id.etDistance);
         etPriceMin = (EditText) view.findViewById(R.id.etPriceMin);
         etPriceMax = (EditText) view.findViewById(R.id.etPriceMax);
         btnSubmit = (Button) view.findViewById(R.id.btnSubmit);
@@ -123,12 +122,7 @@ public class FormDemandFragment extends FormFragment {
     }
 
     public Location getLocation() {
-        // TODO OpenStreetMaps stuff
-        return new Location(0.0, 0.0);
-    }
-
-    public int getDistance() {
-        return Integer.parseInt(etDistance.getText().toString());
+     return new Location(selectedGeoPoint);
     }
 
     public Price getPrice() {
@@ -147,10 +141,11 @@ public class FormDemandFragment extends FormFragment {
         }
 
         if (requestCode == RequestCodes.FIND_LOCATION_REQUEST_CODE) {
-            String latitude = intent.getStringExtra("latitude");
-            String longitude = intent.getStringExtra("longitude");
-            selectedGeoPoint = new GeoPoint(Double.parseDouble(latitude), Double.parseDouble(longitude));
+            selectedGeoPoint = new GeoPoint(Double.parseDouble(intent.getStringExtra("latitude")), Double.parseDouble(intent.getStringExtra("longitude")));
+            selectedDistance = Integer.parseInt(intent.getStringExtra("distance"));
             setLocation(selectedGeoPoint);
+
+
         }
     }
 
@@ -186,7 +181,6 @@ public class FormDemandFragment extends FormFragment {
         validViews = new HashMap<>();
         validViews.put(etMustTags, false);
         validViews.put(etShouldTags, false);
-        validViews.put(etDistance, false);
         validViews.put(etPriceMin, false);
         validViews.put(etPriceMax, false);
 
@@ -202,7 +196,7 @@ public class FormDemandFragment extends FormFragment {
                     if (mustTags.length() == 0) {
                         etMustTags.setError(getResources().getString(R.string.validation_empty_field));
                     }
-                    if(etMustTags.getError() == null) {
+                    if (etMustTags.getError() == null) {
                         validViews.put(etMustTags, true);
                     }
                 }
@@ -212,32 +206,15 @@ public class FormDemandFragment extends FormFragment {
             @Override
             public void onFocusChange(View view, boolean focus) {
                 String shouldTags = etShouldTags.getText().toString();
-                if(!focus) {
+                if (!focus) {
                     if (shouldTags.length() > 0 && !shouldTags.contains(",")) {
                         etShouldTags.setError(getResources().getString(R.string.validation_no_tag));
                     }
                     if (shouldTags.length() == 0) {
                         etShouldTags.setError(getResources().getString(R.string.validation_empty_field));
                     }
-                    if(etShouldTags.getError() == null) {
+                    if (etShouldTags.getError() == null) {
                         validViews.put(etShouldTags, true);
-                    }
-                }
-            }
-        });
-        etDistance.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean focus) {
-                String distance = etDistance.getText().toString();
-                if (!focus) {
-                    if (distance.length() > 0 && Double.valueOf(distance) < 0) {
-                        etDistance.setError(getResources().getString(R.string.validation_value_negative));
-                    }
-                    if (distance.length() == 0) {
-                        etDistance.setError(getResources().getString(R.string.validation_empty_field));
-                    }
-                    if(etDistance.getError() == null) {
-                        validViews.put(etDistance, true);
                     }
                 }
             }
@@ -258,7 +235,7 @@ public class FormDemandFragment extends FormFragment {
                     if (priceMin.length() == 0) {
                         etPriceMin.setError(getResources().getString(R.string.validation_empty_field));
                     }
-                    if(etPriceMin.getError() == null) {
+                    if (etPriceMin.getError() == null) {
                         validViews.put(etPriceMin, true);
                     }
                 }
@@ -292,7 +269,6 @@ public class FormDemandFragment extends FormFragment {
         // force re-focus all textviews for showing errors from above
         etMustTags.requestFocusFromTouch();
         etShouldTags.requestFocusFromTouch();
-        etDistance.requestFocusFromTouch();
         etPriceMin.requestFocusFromTouch();
         etPriceMax.requestFocusFromTouch();
         btnSubmit.requestFocusFromTouch();
@@ -305,5 +281,9 @@ public class FormDemandFragment extends FormFragment {
             Log.d("Validation", "Valid");
         }
         return isValid;
+    }
+
+    public int getDistance() {
+        return selectedDistance;
     }
 }
