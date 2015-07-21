@@ -101,13 +101,15 @@ public class User implements Serializable, BaseEntity {
 
     @Override
     public String toString() {
-
         String text = name;
+        Context context = ApplicationContextModel.getInstance().getApplicationContext();
+        String s = "";
         if (hasNewMessages) {
-            Context context = ApplicationContextModel.getInstance().getApplicationContext();
-            String s = context.getString(R.string.new_message_text);
-            text = s + name;
+            s = context.getString(R.string.new_message_text) + " ";
+        } else {
+            s = context.getString(R.string.message_text) + " ";
         }
+        text = s + name;
         return text;
     }
 

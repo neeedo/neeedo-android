@@ -89,7 +89,8 @@
     <string name="button_messsage">Write message</string>
     <string name="button_send">Send</string>
 
-    <string name="new_message_text">New Message from: </string>
+    <string name="new_message_text">New Message From: </string>
+    <string name="message_text">From: </string>
     <string name="new_match_text">You got a new match to your demand. Click here for redirect.</string>
 
     <string name="dialog_yes">Yes</string>
