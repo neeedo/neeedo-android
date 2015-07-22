@@ -117,6 +117,7 @@ public class SuperFragment extends Fragment {
             return true;
         } else if (id == R.id.action_bar_logout) {
             ActiveUser.getInstance().clearUserInformation();
+
             Toast.makeText(getActivity(), "Logout finished.", Toast.LENGTH_SHORT).show();
             setLoginButtonState();
             redirectToFragment(MainFragment.class);

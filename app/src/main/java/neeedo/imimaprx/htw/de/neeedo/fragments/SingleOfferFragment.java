@@ -132,9 +132,9 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
         }
 
         images = currentOffer.getImages();
-        if(images != null && images.size() > 0) {
+        if (images != null && images.size() > 0) {
 
-            for(int i = 0; i < images.size(); i++) {
+            for (int i = 0; i < images.size(); i++) {
                 FlowLayout.LayoutParams imageLayoutParams = new FlowLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 imageLayoutParams.setMargins(0, 0, 15, 15);
                 ImageView imageView = new ImageView(context);
@@ -185,15 +185,17 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
 
     private void setVisibility() {
 
-        boolean owerShip = UserModel.getInstance().checkIfEntityOwnerIsActiveUser(currentOffer);
+        if (ActiveUser.getInstance().userCredentialsAvailable()) {
+            boolean owerShip = UserModel.getInstance().checkIfEntityOwnerIsActiveUser(currentOffer);
 
-        if (owerShip) {
-            btnDeleteOffer.setVisibility(View.VISIBLE);
-            btnEditOffer.setVisibility(View.VISIBLE);
-        } else {
-            btnRemoveFromFavorites.setVisibility(View.VISIBLE);
-            btnAddToFavorites.setVisibility(View.VISIBLE);
-            btnMessage.setVisibility(View.VISIBLE);
+            if (owerShip) {
+                btnDeleteOffer.setVisibility(View.VISIBLE);
+                btnEditOffer.setVisibility(View.VISIBLE);
+            } else {
+                btnRemoveFromFavorites.setVisibility(View.VISIBLE);
+                btnAddToFavorites.setVisibility(View.VISIBLE);
+                btnMessage.setVisibility(View.VISIBLE);
+            }
         }
     }
 
