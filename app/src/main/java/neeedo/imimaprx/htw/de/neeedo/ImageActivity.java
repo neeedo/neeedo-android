@@ -85,28 +85,33 @@ public class ImageActivity extends Activity {
                         }
                     });
 
-            if (position == 0) {
+            if(imageList.size() <= 1) {
+                btnNext.setVisibility(View.INVISIBLE);
                 btnPrev.setVisibility(View.INVISIBLE);
             } else {
-                btnPrev.setVisibility(View.VISIBLE);
-            }
-            if (position == imageList.size()-1) {
-                btnNext.setVisibility(View.INVISIBLE);
-            } else {
                 btnNext.setVisibility(View.VISIBLE);
+                btnPrev.setVisibility(View.VISIBLE);
             }
 
             btnNext.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    position++;
+                    if (position < imageList.size()-1) {
+                        position++;
+                    } else {
+                        position = 0;
+                    }
                     loadImageView();
                 }
             });
             btnPrev.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    position--;
+                    if (position <= 0) {
+                        position = imageList.size()-1;
+                    } else {
+                        position--;
+                    }
                     loadImageView();
                 }
             });
