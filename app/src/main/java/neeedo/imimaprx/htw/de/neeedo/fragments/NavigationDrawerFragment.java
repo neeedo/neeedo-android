@@ -180,7 +180,7 @@ public class NavigationDrawerFragment extends SuperFragment {
         Fragment currentlyDisplayesFragment = null;
 
         for (Fragment fragment : fragments) {
-            if (fragment.isVisible() && !(fragment instanceof NavigationDrawerFragment)) {
+            if (fragment != null && fragment.isVisible() && !(fragment instanceof NavigationDrawerFragment)) {
                 System.out.println(fragment.getClass().getName());
                 currentlyDisplayesFragment = fragment;
                 break;
