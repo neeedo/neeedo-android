@@ -24,6 +24,7 @@ import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.ItemizedIconOverlay;
 import org.osmdroid.views.overlay.OverlayItem;
 
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -143,7 +144,7 @@ public class FormDemandFragment extends FormFragment {
             selectedGeoPoint = new GeoPoint(Double.parseDouble(intent.getStringExtra("latitude")), Double.parseDouble(intent.getStringExtra("longitude")));
             selectedDistance = Integer.parseInt(intent.getStringExtra("distance"));
             setLocation(selectedGeoPoint);
-
+            btnSetLocation.setError(null);
 
         }
     }
@@ -182,8 +183,8 @@ public class FormDemandFragment extends FormFragment {
         validViews.put(etShouldTags, false);
         validViews.put(etPriceMin, false);
         validViews.put(etPriceMax, false);
+        validViews.put(btnSetLocation, false);
 
-        // TODO more validation
         etMustTags.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean focus) {
@@ -222,6 +223,11 @@ public class FormDemandFragment extends FormFragment {
                     if (priceMin.length() > 0 && priceMax.length() > 0 &&
                             Double.valueOf(priceMin) > Double.valueOf(priceMax)) {
                         etPriceMin.setError(getResources().getString(R.string.validation_price_min_high));
+                    } else {
+                        etPriceMin.setError(null);
+                    }
+                    if (priceMin.length() > 0 && !priceMin.matches("(\\d+(("+ DecimalFormatSymbols.getInstance().getDecimalSeparator()+ ")(\\d{2}|\\d{0}))|\\d)")) {
+                        etPriceMin.setError(getResources().getString(R.string.validation_price_number_format));
                     }
                     if (priceMin.length() == 0) {
                         // TODO if not set, it should be 0
@@ -245,6 +251,11 @@ public class FormDemandFragment extends FormFragment {
                     if (priceMax.length() > 0 && priceMin.length() > 0 &&
                             Double.valueOf(priceMin) > Double.valueOf(priceMax)) {
                         etPriceMax.setError(getResources().getString(R.string.validation_price_max_low));
+                    } else {
+                        etPriceMax.setError(null);
+                    }
+                    if (priceMax.length() > 0 && !priceMax.matches("(\\d+(("+ DecimalFormatSymbols.getInstance().getDecimalSeparator()+ "|\\^)(\\d{2}|\\d{0}))|\\d)")) {
+                        etPriceMax.setError(getResources().getString(R.string.validation_price_number_format));
                     }
                     if (priceMax.length() == 0) {
                         etPriceMax.setError(getResources().getString(R.string.validation_empty_field));
@@ -252,6 +263,17 @@ public class FormDemandFragment extends FormFragment {
                     if (etPriceMax.getError() == null) {
                         validViews.put(etPriceMax, true);
                     }
+                }
+            }
+        });
+        btnSetLocation.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean focus) {
+                if (selectedGeoPoint == null) {
+                    btnSetLocation.setError(getResources().getString(R.string.validation_no_location));
+                }
+                if (btnSetLocation.getError() == null) {
+                    validViews.put(btnSetLocation, true);
                 }
             }
         });
@@ -263,6 +285,7 @@ public class FormDemandFragment extends FormFragment {
         etShouldTags.requestFocusFromTouch();
         etPriceMin.requestFocusFromTouch();
         etPriceMax.requestFocusFromTouch();
+        btnSetLocation.requestFocusFromTouch();
         btnSubmit.requestFocusFromTouch();
 
         if(validViews.containsValue(false)) {

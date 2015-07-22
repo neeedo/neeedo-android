@@ -147,6 +147,8 @@
     <string name="validation_value_negative">This value can\'t be negative</string>
     <string name="validation_price_max_low">Maximal price is lower than minimal price</string>
     <string name="validation_price_min_high">Minimal price is higher than maximal price</string>
+    <string name="validation_price_number_format">Please use a proper price number format</string>
+    <string name="validation_no_location">Please set a location</string>
     <string name="offers">Offers</string>
     <string name="create_new_offer">Create new Offer</string>
     <string name="list_offers">List your Offers</string>
