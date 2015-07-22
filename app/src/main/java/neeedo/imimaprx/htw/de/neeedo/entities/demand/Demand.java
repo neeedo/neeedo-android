@@ -37,7 +37,7 @@ public class Demand implements Serializable, BaseEntity {
     private Location location;
 
     @Element
-    private int distance;
+    private int distance = 10;
 
     @Element
     private Price price;
