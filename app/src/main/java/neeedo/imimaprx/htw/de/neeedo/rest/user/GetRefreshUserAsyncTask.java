@@ -58,7 +58,6 @@ public class GetRefreshUserAsyncTask extends AsyncTask {
 
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
-            //activeUser.clearUserInformation();
             final String message = getErrorMessage(e.getMessage());
 
             loginActivity.runOnUiThread(new Runnable() {

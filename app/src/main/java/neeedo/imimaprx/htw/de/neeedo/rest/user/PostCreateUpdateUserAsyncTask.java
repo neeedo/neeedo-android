@@ -86,7 +86,6 @@ public class PostCreateUpdateUserAsyncTask extends AsyncTask {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
             final String message = getErrorMessage(e.getMessage());
 
-            //activeUser.clearUserInformation();
             loginActivity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {

@@ -214,7 +214,7 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
                         ListOffersFragment.class,
                         getResources().getString(R.string.dialog_delete_offer)
                 );
-                confirmDialog.show(getFragmentManager(), "confirm");
+                confirmDialog.show(getFragmentManager(), getString(R.string.confirm));
                 break;
 
             case R.id.btnEdit:

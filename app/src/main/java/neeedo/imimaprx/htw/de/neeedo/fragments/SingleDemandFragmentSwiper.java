@@ -189,7 +189,7 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
                         ListDemandsFragment.class,
                         getResources().getString(R.string.dialog_delete_demand)
                 );
-                confirmDialog.show(getFragmentManager(), "confirm");
+                confirmDialog.show(getFragmentManager(), getString(R.string.confirm));
                 break;
 
             case R.id.btnEdit:

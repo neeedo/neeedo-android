@@ -57,7 +57,7 @@ public class SuperFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RequestCodes.LOGIN_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            Toast.makeText(getActivity(), "login returned!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.login_finished), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -118,10 +118,10 @@ public class SuperFragment extends Fragment {
         } else if (id == R.id.action_bar_logout) {
             ActiveUser.getInstance().clearUserInformation();
 
-            Toast.makeText(getActivity(), "Logout finished.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.logout_finished), Toast.LENGTH_SHORT).show();
             setLoginButtonState();
             redirectToFragment(MainFragment.class);
-            
+
         } else if (id == R.id.new_messages_icon) {
             redirectToFragment(MessageFragment.class);
         } else if (id == R.id.favorites_icon) {

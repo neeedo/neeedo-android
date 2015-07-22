@@ -70,6 +70,10 @@
     <string name="fail">something went wrong</string>
     <string name="login">login</string>
     <string name="logout">logout</string>
+    <string name="confirm">confirm</string>
+
+    <string name="logout_finished">Logout finished.</string>
+    <string name="login_finished">Login returned.</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="or">or</string>
