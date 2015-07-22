@@ -62,7 +62,7 @@
     <string name="password_length_error">Your password is to short, use at least 8 characters.</string>
     <string name="password_match_error">Your given passwords do not match.</string>
 
-    <string name="username_has_whitespaces">Your username contains whitespaces please remove them.</string>
+    <string name="username_invalid">Your username contains invalid characters, or does not start with a literal. Allowed are A-Z,a-z,0-9,_-.</string>
 
     <string name="new_messages">You have $ new messages.</string>
 

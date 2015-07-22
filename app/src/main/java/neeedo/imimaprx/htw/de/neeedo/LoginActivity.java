@@ -25,8 +25,9 @@ import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 
 public class LoginActivity extends Activity {
 
+    private static String regex = "^[a-zA-Z]+[a-zA-Z0-9-_]*$";
     private EditText mEmailView;
-    public EditText mPasswordView;
+    private EditText mPasswordView;
     private ImageView mLogo;
     private View mLoginFormView;
     private TextView mLoginError;
@@ -184,8 +185,8 @@ public class LoginActivity extends Activity {
             return;
         }
 
-        if (name.contains(" ")) {
-            errorTextView.setText(R.string.username_has_whitespaces);
+        if (name.contains(" ") | !name.matches(regex)) {
+            errorTextView.setText(R.string.username_invalid);
             errorTextView.setVisibility(View.VISIBLE);
             return;
         }
