@@ -214,8 +214,8 @@ public class FormDemandFragment extends FormFragment {
         etPriceMin.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean focus) {
-                String priceMin = etPriceMin.getText().toString();
-                String priceMax = etPriceMax.getText().toString();
+                String priceMin = String.valueOf(etPriceMin.getText().toString().replace(",","."));
+                String priceMax = String.valueOf(etPriceMax.getText().toString().replace(",", "."));
                 if (!focus) {
                     if (priceMin.length() > 0 && Double.valueOf(priceMin) < 0) {
                         etPriceMin.setError(getResources().getString(R.string.validation_value_negative));
@@ -226,7 +226,7 @@ public class FormDemandFragment extends FormFragment {
                     } else {
                         etPriceMin.setError(null);
                     }
-                    if (priceMin.length() > 0 && !priceMin.matches("(\\d+(("+ DecimalFormatSymbols.getInstance().getDecimalSeparator()+ ")(\\d{2}|\\d{0}))|\\d)")) {
+                    if (priceMin.length() > 0 && !priceMin.matches("(\\d+(.(\\d{2}|\\d{0}))|\\d)")) {
                         etPriceMin.setError(getResources().getString(R.string.validation_price_number_format));
                     }
                     if (priceMin.length() == 0) {
@@ -242,8 +242,8 @@ public class FormDemandFragment extends FormFragment {
         etPriceMax.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean focus) {
-                String priceMin = etPriceMin.getText().toString();
-                String priceMax = etPriceMax.getText().toString();
+                String priceMin = String.valueOf(etPriceMin.getText().toString().replace(",", "."));
+                String priceMax = String.valueOf(etPriceMax.getText().toString().replace(",", "."));
                 if (!focus) {
                     if (priceMax.length() > 0 && Double.valueOf(priceMax) < 0) {
                         etPriceMax.setError(getResources().getString(R.string.validation_value_negative));
@@ -254,7 +254,7 @@ public class FormDemandFragment extends FormFragment {
                     } else {
                         etPriceMax.setError(null);
                     }
-                    if (priceMax.length() > 0 && !priceMax.matches("(\\d+(("+ DecimalFormatSymbols.getInstance().getDecimalSeparator()+ "|\\^)(\\d{2}|\\d{0}))|\\d)")) {
+                    if (priceMax.length() > 0 && !priceMax.matches("(\\d+(.(\\d{2}|\\d{0}))|\\d)")) {
                         etPriceMax.setError(getResources().getString(R.string.validation_price_number_format));
                     }
                     if (priceMax.length() == 0) {

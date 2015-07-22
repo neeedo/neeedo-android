@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import com.squareup.otto.Subscribe;
 
+import java.text.DecimalFormatSymbols;
+
 import neeedo.imimaprx.htw.de.neeedo.MainActivity;
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demand;
@@ -31,8 +33,8 @@ public class EditDemandFragment extends FormDemandFragment {
         if (currentDemand != null) {
             etMustTags.setText(currentDemand.getMustTagsString());
             etShouldTags.setText(currentDemand.getShouldTagsString());
-            etPriceMin.setText(String.valueOf(currentDemand.getPrice().getMin()));
-            etPriceMax.setText(String.valueOf(currentDemand.getPrice().getMax()));
+            etPriceMin.setText(String.format("%.2f", currentDemand.getPrice().getMin()));
+            etPriceMax.setText(String.format("%.2f", currentDemand.getPrice().getMax()));
         }
 
         btnSubmit.setOnClickListener(new SendDemandHandler(BaseAsyncTask.SendMode.UPDATE, this));
