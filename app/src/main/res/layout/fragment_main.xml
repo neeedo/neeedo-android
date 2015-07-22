@@ -12,27 +12,36 @@
     <FrameLayout
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#99000000"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
 
         <ImageView
             android:layout_width="160dp"
             android:layout_height="160dp"
-            android:layout_gravity="top|center_horizontal"
-            android:background="@drawable/logo_shadow" />
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/logo_shadow"
+            android:layout_marginTop="80dp"
+            android:alpha=".6" />
 
         <Button
             android:layout_width="150dp"
-            android:layout_height="70dp"
+            android:layout_height="100dp"
             android:text="@string/new_card_demand"
             android:id="@+id/btnNewDemand"
-            android:layout_gravity="center|right" />
+            android:layout_gravity="center|right"
+            android:layout_marginTop="80dp"
+            android:background="#AAFF006D" />
 
         <Button
             android:layout_width="150dp"
-            android:layout_height="70dp"
+            android:layout_height="100dp"
             android:text="@string/new_card_offer"
             android:id="@+id/btnNewOffer"
-            android:layout_gravity="left|center" />
+            android:layout_gravity="left|center"
+            android:layout_marginTop="80dp"
+            android:background="#AA88BEB1" />
 
     </FrameLayout>
 
