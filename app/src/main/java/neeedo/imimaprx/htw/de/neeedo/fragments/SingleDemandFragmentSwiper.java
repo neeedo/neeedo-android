@@ -48,7 +48,7 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
 
         view = inflater.inflate(R.layout.single_demand_view_swiper, container, false);
 
-        btnDeleteDemand = (Button) view.findViewById(R.id.btnDemandDelete);
+        btnDeleteDemand = (Button) view.findViewById(R.id.btnDelete);
         btnEditDemand = (Button) view.findViewById(R.id.btnEdit);
 
         textViewMustTags = (TextView) view.findViewById(R.id.tvMustTags);
