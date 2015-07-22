@@ -15,6 +15,7 @@ import java.util.List;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demands;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.Location;
+import neeedo.imimaprx.htw.de.neeedo.events.GetDemandListFinishedEvent;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
@@ -42,6 +43,12 @@ public class GetDemandsAsyncTask extends BaseAsyncTask {
         this(getEntitiesMode);
         this.limit = limit;
         this.offset = offset;
+    }
+
+    @Override
+    protected void onPostExecute(Object result) {
+        if (result instanceof RestResult)
+            eventService.post(new GetDemandListFinishedEvent());
     }
 
     @Override

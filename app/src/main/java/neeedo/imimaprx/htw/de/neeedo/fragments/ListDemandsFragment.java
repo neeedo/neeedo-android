@@ -18,6 +18,7 @@ import java.util.List;
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demand;
 import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demands;
+import neeedo.imimaprx.htw.de.neeedo.events.GetDemandListFinishedEvent;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.fragments.adapters.ListProductsArrayAdapter;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
@@ -57,12 +58,11 @@ public class ListDemandsFragment extends SuperFragment {
             listMode = BaseAsyncTask.GetEntitiesMode.GET_BY_USER;
         }
 
-        BaseAsyncTask asyncTask = new GetDemandsAsyncTask(listMode, 100, 0); // TODO pagination or higher limit?
-        asyncTask.execute();
+        new GetDemandsAsyncTask(listMode, 100, 0).execute();
     }
 
     @Subscribe
-    public void fillList(ServerResponseEvent e) {
+    public void fillList(GetDemandListFinishedEvent e) {
 
         List<Demand> demandList = DemandsModel.getInstance().getDemands();
 
