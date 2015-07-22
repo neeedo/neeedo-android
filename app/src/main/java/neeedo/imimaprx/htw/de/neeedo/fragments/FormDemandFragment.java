@@ -189,11 +189,8 @@ public class FormDemandFragment extends FormFragment {
             public void onFocusChange(View view, boolean focus) {
                 String mustTags = etMustTags.getText().toString();
                 if (!focus) {
-                    if (mustTags.length() > 0 && !mustTags.contains(",")) {
+                    if (mustTags.length() <= 0) {
                         etMustTags.setError(getResources().getString(R.string.validation_no_tag));
-                    }
-                    if (mustTags.length() == 0) {
-                        etMustTags.setError(getResources().getString(R.string.validation_empty_field));
                     }
                     if (etMustTags.getError() == null) {
                         validViews.put(etMustTags, true);
@@ -204,14 +201,9 @@ public class FormDemandFragment extends FormFragment {
         etShouldTags.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean focus) {
+                // TODO remove this validation?
                 String shouldTags = etShouldTags.getText().toString();
                 if (!focus) {
-                    if (shouldTags.length() > 0 && !shouldTags.contains(",")) {
-                        etShouldTags.setError(getResources().getString(R.string.validation_no_tag));
-                    }
-                    if (shouldTags.length() == 0) {
-                        etShouldTags.setError(getResources().getString(R.string.validation_empty_field));
-                    }
                     if (etShouldTags.getError() == null) {
                         validViews.put(etShouldTags, true);
                     }
@@ -232,6 +224,7 @@ public class FormDemandFragment extends FormFragment {
                         etPriceMin.setError(getResources().getString(R.string.validation_price_min_high));
                     }
                     if (priceMin.length() == 0) {
+                        // TODO if not set, it should be 0
                         etPriceMin.setError(getResources().getString(R.string.validation_empty_field));
                     }
                     if (etPriceMin.getError() == null) {
