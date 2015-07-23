@@ -33,8 +33,8 @@ public class EditDemandFragment extends FormDemandFragment {
         if (currentDemand != null) {
             etMustTags.setText(currentDemand.getMustTagsString());
             etShouldTags.setText(currentDemand.getShouldTagsString());
-            etPriceMin.setText(String.format("%.2f", currentDemand.getPrice().getMin()));
-            etPriceMax.setText(String.format("%.2f", currentDemand.getPrice().getMax()));
+            etPriceMin.setText(String.format("%.2f", currentDemand.getPrice().getMin()).replace(",","."));
+            etPriceMax.setText(String.format("%.2f", currentDemand.getPrice().getMax()).replace(",","."));
         }
 
         btnSubmit.setOnClickListener(new SendDemandHandler(BaseAsyncTask.SendMode.UPDATE, this));
