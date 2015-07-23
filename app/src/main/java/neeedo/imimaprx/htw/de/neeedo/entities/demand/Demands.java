@@ -34,10 +34,16 @@ public class Demands implements Serializable, BaseEntity {
     }
 
     public void addSingleDemandOnFirstPostion(Demand demand) {
-        if (demands == null) {
-            demands = new ArrayList<>();
+        try {
+            if (demands == null) {
+                demands = new ArrayList<>();
+                demands.add(demand);
+                return;
+            }
+            demands.add(0, demand);
+        } catch (Exception e) {
+
         }
-        demands.add(0, demand);
     }
 
     public void replaceDemand(Demand demand) {
@@ -51,10 +57,14 @@ public class Demands implements Serializable, BaseEntity {
     }
 
     public void removeById(String id) {
+        Demand toRemove = null;
         for (Demand d : demands) {
             if (d.getId().equals(id)) {
-                demands.remove(d);
+                toRemove = d;
             }
+        }
+        if (toRemove != null) {
+            demands.remove(toRemove);
         }
     }
 

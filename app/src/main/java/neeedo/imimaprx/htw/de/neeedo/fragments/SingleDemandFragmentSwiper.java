@@ -202,12 +202,5 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
 
     }
 
-    @Subscribe
-    public void removeActionDone(DeleteFinishedEvent e) {
-        if (e.isFinished()) {
-            Toast.makeText(getActivity(), getActivity().getString(R.string.delete_success), Toast.LENGTH_SHORT).show();
-            DemandsModel.getInstance().removeDemandByID(currentDemand.getId());
-        }
-    }
 
 }

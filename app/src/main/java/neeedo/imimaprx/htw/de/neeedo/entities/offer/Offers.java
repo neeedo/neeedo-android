@@ -25,19 +25,18 @@ public class Offers implements Serializable, BaseEntity {
         this.offers = offers;
     }
 
-    @Override
-    public String toString() {
-        return "Offers{" +
-                "soffers=" + offers +
-                '}';
-    }
 
     public void addSingleOfferOnFirstPostion(Offer offer) {
-        if (offers == null) {
-            offers = new ArrayList<>();
-        }
+        try {
+            if (offers == null) {
+                offers = new ArrayList<>();
+                offers.add(offer);
+                return;
+            }
+            offers.add(0, offer);
+        } catch (Exception e) {
 
-        offers.add(0, offer);
+        }
     }
 
     public void replaceOffer(Offer offer) {
@@ -53,11 +52,22 @@ public class Offers implements Serializable, BaseEntity {
     }
 
     public void removeByID(String id) {
+        Offer toRemove = null;
         for (Offer o : offers) {
             if (o.getId().equals(id)) {
-                offers.remove(o);
+                toRemove = o;
             }
         }
+        if (toRemove != null) {
+            offers.remove(toRemove);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Offers{" +
+                "soffers=" + offers +
+                '}';
     }
 
 }

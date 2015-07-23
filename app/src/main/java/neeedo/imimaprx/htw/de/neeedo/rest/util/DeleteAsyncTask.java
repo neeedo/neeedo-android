@@ -14,6 +14,8 @@ import neeedo.imimaprx.htw.de.neeedo.entities.user.User;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.BaseEntity;
 import neeedo.imimaprx.htw.de.neeedo.events.DeleteFinishedEvent;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
+import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
+import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.RestResult;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
@@ -85,8 +87,15 @@ public class DeleteAsyncTask extends BaseAsyncTask {
             setAuthorisationHeaders(requestHeaders);
             HttpEntity requestEntity = new HttpEntity(requestHeaders);
             RestTemplate restTemplate = new RestTemplate(HttpRequestFactoryProviderImpl.getClientHttpRequestFactorySSLSupport(9000));
-            //Void class implies no return entity
+
             restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, Void.class);
+
+            if (entityType == EntityType.DEMAND) {
+                DemandsModel.getInstance().removeDemandByID(((Demand) baseEntity).getId());
+            }
+            if (entityType == EntityType.OFFER) {
+                OffersModel.getInstance().removeOfferByID(((Offer) baseEntity).getId());
+            }
 
             return new RestResult(RestResult.ReturnType.SUCCESS);
         } catch (Exception e) {

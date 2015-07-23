@@ -62,7 +62,9 @@ public class PostCreateUpdateDemandAsyncTask extends BaseAsyncTask {
             ResponseEntity<SingleDemand> response = restTemplate.exchange(url, httpMethod, requestEntity, SingleDemand.class);
             SingleDemand singleDemand = response.getBody();
 
-            demandsModel.replaceDemand(singleDemand.getDemand());
+            if (sendMode == SendMode.UPDATE) {
+                demandsModel.replaceDemand(singleDemand.getDemand());
+            }
             demandsModel.setDraft(null);
 
             return new RestResult(RestResult.ReturnType.SUCCESS);

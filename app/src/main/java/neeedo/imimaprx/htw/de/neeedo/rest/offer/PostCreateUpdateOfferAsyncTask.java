@@ -63,7 +63,9 @@ public class PostCreateUpdateOfferAsyncTask extends BaseAsyncTask {
             ResponseEntity<SingleOffer> response = restTemplate.exchange(url, httpMethod, requestEntity, SingleOffer.class);
             SingleOffer singleOffer = response.getBody();
 
-            offersModel.replaceOffer(singleOffer.getOffer());
+            if (sendMode == SendMode.UPDATE) {
+                offersModel.replaceOffer(singleOffer.getOffer());
+            }
             offersModel.setDraft(null);
 
             return new RestResult(RestResult.ReturnType.SUCCESS);
