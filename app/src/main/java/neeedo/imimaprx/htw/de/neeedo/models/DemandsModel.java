@@ -98,6 +98,8 @@ public class DemandsModel {
         for (Demand newDemand : newDemands) {
             if (!demands.checkIfOfferWithIdExists(newDemand.getId())) {
                 demands.addDemand(newDemand);
+            } else {
+                replaceDemand(newDemand);
             }
         }
     }

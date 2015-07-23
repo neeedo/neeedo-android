@@ -70,6 +70,8 @@ public class OffersModel {
         for (Offer newOffer : newOffers) {
             if (!offers.checkIfOfferWithIdExists(newOffer.getId())) {
                 offers.addOffer(newOffer);
+            } else {
+                replaceOffer(newOffer);
             }
         }
     }
