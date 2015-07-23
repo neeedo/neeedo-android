@@ -2,19 +2,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/background">
+    android:background="@drawable/background"
+    android:orientation="vertical">
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="#99000000"
-        android:padding="15dp"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin">
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:background="#99000000"
+        android:orientation="vertical"
+        android:padding="15dp">
 
         <TextView
             android:id="@+id/tvEmpty"
@@ -22,8 +22,8 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:gravity="center"
-            android:visibility="visible"
-            android:textColor="#88BEB1"/>
+            android:textColor="#88BEB1"
+            android:visibility="visible" />
 
         <TableLayout
             android:layout_width="match_parent"
@@ -37,13 +37,18 @@
             android:divider="@android:color/transparent"
             android:dividerHeight="10dp" />
 
-        <ProgressBar
-            android:id="@+id/list_offers_progessbar"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_centerInParent="true"
-            android:scaleType="centerInside"
-            android:padding="100dp" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ProgressBar
+                android:id="@+id/list_offers_progessbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:padding="100dp"
+                android:scaleType="centerInside" />
+        </RelativeLayout>
 
     </FrameLayout>
 
