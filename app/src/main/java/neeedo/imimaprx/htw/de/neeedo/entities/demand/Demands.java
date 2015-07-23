@@ -50,6 +50,14 @@ public class Demands implements Serializable, BaseEntity {
         }
     }
 
+    public void removeById(String id) {
+        for (Demand d : demands) {
+            if (d.getId().equals(id)) {
+                demands.remove(d);
+            }
+        }
+    }
+
     @Override
     public String toString() {
         return "Demands{" +

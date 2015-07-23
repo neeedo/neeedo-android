@@ -80,4 +80,8 @@ public class DemandsModel {
     public void replaceDemand(Demand demand) {
         demands.replaceDemand(demand);
     }
+
+    public void removeDemandByID(String id){
+        demands.removeById(id);
+    }
 }

@@ -52,4 +52,12 @@ public class Offers implements Serializable, BaseEntity {
 
     }
 
+    public void removeByID(String id) {
+        for (Offer o : offers) {
+            if (o.getId().equals(id)) {
+                offers.remove(o);
+            }
+        }
+    }
+
 }

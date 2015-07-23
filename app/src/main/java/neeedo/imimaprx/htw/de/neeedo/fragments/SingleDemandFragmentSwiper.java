@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
+import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,7 @@ import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demand;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offer;
 
+import neeedo.imimaprx.htw.de.neeedo.events.DeleteFinishedEvent;
 import neeedo.imimaprx.htw.de.neeedo.fragments.adapters.OfferSwipeArrayListAdapter;
 import neeedo.imimaprx.htw.de.neeedo.fragments.adapters.SwipeCardViewItem;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
@@ -198,6 +200,14 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
                 break;
         }
 
+    }
+
+    @Subscribe
+    public void removeActionDone(DeleteFinishedEvent e) {
+        if (e.isFinished()) {
+            Toast.makeText(getActivity(), getActivity().getString(R.string.delete_success), Toast.LENGTH_SHORT).show();
+            DemandsModel.getInstance().removeDemandByID(currentDemand.getId());
+        }
     }
 
 }

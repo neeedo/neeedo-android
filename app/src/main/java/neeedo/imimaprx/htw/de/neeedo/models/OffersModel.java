@@ -53,4 +53,8 @@ public class OffersModel {
         offers.replaceOffer(offer);
     }
 
+    public void removeOfferByID(String id) {
+        offers.removeByID(id);
+    }
+
 }
