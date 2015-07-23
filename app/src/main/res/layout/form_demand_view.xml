@@ -1,25 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    android:background="#4F9181">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:padding="5dp">
 
         <TextView
             android:id="@+id/tvHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/new_card_demand"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:clickable="false"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:layout_gravity="center_horizontal"
+            android:textAllCaps="true"
+            style="@style/Base.TextAppearance.AppCompat.Headline"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:id="@+id/tvMustTags"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/new_card_must_tags"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:padding="5dp" />
 
         <MultiAutoCompleteTextView
             android:id="@+id/etMustTags"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/new_card_must_tags" />
+            android:hint="@string/new_card_must_tags_hint"
+            android:background="#88BEB1"
+            android:padding="5dp" />
 
         <org.apmem.tools.layouts.FlowLayout
             android:id="@+id/flMustTagSuggestions"
@@ -27,11 +47,21 @@
             android:layout_height="wrap_content"
             android:visibility="gone"></org.apmem.tools.layouts.FlowLayout>
 
+        <TextView
+            android:id="@+id/tvShouldTags"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/new_card_should_tags"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:padding="5dp" />
+
         <MultiAutoCompleteTextView
             android:id="@+id/etShouldTags"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/new_card_should_tags" />
+            android:hint="@string/new_card_should_tags_hint"
+            android:background="#88BEB1"
+            android:padding="5dp" />
 
         <org.apmem.tools.layouts.FlowLayout
             android:id="@+id/flShouldTagSuggestions"
@@ -39,27 +69,52 @@
             android:layout_height="wrap_content"
             android:visibility="gone"/>
 
-        <EditText
-            android:id="@+id/etPriceMin"
+        <TextView
+            android:id="@+id/tvPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/new_card_price_min"
-            android:inputType="numberDecimal" />
+            android:hint="@string/new_card_price"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:padding="5dp" />
 
-        <EditText
-            android:id="@+id/etPriceMax"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/new_card_price_max"
-            android:inputType="numberDecimal" />
+        <LinearLayout android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/etPriceMin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/new_card_price_min_hint"
+                android:inputType="numberDecimal"
+                android:layout_weight="1"
+                android:background="#88BEB1"
+                android:padding="5dp"
+                android:layout_marginRight="5dp" />
+
+            <EditText
+                android:id="@+id/etPriceMax"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/new_card_price_max_hint"
+                android:inputType="numberDecimal"
+                android:layout_weight="1"
+                android:background="#88BEB1"
+                android:padding="5dp"
+                android:layout_marginLeft="5dp" />
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/btnChooseLocation"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/new_offer_set_location" />
+            android:text="@string/new_offer_set_location"
+            android:background="#88BEB1"
+            android:padding="5dp"
+            android:layout_marginTop="10dp" />
 
         <RelativeLayout
             android:id="@+id/mapContainer"
@@ -74,7 +129,10 @@
             android:id="@+id/btnSubmit"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/new_card_submit" />
+            android:text="@string/new_card_submit"
+            android:background="#88BEB1"
+            android:padding="5dp"
+            android:layout_marginTop="10dp" />
 
     </LinearLayout>
 </ScrollView>

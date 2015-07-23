@@ -28,26 +28,28 @@
         <Button
             android:layout_width="150dp"
             android:layout_height="100dp"
-            android:text="@string/new_card_demand"
+            android:text="@string/button_new_demand"
             android:id="@+id/btnNewDemand"
             android:layout_gravity="center|right"
             android:layout_marginTop="80dp"
             android:background="#AAFF006D"
             android:drawableLeft="@drawable/offer"
             android:paddingLeft="10dp"
-            android:paddingRight="5dp" />
+            android:paddingRight="5dp"
+            android:singleLine="true" />
 
         <Button
             android:layout_width="150dp"
             android:layout_height="100dp"
-            android:text="@string/new_card_offer"
+            android:text="@string/button_new_offer"
             android:id="@+id/btnNewOffer"
             android:layout_gravity="left|center"
             android:layout_marginTop="80dp"
             android:background="#AA88BEB1"
             android:drawableLeft="@drawable/demand"
             android:paddingLeft="10dp"
-            android:paddingRight="5dp" />
+            android:paddingRight="5dp"
+            android:singleLine="true" />
 
     </FrameLayout>
 

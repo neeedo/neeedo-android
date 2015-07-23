@@ -27,20 +27,26 @@
 
 
     <!-- Forms -->
-    <string name="new_card_must_tags">Must tags</string>
-    <string name="new_card_should_tags">Should tags</string>
+    <string name="new_card_must_tags">I\'m seeking necessarily for ...</string>
+    <string name="new_card_must_tags_hint">bicycle, mountainbike, ...</string>
+    <string name="new_card_should_tags">And it would be nice ... </string>
+    <string name="new_card_should_tags_hint">red, ...</string>
     <string name="new_card_tags">Tags</string>
+    <string name="new_card_tags_hint">bicylce, mountainbike, red, ...</string>
     <string name="new_card_location_lat">Location lat.</string>
     <string name="new_card_location_lon">Location lon.</string>
     <string name="new_card_distance">Distance</string>
-    <string name="new_card_price_min">Price min.</string>
-    <string name="new_card_price_max">Price max.</string>
-    <string name="new_card_price">Price</string>
-    <string name="new_card_offer">New Offer</string>
+    <string name="new_card_price">Price (€)</string>
+    <string name="new_card_price_min_hint">0.00</string>
+    <string name="new_card_price_max_hint">42.00</string>
+    <string name="new_card_price_hint">42.00</string>
+    <string name="new_card_offer">Create Offer</string>
     <string name="new_card_submit">Submit</string>
-    <string name="new_card_demand">New Demand</string>
+    <string name="new_card_demand">Create Demand</string>
     <string name="edit_card_demand">Edit Demand</string>
     <string name="edit_card_offer">Edit Offer</string>
+    <string name="button_new_demand">New Demand</string>
+    <string name="button_new_offer">New Offer</string>
 
 
     <!-- Error messages -->
@@ -103,7 +109,7 @@
     <string name="dialog_delete_demand">Are you sure you want to delete this demand?</string>
     <string name="dialog_delete_offer">Are you sure you want to delete this offer?</string>
     <string name="title_activity_location_chooser">LocationChooser</string>
-    <string name="new_offer_set_location">location setzen</string>
+    <string name="new_offer_set_location">At location</string>
 
     <string name="item_distance">Distance</string>
     <string name="item_price">Price</string>

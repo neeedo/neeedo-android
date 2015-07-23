@@ -1,24 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    android:background="#4F9181">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="5dp">
 
         <TextView
             android:id="@+id/tvHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/new_card_offer"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:clickable="false"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:layout_gravity="center_horizontal"
+            android:textAllCaps="true"
+            style="@style/Base.TextAppearance.AppCompat.Headline"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp" />
 
         <HorizontalScrollView
             android:layout_width="fill_parent"
             android:layout_height="120dp"
-            android:background="#aaa"
+            android:background="#88BEB1"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -41,6 +51,14 @@
 
         </HorizontalScrollView>
 
+        <TextView
+            android:id="@+id/tvTags"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/new_card_tags"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:padding="5dp" />
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -51,7 +69,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="99999"
-                android:hint="@string/new_card_tags" />
+                android:hint="@string/new_card_tags_hint"
+                android:background="#88BEB1"
+                android:padding="5dp" />
 
             <ImageButton
                 android:src="@drawable/scan_barcode"
@@ -60,7 +80,9 @@
                 android:layout_height="match_parent"
                 android:scaleType="fitCenter"
                 android:text="@string/start_barcode_scan"
-                android:layout_alignParentRight="true" />
+                android:layout_alignParentRight="true"
+                android:background="#88BEB1"
+                android:layout_marginLeft="5dp" />
 
         </LinearLayout>
 
@@ -70,13 +92,23 @@
             android:layout_height="wrap_content"
             android:visibility="gone"></org.apmem.tools.layouts.FlowLayout>
 
+        <TextView
+            android:id="@+id/tvPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/new_card_price"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:padding="5dp" />
+
         <EditText
             android:id="@+id/etPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/new_card_price"
-            android:inputType="numberDecimal" />
+            android:hint="@string/new_card_price_hint"
+            android:inputType="numberDecimal"
+            android:background="#88BEB1"
+            android:padding="5dp" />
 
         <RelativeLayout
             android:id="@+id/mapContainer"
@@ -91,13 +123,17 @@
             android:id="@+id/btnChooseLocation"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/new_offer_set_location" />
+            android:text="@string/new_offer_set_location"
+            android:background="#88BEB1"
+            android:layout_marginTop="10dp" />
 
         <Button
             android:id="@+id/btnSubmit"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/new_card_submit" />
+            android:text="@string/new_card_submit"
+            android:background="#88BEB1"
+            android:layout_marginTop="10dp" />
 
     </LinearLayout>
 </ScrollView>
