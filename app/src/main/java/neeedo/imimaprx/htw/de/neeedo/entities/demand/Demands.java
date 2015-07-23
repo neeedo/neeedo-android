@@ -13,7 +13,7 @@ import neeedo.imimaprx.htw.de.neeedo.entities.util.BaseEntity;
 public class Demands implements Serializable, BaseEntity {
 
     @Element
-    private ArrayList<Demand> demands;
+    private ArrayList<Demand> demands = new ArrayList<>();
 
     public Demands() {
     }
@@ -33,17 +33,8 @@ public class Demands implements Serializable, BaseEntity {
         return false;
     }
 
-    public void addSingleDemandOnFirstPostion(Demand demand) {
-        try {
-            if (demands == null) {
-                demands = new ArrayList<>();
-                demands.add(demand);
-                return;
-            }
-            demands.add(0, demand);
-        } catch (Exception e) {
-
-        }
+    public void addDemand(Demand demand) {
+        demands.add(0,demand);
     }
 
     public void replaceDemand(Demand demand) {
@@ -67,6 +58,19 @@ public class Demands implements Serializable, BaseEntity {
             demands.remove(toRemove);
         }
     }
+
+    public boolean checkIfOfferWithIdExists(String id) {
+        boolean temp = false;
+
+        for (Demand demand : demands) {
+            if (demand.getId().equals(id)) {
+                temp = true;
+                break;
+            }
+        }
+        return temp;
+    }
+
 
     @Override
     public String toString() {

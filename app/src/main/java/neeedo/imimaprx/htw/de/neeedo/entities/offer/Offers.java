@@ -12,7 +12,7 @@ import neeedo.imimaprx.htw.de.neeedo.entities.util.BaseEntity;
 public class Offers implements Serializable, BaseEntity {
 
     @Element
-    private ArrayList<Offer> offers;
+    private ArrayList<Offer> offers = new ArrayList<>();
 
     public Offers() {
     }
@@ -26,17 +26,8 @@ public class Offers implements Serializable, BaseEntity {
     }
 
 
-    public void addSingleOfferOnFirstPostion(Offer offer) {
-        try {
-            if (offers == null) {
-                offers = new ArrayList<>();
-                offers.add(offer);
-                return;
-            }
-            offers.add(0, offer);
-        } catch (Exception e) {
-
-        }
+    public void addOffer(Offer offer) {
+        offers.add(0, offer);
     }
 
     public void replaceOffer(Offer offer) {
@@ -61,6 +52,18 @@ public class Offers implements Serializable, BaseEntity {
         if (toRemove != null) {
             offers.remove(toRemove);
         }
+    }
+
+    public boolean checkIfOfferWithIdExists(String id) {
+        boolean temp = false;
+
+        for (Offer offer : offers) {
+            if (offer.getId().equals(id)) {
+                temp = true;
+                break;
+            }
+        }
+        return temp;
     }
 
     @Override

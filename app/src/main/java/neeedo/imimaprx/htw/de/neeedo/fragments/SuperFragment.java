@@ -23,7 +23,9 @@ import neeedo.imimaprx.htw.de.neeedo.MainActivity;
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.events.UserStateChangedEvent;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
+import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.models.MessagesModel;
+import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.service.EventService;
 import neeedo.imimaprx.htw.de.neeedo.vo.RequestCodes;
@@ -117,7 +119,9 @@ public class SuperFragment extends Fragment {
             return true;
         } else if (id == R.id.action_bar_logout) {
             ActiveUser.getInstance().clearUserInformation();
-
+            DemandsModel.getInstance().clearDemands();
+            OffersModel.getInstance().clearOffers();
+            
             Toast.makeText(getActivity(), getString(R.string.logout_finished), Toast.LENGTH_SHORT).show();
             setLoginButtonState();
             redirectToFragment(MainFragment.class);

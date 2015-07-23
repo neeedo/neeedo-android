@@ -4,11 +4,10 @@ import java.util.ArrayList;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offer;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offers;
-import neeedo.imimaprx.htw.de.neeedo.entities.offer.SingleOffer;
 
 public class OffersModel {
 
-    private Offers offers;
+    private Offers offers = new Offers();
 
     private Offer draft;
 
@@ -48,7 +47,7 @@ public class OffersModel {
     }
 
     public void addOffer(Offer offer) {
-        offers.addSingleOfferOnFirstPostion(offer);
+        offers.addOffer(offer);
     }
 
     public boolean isUseLocalList() {
@@ -65,6 +64,18 @@ public class OffersModel {
 
     public void removeOfferByID(String id) {
         offers.removeByID(id);
+    }
+
+    public void appendOffers(ArrayList<Offer> newOffers) {
+        for (Offer newOffer : newOffers) {
+            if (!offers.checkIfOfferWithIdExists(newOffer.getId())) {
+                offers.addOffer(newOffer);
+            }
+        }
+    }
+
+    public void clearOffers() {
+        offers.setOffers(new ArrayList<Offer>());
     }
 
 }

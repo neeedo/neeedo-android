@@ -64,11 +64,17 @@ public class PostCreateUpdateDemandAsyncTask extends BaseAsyncTask {
 
             if (sendMode == SendMode.UPDATE) {
                 demandsModel.replaceDemand(singleDemand.getDemand());
+            } else {
+                demandsModel.addDemand(singleDemand.getDemand());
             }
             demandsModel.setDraft(null);
 
             return new RestResult(RestResult.ReturnType.SUCCESS);
-        } catch (Exception e) {
+        } catch (
+                Exception e
+                )
+
+        {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
             String message = getErrorMessage(e.getMessage());
             showToast(message);

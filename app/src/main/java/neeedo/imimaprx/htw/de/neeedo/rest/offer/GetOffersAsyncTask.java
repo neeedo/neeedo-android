@@ -88,7 +88,9 @@ public class GetOffersAsyncTask extends BaseAsyncTask {
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             ResponseEntity<Offers> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, Offers.class);
             final Offers offers = responseEntity.getBody();
-            OffersModel.getInstance().setOffers(offers);
+
+            OffersModel.getInstance().appendOffers(offers.getOffers());
+
             return new RestResult(RestResult.ReturnType.SUCCESS);
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);

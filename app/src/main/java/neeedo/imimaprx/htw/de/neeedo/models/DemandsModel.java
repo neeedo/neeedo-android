@@ -5,13 +5,12 @@ import java.util.ArrayList;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demand;
 import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demands;
-import neeedo.imimaprx.htw.de.neeedo.entities.demand.SingleDemand;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offer;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offers;
 
 public class DemandsModel {
 
-    private Demands demands;
+    private Demands demands = new Demands();
     private boolean useLocalList = false;
 
     private Demand draft;
@@ -82,8 +81,9 @@ public class DemandsModel {
         return foundDemand;
     }
 
+
     public void addDemand(Demand demand) {
-        demands.addSingleDemandOnFirstPostion(demand);
+        demands.addDemand(demand);
     }
 
     public void replaceDemand(Demand demand) {
@@ -92,5 +92,17 @@ public class DemandsModel {
 
     public void removeDemandByID(String id) {
         demands.removeById(id);
+    }
+
+    public void appendDemands(ArrayList<Demand> newDemands) {
+        for (Demand newDemand : newDemands) {
+            if (!demands.checkIfOfferWithIdExists(newDemand.getId())) {
+                demands.addDemand(newDemand);
+            }
+        }
+    }
+
+    public void clearDemands() {
+        demands.setDemands(new ArrayList<Demand>());
     }
 }
