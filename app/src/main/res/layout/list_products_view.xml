@@ -22,7 +22,8 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:gravity="center"
-            android:visibility="visible" />
+            android:visibility="visible"
+            android:textColor="#88BEB1"/>
 
         <TableLayout
             android:layout_width="match_parent"
