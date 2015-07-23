@@ -32,7 +32,10 @@
             android:id="@+id/btnNewDemand"
             android:layout_gravity="center|right"
             android:layout_marginTop="80dp"
-            android:background="#AAFF006D" />
+            android:background="#AAFF006D"
+            android:drawableLeft="@drawable/offer"
+            android:paddingLeft="10dp"
+            android:paddingRight="5dp" />
 
         <Button
             android:layout_width="150dp"
@@ -41,7 +44,10 @@
             android:id="@+id/btnNewOffer"
             android:layout_gravity="left|center"
             android:layout_marginTop="80dp"
-            android:background="#AA88BEB1" />
+            android:background="#AA88BEB1"
+            android:drawableLeft="@drawable/demand"
+            android:paddingLeft="10dp"
+            android:paddingRight="5dp" />
 
     </FrameLayout>
 
