@@ -238,7 +238,7 @@ public class FormOfferFragment extends FormFragment {
         }
         if (imageNamesOnServer.isEmpty()) {
             //TODO show error
-            isValidInput = false;
+            //isValidInput = false;
         }
         if (etTags.getText().toString().matches("")) {
             etTags.setError(getString(R.string.error_empty_field));
