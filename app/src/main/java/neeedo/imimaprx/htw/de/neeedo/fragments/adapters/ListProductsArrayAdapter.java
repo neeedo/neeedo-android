@@ -58,6 +58,10 @@ public class ListProductsArrayAdapter<Object> extends ArrayAdapter<Object> {
     public View getView(int position, View row, ViewGroup parent) {
         row = LayoutInflater.from(context).inflate(layoutResourceId, parent, false);
 
+        if(position % 2 == 0) {
+            row.setBackgroundColor(0xFF4F9181);
+        }
+
         layoutImage = (RelativeLayout) row.findViewById(R.id.layoutImage);
         layoutText = (LinearLayout) row.findViewById(R.id.layoutText);
 
