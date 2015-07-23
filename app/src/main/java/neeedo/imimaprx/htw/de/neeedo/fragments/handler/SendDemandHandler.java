@@ -30,7 +30,6 @@ public class SendDemandHandler implements View.OnClickListener {
         view.requestFocusFromTouch(); // workaround for checking last field by focus change listener
 
         if(!formDemandFragment.checkValidation()) {
-            // TODO show Toast error
             return;
         }
 

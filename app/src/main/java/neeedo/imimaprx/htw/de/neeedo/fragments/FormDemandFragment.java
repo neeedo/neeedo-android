@@ -53,8 +53,6 @@ public class FormDemandFragment extends FormFragment {
 
     protected GeoPoint selectedGeoPoint;
 
-    protected boolean isValid;
-    HashMap<View, Boolean> validViews;
     private int selectedDistance;
 
     @Override
@@ -95,7 +93,6 @@ public class FormDemandFragment extends FormFragment {
 
         btnSetLocation.setOnClickListener(new StartLocationChooserHandler(this));
 
-        isValid = false;
         validation();
 
         return view;
@@ -177,8 +174,7 @@ public class FormDemandFragment extends FormFragment {
         }, 200);
     }
 
-    private void validation() {
-        validViews = new HashMap<>();
+    protected void validation() {
         validViews.put(etMustTags, false);
         validViews.put(etShouldTags, false);
         validViews.put(etPriceMin, false);
@@ -214,8 +210,8 @@ public class FormDemandFragment extends FormFragment {
         etPriceMin.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean focus) {
-                String priceMin = String.valueOf(etPriceMin.getText().toString().replace(",","."));
-                String priceMax = String.valueOf(etPriceMax.getText().toString().replace(",", "."));
+                String priceMin = String.valueOf(etPriceMin.getText().toString());
+                String priceMax = String.valueOf(etPriceMax.getText().toString());
                 if (!focus) {
                     if (priceMin.length() > 0 && Double.valueOf(priceMin) < 0) {
                         etPriceMin.setError(getResources().getString(R.string.validation_value_negative));
@@ -242,8 +238,8 @@ public class FormDemandFragment extends FormFragment {
         etPriceMax.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean focus) {
-                String priceMin = String.valueOf(etPriceMin.getText().toString().replace(",", "."));
-                String priceMax = String.valueOf(etPriceMax.getText().toString().replace(",", "."));
+                String priceMin = String.valueOf(etPriceMin.getText().toString());
+                String priceMax = String.valueOf(etPriceMax.getText().toString());
                 if (!focus) {
                     if (priceMax.length() > 0 && Double.valueOf(priceMax) < 0) {
                         etPriceMax.setError(getResources().getString(R.string.validation_value_negative));
@@ -289,13 +285,12 @@ public class FormDemandFragment extends FormFragment {
         btnSubmit.requestFocusFromTouch();
 
         if(validViews.containsValue(false)) {
-            isValid = false;
             Log.d("Validation", "Invalid");
+            return false;
         } else {
-            isValid = true;
             Log.d("Validation", "Valid");
+            return true;
         }
-        return isValid;
     }
 
     public int getDistance() {

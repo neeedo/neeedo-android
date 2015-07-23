@@ -26,8 +26,10 @@ public class SendOfferHandler implements View.OnClickListener {
     }
 
     @Override
-    public void onClick(View v) {
-        if (!formOfferFragment.validateData()) {
+    public void onClick(View view) {
+        view.requestFocusFromTouch(); // workaround for checking last field by focus change listener
+
+        if (!formOfferFragment.checkValidation()) {
             return;
         }
 

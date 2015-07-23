@@ -12,6 +12,7 @@ import android.widget.TextView;
 import org.apmem.tools.layouts.FlowLayout;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import neeedo.imimaprx.htw.de.neeedo.events.GetSuggestionEvent;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
@@ -21,12 +22,15 @@ public class FormFragment extends SuperFragment {
     protected ArrayAdapter<String> completionsAdapter;
     protected ArrayList<String> suggestions;
 
+    protected HashMap<View, Boolean> validViews;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         completions = new ArrayList<>();
         suggestions = new ArrayList<>();
+        validViews = new HashMap<>();
     }
 
     public void fillSuggestions(GetSuggestionEvent e) {

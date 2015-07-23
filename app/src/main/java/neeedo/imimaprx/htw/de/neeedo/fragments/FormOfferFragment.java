@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,6 +99,8 @@ public class FormOfferFragment extends FormFragment {
         etTags.addTextChangedListener(new AutocompletionTextWatcher(this, etTags, BaseAsyncTask.CompletionType.PHRASE));
         etTags.setOnFocusChangeListener(new AutocompletionOnFocusChangeListener(flTagSuggestions));
 
+        validation();
+
         return view;
     }
 
@@ -164,6 +167,7 @@ public class FormOfferFragment extends FormFragment {
                     Double.parseDouble(intent.getStringExtra("latitude")),
                     Double.parseDouble(intent.getStringExtra("longitude")));
             setLocation(selectedGeoPoint);
+            btnSetLocation.setError(null);
         }
     }
 
@@ -230,27 +234,6 @@ public class FormOfferFragment extends FormFragment {
         return imageNamesOnServer;
     }
 
-    public boolean validateData() {
-        boolean isValidInput = true;
-        if (selectedGeoPoint == null) {
-            //TODO show error
-            isValidInput = false;
-        }
-        if (imageNamesOnServer.isEmpty()) {
-            //TODO show error
-            //isValidInput = false;
-        }
-        if (etTags.getText().toString().matches("")) {
-            etTags.setError(getString(R.string.error_empty_field));
-            isValidInput = false;
-        }
-        if (etPrice.getText().toString().matches("")) {
-            etTags.setError(getString(R.string.error_empty_field));
-            isValidInput = false;
-        }
-        return isValidInput;
-    }
-
     protected void setLocation(final GeoPoint geoPoint) {
         final MapView mapView = new MapView(getActivity(), null);
         mapView.setTileSource(TileSourceFactory.MAPNIK);
@@ -277,5 +260,72 @@ public class FormOfferFragment extends FormFragment {
                 mapView.getController().animateTo(geoPoint);
             }
         }, 200);
+    }
+
+    protected void validation() {
+        validViews.put(etTags, false);
+        validViews.put(etPrice, false);
+
+        etTags.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean focus) {
+                String tags = etTags.getText().toString();
+                if (!focus) {
+                    if (tags.length() <= 0) {
+                        etTags.setError(getResources().getString(R.string.validation_no_tag));
+                    }
+                    if (etTags.getError() == null) {
+                        validViews.put(etTags, true);
+                    }
+                }
+            }
+        });
+        etPrice.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean focus) {
+                String price = etPrice.getText().toString();
+                if(!focus) {
+                    if (price.length() > 0 && Double.valueOf(price) < 0) {
+                        etPrice.setError(getResources().getString(R.string.validation_value_negative));
+                    }
+                    if (price.length() > 0 && !price.matches("(\\d+(.(\\d{2}|\\d{0}))|\\d)")) {
+                        etPrice.setError(getResources().getString(R.string.validation_price_number_format));
+                    }
+                    if (price.length() == 0) {
+                        etPrice.setError(getResources().getString(R.string.validation_empty_field));
+                    }
+                    if (etPrice.getError() == null) {
+                        validViews.put(etPrice, true);
+                    }
+                }
+            }
+        });
+        btnSetLocation.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean focus) {
+                if (selectedGeoPoint == null) {
+                    btnSetLocation.setError(getResources().getString(R.string.validation_no_location));
+                }
+                if (btnSetLocation.getError() == null) {
+                    validViews.put(btnSetLocation, true);
+                }
+            }
+        });
+    }
+
+    public boolean checkValidation() {
+        // force re-focus all textviews for showing errors from above
+        etTags.requestFocusFromTouch();
+        etPrice.requestFocusFromTouch();
+        btnSetLocation.requestFocusFromTouch();
+        btnSubmit.requestFocusFromTouch();
+
+        if(validViews.containsValue(false)) {
+            Log.d("Validation", "Invalid");
+            return false;
+        } else {
+            Log.d("Validation", "Valid");
+            return true;
+        }
     }
 }

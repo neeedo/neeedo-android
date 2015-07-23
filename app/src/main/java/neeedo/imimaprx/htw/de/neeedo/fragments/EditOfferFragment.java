@@ -35,7 +35,7 @@ public class EditOfferFragment extends FormOfferFragment {
         Offer currentOffer = OffersModel.getInstance().getDraft();
         if (currentOffer != null) {
             etTags.setText(currentOffer.getTagsString());
-            etPrice.setText(String.valueOf(currentOffer.getPrice()));
+            etPrice.setText(String.format("%.2f", currentOffer.getPrice()).replace(",", "."));
 
             for (String image : currentOffer.getImages()) {
                 String imageUrl = ServerConstantsUtils.getActiveServer() + "images/" + image;
