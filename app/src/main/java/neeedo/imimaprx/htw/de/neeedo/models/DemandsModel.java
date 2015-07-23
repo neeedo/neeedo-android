@@ -12,6 +12,7 @@ import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offers;
 public class DemandsModel {
 
     private Demands demands;
+    private boolean useLocalList = false;
 
     private Demand draft;
 
@@ -58,6 +59,14 @@ public class DemandsModel {
         return draft;
     }
 
+    public boolean isUseLocalList() {
+        return useLocalList;
+    }
+
+    public void setUseLocalList(boolean useLocalList) {
+        this.useLocalList = useLocalList;
+    }
+
     public void setDraft(Demand draft) {
         this.draft = draft;
     }
@@ -81,7 +90,7 @@ public class DemandsModel {
         demands.replaceDemand(demand);
     }
 
-    public void removeDemandByID(String id){
+    public void removeDemandByID(String id) {
         demands.removeById(id);
     }
 }

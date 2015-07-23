@@ -12,6 +12,8 @@ public class OffersModel {
 
     private Offer draft;
 
+    private boolean useLocalList = false;
+
     public static OffersModel getInstance() {
         if (offersModel == null)
             offersModel = new OffersModel();
@@ -47,6 +49,14 @@ public class OffersModel {
 
     public void addOffer(Offer offer) {
         offers.addSingleOfferOnFirstPostion(offer);
+    }
+
+    public boolean isUseLocalList() {
+        return useLocalList;
+    }
+
+    public void setUseLocalList(boolean useLocalList) {
+        this.useLocalList = useLocalList;
     }
 
     public void replaceOffer(Offer offer) {

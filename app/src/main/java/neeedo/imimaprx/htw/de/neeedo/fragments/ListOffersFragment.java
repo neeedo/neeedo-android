@@ -30,9 +30,10 @@ import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 public class ListOffersFragment extends SuperFragment {
 
     private final ActiveUser activeUser = ActiveUser.getInstance();
-    ListView listView;
-    View view;
-    ProgressBar progressBar;
+    private ListView listView;
+    private View view;
+    private ProgressBar progressBar;
+    private OffersModel offersModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,24 +56,30 @@ public class ListOffersFragment extends SuperFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        offersModel = OffersModel.getInstance();
         BaseAsyncTask.GetEntitiesMode listMode = BaseAsyncTask.GetEntitiesMode.GET_RANDOM;
         if (activeUser.hasActiveUser()) {
             listMode = BaseAsyncTask.GetEntitiesMode.GET_BY_USER;
-        }
 
-        BaseAsyncTask asyncTask = new GetOffersAsyncTask(listMode, 100, 0); // TODO pagination or higher limit?
-        asyncTask.execute();
+            if (offersModel.isUseLocalList()) {
+                offersModel.setUseLocalList(false);
+                fillList(null);
+                return;
+            }
+        }
+        new GetOffersAsyncTask(listMode, 100, 0).execute();
     }
 
     @Subscribe
     public void fillList(GetOfferFinishedEvent e) {
-        ArrayList<Offer> offerList = OffersModel.getInstance().getOffers();
+        ArrayList<Offer> offerList = offersModel.getOffers();
 
         TextView tvEmpty = (TextView) view.findViewById(R.id.tvEmpty);
 
         if (!offerList.isEmpty()) {
             ListProductsArrayAdapter<Demand> adapter = new ListProductsArrayAdapter(getActivity(),
                     R.layout.list_products_item, offerList);
+            adapter.notifyDataSetChanged();
             listView.setAdapter(adapter);
 
             listView.setClickable(true);

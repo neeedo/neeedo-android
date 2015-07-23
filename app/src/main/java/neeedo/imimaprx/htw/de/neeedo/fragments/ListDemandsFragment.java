@@ -31,6 +31,8 @@ public class ListDemandsFragment extends SuperFragment {
     private ListView listView;
     private View view;
     private ProgressBar progressBar;
+    private DemandsModel demandsModel;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,25 +55,32 @@ public class ListDemandsFragment extends SuperFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        demandsModel = DemandsModel.getInstance();
         BaseAsyncTask.GetEntitiesMode listMode = BaseAsyncTask.GetEntitiesMode.GET_RANDOM;
         if (activeUser.hasActiveUser()) {
             listMode = BaseAsyncTask.GetEntitiesMode.GET_BY_USER;
+            if (demandsModel.isUseLocalList()) {
+                demandsModel.setUseLocalList(false);
+                fillList(null);
+                return;
+            }
         }
-
         new GetDemandsAsyncTask(listMode, 100, 0).execute();
     }
 
     @Subscribe
     public void fillList(GetDemandListFinishedEvent e) {
 
-        List<Demand> demandList = DemandsModel.getInstance().getDemands();
+        List<Demand> demandList = demandsModel.getDemands();
 
         TextView tvEmpty = (TextView) view.findViewById(R.id.tvEmpty);
 
         if (!demandList.isEmpty()) {
             ListProductsArrayAdapter<Demand> adapter = new ListProductsArrayAdapter(getActivity(),
                     R.layout.list_products_item, demandList);
+            adapter.notifyDataSetChanged();
             listView.setAdapter(adapter);
+
 
             listView.setClickable(true);
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
