@@ -29,6 +29,7 @@ import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.RestResult;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.UploadImageResult;
 import neeedo.imimaprx.htw.de.neeedo.service.EventService;
 import neeedo.imimaprx.htw.de.neeedo.utils.ImageUtils;
+import neeedo.imimaprx.htw.de.neeedo.utils.OfferImageUrl;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
 public class ImageUploadHandler extends AsyncTask<Void, Integer, UploadImageResult> {
@@ -192,7 +193,7 @@ public class ImageUploadHandler extends AsyncTask<Void, Integer, UploadImageResu
 
         if (result.getResult() == RestResult.ReturnType.SUCCESS) {
             progressDialog.dismiss();
-            eventService.post(new NewImageReceivedFromServer(imageFileNameOnServer, finalOptimizedBitmap));
+            eventService.post(new NewImageReceivedFromServer(new OfferImageBitmap(imageFileNameOnServer, finalOptimizedBitmap)));
         } else {
             progressDialog.dismiss();
             new AlertDialog.Builder(activity)

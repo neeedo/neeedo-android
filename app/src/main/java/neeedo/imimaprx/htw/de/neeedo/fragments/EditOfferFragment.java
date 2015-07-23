@@ -10,7 +10,6 @@ import com.squareup.otto.Subscribe;
 
 import org.osmdroid.util.GeoPoint;
 
-import neeedo.imimaprx.htw.de.neeedo.MainActivity;
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offer;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.Location;
@@ -21,6 +20,7 @@ import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.SendOfferHandler;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.utils.OfferImageUrl;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
 public class EditOfferFragment extends FormOfferFragment {
@@ -37,10 +37,9 @@ public class EditOfferFragment extends FormOfferFragment {
             etTags.setText(currentOffer.getTagsString());
             etPrice.setText(String.format("%.2f", currentOffer.getPrice()).replace(",", "."));
 
-            for (String image : currentOffer.getImages()) {
-                String imageUrl = ServerConstantsUtils.getActiveServer() + "images/" + image;
-                addImage(imageUrl);
-                imageNamesOnServer.add(image);
+            for (String imageName : currentOffer.getImages()) {
+                String imageUrl = ServerConstantsUtils.getActiveServer() + "images/" + imageName;
+                addImage(new OfferImageUrl(imageName,imageUrl));
             }
 
             Location location = currentOffer.getLocation();

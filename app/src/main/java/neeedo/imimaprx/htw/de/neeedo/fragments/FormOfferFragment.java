@@ -1,9 +1,8 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -17,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -40,6 +38,7 @@ import neeedo.imimaprx.htw.de.neeedo.events.GetSuggestionEvent;
 import neeedo.imimaprx.htw.de.neeedo.events.NewEanTagsReceivedEvent;
 import neeedo.imimaprx.htw.de.neeedo.events.NewImageReceivedFromServer;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.ImageUploadHandler;
+import neeedo.imimaprx.htw.de.neeedo.fragments.handler.OfferImageBitmap;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.StartCameraHandler;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.StartLocationChooserHandler;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.StartNewBarcodeScanHandler;
@@ -47,6 +46,7 @@ import neeedo.imimaprx.htw.de.neeedo.rest.outpan.GetOutpanByEANAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.utils.AutocompletionOnFocusChangeListener;
 import neeedo.imimaprx.htw.de.neeedo.utils.AutocompletionTextWatcher;
+import neeedo.imimaprx.htw.de.neeedo.utils.OfferImageUrl;
 import neeedo.imimaprx.htw.de.neeedo.vo.RequestCodes;
 
 public class FormOfferFragment extends FormFragment {
@@ -55,10 +55,8 @@ public class FormOfferFragment extends FormFragment {
     protected LinearLayout imagesContainer;
     protected Button btnSetLocation;
     protected ImageButton addImageButton;
-    protected ProgressDialog progressDialog;
+    protected ArrayList<OfferImage> images = new ArrayList<OfferImage>();
 
-    // stateful
-    // TODO those 2
     protected MultiAutoCompleteTextView etTags;
     protected EditText etPrice;
 
@@ -67,8 +65,6 @@ public class FormOfferFragment extends FormFragment {
     protected RelativeLayout mapContainer;
 
     protected File newCameraOutputFile;
-    protected ArrayList<Bitmap> imageBitmaps = new ArrayList<Bitmap>();
-    protected ArrayList<String> imageNamesOnServer = new ArrayList<String>();
     protected GeoPoint selectedGeoPoint;
 
     @Override
@@ -118,18 +114,13 @@ public class FormOfferFragment extends FormFragment {
     @Override
     public void onViewStateRestored(Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
-        initOrRestore(savedInstanceState);
-    }
-
-    private void initOrRestore(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             newCameraOutputFile = (File) savedInstanceState.getSerializable("newCameraOutputFile");
             selectedGeoPoint = (GeoPoint) savedInstanceState.getSerializable("selectedGeoPoint");
-            imageNamesOnServer = (ArrayList<String>) savedInstanceState.getSerializable("imageNamesOnServer");
-            imageBitmaps = (ArrayList<Bitmap>) savedInstanceState.getSerializable("imageBitmaps");
+            ArrayList<OfferImage> imagesRestored = (ArrayList<OfferImage>) savedInstanceState.getSerializable("images");
 
-            for (Bitmap image : imageBitmaps) {
-                addImage(image);
+            for (OfferImage offerImage : imagesRestored) {
+                addImage(offerImage);
             }
 
             if (selectedGeoPoint != null) {
@@ -142,8 +133,7 @@ public class FormOfferFragment extends FormFragment {
     public void onSaveInstanceState(Bundle savedInstanceState) {
         savedInstanceState.putSerializable("newCameraOutputFile", newCameraOutputFile);
         savedInstanceState.putSerializable("selectedGeoPoint", selectedGeoPoint);
-        savedInstanceState.putSerializable("imageBitmaps", imageBitmaps);
-        savedInstanceState.putSerializable("imageNamesOnServer", imageNamesOnServer);
+        savedInstanceState.putSerializable("images", images);
 
         super.onSaveInstanceState(savedInstanceState);
     }
@@ -153,7 +143,6 @@ public class FormOfferFragment extends FormFragment {
         super.onActivityResult(requestCode, resultCode, intent);
 
         if (resultCode != Activity.RESULT_OK) {
-
             return;
         }
 
@@ -180,42 +169,32 @@ public class FormOfferFragment extends FormFragment {
     }
 
     public void handleNewImageReceivedFromServer(NewImageReceivedFromServer event) {
-        String imageFileNamesOnServer = event.getImageFileNameOnServer();
-        imageNamesOnServer.add(imageFileNamesOnServer);
-
-        Bitmap finalImageFile = event.getfinalOptimizedBitmap();
-        imageBitmaps.add(finalImageFile);
-        addImage(finalImageFile);
+        addImage(event.getOfferImage());
     }
 
-    protected void addImage(Bitmap image) {
-        LinearLayout.LayoutParams layoutParameters = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        layoutParameters.setMargins(15, 0, 0, 0);
+    protected void addImage(final OfferImage offerImage) {
+        images.add(offerImage);
 
-        ImageButton imageButton = new ImageButton(getActivity());
-        imageButton.setImageBitmap(image);
-        imageButton.setScaleType(ImageView.ScaleType.FIT_START);
-        imageButton.setPadding(0, 0, 0, 0);
-        imageButton.setAdjustViewBounds(true);
-        imageButton.setLayoutParams(layoutParameters);
+        LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final RelativeLayout relativeLayout = (RelativeLayout) inflater.inflate(R.layout.new_offer_image_wrapper, null);
 
-        imagesContainer.addView(imageButton);
-    }
+        ImageView imageView = (ImageView) relativeLayout.findViewById(R.id.new_offer_image);
 
-    protected void addImage(String urlString) {
-        LinearLayout.LayoutParams layoutParameters = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        layoutParameters.setMargins(15, 0, 0, 0);
+        if (offerImage instanceof OfferImageBitmap) {
+            imageView.setImageBitmap(((OfferImageBitmap) offerImage).getImageBitmap());
+        } else if (offerImage instanceof OfferImageUrl) {
+            Picasso.with(getActivity()).load(((OfferImageUrl) offerImage).getImageUrl()).into(imageView);
+        }
 
-        ImageButton imageButton = new ImageButton(getActivity());
-//        imageButton.setImageBitmap(bitmap);
-        imageButton.setScaleType(ImageView.ScaleType.FIT_START);
-        imageButton.setPadding(0, 0, 0, 0);
-        imageButton.setAdjustViewBounds(true);
-        imageButton.setLayoutParams(layoutParameters);
-
-        imagesContainer.addView(imageButton);
-
-        Picasso.with(getActivity()).load(urlString).into(imageButton);
+        ImageButton deleteButton = (ImageButton) relativeLayout.findViewById(R.id.new_offer_image_delete);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((ViewGroup) relativeLayout.getParent()).removeView(relativeLayout);
+                images.remove(offerImage);
+            }
+        });
+        imagesContainer.addView(relativeLayout);
     }
 
     public ArrayList<String> getOfferTags() {
@@ -230,8 +209,12 @@ public class FormOfferFragment extends FormFragment {
         return Double.parseDouble(etPrice.getText().toString());
     }
 
-    public ArrayList<String> getImages() {
-        return imageNamesOnServer;
+    public ArrayList<String> getImageNames() {
+        ArrayList<String> imagesNames = new ArrayList<String>();
+        for (OfferImage offerImage : images) {
+            imagesNames.add(offerImage.getImageName());
+        }
+        return imagesNames;
     }
 
     protected void setLocation(final GeoPoint geoPoint) {
@@ -284,7 +267,7 @@ public class FormOfferFragment extends FormFragment {
             @Override
             public void onFocusChange(View view, boolean focus) {
                 String price = etPrice.getText().toString();
-                if(!focus) {
+                if (!focus) {
                     if (price.length() > 0 && Double.valueOf(price) < 0) {
                         etPrice.setError(getResources().getString(R.string.validation_value_negative));
                     }
@@ -320,7 +303,7 @@ public class FormOfferFragment extends FormFragment {
         btnSetLocation.requestFocusFromTouch();
         btnSubmit.requestFocusFromTouch();
 
-        if(validViews.containsValue(false)) {
+        if (validViews.containsValue(false)) {
             Log.d("Validation", "Invalid");
             return false;
         } else {

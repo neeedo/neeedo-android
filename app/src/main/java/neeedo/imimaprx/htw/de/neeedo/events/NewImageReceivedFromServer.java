@@ -2,20 +2,19 @@ package neeedo.imimaprx.htw.de.neeedo.events;
 
 import android.graphics.Bitmap;
 
+import neeedo.imimaprx.htw.de.neeedo.fragments.OfferImage;
+import neeedo.imimaprx.htw.de.neeedo.fragments.handler.OfferImageBitmap;
+
 public class NewImageReceivedFromServer {
-    private final String imageFileNameOnServer;
-    private final Bitmap finalOptimizedBitmap;
 
-    public NewImageReceivedFromServer(String imageFileNameOnServer, Bitmap finalOptimizedBitmap) {
-        this.imageFileNameOnServer = imageFileNameOnServer;
-        this.finalOptimizedBitmap = finalOptimizedBitmap;
+    private final OfferImage offerImage;
+
+    public NewImageReceivedFromServer(OfferImage offerImage) {
+        this.offerImage = offerImage;
     }
 
-    public Bitmap getfinalOptimizedBitmap() {
-        return finalOptimizedBitmap;
+    public OfferImage getOfferImage() {
+        return offerImage;
     }
 
-    public String getImageFileNameOnServer() {
-        return imageFileNameOnServer;
-    }
 }

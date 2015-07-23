@@ -40,7 +40,7 @@ public class SendOfferHandler implements View.OnClickListener {
         offer.setTags(formOfferFragment.getOfferTags());
         offer.setLocation(formOfferFragment.getLocation());
         offer.setPrice(formOfferFragment.getPrice());
-        offer.setImages(formOfferFragment.getImages());
+        offer.setImages(formOfferFragment.getImageNames());
 
         if (currentUser == null) {
             Context context = ApplicationContextModel.getInstance().getApplicationContext();
