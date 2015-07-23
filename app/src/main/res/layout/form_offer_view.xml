@@ -2,13 +2,18 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#4F9181">
+    android:background="@drawable/background"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="5dp">
+        android:background="#99000000"
+        android:padding="15dp">
 
         <TextView
             android:id="@+id/tvHeader"
@@ -23,117 +28,127 @@
             android:textAllCaps="true"
             style="@style/Base.TextAppearance.AppCompat.Headline"
             android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            android:textColor="#88BEB1" />
 
-        <HorizontalScrollView
-            android:layout_width="fill_parent"
-            android:layout_height="120dp"
-            android:background="#88BEB1"
-            android:orientation="horizontal">
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="#4F9181"
+            android:padding="5dp"
+            android:layout_marginTop="50dp">
+
+            <HorizontalScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="120dp"
+                android:background="#88BEB1"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/imagesContainer"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
+
+                    <ImageButton
+                        android:id="@+id/addImageButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:padding="0dp"
+                        android:scaleType="fitStart"
+                        android:src="@drawable/add_offer_image" />
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+            <TextView
+                android:id="@+id/tvTags"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/new_card_tags"
+                style="@style/TextAppearance.AppCompat.Title"
+                android:padding="5dp" />
 
             <LinearLayout
-                android:id="@+id/imagesContainer"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:orientation="horizontal"
-                android:padding="5dp">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-                <ImageButton
-                    android:id="@+id/addImageButton"
+                <MultiAutoCompleteTextView
+                    android:id="@+id/etTags"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:padding="0dp"
-                    android:scaleType="fitStart"
-                    android:src="@drawable/add_offer_image" />
+                    android:layout_weight="99999"
+                    android:hint="@string/new_card_tags_hint"
+                    android:background="#88BEB1"
+                    android:padding="5dp" />
+
+                <ImageButton
+                    android:src="@drawable/scan_barcode"
+                    android:id="@+id/newOffer_Barcode_Button"
+                    android:layout_width="66dp"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitCenter"
+                    android:text="@string/start_barcode_scan"
+                    android:layout_alignParentRight="true"
+                    android:background="#88BEB1"
+                    android:layout_marginLeft="5dp" />
 
             </LinearLayout>
 
-        </HorizontalScrollView>
-
-        <TextView
-            android:id="@+id/tvTags"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/new_card_tags"
-            style="@style/TextAppearance.AppCompat.Title"
-            android:padding="5dp" />
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <MultiAutoCompleteTextView
-                android:id="@+id/etTags"
-                android:layout_width="wrap_content"
+            <org.apmem.tools.layouts.FlowLayout
+                android:id="@+id/flTagSuggestions"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="99999"
-                android:hint="@string/new_card_tags_hint"
+                android:visibility="gone"></org.apmem.tools.layouts.FlowLayout>
+
+            <TextView
+                android:id="@+id/tvPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/new_card_price"
+                style="@style/TextAppearance.AppCompat.Title"
+                android:padding="5dp" />
+
+            <EditText
+                android:id="@+id/etPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/new_card_price_hint"
+                android:inputType="numberDecimal"
                 android:background="#88BEB1"
                 android:padding="5dp" />
 
-            <ImageButton
-                android:src="@drawable/scan_barcode"
-                android:id="@+id/newOffer_Barcode_Button"
-                android:layout_width="66dp"
-                android:layout_height="match_parent"
-                android:scaleType="fitCenter"
-                android:text="@string/start_barcode_scan"
+            <RelativeLayout
+                android:id="@+id/mapContainer"
+                android:layout_width="fill_parent"
+                android:layout_height="120dp"
+                android:layout_alignParentLeft="true"
                 android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btnChooseLocation"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/new_offer_set_location"
                 android:background="#88BEB1"
-                android:layout_marginLeft="5dp" />
+                android:layout_marginTop="10dp" />
+
+            <Button
+                android:id="@+id/btnSubmit"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/new_card_submit"
+                android:background="#88BEB1"
+                android:layout_marginTop="10dp" />
 
         </LinearLayout>
-
-        <org.apmem.tools.layouts.FlowLayout
-            android:id="@+id/flTagSuggestions"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"></org.apmem.tools.layouts.FlowLayout>
-
-        <TextView
-            android:id="@+id/tvPrice"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/new_card_price"
-            style="@style/TextAppearance.AppCompat.Title"
-            android:padding="5dp" />
-
-        <EditText
-            android:id="@+id/etPrice"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/new_card_price_hint"
-            android:inputType="numberDecimal"
-            android:background="#88BEB1"
-            android:padding="5dp" />
-
-        <RelativeLayout
-            android:id="@+id/mapContainer"
-            android:layout_width="fill_parent"
-            android:layout_height="120dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:gravity="center"
-            android:visibility="gone" />
-
-        <Button
-            android:id="@+id/btnChooseLocation"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/new_offer_set_location"
-            android:background="#88BEB1"
-            android:layout_marginTop="10dp" />
-
-        <Button
-            android:id="@+id/btnSubmit"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/new_card_submit"
-            android:background="#88BEB1"
-            android:layout_marginTop="10dp" />
-
-    </LinearLayout>
+    </FrameLayout>
 </ScrollView>
