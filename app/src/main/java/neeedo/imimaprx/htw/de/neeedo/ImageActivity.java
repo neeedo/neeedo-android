@@ -3,15 +3,13 @@ package neeedo.imimaprx.htw.de.neeedo;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Display;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.diegocarloslima.byakugallery.lib.TouchImageView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -24,14 +22,12 @@ public class ImageActivity extends Activity {
     public final static String IMAGES_LIST_POSITION_EXTRA = "images-list-position-intent-data";
     private View view;
     private Intent intent;
-    private ImageView imageView;
+    private TouchImageView imageView;
     private ProgressBar progressBar;
     private ImageButton btnNext;
     private ImageButton btnPrev;
     private ArrayList<String> imageList;
     private int position;
-    private int screenWidth;
-    private int screenHeight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +35,6 @@ public class ImageActivity extends Activity {
 
         view = getLayoutInflater().inflate(R.layout.activity_image, null);
         intent = getIntent();
-
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        screenWidth = size.x;
-        screenHeight = size.y;
 
         if(intent != null) {
             imageList = intent.getStringArrayListExtra(IMAGES_LIST_EXTRA);
@@ -56,7 +46,7 @@ public class ImageActivity extends Activity {
     }
 
     private void loadImageView() {
-        imageView = (ImageView) view.findViewById(R.id.imageView);
+        imageView = (TouchImageView) view.findViewById(R.id.imageView);
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         btnNext = (ImageButton) view.findViewById(R.id.btnNext);
         btnPrev = (ImageButton) view.findViewById(R.id.btnPrev);
@@ -70,8 +60,6 @@ public class ImageActivity extends Activity {
 
             Picasso.with(this).
                     load(imageUrl).
-                    resize(screenWidth+40, screenHeight).
-                    centerInside().
                     into(imageView, new Callback() {
                         @Override
                         public void onSuccess() {
