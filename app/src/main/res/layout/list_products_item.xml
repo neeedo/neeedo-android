@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="10dp"
-    android:background="#88BEB1" >
+    android:background="#88BEB1"
+    android:padding="10dp">
 
     <RelativeLayout
         android:id="@+id/layoutImage"
@@ -76,19 +76,6 @@
             android:textStyle="normal" />
 
         <TextView
-            android:id="@+id/tvPrice"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
-            android:gravity="center_vertical"
-            android:text="Price: 9.99 €"
-            android:textSize="12dp"
-            android:textStyle="normal" />
-
-        <TextView
             android:id="@+id/tvUser"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
@@ -102,5 +89,19 @@
             android:textStyle="italic" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="false"
+        android:text="9.99 €"
+        android:textSize="12dp"
+        android:textStyle="normal"
+        android:layout_alignParentRight="true"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/shape_price"
+        android:padding="10dp" />
 
 </RelativeLayout>

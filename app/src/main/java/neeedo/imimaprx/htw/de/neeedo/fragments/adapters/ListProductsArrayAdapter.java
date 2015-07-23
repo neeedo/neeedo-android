@@ -90,8 +90,7 @@ public class ListProductsArrayAdapter<Object> extends ArrayAdapter<Object> {
             secondaryTagsText = demand.getShouldTagsString();
             distanceText = context.getString(
                     R.string.item_distance) + ": " + distanceFormat.format(demand.getDistance());
-            priceText = context.getString(
-                    R.string.item_price) + ": " + priceFormat.format(price.getMin()) + " - " + priceFormat.format(price.getMax());
+            priceText = priceFormat.format(price.getMin()) + " - " + priceFormat.format(price.getMax());
             userText = demand.getUser().getName();
 
             // hide image
@@ -105,10 +104,7 @@ public class ListProductsArrayAdapter<Object> extends ArrayAdapter<Object> {
             Offer offer = (Offer) products.get(position);
 
             primaryTagsText = offer.getTagsString();
-            priceText = context.getString(
-                    R.string.item_price) +
-                    ": " +
-                    priceFormat.format(offer.getPrice()
+            priceText = priceFormat.format(offer.getPrice()
                     );
             userText = offer.getUser().getName();
 
@@ -128,10 +124,7 @@ public class ListProductsArrayAdapter<Object> extends ArrayAdapter<Object> {
             Favorite favorite = (Favorite) products.get(position);
 
             primaryTagsText = favorite.getTagsString();
-            priceText = context.getString(
-                    R.string.item_price) +
-                    ": " +
-                    priceFormat.format(favorite.getPrice()
+            priceText = priceFormat.format(favorite.getPrice()
                     );
             userText = favorite.getUser().getName();
 
