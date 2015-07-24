@@ -8,11 +8,14 @@ import android.widget.TextView;
 
 import com.squareup.otto.Subscribe;
 
+import org.osmdroid.util.GeoPoint;
+
 import java.text.DecimalFormatSymbols;
 
 import neeedo.imimaprx.htw.de.neeedo.MainActivity;
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demand;
+import neeedo.imimaprx.htw.de.neeedo.entities.util.Location;
 import neeedo.imimaprx.htw.de.neeedo.events.GetSuggestionEvent;
 import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.SendDemandHandler;
@@ -33,8 +36,12 @@ public class EditDemandFragment extends FormDemandFragment {
         if (currentDemand != null) {
             etMustTags.setText(currentDemand.getMustTagsString());
             etShouldTags.setText(currentDemand.getShouldTagsString());
-            etPriceMin.setText(String.format("%.2f", currentDemand.getPrice().getMin()).replace(",","."));
-            etPriceMax.setText(String.format("%.2f", currentDemand.getPrice().getMax()).replace(",","."));
+            etPriceMin.setText(String.format("%.2f", currentDemand.getPrice().getMin()).replace(",", "."));
+            etPriceMax.setText(String.format("%.2f", currentDemand.getPrice().getMax()).replace(",", "."));
+
+            Location location = currentDemand.getLocation();
+            selectedGeoPoint = new GeoPoint(location.getLat(), location.getLon());
+            setLocation(selectedGeoPoint);
         }
 
         btnSubmit.setOnClickListener(new SendDemandHandler(BaseAsyncTask.SendMode.UPDATE, this));
