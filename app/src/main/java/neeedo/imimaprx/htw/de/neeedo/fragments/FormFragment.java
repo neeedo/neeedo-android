@@ -62,7 +62,7 @@ public class FormFragment extends SuperFragment {
 
                 FlowLayout.LayoutParams layoutParams = new FlowLayout.LayoutParams(
                         FlowLayout.LayoutParams.WRAP_CONTENT, FlowLayout.LayoutParams.WRAP_CONTENT);
-                layoutParams.setMargins(10, 10, 10, 15);
+                layoutParams.setMargins(0, 10, 10, 0);
 
                 layout.addView(tvTag, layoutParams);
 

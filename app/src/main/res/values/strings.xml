@@ -31,7 +31,7 @@
     <string name="new_card_must_tags_hint">bicycle, mountainbike, ...</string>
     <string name="new_card_should_tags">And it would be nice ... </string>
     <string name="new_card_should_tags_hint">red, ...</string>
-    <string name="new_card_tags">Tags</string>
+    <string name="new_card_tags">I\'m offering ...</string>
     <string name="new_card_tags_hint">bicylce, mountainbike, red, ...</string>
     <string name="new_card_location_lat">Location lat.</string>
     <string name="new_card_location_lon">Location lon.</string>
