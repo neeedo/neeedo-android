@@ -71,16 +71,6 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
 
         currentDemand = demandsModel.getDemandById(demandId);
 
-        //TODO wenn das demand zu der ID nicht in der liste existiert,
-        // wird ein neuer service gestartet um es nachzuladen und in die Liste zu adden.
-        // Ist also besser wenn das auch hier irgendwie auf GetDemandFinishedEvent reagiert
-
-        if (currentDemand == null) {
-            new GetDemandByIDAsyncTask(demandId).execute();
-            return;
-        }
-
-
         textViewMustTags.setText(currentDemand.getMustTagsString());
         textViewShouldTags.setText(currentDemand.getShouldTagsString());
 
