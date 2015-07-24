@@ -90,7 +90,11 @@ public class ListProductsArrayAdapter<Object> extends ArrayAdapter<Object> {
             secondaryTagsText = demand.getShouldTagsString();
             distanceText = context.getString(
                     R.string.item_distance) + ": " + distanceFormat.format(demand.getDistance());
-            priceText = priceFormat.format(price.getMin()) + " - " + priceFormat.format(price.getMax());
+            if(price.getMin() == price.getMax()) {
+                priceText = priceFormat.format(price.getMin());
+            } else {
+                priceText = priceFormat.format(price.getMin()) + " - " + priceFormat.format(price.getMax());
+            }
             userText = demand.getUser().getName();
 
             // hide image
