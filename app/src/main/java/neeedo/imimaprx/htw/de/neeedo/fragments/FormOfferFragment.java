@@ -242,6 +242,7 @@ public class FormOfferFragment extends FormFragment {
     protected void validation() {
         validViews.put(etTags, false);
         validViews.put(etPrice, false);
+        validViews.put(btnSetLocation, false);
 
         etTags.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
