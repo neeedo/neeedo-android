@@ -19,7 +19,6 @@ import android.widget.Toast;
 import com.squareup.otto.Subscribe;
 
 import neeedo.imimaprx.htw.de.neeedo.LoginActivity;
-import neeedo.imimaprx.htw.de.neeedo.MainActivity;
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.events.UserStateChangedEvent;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
@@ -29,6 +28,7 @@ import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.service.EventService;
 import neeedo.imimaprx.htw.de.neeedo.vo.RequestCodes;
+import android.support.v4.app.DialogFragment;
 
 public class SuperFragment extends Fragment {
 
@@ -118,13 +118,35 @@ public class SuperFragment extends Fragment {
             startActivityForResult(intent, RequestCodes.LOGIN_REQUEST_CODE);
             return true;
         } else if (id == R.id.action_bar_logout) {
-            ActiveUser.getInstance().clearUserInformation();
-            DemandsModel.getInstance().clearDemands();
-            OffersModel.getInstance().clearOffers();
-            
-            Toast.makeText(getActivity(), getString(R.string.logout_finished), Toast.LENGTH_SHORT).show();
-            setLoginButtonState();
-            redirectToFragment(MainFragment.class);
+            DialogFragment dialog = new DialogFragment() {
+                @Override
+                public Dialog onCreateDialog(Bundle savedInstanceState) {
+                    return new ProgressDialog.Builder(getActivity()).
+                            setMessage(getResources().getString(R.string.dialog_logout)).
+                            setPositiveButton(R.string.dialog_yes,
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            ActiveUser.getInstance().clearUserInformation();
+                                            DemandsModel.getInstance().clearDemands();
+                                            OffersModel.getInstance().clearOffers();
+
+                                            Toast.makeText(getActivity(), getString(R.string.logout_finished), Toast.LENGTH_SHORT).show();
+                                            setLoginButtonState();
+                                            redirectToFragment(MainFragment.class);
+                                        }
+                                    }).
+                            setNegativeButton(R.string.dialog_no,
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            // dismiss, nothing else
+                                        }
+                                    }).
+                            create();
+                }
+            };
+            dialog.show(getFragmentManager(), "");
 
         } else if (id == R.id.new_messages_icon) {
             redirectToFragment(MessageFragment.class);
