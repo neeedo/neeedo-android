@@ -146,7 +146,7 @@ public class SuperFragment extends Fragment {
                             create();
                 }
             };
-            dialog.show(getFragmentManager(), "");
+            dialog.show(getFragmentManager(), getResources().getString(R.string.confirm));
 
         } else if (id == R.id.new_messages_icon) {
             redirectToFragment(MessageFragment.class);
