@@ -17,6 +17,15 @@
         android:orientation="vertical"
         android:padding="15dp">
 
+        <TextView
+            android:id="@+id/tvHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|top"
+            android:textColor="#88BEB1"
+            android:textSize="18dp"
+            android:textAllCaps="true" />
+
         <ListView
             android:id="@+id/messages_view_list"
             android:layout_width="match_parent"
@@ -25,6 +34,7 @@
             android:transcriptMode="alwaysScroll"
             android:visibility="visible"
             android:paddingBottom="100dp"
+            android:layout_marginTop="20dp"
             android:layout_gravity="center_horizontal|top"
             android:divider="@android:color/transparent"
             android:dividerHeight="5dp"/>

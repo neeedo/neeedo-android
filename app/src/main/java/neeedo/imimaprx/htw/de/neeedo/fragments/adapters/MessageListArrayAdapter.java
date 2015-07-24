@@ -10,8 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.apmem.tools.layouts.FlowLayout;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -19,7 +17,6 @@ import java.util.List;
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.message.Message;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
-import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
 
 public class MessageListArrayAdapter<Object> extends ArrayAdapter<Object> {
     private final String currentUserId = ActiveUser.getInstance().getUserId();

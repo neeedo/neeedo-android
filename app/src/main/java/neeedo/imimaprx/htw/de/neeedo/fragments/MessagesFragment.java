@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
@@ -20,10 +21,12 @@ import java.util.ArrayList;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.message.Message;
+import neeedo.imimaprx.htw.de.neeedo.entities.user.User;
 import neeedo.imimaprx.htw.de.neeedo.events.MessagesLoadedEvent;
 import neeedo.imimaprx.htw.de.neeedo.events.UserMessageSendEvent;
 import neeedo.imimaprx.htw.de.neeedo.fragments.adapters.MessageListArrayAdapter;
 import neeedo.imimaprx.htw.de.neeedo.models.MessagesModel;
+import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.message.GetMessagesAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.message.PostMessageAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.message.PutMessageReadStateAsyncTask;
@@ -36,6 +39,7 @@ public class MessagesFragment extends SuperFragment implements View.OnClickListe
     private String user2Id;
     private String matchUser = "Neeedo";
     private EditText editText;
+    private TextView tvHeader;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,6 +48,7 @@ public class MessagesFragment extends SuperFragment implements View.OnClickListe
         View view = inflater.inflate(R.layout.messages_view, container, false);
 
         messageView = (ListView) view.findViewById(R.id.messages_view_list);
+        tvHeader = (TextView) view.findViewById(R.id.tvHeader);
 
         Bundle args = getArguments();
         user2Id = args.getString("userId2");
@@ -62,6 +67,15 @@ public class MessagesFragment extends SuperFragment implements View.OnClickListe
                 message.setMatchFoundMassage(true);
             }
         }
+
+        String userName = "";
+        for (Message message : messages) {
+            User user = message.getSender();
+            if(!user.getId().equals(user1Id)) {
+                userName = user.getName();
+            }
+        }
+        tvHeader.setText(userName);
 
         ArrayAdapter<Message> messageAdapter = new MessageListArrayAdapter<>(getActivity(), R.layout.messages_message_item, messages);
         messageView.setAdapter(messageAdapter);
