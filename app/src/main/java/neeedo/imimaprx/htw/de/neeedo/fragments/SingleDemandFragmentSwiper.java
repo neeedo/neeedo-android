@@ -22,6 +22,7 @@ import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demand;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offer;
 
 import neeedo.imimaprx.htw.de.neeedo.events.DeleteFinishedEvent;
+import neeedo.imimaprx.htw.de.neeedo.events.FoundMatchesEvent;
 import neeedo.imimaprx.htw.de.neeedo.fragments.adapters.OfferSwipeArrayListAdapter;
 import neeedo.imimaprx.htw.de.neeedo.fragments.adapters.SwipeCardViewItem;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
@@ -94,20 +95,6 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
             swipeCardViewItems.add(new SwipeCardViewItem(currentOffer));
         }
 
-        ArrayList<String> sampleImageArray = new ArrayList<String>();
-        sampleImageArray.add("http://i.imgur.com/RVhlr3C.jpg");
-        sampleImageArray.add("http://i.imgur.com/ZGIRhB1.png");
-        sampleImageArray.add("http://i.imgur.com/DvpvklR.png");
-
-        Offer testOffer = new Offer();
-        testOffer.setImages(sampleImageArray);
-        testOffer.setName("foo1");
-
-        swipeCardViewItems.add(new SwipeCardViewItem(testOffer));
-        swipeCardViewItems.add(new SwipeCardViewItem(testOffer));
-        swipeCardViewItems.add(new SwipeCardViewItem(testOffer));
-        swipeCardViewItems.add(new SwipeCardViewItem(testOffer));
-
         final ArrayAdapter<String> titleArrayAdapter = new OfferSwipeArrayListAdapter(getActivity(), R.layout.diolor_item, swipeCardViewItems);
 
         flingContainer.setAdapter(titleArrayAdapter);
@@ -175,6 +162,11 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
         });
 
 
+    }
+
+    @Subscribe
+    public void handleFoundMatchesEvent(FoundMatchesEvent event) {
+        System.out.println();
     }
 
     @Override
