@@ -211,7 +211,7 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
                 BaseAsyncTask asyncTask = new DeleteAsyncTask(currentOffer);
                 ConfirmDialogFragment confirmDialog = ConfirmDialogFragment.newInstance(
                         asyncTask,
-                        ListOffersFragment.class,
+                        null,
                         getResources().getString(R.string.dialog_delete_offer)
                 );
                 confirmDialog.show(getFragmentManager(), getString(R.string.confirm));

@@ -204,7 +204,9 @@ public class SuperFragment extends Fragment {
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     task.execute();
                                     SuperFragment fragment = (SuperFragment) getFragmentManager().findFragmentById(R.id.container);
-                                    fragment.redirectToFragment(fragmentRedirect);
+                                    if(fragmentRedirect != null) {
+                                        fragment.redirectToFragment(fragmentRedirect);
+                                    }
                                 }
                             }).
                     setNegativeButton(R.string.dialog_no,

@@ -170,7 +170,7 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
                 BaseAsyncTask asyncTask = new DeleteAsyncTask(currentDemand);
                 ConfirmDialogFragment confirmDialog = ConfirmDialogFragment.newInstance(
                         asyncTask,
-                        ListDemandsFragment.class,
+                        null,
                         getResources().getString(R.string.dialog_delete_demand)
                 );
                 confirmDialog.show(getFragmentManager(), getString(R.string.confirm));
