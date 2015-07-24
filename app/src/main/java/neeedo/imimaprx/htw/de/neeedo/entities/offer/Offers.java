@@ -42,6 +42,15 @@ public class Offers implements Serializable, BaseEntity {
 
     }
 
+    public Offer getOfferByID(String id){
+        Offer offer = null;
+        for(Offer o: offers){
+            if(o.getId().equals(id))
+                offer = o;
+        }
+        return offer;
+    }
+
     public void removeByID(String id) {
         Offer toRemove = null;
         for (Offer o : offers) {

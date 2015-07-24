@@ -23,6 +23,7 @@ public class DeleteAsyncTask extends BaseAsyncTask {
 
     private EntityType entityType;
     private BaseEntity baseEntity;
+    private BaseEntity backupEntity;
 
     public DeleteAsyncTask(BaseEntity baseEntity) {
         if (baseEntity == null) {
@@ -54,6 +55,23 @@ public class DeleteAsyncTask extends BaseAsyncTask {
                 entityType = EntityType.OFFER;
             } else if (baseEntity instanceof Favorite) {
                 entityType = EntityType.FAVORITE;
+            }
+
+            if (entityType == EntityType.DEMAND) {
+                DemandsModel model = DemandsModel.getInstance();
+                String id = ((Demand) baseEntity).getId();
+                baseEntity = model.getDemandById(id);
+                model.removeDemandByID(id);
+                model.setUseLocalList(true);
+                model.setLastDeletedEntityId(id);
+            }
+            if (entityType == EntityType.OFFER) {
+                OffersModel model = OffersModel.getInstance();
+                String id = ((Offer) baseEntity).getId();
+                baseEntity = model.getOfferByID(id);
+                model.removeOfferByID(id);
+                model.setUseLocalList(true);
+                model.setLastDeletedEntityId(id);
             }
 
             String url = ServerConstantsUtils.getActiveServer();
@@ -90,23 +108,23 @@ public class DeleteAsyncTask extends BaseAsyncTask {
 
             restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, Void.class);
 
-            if (entityType == EntityType.DEMAND) {
-                DemandsModel model = DemandsModel.getInstance();
-                String id = ((Demand) baseEntity).getId();
-                model.removeDemandByID(id);
-                model.setUseLocalList(true);
-                model.setLastDeletedEntityId(id);
-            }
-            if (entityType == EntityType.OFFER) {
-                OffersModel model = OffersModel.getInstance();
-                String id = ((Offer) baseEntity).getId();
-                model.removeOfferByID(id);
-                model.setUseLocalList(true);
-                model.setLastDeletedEntityId(id);
-            }
 
             return new RestResult(RestResult.ReturnType.SUCCESS);
         } catch (Exception e) {
+
+            if (entityType == EntityType.DEMAND) {
+                DemandsModel model = DemandsModel.getInstance();
+                Demand demand = ((Demand) backupEntity);
+                model.addDemand(demand);
+                model.setLastDeletedEntityId("");
+            }
+            if (entityType == EntityType.OFFER) {
+                OffersModel model = OffersModel.getInstance();
+                Offer offer = ((Offer) backupEntity);
+                model.addOffer(offer);
+                model.setLastDeletedEntityId("");
+            }
+
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
             String message = getErrorMessage(e.getMessage());
             showToast(message);

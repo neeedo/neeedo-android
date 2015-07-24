@@ -91,4 +91,8 @@ public class OffersModel {
     public void setLastDeletedEntityId(String lastDeletedEntityId) {
         this.lastDeletedEntityId = lastDeletedEntityId;
     }
+
+    public Offer getOfferByID(String id) {
+        return offers.getOfferByID(id);
+    }
 }
