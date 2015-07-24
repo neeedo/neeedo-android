@@ -45,6 +45,7 @@ import neeedo.imimaprx.htw.de.neeedo.rest.outpan.GetOutpanByEANAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.utils.AutocompletionOnFocusChangeListener;
 import neeedo.imimaprx.htw.de.neeedo.utils.AutocompletionTextWatcher;
+import neeedo.imimaprx.htw.de.neeedo.vo.OfferImage;
 import neeedo.imimaprx.htw.de.neeedo.vo.RequestCodes;
 
 public class FormOfferFragment extends FormFragment {
@@ -188,7 +189,7 @@ public class FormOfferFragment extends FormFragment {
                 images.remove(offerImage);
             }
         });
-        imagesContainer.addView(relativeLayout,1);
+        imagesContainer.addView(relativeLayout, 1);
     }
 
     public ArrayList<String> getOfferTags() {

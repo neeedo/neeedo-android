@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -24,7 +23,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.events.NewImageReceivedFromServer;
-import neeedo.imimaprx.htw.de.neeedo.fragments.OfferImage;
+import neeedo.imimaprx.htw.de.neeedo.vo.OfferImage;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.RestResult;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.UploadImageResult;

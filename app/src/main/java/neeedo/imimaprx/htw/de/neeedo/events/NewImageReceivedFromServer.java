@@ -1,6 +1,6 @@
 package neeedo.imimaprx.htw.de.neeedo.events;
 
-import neeedo.imimaprx.htw.de.neeedo.fragments.OfferImage;
+import neeedo.imimaprx.htw.de.neeedo.vo.OfferImage;
 
 public class NewImageReceivedFromServer {
 

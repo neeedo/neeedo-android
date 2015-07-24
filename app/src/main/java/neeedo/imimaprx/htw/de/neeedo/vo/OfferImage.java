@@ -1,4 +1,4 @@
-package neeedo.imimaprx.htw.de.neeedo.fragments;
+package neeedo.imimaprx.htw.de.neeedo.vo;
 
 import android.os.Parcel;
 import android.os.Parcelable;
