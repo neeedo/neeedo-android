@@ -2,21 +2,52 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/message_view_edit_text"
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center"
-        android:text="@string/message_view_no_conversations_found"
-        android:editable="false" />
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:background="#99000000"
+        android:orientation="vertical"
+        android:padding="15dp">
 
-    <ListView
-        android:id="@+id/message_view_user_list"
-        android:layout_width="match_parent"
-        android:layout_height="469dp"
-        android:visibility="invisible" />
+        <TextView
+            android:id="@+id/tvEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="#88BEB1"
+            android:text="@string/message_view_no_conversations_found"
+            android:visibility="gone" />
+
+        <ListView
+            android:id="@+id/message_view_user_list"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:visibility="gone"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="10dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ProgressBar
+                android:id="@+id/list_message_progressbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:padding="100dp"
+                android:scaleType="centerInside" />
+
+        </RelativeLayout>
+
+    </FrameLayout>
 
 </LinearLayout>

@@ -12,6 +12,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
@@ -32,8 +34,9 @@ public class MessageFragment extends SuperFragment {
     private ListView messageView;
     private ArrayList<User> users;
     private ArrayAdapter<User> userAdapter;
-    private EditText editText;
     private String userId1;
+    private TextView tvEmpty;
+    private ProgressBar progressBar;
 
 
     @Override
@@ -41,11 +44,12 @@ public class MessageFragment extends SuperFragment {
         super.onCreateView(inflater, container, savedInstanceState);
 
         View view = inflater.inflate(R.layout.message_view, container, false);
+        tvEmpty = (TextView) view.findViewById(R.id.tvEmpty);
+        progressBar = (ProgressBar) view.findViewById(R.id.list_message_progressbar);
         users = new ArrayList<User>();
 
         messageView = (ListView) view.findViewById(R.id.message_view_user_list);
         userAdapter = new MessageUserArrayAdapter<>(getActivity(), R.layout.message_user_item, users);
-        editText = (EditText) view.findViewById(R.id.message_view_edit_text);
         messageView.setAdapter(userAdapter);
 
         messageView.setClickable(true);
@@ -86,7 +90,7 @@ public class MessageFragment extends SuperFragment {
 
 
         } else {
-            editText.setVisibility(View.VISIBLE);
+            tvEmpty.setVisibility(View.VISIBLE);
             messageView.setVisibility(View.INVISIBLE);
             Context context = ApplicationContextModel.getInstance().getApplicationContext();
             Toast.makeText(context, context.getString(R.string.exception_message_login), Toast.LENGTH_LONG).show();
@@ -101,12 +105,11 @@ public class MessageFragment extends SuperFragment {
         users = MessagesModel.getInstance().getUsers();
 
         if (users.size() > 0) {
-            editText.setVisibility(View.INVISIBLE);
+            tvEmpty.setVisibility(View.GONE);
             messageView.setVisibility(View.VISIBLE);
-
         } else {
-            editText.setVisibility(View.VISIBLE);
-            messageView.setVisibility(View.INVISIBLE);
+            tvEmpty.setVisibility(View.VISIBLE); // TODO put this somewhere else, this message flickers at launching the list
+            messageView.setVisibility(View.GONE);
 
             return;
         }
@@ -114,5 +117,6 @@ public class MessageFragment extends SuperFragment {
         userAdapter = new MessageUserArrayAdapter<>(getActivity(), R.layout.message_user_item, users);
         messageView.setAdapter(userAdapter);
         userAdapter.notifyDataSetChanged();
+        progressBar.setVisibility(View.GONE);
     }
 }
