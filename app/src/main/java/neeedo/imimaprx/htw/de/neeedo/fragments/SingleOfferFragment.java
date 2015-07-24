@@ -275,5 +275,10 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
         Toast.makeText(getActivity(), getActivity().getString(R.string.done), Toast.LENGTH_SHORT).show();
     }
 
+    @Subscribe
+    public void offerDeleted(DeleteFinishedEvent e) {
+        redirectToFragment(ListOffersFragment.class);
+    }
+
 
 }

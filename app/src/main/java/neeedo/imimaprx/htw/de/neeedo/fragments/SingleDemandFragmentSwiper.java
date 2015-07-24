@@ -159,6 +159,11 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
         System.out.println();
     }
 
+    @Subscribe
+    public void demandDeleted(DeleteFinishedEvent e) {
+        redirectToFragment(ListDemandsFragment.class);
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
