@@ -47,6 +47,7 @@ public class EditOfferFragment extends FormOfferFragment {
             setLocation(selectedGeoPoint);
         }
 
+        OffersModel.getInstance().removeOfferByID(currentOffer.getId());
         btnSubmit.setOnClickListener(new SendOfferHandler(BaseAsyncTask.SendMode.UPDATE, this));
 
         return view;
