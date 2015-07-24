@@ -44,7 +44,6 @@ public class ListFavoritesFragment extends SuperFragment {
         listView = (ListView) view.findViewById(R.id.listview);
         progressBar = (ProgressBar) view.findViewById(R.id.list_offers_progessbar);
 
-
         return view;
     }
 
@@ -61,12 +60,12 @@ public class ListFavoritesFragment extends SuperFragment {
 
     @Subscribe
     public void fillList(UserFavoritesLoadedEvent e) {
-
         ArrayList<Favorite> favoriteList = FavoritesModel.getInstance().getFavorites();
 
         TextView tvEmpty = (TextView) view.findViewById(R.id.tvEmpty);
 
         if (favoriteList.isEmpty()) {
+            progressBar.setVisibility(View.GONE);
             listView.setVisibility(View.GONE);
             tvEmpty.setText(getActivity().getString(R.string.favorites_view_no_favorites_found));
             tvEmpty.setVisibility(View.VISIBLE);
