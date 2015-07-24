@@ -10,7 +10,7 @@
         android:id="@+id/tvAvatar"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:background="@drawable/shape_avatar_list"
+        android:background="#4F9181"
         android:textColor="#FFFFFF"
         android:textSize="25dp"
         android:textAlignment="center"

@@ -2,32 +2,63 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     android:orientation="vertical"
-    android:weightSum="1">
+    >
 
-    <ListView
-        android:id="@+id/messages_view_list"
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="193dp"
-        android:layout_weight="0.68"
-        android:stackFromBottom="true"
-        android:transcriptMode="alwaysScroll"
-        android:visibility="visible" />
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:background="#99000000"
+        android:orientation="vertical"
+        android:padding="15dp">
 
-    <EditText
-        android:id="@+id/messages_view_answer_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.13"
-        android:editable="true"
-        android:gravity="center"
-        android:hint="@string/single_offer_message_edit_text_hint" />
+        <ListView
+            android:id="@+id/messages_view_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:stackFromBottom="true"
+            android:transcriptMode="alwaysScroll"
+            android:visibility="visible"
+            android:paddingBottom="100dp"
+            android:layout_gravity="center_horizontal|top"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="5dp"/>
 
-    <Button
-        android:id="@+id/messages_view_send_button"
-        android:layout_width="127dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/messages_view_send" />
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="bottom"
+            android:gravity="bottom|center_vertical"
+            android:layout_marginTop="100dp">
+
+            <EditText
+                android:id="@+id/messages_view_answer_text"
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:editable="true"
+                android:hint="@string/single_offer_message_edit_text_hint"
+                android:background="#88BEB1"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="100dp"
+                android:padding="5dp"
+                android:gravity="left|center_vertical" />
+
+            <Button
+                android:id="@+id/messages_view_send_button"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:text="@string/messages_view_send"
+                android:layout_alignParentRight="true"
+                android:background="#4F9181" />
+
+
+        </RelativeLayout>
+
+    </FrameLayout>
 
 </LinearLayout>

@@ -22,6 +22,7 @@ import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.message.Message;
 import neeedo.imimaprx.htw.de.neeedo.events.MessagesLoadedEvent;
 import neeedo.imimaprx.htw.de.neeedo.events.UserMessageSendEvent;
+import neeedo.imimaprx.htw.de.neeedo.fragments.adapters.MessageListArrayAdapter;
 import neeedo.imimaprx.htw.de.neeedo.models.MessagesModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.message.GetMessagesAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.message.PostMessageAsyncTask;
@@ -62,7 +63,7 @@ public class MessagesFragment extends SuperFragment implements View.OnClickListe
             }
         }
 
-        ArrayAdapter<Message> messageAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, messages);
+        ArrayAdapter<Message> messageAdapter = new MessageListArrayAdapter<>(getActivity(), R.layout.messages_message_item, messages);
         messageView.setAdapter(messageAdapter);
         for (Message m : messages) {
             if (!m.isRead() && m.getRecipient().getId().equals(user1Id))
