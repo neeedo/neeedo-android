@@ -101,7 +101,7 @@
         android:textStyle="normal"
         android:layout_alignParentRight="true"
         android:textColor="#FFFFFF"
-        android:background="@drawable/shape_price"
+        android:background="@drawable/shape_badge_list"
         android:padding="10dp" />
 
 </RelativeLayout>

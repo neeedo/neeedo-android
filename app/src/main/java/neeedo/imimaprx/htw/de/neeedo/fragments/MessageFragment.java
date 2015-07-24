@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.user.User;
 import neeedo.imimaprx.htw.de.neeedo.events.UserMessageContactsLoadedEvent;
+import neeedo.imimaprx.htw.de.neeedo.fragments.adapters.MessageUserArrayAdapter;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.ApplicationContextModel;
 import neeedo.imimaprx.htw.de.neeedo.models.MessagesModel;
@@ -28,8 +29,6 @@ import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.message.GetMessagesByUserIdAndReadStateAsyncTask;
 
 public class MessageFragment extends SuperFragment {
-
-
     private ListView messageView;
     private ArrayList<User> users;
     private ArrayAdapter<User> userAdapter;
@@ -45,7 +44,7 @@ public class MessageFragment extends SuperFragment {
         users = new ArrayList<User>();
 
         messageView = (ListView) view.findViewById(R.id.message_view_user_list);
-        userAdapter = new ArrayAdapter<User>(getActivity(), android.R.layout.simple_list_item_1, users);
+        userAdapter = new MessageUserArrayAdapter<>(getActivity(), R.layout.message_user_item, users);
         editText = (EditText) view.findViewById(R.id.message_view_edit_text);
         messageView.setAdapter(userAdapter);
 
@@ -112,7 +111,7 @@ public class MessageFragment extends SuperFragment {
             return;
         }
 
-        userAdapter = new ArrayAdapter<User>(getActivity(), android.R.layout.simple_list_item_1, users);
+        userAdapter = new MessageUserArrayAdapter<>(getActivity(), R.layout.message_user_item, users);
         messageView.setAdapter(userAdapter);
         userAdapter.notifyDataSetChanged();
     }

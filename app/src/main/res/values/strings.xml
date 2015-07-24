@@ -131,4 +131,6 @@
     <string name="title_activity_login">Sign in</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_field_required">This field is required</string>
+
+    <string name="badge_new">new</string>
 </resources>
