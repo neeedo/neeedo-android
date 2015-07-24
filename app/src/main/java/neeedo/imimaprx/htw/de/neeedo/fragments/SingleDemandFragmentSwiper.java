@@ -19,6 +19,7 @@ import java.util.List;
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demand;
 
+import neeedo.imimaprx.htw.de.neeedo.entities.favorites.Favorite;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offer;
 
 import neeedo.imimaprx.htw.de.neeedo.events.DeleteFinishedEvent;
@@ -28,6 +29,7 @@ import neeedo.imimaprx.htw.de.neeedo.fragments.adapters.SwipeCardViewItem;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.demand.GetDemandByIDAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.favorites.CreateFavoriteAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.matching.GetOffersToDemandAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.DeleteAsyncTask;
@@ -43,7 +45,11 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
     private View view;
     private Demand currentDemand;
 
+    private ArrayList<SwipeCardViewItem> swipeCardViewItems;
+    private ArrayAdapter<String> arrayAdapter;
+
     private DemandsModel demandsModel = DemandsModel.getInstance();
+    private String demandId;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -67,7 +73,7 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
         btnDeleteDemand.setOnClickListener(this);
         btnEditDemand.setOnClickListener(this);
 
-        String demandId = getArguments().getString("id");
+        demandId = getArguments().getString("id");
 
         currentDemand = demandsModel.getDemandById(demandId);
 
@@ -75,19 +81,22 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
         textViewShouldTags.setText(currentDemand.getShouldTagsString());
 
         new GetOffersToDemandAsyncTask(currentDemand).execute();
+    }
 
-        List<Offer> offerArrayList = OffersModel.getInstance().getOffers();
-
+    @Subscribe
+    public void handleFoundMatchesEvent(FoundMatchesEvent event) {
         final SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) getActivity().findViewById(R.id.swipe_frame);
-        final ArrayList<SwipeCardViewItem> swipeCardViewItems = new ArrayList<SwipeCardViewItem>();
+
+        swipeCardViewItems = new ArrayList<SwipeCardViewItem>();
+        List<Offer> offerArrayList = DemandsModel.getInstance().getOfferlistToDemandById(demandId);
 
         for (Offer currentOffer : offerArrayList) {
             swipeCardViewItems.add(new SwipeCardViewItem(currentOffer));
         }
 
-        final ArrayAdapter<String> titleArrayAdapter = new OfferSwipeArrayListAdapter(getActivity(), R.layout.diolor_item, swipeCardViewItems);
+        arrayAdapter = new OfferSwipeArrayListAdapter(getActivity(), R.layout.diolor_item, swipeCardViewItems);
 
-        flingContainer.setAdapter(titleArrayAdapter);
+        flingContainer.setAdapter(arrayAdapter);
 
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
@@ -96,8 +105,7 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
                 if (swipeCardViewItems.size() > 0) {
                     swipeCardViewItems.remove(0);
                 }
-
-                titleArrayAdapter.notifyDataSetChanged();
+                arrayAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -111,13 +119,12 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
             public void onRightCardExit(Object dataObject) {
                 SwipeCardViewItem swipeCardViewItem = (SwipeCardViewItem) dataObject;
                 Offer offer = swipeCardViewItem.getOffer();
-                //TODO fav
+                new CreateFavoriteAsyncTask(new Favorite()).execute();
+
             }
 
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
-//                swipeCardViewItems.add(new SwipeCardViewItem("", "", new ArrayList<String>()));
-//                titleArrayAdapter.notifyDataSetChanged();
                 if (itemsInAdapter == 0)
                     getActivity().findViewById(R.id.buttons_diolor_chooser).setVisibility(View.GONE);
             }
@@ -151,12 +158,7 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
             }
         });
 
-
-    }
-
-    @Subscribe
-    public void handleFoundMatchesEvent(FoundMatchesEvent event) {
-        System.out.println();
+        arrayAdapter.notifyDataSetChanged();
     }
 
     @Subscribe
