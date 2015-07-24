@@ -28,17 +28,8 @@
     <string name="edit_card_offer">Edit Offer</string>
     <string name="button_new_demand">New Demand</string>
     <string name="button_new_offer">New Offer</string>
-<!---->
 
     <!-- Error messages -->
-    <string name="error_outpan_not_found">Your product was not found in the database</string>
-    <string name="error_empty_or_wrong_format">Wrong format or emtpy field(s)</string>
-    <string name="sample_title">Gebrauchtes Kinderfahrrad</string>
-    <string name="sample_describtion">ich biete ein 2,5 Jahre altes Kinderrad. Es ist optisch und
-        technisch in einem sehr gutem Zustand. Wurde regelmäßig gepflegt mit natürlich kleinen
-        Gebrauchsspuren.
-    </string>
-
     <string name="exception_message_error_unkown">An unkown error occured.</string>
     <string name="exception_message_server_not_available">Server is not available.</string>
     <string name="exception_message_no_internet">Internet is not available.</string>
@@ -51,10 +42,7 @@
 
     <string name="username_invalid">Your username contains invalid characters, or does not start with a literal. Allowed are A-Z,a-z,0-9,_-.</string>
 
-    <string name="new_messages">You have $ new messages.</string>
-
     <string name="no_camera">no camera available</string>
-    <string name="fail">something went wrong</string>
     <string name="login">login</string>
     <string name="logout">logout</string>
     <string name="confirm">confirm</string>
@@ -62,17 +50,13 @@
     <string name="logout_finished">Logout finished.</string>
     <string name="login_finished">Login returned.</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="or">or</string>
     <string name="start_barcode_scan">barcode scannen</string>
-    <string name="action_register_new" />
     <string name="login_error_text">The email and password you entered don\'t match.</string>
     <string name="prompt_name">Your name</string>
     <string name="login_password_error">Your given passwords do not match.</string>
     <string name="login_email_error">Your given email is already in use.</string>
     <string name="login_error_fields_empty">All fields are necessary.</string>
     <string name="login_no_valid_email_error">Your given email isn\'t valid.</string>
-    <string name="login_returned">Login returned</string>
     <string name="authorization_error">You aren\'t allowed to do that. Please login before proceed.</string>
 
     <string name="button_delete">Delete</string>
@@ -96,7 +80,6 @@
     <string name="item_price">Price</string>
     <string name="empty_offers_message">You have no offers at the moment</string>
     <string name="empty_demands_message">You have no demands at the moment</string>
-    <string name="empty_matching_message">No matches found</string>
 
     <string name="format_price">#0.00 €</string>
     <string name="format_distance">#0.00 km</string>
@@ -109,11 +92,7 @@
     <string name="single_offer_message_edit_text_hint">Write your message here.</string>
     <string name="done">done</string>
     <string name="messages_view_send">Send</string>
-    <string name="delete_success">removal done</string>
 
-    <string name="message_view_new_message">New message from</string>
-    <string name="message_view_load_older_btn">load older messages</string>
-    <string name="error_empty_field">This field can not be empty</string>
     <string name="swiper_no_more_offers_to_show">No more offers to show. :-(</string>
     <string name="image_upload_failed_title">Image upload failed</string>
     <string name="image_upload_failed_message">Please try again.</string>
@@ -149,7 +128,5 @@
     <string name="action_sign_in">Sign in</string>
     <string name="title_activity_login">Sign in</string>
     <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
 </resources>
