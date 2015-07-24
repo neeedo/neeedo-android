@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -56,10 +57,10 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
         setContentView(R.layout.activity_location_chooser);
 
         ImageButton findOwnLocationButton = (ImageButton) findViewById(R.id.find_own_location);
+        final LocationManager mLocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         findOwnLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final LocationManager mLocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
                 final LocationListener mLocListener = new LocationListener() {
                     @Override
                     public void onLocationChanged(Location location) {
@@ -129,7 +130,11 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                mapView.getController().animateTo(new GeoPoint(52468277, 13425979));
+                Location lastKnownLocation = mLocManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+                if (lastKnownLocation != null)
+                    mapView.getController().animateTo(new GeoPoint(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude()));
+                else
+                    mapView.getController().animateTo(new GeoPoint(52468277, 13425979));
             }
         }, 200);
 
@@ -137,6 +142,7 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
         autoCompleteTextView.setThreshold(3);//will start working after third character
         autoCompleteTextView.setAdapter(new ArrayAdapter<FoundLocation>(this, android.R.layout.simple_dropdown_item_1line));
         autoCompleteTextView.setHint(getString(R.string.location_chooser_search_hint));
+        autoCompleteTextView.clearFocus();
         autoCompleteTextView.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence inputString, int start, int before, int count) {
@@ -172,6 +178,8 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
         MapEventsOverlay mapEventsOverlay = new MapEventsOverlay(this, this);
         mapView.getOverlays().add(mapEventsOverlay);
         mapView.invalidate();
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
     private void setNewDistance(int distanceInKm) {
