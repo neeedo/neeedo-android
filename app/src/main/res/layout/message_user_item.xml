@@ -6,21 +6,36 @@
     android:padding="10dp">
 
     <TextView
+        android:id="@+id/tvAvatar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/shape_avatar_list"
+        android:textColor="#FFFFFF"
+        android:textSize="25dp"
+        android:textAlignment="center"
+        android:gravity="center" />
+
+    <TextView
         android:id="@+id/tvUser"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
-        android:layout_weight="1"/>
+        android:textSize="20dp"
+        android:layout_marginLeft="45dp"
+        android:padding="5dp"
+        android:gravity="fill_vertical" />
 
     <TextView
         android:id="@+id/tvNew"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:text="@string/badge_new"
-        android:textSize="10dp"
+        android:textSize="15dp"
         android:background="@drawable/shape_badge_list"
         android:textColor="#FFFFFF"
         android:padding="5dp"
+        android:layout_margin="5dp"
         android:layout_alignParentRight="true"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:gravity="fill_vertical" />
 
 </RelativeLayout>
