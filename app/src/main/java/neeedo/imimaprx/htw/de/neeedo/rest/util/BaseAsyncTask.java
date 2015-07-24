@@ -80,6 +80,10 @@ public abstract class BaseAsyncTask extends AsyncTask {
         if (exception.contains("Unable to resolve host")) {
             message = context.getString(R.string.exception_message_no_internet);
         }
+        if (exception.contains("404")) {
+            message = context.getString(R.string.exception_message_not_found);
+        }
+
         return message;
     }
 

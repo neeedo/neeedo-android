@@ -36,6 +36,7 @@
     <string name="exception_message_internal_server_error">An internal server error occured.</string>
     <string name="exception_message_email_already_in_use">Your E-Mail is already in use.</string>
     <string name="exception_message_login">You have to login to proceed.</string>
+    <string name="exception_message_not_found">Your requested resource is not available anymore.</string>
 
     <string name="password_length_error">Your password is to short, use at least 8 characters.</string>
     <string name="password_match_error">Your given passwords do not match.</string>
