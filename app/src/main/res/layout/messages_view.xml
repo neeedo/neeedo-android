@@ -33,7 +33,7 @@
             android:stackFromBottom="true"
             android:transcriptMode="alwaysScroll"
             android:visibility="visible"
-            android:paddingBottom="100dp"
+            android:paddingBottom="50dp"
             android:layout_marginTop="20dp"
             android:layout_gravity="center_horizontal|top"
             android:divider="@android:color/transparent"
