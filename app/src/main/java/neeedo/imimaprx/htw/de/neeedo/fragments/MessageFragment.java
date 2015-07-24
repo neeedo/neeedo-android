@@ -104,14 +104,15 @@ public class MessageFragment extends SuperFragment {
 
         users = MessagesModel.getInstance().getUsers();
 
-        if (users.size() > 0) {
-            tvEmpty.setVisibility(View.GONE);
-            messageView.setVisibility(View.VISIBLE);
-        } else {
-            tvEmpty.setVisibility(View.VISIBLE); // TODO put this somewhere else, this message flickers at launching the list
+        if (users.size() <= 0) {
+            tvEmpty.setVisibility(View.VISIBLE);
             messageView.setVisibility(View.GONE);
+            progressBar.setVisibility(View.GONE);
 
             return;
+        } else {
+            tvEmpty.setVisibility(View.GONE);
+            messageView.setVisibility(View.VISIBLE);
         }
 
         userAdapter = new MessageUserArrayAdapter<>(getActivity(), R.layout.message_user_item, users);
