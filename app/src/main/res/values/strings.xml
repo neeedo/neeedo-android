@@ -5,25 +5,9 @@
     <string name="app_name">Neeedo</string>
 
     <!-- Drawer -->
-    <string name="title_section_home">Home</string>
-    <string name="title_section_new_offer">New Offer</string>
-    <string name="title_section_new_demand">New Demand</string>
-    <string name="title_section_my_offers">My Offers</string>
-    <string name="title_section_my_demands">My Demands</string>
-    <string name="title_section_swiper">Swiper</string>
-    <string name="title_section_message">Message</string>
     <string name="title_section_favorites">Favorites</string>
-
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="action_example">Example action</string>
-    <string name="action_settings">Settings</string>
-
-    <!-- Cards -->
-    <string name="new_card_form_hint_title">Name deiner Karte</string>
-    <string name="new_card_form_hint_description">Kurzbeschreibung</string>
-    <string name="new_card_form_hint_price">Preis</string>
-    <string name="new_card_form_hint_continue">weiter</string>
 
 
     <!-- Forms -->
@@ -33,9 +17,6 @@
     <string name="new_card_should_tags_hint">red, ...</string>
     <string name="new_card_tags">I\'m offering ...</string>
     <string name="new_card_tags_hint">bicylce, mountainbike, red, ...</string>
-    <string name="new_card_location_lat">Location lat.</string>
-    <string name="new_card_location_lon">Location lon.</string>
-    <string name="new_card_distance">Distance</string>
     <string name="new_card_price">Price (€)</string>
     <string name="new_card_price_min_hint">0.00</string>
     <string name="new_card_price_max_hint">42.00</string>
@@ -47,7 +28,7 @@
     <string name="edit_card_offer">Edit Offer</string>
     <string name="button_new_demand">New Demand</string>
     <string name="button_new_offer">New Offer</string>
-
+<!---->
 
     <!-- Error messages -->
     <string name="error_outpan_not_found">Your product was not found in the database</string>
