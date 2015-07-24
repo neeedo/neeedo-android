@@ -1,9 +1,6 @@
 package neeedo.imimaprx.htw.de.neeedo.events;
 
-import android.graphics.Bitmap;
-
 import neeedo.imimaprx.htw.de.neeedo.fragments.OfferImage;
-import neeedo.imimaprx.htw.de.neeedo.fragments.handler.OfferImageBitmap;
 
 public class NewImageReceivedFromServer {
 

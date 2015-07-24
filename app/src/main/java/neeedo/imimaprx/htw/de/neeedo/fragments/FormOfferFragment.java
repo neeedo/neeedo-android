@@ -38,7 +38,6 @@ import neeedo.imimaprx.htw.de.neeedo.events.GetSuggestionEvent;
 import neeedo.imimaprx.htw.de.neeedo.events.NewEanTagsReceivedEvent;
 import neeedo.imimaprx.htw.de.neeedo.events.NewImageReceivedFromServer;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.ImageUploadHandler;
-import neeedo.imimaprx.htw.de.neeedo.fragments.handler.OfferImageBitmap;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.StartCameraHandler;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.StartLocationChooserHandler;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.StartNewBarcodeScanHandler;
@@ -46,7 +45,6 @@ import neeedo.imimaprx.htw.de.neeedo.rest.outpan.GetOutpanByEANAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.utils.AutocompletionOnFocusChangeListener;
 import neeedo.imimaprx.htw.de.neeedo.utils.AutocompletionTextWatcher;
-import neeedo.imimaprx.htw.de.neeedo.utils.OfferImageUrl;
 import neeedo.imimaprx.htw.de.neeedo.vo.RequestCodes;
 
 public class FormOfferFragment extends FormFragment {
@@ -180,11 +178,7 @@ public class FormOfferFragment extends FormFragment {
 
         ImageView imageView = (ImageView) relativeLayout.findViewById(R.id.new_offer_image);
 
-        if (offerImage instanceof OfferImageBitmap) {
-            imageView.setImageBitmap(((OfferImageBitmap) offerImage).getImageBitmap());
-        } else if (offerImage instanceof OfferImageUrl) {
-            Picasso.with(getActivity()).load(((OfferImageUrl) offerImage).getImageUrl()).into(imageView);
-        }
+        Picasso.with(getActivity()).load(offerImage.getImageUrl()).into(imageView);
 
         ImageButton deleteButton = (ImageButton) relativeLayout.findViewById(R.id.new_offer_image_delete);
         deleteButton.setOnClickListener(new View.OnClickListener() {

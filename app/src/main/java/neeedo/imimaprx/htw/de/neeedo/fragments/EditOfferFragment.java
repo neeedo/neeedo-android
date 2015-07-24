@@ -20,8 +20,6 @@ import neeedo.imimaprx.htw.de.neeedo.events.ServerResponseEvent;
 import neeedo.imimaprx.htw.de.neeedo.fragments.handler.SendOfferHandler;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
-import neeedo.imimaprx.htw.de.neeedo.utils.OfferImageUrl;
-import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
 public class EditOfferFragment extends FormOfferFragment {
 
@@ -38,8 +36,7 @@ public class EditOfferFragment extends FormOfferFragment {
             etPrice.setText(String.format("%.2f", currentOffer.getPrice()).replace(",", "."));
 
             for (String imageName : currentOffer.getImages()) {
-                String imageUrl = ServerConstantsUtils.getActiveServer() + "images/" + imageName;
-                addImage(new OfferImageUrl(imageName,imageUrl));
+                addImage(new OfferImage(imageName));
             }
 
             Location location = currentOffer.getLocation();

@@ -1,15 +1,27 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments;
 
-import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offer;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-abstract public class OfferImage {
-    private String imageName;
+import java.io.Serializable;
 
-    public OfferImage(String imageName ){
+import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
+
+public class OfferImage implements Serializable {
+    private final String imageUrl;
+    private final String imageName;
+
+    public OfferImage(String imageName) {
         this.imageName = imageName;
+        this.imageUrl = ServerConstantsUtils.getActiveServer() + "images/" + imageName;
     }
 
     public String getImageName() {
         return imageName;
     }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
 }

@@ -24,19 +24,18 @@ import javax.net.ssl.HttpsURLConnection;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.events.NewImageReceivedFromServer;
+import neeedo.imimaprx.htw.de.neeedo.fragments.OfferImage;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.RestResult;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.UploadImageResult;
 import neeedo.imimaprx.htw.de.neeedo.service.EventService;
 import neeedo.imimaprx.htw.de.neeedo.utils.ImageUtils;
-import neeedo.imimaprx.htw.de.neeedo.utils.OfferImageUrl;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
 public class ImageUploadHandler extends AsyncTask<Void, Integer, UploadImageResult> {
     private final Activity activity;
     private File photoFile;
     private String imageFileNameOnServer;
-    private Bitmap finalOptimizedBitmap;
 
     private EventService eventService = EventService.getInstance();
 
@@ -165,8 +164,6 @@ public class ImageUploadHandler extends AsyncTask<Void, Integer, UploadImageResu
             fOut.flush();
             fOut.close();
 
-            finalOptimizedBitmap = BitmapFactory.decodeFile(file.getPath());
-
             fileInputStream = new FileInputStream(file);
         } catch (Exception e) {
             System.out.println(e);
@@ -193,7 +190,7 @@ public class ImageUploadHandler extends AsyncTask<Void, Integer, UploadImageResu
 
         if (result.getResult() == RestResult.ReturnType.SUCCESS) {
             progressDialog.dismiss();
-            eventService.post(new NewImageReceivedFromServer(new OfferImageBitmap(imageFileNameOnServer, finalOptimizedBitmap)));
+            eventService.post(new NewImageReceivedFromServer(new OfferImage(imageFileNameOnServer)));
         } else {
             progressDialog.dismiss();
             new AlertDialog.Builder(activity)
