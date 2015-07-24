@@ -61,6 +61,10 @@ public class MessageListArrayAdapter<Object> extends ArrayAdapter<Object> {
         String messageText = message.getBody();
         String messageTime = formatter.format(date);
 
+        if(messageSender.equals("Neeedo")) {
+            messageText = context.getResources().getString(R.string.new_match_text);
+        }
+
         tvTime.setText(messageTime);
         tvMessage.setText(messageText);
 
