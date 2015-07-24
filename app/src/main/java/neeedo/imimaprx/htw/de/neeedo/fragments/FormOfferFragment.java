@@ -188,7 +188,7 @@ public class FormOfferFragment extends FormFragment {
                 images.remove(offerImage);
             }
         });
-        imagesContainer.addView(relativeLayout);
+        imagesContainer.addView(relativeLayout,1);
     }
 
     public ArrayList<String> getOfferTags() {
