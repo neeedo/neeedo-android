@@ -92,13 +92,17 @@ public class DeleteAsyncTask extends BaseAsyncTask {
 
             if (entityType == EntityType.DEMAND) {
                 DemandsModel model = DemandsModel.getInstance();
-                model.removeDemandByID(((Demand) baseEntity).getId());
+                String id = ((Demand) baseEntity).getId();
+                model.removeDemandByID(id);
                 model.setUseLocalList(true);
+                model.setLastDeletedEntityId(id);
             }
             if (entityType == EntityType.OFFER) {
                 OffersModel model = OffersModel.getInstance();
-                model.removeOfferByID(((Offer) baseEntity).getId());
+                String id = ((Offer) baseEntity).getId();
+                model.removeOfferByID(id);
                 model.setUseLocalList(true);
+                model.setLastDeletedEntityId(id);
             }
 
             return new RestResult(RestResult.ReturnType.SUCCESS);

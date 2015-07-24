@@ -74,6 +74,10 @@ public class ListOffersFragment extends SuperFragment {
     public void fillList(GetOfferFinishedEvent e) {
         ArrayList<Offer> offerList = offersModel.getOffers();
 
+        if (e == null) {
+            offersModel.setLastDeletedEntityId("");
+        }
+
         TextView tvEmpty = (TextView) view.findViewById(R.id.tvEmpty);
 
         if (!offerList.isEmpty()) {

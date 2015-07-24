@@ -13,6 +13,8 @@ public class OffersModel {
 
     private boolean useLocalList = false;
 
+    private String lastDeletedEntityId = "";
+
     public static OffersModel getInstance() {
         if (offersModel == null)
             offersModel = new OffersModel();
@@ -69,6 +71,8 @@ public class OffersModel {
     public void appendOffers(ArrayList<Offer> newOffers) {
         for (Offer newOffer : newOffers) {
             if (!offers.checkIfOfferWithIdExists(newOffer.getId())) {
+                if (lastDeletedEntityId.equals(newOffer.getId()))
+                    continue;
                 offers.addOffer(newOffer);
             } else {
                 replaceOffer(newOffer);
@@ -80,4 +84,11 @@ public class OffersModel {
         offers.setOffers(new ArrayList<Offer>());
     }
 
+    public String getLastDeletedEntityId() {
+        return lastDeletedEntityId;
+    }
+
+    public void setLastDeletedEntityId(String lastDeletedEntityId) {
+        this.lastDeletedEntityId = lastDeletedEntityId;
+    }
 }

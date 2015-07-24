@@ -73,6 +73,10 @@ public class ListDemandsFragment extends SuperFragment {
 
         List<Demand> demandList = demandsModel.getDemands();
 
+        if (e == null) {
+            demandsModel.setLastDeletedEntityId("");
+        }
+
         TextView tvEmpty = (TextView) view.findViewById(R.id.tvEmpty);
 
         if (!demandList.isEmpty()) {

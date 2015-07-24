@@ -12,6 +12,7 @@ public class DemandsModel {
 
     private Demands demands = new Demands();
     private boolean useLocalList = false;
+    private String lastDeletedEntityId = "";
 
     private Demand draft;
 
@@ -97,6 +98,8 @@ public class DemandsModel {
     public void appendDemands(ArrayList<Demand> newDemands) {
         for (Demand newDemand : newDemands) {
             if (!demands.checkIfOfferWithIdExists(newDemand.getId())) {
+                if (lastDeletedEntityId.equals(newDemand.getId()))
+                    continue;
                 demands.addDemand(newDemand);
             } else {
                 replaceDemand(newDemand);
@@ -106,5 +109,13 @@ public class DemandsModel {
 
     public void clearDemands() {
         demands.setDemands(new ArrayList<Demand>());
+    }
+
+    public String getLastDeletedEntityId() {
+        return lastDeletedEntityId;
+    }
+
+    public void setLastDeletedEntityId(String lastDeletedEntityId) {
+        this.lastDeletedEntityId = lastDeletedEntityId;
     }
 }
