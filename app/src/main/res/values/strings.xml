@@ -102,8 +102,8 @@
     <string name="outpan_failed_accept">OK</string>
     <string name="outpan_failed_message">no matching products for scanned product</string>
     <string name="outpan_failed_title">Barcode scan failed</string>
-    <string name="single_offer_view_add_to_favorites_text">Add to Favorites</string>
-    <string name="single_offer_view_remove_from_favorites_text">Remove from favorites</string>
+    <string name="single_offer_view_add_to_favorites_text">Fav</string>
+    <string name="single_offer_view_remove_from_favorites_text">Unfav</string>
     <string name="kilometer_radius">radius in km:</string>
 
     <string name="title_activity_image">Display image</string>

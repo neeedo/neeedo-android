@@ -33,6 +33,7 @@ import neeedo.imimaprx.htw.de.neeedo.events.FavoritesActionEvent;
 import neeedo.imimaprx.htw.de.neeedo.events.GetOfferFinishedEvent;
 import neeedo.imimaprx.htw.de.neeedo.events.UserMessageSendEvent;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
+import neeedo.imimaprx.htw.de.neeedo.models.FavoritesModel;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
 import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.favorites.CreateFavoriteAsyncTask;
@@ -183,14 +184,28 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
     private void setVisibility() {
 
         if (ActiveUser.getInstance().userCredentialsAvailable()) {
-            boolean owerShip = UserModel.getInstance().checkIfEntityOwnerIsActiveUser(currentOffer);
+            boolean isOwn = UserModel.getInstance().checkIfEntityOwnerIsActiveUser(currentOffer);
 
-            if (owerShip) {
+            boolean isFavorite = false;
+            ArrayList<Favorite> favorites = FavoritesModel.getInstance().getFavorites();
+            for(Favorite favorite : favorites) {
+                if(currentOffer.getId().equals(favorite.getId())) {
+                    isFavorite = true;
+                    break;
+                }
+            }
+
+            if (isOwn) {
                 btnDeleteOffer.setVisibility(View.VISIBLE);
                 btnEditOffer.setVisibility(View.VISIBLE);
             } else {
-                btnRemoveFromFavorites.setVisibility(View.VISIBLE);
-                btnAddToFavorites.setVisibility(View.VISIBLE);
+                if(isFavorite) {
+                    btnAddToFavorites.setVisibility(View.GONE);
+                    btnRemoveFromFavorites.setVisibility(View.VISIBLE);
+                } else {
+                    btnAddToFavorites.setVisibility(View.VISIBLE);
+                    btnRemoveFromFavorites.setVisibility(View.GONE);
+                }
                 btnMessage.setVisibility(View.VISIBLE);
             }
         }
