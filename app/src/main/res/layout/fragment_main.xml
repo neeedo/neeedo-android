@@ -22,7 +22,7 @@
             android:layout_height="160dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="80dp"
-            android:alpha=".6"
+            android:alpha=".8"
             android:background="@drawable/logo_shadow" />
 
         <LinearLayout
@@ -43,7 +43,7 @@
                     android:id="@+id/btnNewDemand"
                     android:layout_width="150dp"
                     android:layout_height="100dp"
-                    android:background="#AAFF006D"
+                    android:background="#CCFF006D"
                     android:drawableTop="@drawable/demand"
                     android:padding="15dp"
                     android:text="@string/button_new_demand" />
@@ -62,7 +62,7 @@
                     android:layout_width="150dp"
                     android:layout_height="100dp"
                     android:layout_gravity="center_horizontal"
-                    android:background="#AA88BEB1"
+                    android:background="#CC88BEB1"
                     android:drawableTop="@drawable/offer"
                     android:padding="15dp"
                     android:text="@string/button_new_offer" />
