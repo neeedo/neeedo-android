@@ -246,9 +246,9 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
                 Fragment fragment = new MessagesFragment();
 
                 Bundle args = new Bundle();
-                args.putString("userId2", currentOffer.getUser().getId());
-                args.putString("userId1", ActiveUser.getInstance().getUserId());
-                args.putString("username", currentOffer.getUser().getName());
+                args.putString(MessagesFragment.FRAGMENT_ARGS_USER2ID, currentOffer.getUser().getId());
+                args.putString(MessagesFragment.FRAGMENT_ARGS_USER1ID, ActiveUser.getInstance().getUserId());
+                args.putString(MessagesFragment.FRAGMENT_ARGS_USERNAME, currentOffer.getUser().getName());
                 fragment.setArguments(args);
 
                 fragmentManager.beginTransaction()

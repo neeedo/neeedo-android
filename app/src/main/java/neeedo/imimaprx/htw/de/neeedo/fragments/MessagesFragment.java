@@ -32,6 +32,9 @@ import neeedo.imimaprx.htw.de.neeedo.rest.message.PostMessageAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.message.PutMessageReadStateAsyncTask;
 
 public class MessagesFragment extends SuperFragment implements View.OnClickListener {
+    public static final String FRAGMENT_ARGS_USER1ID = "userId1";
+    public static final String FRAGMENT_ARGS_USER2ID = "userId2";
+    public static final String FRAGMENT_ARGS_USERNAME = "username";
     private ListView messageView;
     private Button sendBtn;
     private Activity activity;
@@ -52,9 +55,9 @@ public class MessagesFragment extends SuperFragment implements View.OnClickListe
         tvHeader = (TextView) view.findViewById(R.id.tvHeader);
 
         Bundle args = getArguments();
-        user2Id = args.getString("userId2");
-        user1Id = args.getString("userId1");
-        username = args.getString("username");
+        user2Id = args.getString(FRAGMENT_ARGS_USER2ID);
+        user1Id = args.getString(FRAGMENT_ARGS_USER1ID);
+        username = args.getString(FRAGMENT_ARGS_USERNAME);
         new GetMessagesAsyncTask(user1Id, user2Id).execute();
 
         return view;
