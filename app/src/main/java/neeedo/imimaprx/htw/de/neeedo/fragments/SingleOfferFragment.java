@@ -50,13 +50,11 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
     private Button btnDeleteOffer;
     private Button btnEditOffer;
     private Button btnMessage;
-    private Button btnSend;
     private Button btnAddToFavorites;
     private Button btnRemoveFromFavorites;
     private TextView tvTags;
     private TextView tvPrice;
     private TextView tvUser;
-    private EditText editTextSendMessage;
     private FlowLayout layoutImages;
     private HorizontalScrollView viewImages;
     private Offer currentOffer;
@@ -74,7 +72,6 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
         tvTags = (TextView) view.findViewById(R.id.tvTags);
         tvPrice = (TextView) view.findViewById(R.id.tvPrice);
         tvUser = (TextView) view.findViewById(R.id.tvUser);
-        editTextSendMessage = (EditText) view.findViewById(R.id.getMessage);
         layoutImages = (FlowLayout) view.findViewById(R.id.layoutImages);
         viewImages = (HorizontalScrollView) view.findViewById(R.id.viewImages);
 
@@ -89,14 +86,12 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
         btnDeleteOffer = (Button) activity.findViewById(R.id.btnDelete);
         btnEditOffer = (Button) activity.findViewById(R.id.btnEdit);
         btnMessage = (Button) activity.findViewById(R.id.btnMessage);
-        btnSend = (Button) activity.findViewById(R.id.btnSend);
         btnAddToFavorites = (Button) activity.findViewById(R.id.single_offer_view_add_to_favorites_button);
         btnRemoveFromFavorites = (Button) activity.findViewById(R.id.single_offer_view_remove_from_favorites_button);
 
         btnDeleteOffer.setOnClickListener(this);
         btnEditOffer.setOnClickListener(this);
         btnMessage.setOnClickListener(this);
-        btnSend.setOnClickListener(this);
         btnAddToFavorites.setOnClickListener(this);
         btnRemoveFromFavorites.setOnClickListener(this);
 
@@ -241,7 +236,7 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
                 OffersModel.getInstance().setDraft(currentOffer);
                 redirectToFragment(EditOfferFragment.class);
                 break;
-            case R.id.btnMessage: {
+            case R.id.btnMessage:
                 FragmentManager fragmentManager = getFragmentManager();
                 Fragment fragment = new MessagesFragment();
 
@@ -255,36 +250,15 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
                         .addToBackStack(null)
                         .replace(R.id.container, fragment)
                         .commit();
-            }
-            break;
+                break;
 
-            case R.id.btnSend: {
-                String message = editTextSendMessage.getText().toString();
-                if (message.isEmpty() || message.matches("[ ]+")) {
-                    return;
-                }
-                Message m = new Message();
-                m.setSenderId(UserModel.getInstance().getUser().getId());
-                m.setRecipientId(currentOffer.getUser().getId());
-                m.setBody(message);
-
-                new PostMessageAsyncTask(m).execute();
-                btnSend.setVisibility(View.GONE);
-                btnMessage.setVisibility(View.VISIBLE);
-                editTextSendMessage.setVisibility(View.GONE);
-
-            }
-            break;
-
-            case R.id.single_offer_view_add_to_favorites_button: {
+            case R.id.single_offer_view_add_to_favorites_button:
                 new CreateFavoriteAsyncTask(getCurrentFavorite()).execute();
-            }
-            break;
+                break;
 
-            case R.id.single_offer_view_remove_from_favorites_button: {
+            case R.id.single_offer_view_remove_from_favorites_button:
                 new DeleteAsyncTask(getCurrentFavorite()).execute();
-            }
-            break;
+                break;
         }
     }
 
