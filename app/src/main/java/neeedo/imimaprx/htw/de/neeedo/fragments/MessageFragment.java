@@ -66,6 +66,7 @@ public class MessageFragment extends SuperFragment {
                 Bundle args = new Bundle();
                 args.putString("userId2", user.getId());
                 args.putString("userId1", userId1);
+                args.putString("username", user.getName());
                 fragment.setArguments(args);
                 MessagesModel.getInstance().clearUsers();
                 fragmentManager.beginTransaction()

@@ -37,6 +37,7 @@ public class MessagesFragment extends SuperFragment implements View.OnClickListe
     private Activity activity;
     private String user1Id;
     private String user2Id;
+    private String username;
     private String matchUser = "Neeedo";
     private EditText editText;
     private TextView tvHeader;
@@ -53,6 +54,7 @@ public class MessagesFragment extends SuperFragment implements View.OnClickListe
         Bundle args = getArguments();
         user2Id = args.getString("userId2");
         user1Id = args.getString("userId1");
+        username = args.getString("username");
         new GetMessagesAsyncTask(user1Id, user2Id).execute();
 
         return view;
@@ -68,15 +70,6 @@ public class MessagesFragment extends SuperFragment implements View.OnClickListe
             }
         }
 
-        String userName = "";
-        for (Message message : messages) {
-            User user = message.getSender();
-            if(!user.getId().equals(user1Id)) {
-                userName = user.getName();
-            }
-        }
-        tvHeader.setText(userName);
-
         ArrayAdapter<Message> messageAdapter = new MessageListArrayAdapter<>(getActivity(), R.layout.messages_message_item, messages);
         messageView.setAdapter(messageAdapter);
         for (Message m : messages) {
@@ -88,6 +81,8 @@ public class MessagesFragment extends SuperFragment implements View.OnClickListe
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        tvHeader.setText(username);
 
         activity = getActivity();
         sendBtn = (Button) activity.findViewById(R.id.messages_view_send_button);
