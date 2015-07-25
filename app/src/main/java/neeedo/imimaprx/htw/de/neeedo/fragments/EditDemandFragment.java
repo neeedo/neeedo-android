@@ -44,6 +44,7 @@ public class EditDemandFragment extends FormDemandFragment {
             setLocation(selectedGeoPoint);
         }
 
+        DemandsModel.getInstance().removeDemandByID(currentDemand.getId());
         btnSubmit.setOnClickListener(new SendDemandHandler(BaseAsyncTask.SendMode.UPDATE, this));
 
         return view;
