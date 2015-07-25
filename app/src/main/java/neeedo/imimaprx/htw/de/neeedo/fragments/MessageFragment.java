@@ -105,15 +105,17 @@ public class MessageFragment extends SuperFragment {
 
         users = MessagesModel.getInstance().getUsers();
 
-        if (users.size() <= 0) {
-            tvEmpty.setVisibility(View.VISIBLE);
-            messageView.setVisibility(View.GONE);
-            progressBar.setVisibility(View.GONE);
-
-            return;
-        } else {
+        if (users.size() > 0) {
             tvEmpty.setVisibility(View.GONE);
             messageView.setVisibility(View.VISIBLE);
+        } else {
+            if(userMessageContactsLoadedEvent.isReadState()) {
+                tvEmpty.setVisibility(View.VISIBLE);
+                messageView.setVisibility(View.GONE);
+                progressBar.setVisibility(View.GONE);
+            }
+
+            return;
         }
 
         userAdapter = new MessageUserArrayAdapter<>(getActivity(), R.layout.message_user_item, users);
