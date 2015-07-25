@@ -6,13 +6,15 @@
     android:layout_height="match_parent"
     android:background="@android:color/transparent"
     android:layout_margin="5dp"
-    android:gravity="right">
+    android:paddingRight="50dp"
+    android:paddingLeft="0dp"
+    android:gravity="left">
 
     <TextView
         android:id="@+id/tvMessage"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
-        android:background="@drawable/shape_message_item_right"
+        android:background="@drawable/shape_message_item_own"
         android:padding="10dp" />
 
     <TextView

@@ -1,7 +1,6 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments.adapters;
 
 import android.content.Context;
-import android.text.Layout;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,8 +50,9 @@ public class MessageListArrayAdapter<Object> extends ArrayAdapter<Object> {
 
         String messageSender = message.getSender().getId();
         if(messageSender != null && messageSender.equals(currentUserId)) {
-            layoutMessageItem.setGravity(Gravity.LEFT);
-            tvMessage.setBackground(context.getResources().getDrawable(R.drawable.shape_message_item_left));
+            layoutMessageItem.setGravity(Gravity.RIGHT);
+            layoutMessageItem.setPadding(50, 0, 0, 0);
+            tvMessage.setBackground(context.getResources().getDrawable(R.drawable.shape_message_item_partner));
         }
 
         String messageText = message.getBody();
