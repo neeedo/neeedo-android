@@ -14,7 +14,7 @@
         android:id="@+id/tvMessage"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
-        android:background="@drawable/shape_message_item_own"
+        android:background="@drawable/shape_message_item_partner_read"
         android:padding="10dp" />
 
     <TextView

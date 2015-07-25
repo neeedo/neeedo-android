@@ -49,10 +49,14 @@ public class MessageListArrayAdapter<Object> extends ArrayAdapter<Object> {
         Date date = new Date(message.getTimestamp());
 
         String messageSender = message.getSender().getId();
-        if(messageSender != null && messageSender.equals(currentUserId)) {
+        if(messageSender.equals(currentUserId)) {
             layoutMessageItem.setGravity(Gravity.RIGHT);
             layoutMessageItem.setPadding(50, 0, 0, 0);
-            tvMessage.setBackground(context.getResources().getDrawable(R.drawable.shape_message_item_partner));
+            tvMessage.setBackground(context.getResources().getDrawable(R.drawable.shape_message_item_own));
+        } else {
+            if(!message.isRead()) {
+                tvMessage.setBackground(context.getResources().getDrawable(R.drawable.shape_message_item_partner_unread));
+            }
         }
 
         String messageText = message.getBody();
