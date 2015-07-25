@@ -171,10 +171,7 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
         DecimalFormat priceFormat = new DecimalFormat(context.getString(R.string.format_price));
 
         String tagsText = currentOffer.getTagsString();
-        String priceText = context.getString(R.string.item_price) +
-                ": " +
-                priceFormat.format(currentOffer.getPrice()
-                );
+        String priceText = priceFormat.format(currentOffer.getPrice());
         String userText = currentOffer.getUser().getName();
 
         tvTags.setText(tagsText);
