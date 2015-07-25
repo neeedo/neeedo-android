@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -56,6 +57,7 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
     private TextView tvUser;
     private EditText editTextSendMessage;
     private FlowLayout layoutImages;
+    private HorizontalScrollView viewImages;
     private Offer currentOffer;
     private String offerId = "";
     private ArrayList<String> images;
@@ -73,6 +75,7 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
         tvUser = (TextView) view.findViewById(R.id.tvUser);
         editTextSendMessage = (EditText) view.findViewById(R.id.getMessage);
         layoutImages = (FlowLayout) view.findViewById(R.id.layoutImages);
+        viewImages = (HorizontalScrollView) view.findViewById(R.id.viewImages);
 
         return view;
     }
@@ -193,6 +196,10 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
                     isFavorite = true;
                     break;
                 }
+            }
+
+            if(currentOffer.getImages().isEmpty()) {
+                viewImages.setVisibility(View.GONE);
             }
 
             if (isOwn) {

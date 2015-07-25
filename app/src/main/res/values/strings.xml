@@ -126,6 +126,8 @@
     <string name="action_register">register</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
+    <string name="offer">Offer</string>
+    <string name="demand">Demand</string>
 
     <string name="action_sign_in">Sign in</string>
     <string name="title_activity_login">Sign in</string>
