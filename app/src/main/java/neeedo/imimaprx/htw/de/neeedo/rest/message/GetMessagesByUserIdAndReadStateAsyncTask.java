@@ -37,7 +37,7 @@ public class GetMessagesByUserIdAndReadStateAsyncTask extends BaseAsyncTask {
     @Override
     protected void onPostExecute(Object result) {
         if (result instanceof RestResult)
-            eventService.post(new UserMessageContactsLoadedEvent());
+            eventService.post(new UserMessageContactsLoadedEvent(read));
     }
 
     @Override
