@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,11 +48,11 @@ import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
 
 public class SingleOfferFragment extends SuperFragment implements View.OnClickListener {
-    private Button btnDeleteOffer;
-    private Button btnEditOffer;
+    private ImageButton btnDeleteOffer;
+    private ImageButton btnEditOffer;
     private Button btnMessage;
-    private Button btnAddToFavorites;
-    private Button btnRemoveFromFavorites;
+    private ImageButton btnAddToFavorites;
+    private ImageButton btnRemoveFromFavorites;
     private TextView tvTags;
     private TextView tvPrice;
     private TextView tvUser;
@@ -83,11 +84,11 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
         super.onActivityCreated(savedInstanceState);
 
         Activity activity = getActivity();
-        btnDeleteOffer = (Button) activity.findViewById(R.id.btnDelete);
-        btnEditOffer = (Button) activity.findViewById(R.id.btnEdit);
+        btnDeleteOffer = (ImageButton) activity.findViewById(R.id.btnDelete);
+        btnEditOffer = (ImageButton) activity.findViewById(R.id.btnEdit);
         btnMessage = (Button) activity.findViewById(R.id.btnMessage);
-        btnAddToFavorites = (Button) activity.findViewById(R.id.single_offer_view_add_to_favorites_button);
-        btnRemoveFromFavorites = (Button) activity.findViewById(R.id.single_offer_view_remove_from_favorites_button);
+        btnAddToFavorites = (ImageButton) activity.findViewById(R.id.single_offer_view_add_to_favorites_button);
+        btnRemoveFromFavorites = (ImageButton) activity.findViewById(R.id.single_offer_view_remove_from_favorites_button);
 
         btnDeleteOffer.setOnClickListener(this);
         btnEditOffer.setOnClickListener(this);
@@ -254,10 +255,14 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
 
             case R.id.single_offer_view_add_to_favorites_button:
                 new CreateFavoriteAsyncTask(getCurrentFavorite()).execute();
+                btnAddToFavorites.setVisibility(View.GONE);
+                btnRemoveFromFavorites.setVisibility(View.VISIBLE);
                 break;
 
             case R.id.single_offer_view_remove_from_favorites_button:
                 new DeleteAsyncTask(getCurrentFavorite()).execute();
+                btnAddToFavorites.setVisibility(View.VISIBLE);
+                btnRemoveFromFavorites.setVisibility(View.GONE);
                 break;
         }
     }
@@ -267,11 +272,6 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
         favorite.setUserId(ActiveUser.getInstance().getUserId());
         favorite.setOfferId(getArguments().getString("id"));
         return favorite;
-    }
-
-    @Subscribe
-    public void messageSend(UserMessageSendEvent userMessageSendEvent) {
-        Toast.makeText(getActivity(), getActivity().getString(R.string.single_offer_fragment_toast_message), Toast.LENGTH_SHORT).show();
     }
 
     @Subscribe
