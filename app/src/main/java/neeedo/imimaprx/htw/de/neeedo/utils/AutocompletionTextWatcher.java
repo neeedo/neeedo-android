@@ -11,11 +11,13 @@ import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 public class AutocompletionTextWatcher implements TextWatcher {
     FormFragment fragment;
     EditText etInput;
+    EditText etInputOther;
     BaseAsyncTask.CompletionType completionType;
 
-    public AutocompletionTextWatcher(FormFragment fragment, EditText etInput, BaseAsyncTask.CompletionType completionType) {
+    public AutocompletionTextWatcher(FormFragment fragment, EditText etInput, EditText etInputOther, BaseAsyncTask.CompletionType completionType) {
         this.fragment = fragment;
         this.etInput = etInput;
+        this.etInputOther = etInputOther;
         this.completionType = completionType;
     }
 
@@ -26,6 +28,11 @@ public class AutocompletionTextWatcher implements TextWatcher {
 
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        String otherTagsField = "";
+        if(etInputOther != null) {
+            otherTagsField = etInputOther.getText().toString();
+        }
+
         if (completionType.equals(BaseAsyncTask.CompletionType.TAG)) {
             String tagsText = etInput.getText().toString();
             String tags[] = tagsText.split("[ ,]+");
@@ -37,7 +44,7 @@ public class AutocompletionTextWatcher implements TextWatcher {
                 }
             }
         } else if (completionType.equals(BaseAsyncTask.CompletionType.PHRASE)) {
-            String tagsText = etInput.getText().toString();
+            String tagsText = etInput.getText().toString() + otherTagsField;
             if (tagsText.length() > 0) {
                 char lastCharacter = charSequence.charAt(charSequence.length() - 1);
                 // do suggestion for all tags

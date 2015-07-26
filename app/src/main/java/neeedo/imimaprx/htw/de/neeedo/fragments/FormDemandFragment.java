@@ -76,8 +76,8 @@ public class FormDemandFragment extends FormFragment {
         btnSetLocation = (Button) view.findViewById(R.id.btnChooseLocation);
         mapContainer = (RelativeLayout) view.findViewById(R.id.mapContainer);
 
-        etMustTags.addTextChangedListener(new AutocompletionTextWatcher(this, etMustTags, BaseAsyncTask.CompletionType.TAG));
-        etShouldTags.addTextChangedListener(new AutocompletionTextWatcher(this, etShouldTags, BaseAsyncTask.CompletionType.TAG));
+        etMustTags.addTextChangedListener(new AutocompletionTextWatcher(this, etMustTags, null, BaseAsyncTask.CompletionType.TAG));
+        etShouldTags.addTextChangedListener(new AutocompletionTextWatcher(this, etShouldTags, null, BaseAsyncTask.CompletionType.TAG));
 
         etMustTags.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
         etShouldTags.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
@@ -85,8 +85,8 @@ public class FormDemandFragment extends FormFragment {
         etMustTags.setOnClickListener(new AutocompletionOnClickListener(etMustTags));
         etShouldTags.setOnClickListener(new AutocompletionOnClickListener(etShouldTags));
 
-        etMustTags.addTextChangedListener(new AutocompletionTextWatcher(this, etMustTags, BaseAsyncTask.CompletionType.PHRASE));
-        etShouldTags.addTextChangedListener(new AutocompletionTextWatcher(this, etShouldTags, BaseAsyncTask.CompletionType.PHRASE));
+        etMustTags.addTextChangedListener(new AutocompletionTextWatcher(this, etMustTags, etShouldTags, BaseAsyncTask.CompletionType.PHRASE));
+        etShouldTags.addTextChangedListener(new AutocompletionTextWatcher(this, etShouldTags, etMustTags, BaseAsyncTask.CompletionType.PHRASE));
 
         etMustTags.setOnFocusChangeListener(new AutocompletionOnFocusChangeListener(flMustTagSuggestions));
         etShouldTags.setOnFocusChangeListener(new AutocompletionOnFocusChangeListener(flShouldTagSuggestions));
