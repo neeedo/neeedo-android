@@ -255,14 +255,17 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
 
             case R.id.single_offer_view_add_to_favorites_button:
                 new CreateFavoriteAsyncTask(getCurrentFavorite()).execute();
-                btnAddToFavorites.setVisibility(View.GONE);
-                btnRemoveFromFavorites.setVisibility(View.VISIBLE);
                 break;
 
             case R.id.single_offer_view_remove_from_favorites_button:
-                new DeleteAsyncTask(getCurrentFavorite()).execute();
-                btnAddToFavorites.setVisibility(View.VISIBLE);
-                btnRemoveFromFavorites.setVisibility(View.GONE);
+                BaseAsyncTask removeFavoriteTask = new DeleteAsyncTask(getCurrentFavorite());
+                ConfirmDialogFragment confirmRemoveFavorite = ConfirmDialogFragment.newInstance(
+                        removeFavoriteTask,
+                        null,
+                        getResources().getString(R.string.dialog_remove_favorite)
+                );
+                confirmRemoveFavorite.show(getFragmentManager(), getString(R.string.confirm));
+
                 break;
         }
     }
@@ -277,6 +280,20 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
     @Subscribe
     public void favoriteActionDone(FavoritesActionEvent e) {
         Toast.makeText(getActivity(), getActivity().getString(R.string.done), Toast.LENGTH_SHORT).show();
+
+        // TODO add a field to the event which describes if it removed or added the favorite
+
+        if(btnAddToFavorites.getVisibility() == View.VISIBLE) {
+            btnAddToFavorites.setVisibility(View.GONE);
+        } else {
+            btnAddToFavorites.setVisibility(View.VISIBLE);
+        }
+
+        if(btnRemoveFromFavorites.getVisibility() == View.VISIBLE) {
+            btnRemoveFromFavorites.setVisibility(View.GONE);
+        } else {
+            btnRemoveFromFavorites.setVisibility(View.VISIBLE);
+        }
     }
 
     @Subscribe
