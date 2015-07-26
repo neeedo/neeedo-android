@@ -66,13 +66,13 @@
 
     <string name="new_message_text">New Message From: </string>
     <string name="message_text">From: </string>
-    <string name="new_match_text">You got a new match to your demand. Click here for redirect.</string>
+    <string name="new_match_text">You got a new match to your Demand. Click here for redirect.</string>
 
     <string name="dialog_yes">Yes</string>
     <string name="dialog_no">No</string>
 
-    <string name="dialog_delete_demand">Are you sure you want to delete this demand?</string>
-    <string name="dialog_delete_offer">Are you sure you want to delete this offer?</string>
+    <string name="dialog_delete_demand">Are you sure you want to delete this Demand?</string>
+    <string name="dialog_delete_offer">Are you sure you want to delete this Offer?</string>
     <string name="dialog_remove_favorite">Are you sure you want to remove this favorite?</string>
     <string name="dialog_logout">Are you sure you want to logout?</string>
     <string name="title_activity_location_chooser">LocationChooser</string>
@@ -80,31 +80,31 @@
 
     <string name="item_distance">Distance</string>
     <string name="item_price">Price</string>
-    <string name="empty_offers_message">You have no offers at the moment</string>
-    <string name="empty_demands_message">You have no demands at the moment</string>
+    <string name="empty_offers_message">You have no Offers at the moment</string>
+    <string name="empty_demands_message">You have no Demands at the moment</string>
 
     <string name="format_price">#0.00 €</string>
     <string name="format_distance">#0.00 km</string>
-    <string name="camera_uploading_progress">image is uploading</string>
-    <string name="location_chooser_search_hint">Suche...</string>
+    <string name="camera_uploading_progress">Uploading image...</string>
+    <string name="location_chooser_search_hint">Searching...</string>
     <string name="message_view_no_conversations_found">No conversations have been found.</string>
     <string name="favorites_view_no_favorites_found">No favorites have been found.</string>
 
-    <string name="single_offer_fragment_toast_message">Your message was send.</string>
+    <string name="single_offer_fragment_toast_message">Your message was sent.</string>
     <string name="single_offer_message_edit_text_hint">Write your message here.</string>
     <string name="done">done</string>
     <string name="messages_view_send">Send</string>
 
-    <string name="swiper_no_more_offers_to_show">No more offers to show. :-(</string>
-    <string name="image_upload_failed_title">Image upload failed</string>
+    <string name="swiper_no_more_offers_to_show">No more Offers to show. :-(</string>
+    <string name="image_upload_failed_title">Image upload failed.</string>
     <string name="image_upload_failed_message">Please try again.</string>
     <string name="image_upload_failed_accept">OK</string>
     <string name="outpan_failed_accept">OK</string>
-    <string name="outpan_failed_message">no matching products for scanned product</string>
+    <string name="outpan_failed_message">No products found for Barcode</string>
     <string name="outpan_failed_title">Barcode scan failed</string>
     <string name="single_offer_view_add_to_favorites_text">Fav</string>
     <string name="single_offer_view_remove_from_favorites_text">Unfav</string>
-    <string name="kilometer_radius">radius in km:</string>
+    <string name="kilometer_radius">Radius in km:</string>
 
     <string name="title_activity_image">Display image</string>
     <string name="button_previous">Previous</string>
@@ -121,8 +121,8 @@
     <string name="create_new_offer">Create new Offer</string>
     <string name="list_offers">List your Offers</string>
     <string name="demands">Demands</string>
-    <string name="create_new_demand">Create a new Demand</string>
-    <string name="list_demand">list demands</string>
+    <string name="create_new_demand">Create new Demand</string>
+    <string name="list_demand">List your Demands</string>
     <string name="action_register">register</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
