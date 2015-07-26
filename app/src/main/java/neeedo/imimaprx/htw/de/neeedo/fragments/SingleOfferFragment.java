@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +22,13 @@ import com.squareup.otto.Subscribe;
 import com.squareup.picasso.Picasso;
 
 import org.apmem.tools.layouts.FlowLayout;
+import org.osmdroid.DefaultResourceProxyImpl;
+import org.osmdroid.ResourceProxy;
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.ItemizedIconOverlay;
+import org.osmdroid.views.overlay.OverlayItem;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -58,6 +67,7 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
     private String offerId = "";
     private ArrayList<String> images;
     private Context context;
+    private RelativeLayout mapContainer;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -71,6 +81,7 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
         tvUser = (TextView) view.findViewById(R.id.tvUser);
         layoutImages = (FlowLayout) view.findViewById(R.id.layoutImages);
         viewImages = (HorizontalScrollView) view.findViewById(R.id.viewImages);
+        mapContainer = (RelativeLayout) view.findViewById(R.id.offer_view_map);
 
         return view;
     }
@@ -120,7 +131,6 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
 
     @Subscribe
     public void fillText(GetOfferFinishedEvent e) {
-
         //try to find it in the list, if not available reload the offer and add it to the list
         currentOffer = findSingleOffer(offerId);
         if (currentOffer == null) {
@@ -133,10 +143,10 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
 
             for (int i = 0; i < images.size(); i++) {
                 FlowLayout.LayoutParams imageLayoutParams = new FlowLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                imageLayoutParams.setMargins(0, 0, 15, 15);
+                imageLayoutParams.setMargins(0, 0, 0,0);
                 ImageView imageView = new ImageView(context);
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                imageView.setPadding(0, 0, 0, 20);
+                imageView.setPadding(20, 20, 0, 20);
                 imageView.setAdjustViewBounds(true);
                 imageView.setLayoutParams(imageLayoutParams);
                 imageView.setMinimumHeight(300);
@@ -167,14 +177,34 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
 
         DecimalFormat priceFormat = new DecimalFormat(context.getString(R.string.format_price));
 
-        String tagsText = currentOffer.getTagsString();
-        String priceText = priceFormat.format(currentOffer.getPrice());
-        String userText = currentOffer.getUser().getName();
+        tvTags.setText(currentOffer.getTagsString());
+        tvPrice.setText(priceFormat.format(currentOffer.getPrice()));
+        tvUser.setText(currentOffer.getUser().getName());
 
-        tvTags.setText(tagsText);
-        tvPrice.setText(priceText);
-        tvUser.setText(userText);
+        final MapView mapView = new MapView(getActivity(), null);
+        mapView.setTileSource(TileSourceFactory.MAPNIK);
+        mapView.setBuiltInZoomControls(true);
+        mapView.setMultiTouchControls(true);
+        mapView.getController().setZoom(18);
+        mapView.setClickable(true);
+        mapView.setBuiltInZoomControls(true);
+        mapView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
+        mapContainer.addView(mapView);
+
+        ResourceProxy resourceProxy = new DefaultResourceProxyImpl(getActivity());
+        ArrayList<OverlayItem> ownOverlay = new ArrayList<OverlayItem>();
+        ownOverlay.add(new OverlayItem("", "", new GeoPoint(currentOffer.getLocation().getLat(), currentOffer.getLocation().getLon())));
+        ItemizedIconOverlay userLocationOverlay = new ItemizedIconOverlay<OverlayItem>(ownOverlay, getResources().getDrawable(R.drawable.map_marker), null, resourceProxy);
+        mapView.getOverlays().add(userLocationOverlay);
+
+        // this is a hack to get around one of the osmdroid bugs
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mapView.getController().animateTo(new GeoPoint(currentOffer.getLocation().getLat(), currentOffer.getLocation().getLon()));
+            }
+        }, 200);
     }
 
     private void setVisibility() {
@@ -184,14 +214,14 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
 
             boolean isFavorite = false;
             ArrayList<Favorite> favorites = FavoritesModel.getInstance().getFavorites();
-            for(Favorite favorite : favorites) {
-                if(currentOffer.getId().equals(favorite.getId())) {
+            for (Favorite favorite : favorites) {
+                if (currentOffer.getId().equals(favorite.getId())) {
                     isFavorite = true;
                     break;
                 }
             }
 
-            if(currentOffer.getImages().isEmpty()) {
+            if (currentOffer.getImages().isEmpty()) {
                 viewImages.setVisibility(View.GONE);
             }
 
@@ -199,7 +229,7 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
                 btnDeleteOffer.setVisibility(View.VISIBLE);
                 btnEditOffer.setVisibility(View.VISIBLE);
             } else {
-                if(isFavorite) {
+                if (isFavorite) {
                     btnAddToFavorites.setVisibility(View.GONE);
                     btnRemoveFromFavorites.setVisibility(View.VISIBLE);
                 } else {
@@ -279,13 +309,13 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
 
         // TODO add a field to the event which describes if it removed or added the favorite
 
-        if(btnAddToFavorites.getVisibility() == View.VISIBLE) {
+        if (btnAddToFavorites.getVisibility() == View.VISIBLE) {
             btnAddToFavorites.setVisibility(View.GONE);
         } else {
             btnAddToFavorites.setVisibility(View.VISIBLE);
         }
 
-        if(btnRemoveFromFavorites.getVisibility() == View.VISIBLE) {
+        if (btnRemoveFromFavorites.getVisibility() == View.VISIBLE) {
             btnRemoveFromFavorites.setVisibility(View.GONE);
         } else {
             btnRemoveFromFavorites.setVisibility(View.VISIBLE);
