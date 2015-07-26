@@ -3,21 +3,12 @@ package neeedo.imimaprx.htw.de.neeedo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-import neeedo.imimaprx.htw.de.neeedo.fragments.ListDemandsFragment;
-import neeedo.imimaprx.htw.de.neeedo.fragments.ListFavoritesFragment;
-import neeedo.imimaprx.htw.de.neeedo.fragments.ListOffersFragment;
 import neeedo.imimaprx.htw.de.neeedo.fragments.MainFragment;
-import neeedo.imimaprx.htw.de.neeedo.fragments.MessageFragment;
-import neeedo.imimaprx.htw.de.neeedo.fragments.NavigationDrawerFragment;
-import neeedo.imimaprx.htw.de.neeedo.fragments.NewDemandFragment;
-import neeedo.imimaprx.htw.de.neeedo.fragments.NewOfferFragment;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.ApplicationContextModel;
 import neeedo.imimaprx.htw.de.neeedo.models.MessagesModel;
