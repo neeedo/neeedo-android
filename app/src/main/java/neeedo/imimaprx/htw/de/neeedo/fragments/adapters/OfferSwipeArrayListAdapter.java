@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
@@ -45,6 +46,7 @@ public class OfferSwipeArrayListAdapter extends ArrayAdapter {
         final TextView titleTextView = (TextView) view.findViewById(R.id.card_title);
         final TextView descriptionTextView = (TextView) view.findViewById(R.id.card_description);
         final ImageView imageView = (ImageView) view.findViewById(R.id.card_image);
+        final TextView textViewPrice = (TextView) view.findViewById(R.id.swiper_price);
 
         final SwipeCardViewItem offerItem = swipeCardViewItems.get(position);
 
@@ -83,6 +85,9 @@ public class OfferSwipeArrayListAdapter extends ArrayAdapter {
 
         titleTextView.setText(offerItem.getOffer().getTagsString());
         descriptionTextView.setText(offerItem.getOffer().getPrice().toString());
+
+        DecimalFormat priceFormat = new DecimalFormat(activity.getString(R.string.format_price));
+        textViewPrice.setText(priceFormat.format(offerItem.getOffer().getPrice()));
 
         return view;
     }

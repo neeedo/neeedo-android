@@ -28,6 +28,7 @@ import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.service.EventService;
 import neeedo.imimaprx.htw.de.neeedo.vo.RequestCodes;
+
 import android.support.v4.app.DialogFragment;
 
 public class SuperFragment extends Fragment {
@@ -58,8 +59,9 @@ public class SuperFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == RequestCodes.LOGIN_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            Toast.makeText(getActivity(), getString(R.string.login_finished), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getActivity(), getString(R.string.login_finished), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -204,7 +206,7 @@ public class SuperFragment extends Fragment {
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     task.execute();
                                     SuperFragment fragment = (SuperFragment) getFragmentManager().findFragmentById(R.id.container);
-                                    if(fragmentRedirect != null) {
+                                    if (fragmentRedirect != null) {
                                         fragment.redirectToFragment(fragmentRedirect);
                                     }
                                 }
