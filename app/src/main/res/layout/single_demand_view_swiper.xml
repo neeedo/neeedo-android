@@ -5,90 +5,127 @@
     android:background="@drawable/background"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btnEdit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="false"
-            android:text="@string/button_edit" />
-
-        <Button
-            android:id="@+id/btnDelete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="false"
-            android:text="@string/button_delete" />
-
-        <TextView
-            android:id="@+id/tvMustTags"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="must Tags" />
-
-        <TextView
-            android:id="@+id/tvShouldTags"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="should Tags" />
-    </LinearLayout>
-
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:background="#99000000"
+        android:orientation="vertical"
+        android:paddingTop="15dp"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:paddingBottom="0dp">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:gravity="center">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="right"
+            android:paddingRight="15dp"
+            android:paddingLeft="15dp">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/swiper_no_more_offers_to_show" />
+                android:layout_weight="0.5"
+                android:text="@string/demand"
+                android:textColor="#88BEB1"
+                android:layout_gravity="left|bottom"
+                android:textAllCaps="true"
+                style="@style/Base.TextAppearance.AppCompat.Headline"
+                android:paddingBottom="5dp" />
+
+            <ImageButton
+                android:id="@+id/btnEdit"
+                style="?android:attr/buttonStyleSmall"
+                android:text="@string/button_edit"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:padding="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginBottom="5dp"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:src="@drawable/btn_edit"
+                android:background="#66000000"
+                android:layout_gravity="bottom" />
+
+            <ImageButton
+                android:id="@+id/btnDelete"
+                style="?android:attr/buttonStyleSmall"
+                android:text="@string/button_delete"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:padding="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginBottom="5dp"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:src="@drawable/btn_trash"
+                android:background="#66000000"
+                android:layout_gravity="bottom"/>
+
+        </LinearLayout>
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="40dp">
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/swiper_no_more_offers_to_show"
+                    android:textColor="#88BEB1" />
+
+            </RelativeLayout>
+
+            <com.lorentzos.flingswipe.SwipeFlingAdapterView
+                android:id="@+id/swipe_frame"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                app:rotation_degrees="15.5" />
+
+            <LinearLayout
+                android:id="@+id/buttons_diolor_chooser"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="#00000000"
+                android:gravity="center_horizontal">
+
+                <ImageButton
+                    android:id="@+id/button_diolor_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="#00000000"
+                    android:padding="0dp"
+                    android:src="@drawable/dismiss_large" />
+
+                <ImageButton
+                    android:id="@+id/button_diolor_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="#00000000"
+                    android:padding="0dp"
+                    android:src="@drawable/fav_large" />
+
+            </LinearLayout>
 
         </RelativeLayout>
 
-        <com.lorentzos.flingswipe.SwipeFlingAdapterView
-            android:id="@+id/swipe_frame"
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            app:rotation_degrees="15.5" />
-
-        <LinearLayout
-            android:id="@+id/buttons_diolor_chooser"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="#00000000"
-            android:gravity="center_horizontal">
-
-            <ImageButton
-                android:id="@+id/button_diolor_left"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="#00000000"
-                android:padding="0dp"
-                android:src="@drawable/dismiss_large" />
-
-            <ImageButton
-                android:id="@+id/button_diolor_right"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="#00000000"
-                android:padding="0dp"
-                android:src="@drawable/fav_large" />
-
-        </LinearLayout>
-    </RelativeLayout>
-
+    </FrameLayout>
 
 </LinearLayout>

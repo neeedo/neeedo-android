@@ -6,8 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.TextView;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
@@ -27,8 +26,6 @@ import neeedo.imimaprx.htw.de.neeedo.events.FoundMatchesEvent;
 import neeedo.imimaprx.htw.de.neeedo.fragments.adapters.OfferSwipeArrayListAdapter;
 import neeedo.imimaprx.htw.de.neeedo.fragments.adapters.SwipeCardViewItem;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
-import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
-import neeedo.imimaprx.htw.de.neeedo.rest.demand.GetDemandByIDAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.favorites.CreateFavoriteAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.matching.GetOffersToDemandAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
@@ -36,11 +33,8 @@ import neeedo.imimaprx.htw.de.neeedo.rest.util.DeleteAsyncTask;
 
 
 public class SingleDemandFragmentSwiper extends SuperFragment implements View.OnClickListener {
-    private Button btnDeleteDemand;
-    private Button btnEditDemand;
-
-    private TextView textViewMustTags;
-    private TextView textViewShouldTags;
+    private ImageButton btnDeleteDemand;
+    private ImageButton btnEditDemand;
 
     private View view;
     private Demand currentDemand;
@@ -57,11 +51,8 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
 
         view = inflater.inflate(R.layout.single_demand_view_swiper, container, false);
 
-        btnDeleteDemand = (Button) view.findViewById(R.id.btnDelete);
-        btnEditDemand = (Button) view.findViewById(R.id.btnEdit);
-
-        textViewMustTags = (TextView) view.findViewById(R.id.tvMustTags);
-        textViewShouldTags = (TextView) view.findViewById(R.id.tvShouldTags);
+        btnDeleteDemand = (ImageButton) view.findViewById(R.id.btnDelete);
+        btnEditDemand = (ImageButton) view.findViewById(R.id.btnEdit);
 
         return view;
     }
@@ -76,9 +67,6 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
         demandId = getArguments().getString("id");
 
         currentDemand = demandsModel.getDemandById(demandId);
-
-        textViewMustTags.setText(currentDemand.getMustTagsString());
-        textViewShouldTags.setText(currentDemand.getShouldTagsString());
 
         new GetOffersToDemandAsyncTask(currentDemand).execute();
     }
