@@ -232,12 +232,14 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
 
         deleteAllUiOverlays();
 
-        Polygon circle = new Polygon(this);
-        circle.setPoints(Polygon.pointsAsCircle(selectedGeoPoint, selectedDistanceInKm * 1000));
-        circle.setFillColor(0xaa88BEB1);
-        circle.setStrokeColor(0x88BEB1);
-        circle.setStrokeWidth(2);
-        mapView.getOverlays().add(circle);
+        if (withDistance) {
+            Polygon circle = new Polygon(this);
+            circle.setPoints(Polygon.pointsAsCircle(selectedGeoPoint, selectedDistanceInKm * 1000));
+            circle.setFillColor(0xaa88BEB1);
+            circle.setStrokeColor(0x88BEB1);
+            circle.setStrokeWidth(2);
+            mapView.getOverlays().add(circle);
+        }
 
         ArrayList<OverlayItem> ownOverlay = new ArrayList<OverlayItem>();
         ownOverlay.add(new OverlayItem("", "", (GeoPoint) selectedGeoPoint));
