@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -29,18 +28,15 @@ import java.util.List;
 import neeedo.imimaprx.htw.de.neeedo.ImageActivity;
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.favorites.Favorite;
-import neeedo.imimaprx.htw.de.neeedo.entities.message.Message;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offer;
 import neeedo.imimaprx.htw.de.neeedo.events.DeleteFinishedEvent;
 import neeedo.imimaprx.htw.de.neeedo.events.FavoritesActionEvent;
 import neeedo.imimaprx.htw.de.neeedo.events.GetOfferFinishedEvent;
-import neeedo.imimaprx.htw.de.neeedo.events.UserMessageSendEvent;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.FavoritesModel;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
 import neeedo.imimaprx.htw.de.neeedo.models.UserModel;
-import neeedo.imimaprx.htw.de.neeedo.rest.favorites.CreateFavoriteAsyncTask;
-import neeedo.imimaprx.htw.de.neeedo.rest.message.PostMessageAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.favorites.PostCreateFavoriteAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.offer.GetOfferByIDAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.DeleteAsyncTask;
@@ -254,7 +250,7 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
                 break;
 
             case R.id.single_offer_view_add_to_favorites_button:
-                new CreateFavoriteAsyncTask(getCurrentFavorite()).execute();
+                new PostCreateFavoriteAsyncTask(getCurrentFavorite()).execute();
                 break;
 
             case R.id.single_offer_view_remove_from_favorites_button:

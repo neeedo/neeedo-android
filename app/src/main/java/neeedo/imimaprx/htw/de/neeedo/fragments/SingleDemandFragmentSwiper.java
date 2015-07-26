@@ -27,7 +27,7 @@ import neeedo.imimaprx.htw.de.neeedo.fragments.adapters.OfferSwipeArrayListAdapt
 import neeedo.imimaprx.htw.de.neeedo.fragments.adapters.SwipeCardViewItem;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
-import neeedo.imimaprx.htw.de.neeedo.rest.favorites.CreateFavoriteAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.favorites.PostCreateFavoriteAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.matching.GetOffersToDemandAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.DeleteAsyncTask;
@@ -112,7 +112,7 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
                 favorite.setOfferId(offer.getId());
                 favorite.setUserId(ActiveUser.getInstance().getUserId());
 
-                new CreateFavoriteAsyncTask(favorite).execute();
+                new PostCreateFavoriteAsyncTask(favorite).execute();
 
             }
 

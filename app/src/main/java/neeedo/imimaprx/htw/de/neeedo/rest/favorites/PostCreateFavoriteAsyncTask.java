@@ -24,12 +24,12 @@ import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.RestResult;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 
 
-public class CreateFavoriteAsyncTask extends BaseAsyncTask {
+public class PostCreateFavoriteAsyncTask extends BaseAsyncTask {
 
     private Favorite favorite;
 
 
-    public CreateFavoriteAsyncTask(Favorite favorite) {
+    public PostCreateFavoriteAsyncTask(Favorite favorite) {
         this.favorite = favorite;
     }
 
