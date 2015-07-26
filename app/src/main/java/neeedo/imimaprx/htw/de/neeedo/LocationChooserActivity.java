@@ -277,6 +277,9 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
 
         if (id == R.id.location_chooser_done) {
             closeActivityAndReturnData();
+        } else if (id == android.R.id.home) {
+            super.onBackPressed();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
