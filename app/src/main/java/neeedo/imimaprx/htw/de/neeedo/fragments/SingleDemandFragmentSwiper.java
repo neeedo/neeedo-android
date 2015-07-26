@@ -25,6 +25,7 @@ import neeedo.imimaprx.htw.de.neeedo.events.DeleteFinishedEvent;
 import neeedo.imimaprx.htw.de.neeedo.events.FoundMatchesEvent;
 import neeedo.imimaprx.htw.de.neeedo.fragments.adapters.OfferSwipeArrayListAdapter;
 import neeedo.imimaprx.htw.de.neeedo.fragments.adapters.SwipeCardViewItem;
+import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.favorites.CreateFavoriteAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.matching.GetOffersToDemandAsyncTask;
@@ -107,7 +108,11 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
             public void onRightCardExit(Object dataObject) {
                 SwipeCardViewItem swipeCardViewItem = (SwipeCardViewItem) dataObject;
                 Offer offer = swipeCardViewItem.getOffer();
-                new CreateFavoriteAsyncTask(new Favorite()).execute();
+                Favorite favorite = new Favorite();
+                favorite.setOfferId(offer.getId());
+                favorite.setUserId(ActiveUser.getInstance().getUserId());
+
+                new CreateFavoriteAsyncTask(favorite).execute();
 
             }
 
