@@ -81,8 +81,8 @@ public class OfferSwipeArrayListAdapter extends ArrayAdapter {
             Picasso.with(getContext()).load(ServerConstantsUtils.getActiveServer() + "images/" + offerItem.getImages().get(0)).fit().centerInside().into(imageView);
         }
 
-        titleTextView.setText(offerItem.getTitle());
-        descriptionTextView.setText(offerItem.getDescription());
+        titleTextView.setText(offerItem.getOffer().getTagsString());
+        descriptionTextView.setText(offerItem.getOffer().getPrice().toString());
 
         return view;
     }

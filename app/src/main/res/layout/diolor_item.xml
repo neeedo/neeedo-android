@@ -24,9 +24,10 @@
 
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
-            android:layout_height="240dp"
+            android:layout_height="fill_parent"
             android:layout_margin="5dp"
-            android:gravity="top">
+            android:gravity="top"
+            android:layout_weight=".3">
 
             <RelativeLayout
                 android:layout_width="fill_parent"
@@ -45,6 +46,17 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:scaleType="centerCrop" />
+
+            <TextView
+                android:id="@+id/swiper_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#FF006D"
+                android:text="100 €"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:textColor="@android:color/white"
+                android:textSize="40sp" android:padding="10dp" />
 
             <RelativeLayout
                 android:layout_width="fill_parent"
@@ -84,7 +96,8 @@
             android:layout_marginRight="5dp"
             android:background="#fff"
             android:textColor="@android:color/black"
-            android:textSize="13dp" />
+            android:textSize="13dp"
+            android:layout_weight=".8" />
 
     </LinearLayout>
 
