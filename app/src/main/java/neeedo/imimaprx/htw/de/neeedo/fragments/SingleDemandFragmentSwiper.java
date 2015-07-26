@@ -41,11 +41,7 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
 
     private ImageButton btnDeleteDemand;
     private ImageButton btnEditDemand;
-    private Button btnDeleteDemand;
-    private Button btnEditDemand;
 
-    private TextView textViewMustTags;
-    private TextView textViewShouldTags;
     private ProgressBar progressBar;
 
     private View view;
@@ -68,8 +64,6 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
         btnDeleteDemand = (ImageButton) view.findViewById(R.id.btnDelete);
         btnEditDemand = (ImageButton) view.findViewById(R.id.btnEdit);
 
-        textViewMustTags = (TextView) view.findViewById(R.id.tvMustTags);
-        textViewShouldTags = (TextView) view.findViewById(R.id.tvShouldTags);
         progressBar = (ProgressBar) view.findViewById(R.id.loading_matches_progress_bar);
         diolorButtonsContainer = (LinearLayout) view.findViewById(R.id.buttons_diolor_chooser);
         textViewEmpty = (TextView) view.findViewById(R.id.list_empty_error);
@@ -87,9 +81,6 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
         demandId = getArguments().getString("id");
 
         currentDemand = demandsModel.getDemandById(demandId);
-
-        textViewMustTags.setText(currentDemand.getMustTagsString());
-        textViewShouldTags.setText(currentDemand.getShouldTagsString());
 
         new GetOffersToDemandAsyncTask(currentDemand).execute();
     }
