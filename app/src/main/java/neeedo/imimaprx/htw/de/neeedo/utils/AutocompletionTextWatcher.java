@@ -33,19 +33,19 @@ public class AutocompletionTextWatcher implements TextWatcher {
             otherTagsField = etInputOther.getText().toString();
         }
 
-        if (completionType.equals(BaseAsyncTask.CompletionType.TAG)) {
+        if (completionType.equals(BaseAsyncTask.CompletionType.TAG) && charSequence.length() > 0) {
             String tagsText = etInput.getText().toString();
             String tags[] = tagsText.split("[ ,]+");
             String lastTag = tags[tags.length - 1]; // get last tag for completion
-            if (tagsText.length() > 0) {
+            if (tagsText.length() > 1) {
                 // do completion for last tag
                 if (lastTag.matches("[A-Za-z0-9]+")) {
                     new GetCompletionAsyncTask(lastTag, BaseAsyncTask.CompletionType.TAG, charSequence).execute();
                 }
             }
-        } else if (completionType.equals(BaseAsyncTask.CompletionType.PHRASE)) {
+        } else if (completionType.equals(BaseAsyncTask.CompletionType.PHRASE) && charSequence.length() > 0) {
             String tagsText = etInput.getText().toString() + otherTagsField;
-            if (tagsText.length() > 0) {
+            if (tagsText.length() > 1) {
                 char lastCharacter = charSequence.charAt(charSequence.length() - 1);
                 // do suggestion for all tags
                 if (tagsText.matches("[A-Za-z0-9, ]+") && (lastCharacter == ',' || lastCharacter == ' ')) {
