@@ -7,6 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
@@ -34,8 +38,15 @@ import neeedo.imimaprx.htw.de.neeedo.rest.util.DeleteAsyncTask;
 
 
 public class SingleDemandFragmentSwiper extends SuperFragment implements View.OnClickListener {
+
     private ImageButton btnDeleteDemand;
     private ImageButton btnEditDemand;
+    private Button btnDeleteDemand;
+    private Button btnEditDemand;
+
+    private TextView textViewMustTags;
+    private TextView textViewShouldTags;
+    private ProgressBar progressBar;
 
     private View view;
     private Demand currentDemand;
@@ -45,6 +56,8 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
 
     private DemandsModel demandsModel = DemandsModel.getInstance();
     private String demandId;
+    private LinearLayout diolorButtonsContainer;
+    private TextView textViewEmpty;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,6 +67,12 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
 
         btnDeleteDemand = (ImageButton) view.findViewById(R.id.btnDelete);
         btnEditDemand = (ImageButton) view.findViewById(R.id.btnEdit);
+
+        textViewMustTags = (TextView) view.findViewById(R.id.tvMustTags);
+        textViewShouldTags = (TextView) view.findViewById(R.id.tvShouldTags);
+        progressBar = (ProgressBar) view.findViewById(R.id.loading_matches_progress_bar);
+        diolorButtonsContainer = (LinearLayout) view.findViewById(R.id.buttons_diolor_chooser);
+        textViewEmpty = (TextView) view.findViewById(R.id.list_empty_error);
 
         return view;
     }
@@ -68,6 +87,9 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
         demandId = getArguments().getString("id");
 
         currentDemand = demandsModel.getDemandById(demandId);
+
+        textViewMustTags.setText(currentDemand.getMustTagsString());
+        textViewShouldTags.setText(currentDemand.getShouldTagsString());
 
         new GetOffersToDemandAsyncTask(currentDemand).execute();
     }
@@ -118,8 +140,10 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
 
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
-                if (itemsInAdapter == 0)
-                    getActivity().findViewById(R.id.buttons_diolor_chooser).setVisibility(View.GONE);
+                if (itemsInAdapter == 0) {
+                     textViewEmpty.setVisibility(View.VISIBLE);
+                    diolorButtonsContainer.setVisibility(View.GONE);
+                }
             }
 
             @Override
@@ -152,6 +176,7 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
         });
 
         arrayAdapter.notifyDataSetChanged();
+        progressBar.setVisibility(View.GONE);
     }
 
     @Subscribe

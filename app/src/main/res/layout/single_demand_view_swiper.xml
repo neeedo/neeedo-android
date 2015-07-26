@@ -38,6 +38,40 @@
                 style="@style/Base.TextAppearance.AppCompat.Headline"
                 android:paddingBottom="5dp" />
 
+            <TextView
+                android:id="@+id/list_empty_error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="#FF006D"
+                android:padding="10dp"
+                android:text="@string/swiper_no_more_offers_to_show"
+                android:textColor="#fff"
+                android:textSize="18dp"
+                android:visibility="gone" />
+
+            <ProgressBar
+                android:id="@+id/loading_matches_progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
+
+        </RelativeLayout>
+
+        <com.lorentzos.flingswipe.SwipeFlingAdapterView
+            android:id="@+id/swipe_frame"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            app:rotation_degrees="15.5" />
+
+        <LinearLayout
+            android:id="@+id/buttons_diolor_chooser"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="#00000000"
+            android:gravity="center_horizontal">
+
             <ImageButton
                 android:id="@+id/btnEdit"
                 style="?android:attr/buttonStyleSmall"
