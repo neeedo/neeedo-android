@@ -87,7 +87,7 @@ public class FormOfferFragment extends FormFragment {
 
         addImageButton.setOnClickListener(new StartCameraHandler(this));
         btnBarcode.setOnClickListener(new StartNewBarcodeScanHandler(this));
-        btnSetLocation.setOnClickListener(new StartLocationChooserHandler(this));
+        btnSetLocation.setOnClickListener(new StartLocationChooserHandler(this, false));
 
         etTags.addTextChangedListener(new AutocompletionTextWatcher(this, etTags, null, BaseAsyncTask.CompletionType.TAG));
         etTags.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());

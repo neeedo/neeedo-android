@@ -50,10 +50,15 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
     private GeoPoint selectedGeoPoint = null;
     private int selectedDistanceInKm;
     private TextView distanceTextView;
+    private boolean withDistance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent intent = getIntent(); // gets the previously created intent
+        withDistance = intent.getBooleanExtra("withDistance", false);
+
         setContentView(R.layout.activity_location_chooser);
 
         ImageButton findOwnLocationButton = (ImageButton) findViewById(R.id.find_own_location);
@@ -88,7 +93,11 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
         });
 
         final SeekBar distanceSeekBar = (SeekBar) findViewById(R.id.distance_seek_bar);
+        distanceSeekBar.setVisibility(withDistance ? View.VISIBLE : View.GONE);
+
         distanceTextView = (TextView) findViewById(R.id.distance_text_view);
+        distanceTextView.setVisibility(withDistance ? View.VISIBLE : View.GONE);
+
         setNewDistance(10);
         distanceSeekBar.setProgress(9);
 
@@ -256,7 +265,8 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
             Intent output = new Intent();
             output.putExtra("latitude", Double.toString(selectedGeoPoint.getLatitude()));
             output.putExtra("longitude", Double.toString(selectedGeoPoint.getLongitude()));
-            output.putExtra("distance", Integer.toString(selectedDistanceInKm));
+            if (withDistance)
+                output.putExtra("distance", Integer.toString(selectedDistanceInKm));
             setResult(RESULT_OK, output);
         } else {
             setResult(RESULT_CANCELED);

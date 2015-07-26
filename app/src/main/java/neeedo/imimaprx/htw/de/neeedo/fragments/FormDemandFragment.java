@@ -91,7 +91,7 @@ public class FormDemandFragment extends FormFragment {
         etMustTags.setOnFocusChangeListener(new AutocompletionOnFocusChangeListener(flMustTagSuggestions));
         etShouldTags.setOnFocusChangeListener(new AutocompletionOnFocusChangeListener(flShouldTagSuggestions));
 
-        btnSetLocation.setOnClickListener(new StartLocationChooserHandler(this));
+        btnSetLocation.setOnClickListener(new StartLocationChooserHandler(this, true));
 
         validation();
 

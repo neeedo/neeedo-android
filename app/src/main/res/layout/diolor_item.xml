@@ -20,14 +20,14 @@
             android:background="#FF006D"
             android:gravity="center"
             android:textColor="@android:color/white"
-            android:textSize="40sp" />
+            android:textSize="25sp" />
 
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_margin="5dp"
-            android:gravity="top"
-            android:layout_weight=".3">
+            android:layout_weight=".3"
+            android:gravity="top">
 
             <RelativeLayout
                 android:layout_width="fill_parent"
@@ -51,12 +51,13 @@
                 android:id="@+id/swiper_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#FF006D"
-                android:text="100 €"
-                android:layout_alignParentBottom="true"
+                android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
+                android:background="#FF006D"
+                android:padding="10dp"
+                android:text="100 €"
                 android:textColor="@android:color/white"
-                android:textSize="40sp" android:padding="10dp" />
+                android:textSize="40sp" />
 
             <RelativeLayout
                 android:layout_width="fill_parent"
@@ -69,8 +70,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_margin="0dp"
-                    android:padding="0dp"
                     android:background="#00000000"
+                    android:padding="0dp"
                     android:src="@drawable/gallery_left" />
 
                 <ImageButton
@@ -79,25 +80,13 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_margin="0dp"
-                    android:padding="0dp"
                     android:background="#00000000"
+                    android:padding="0dp"
                     android:src="@drawable/gallery_right" />
 
             </RelativeLayout>
 
         </RelativeLayout>
-
-        <TextView
-            android:id="@+id/card_description"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:background="#fff"
-            android:textColor="@android:color/black"
-            android:textSize="13dp"
-            android:layout_weight=".8" />
 
     </LinearLayout>
 

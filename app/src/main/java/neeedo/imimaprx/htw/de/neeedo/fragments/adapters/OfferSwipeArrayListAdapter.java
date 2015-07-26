@@ -44,7 +44,6 @@ public class OfferSwipeArrayListAdapter extends ArrayAdapter {
         View view = inflater.inflate(layoutId, parent, false);
 
         final TextView titleTextView = (TextView) view.findViewById(R.id.card_title);
-        final TextView descriptionTextView = (TextView) view.findViewById(R.id.card_description);
         final ImageView imageView = (ImageView) view.findViewById(R.id.card_image);
         final TextView textViewPrice = (TextView) view.findViewById(R.id.swiper_price);
 
@@ -84,7 +83,6 @@ public class OfferSwipeArrayListAdapter extends ArrayAdapter {
         }
 
         titleTextView.setText(offerItem.getOffer().getTagsString());
-        descriptionTextView.setText(offerItem.getOffer().getPrice().toString());
 
         DecimalFormat priceFormat = new DecimalFormat(activity.getString(R.string.format_price));
         textViewPrice.setText(priceFormat.format(offerItem.getOffer().getPrice()));
