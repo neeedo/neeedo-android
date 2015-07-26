@@ -185,7 +185,7 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
         mapView.setTileSource(TileSourceFactory.MAPNIK);
         mapView.setBuiltInZoomControls(true);
         mapView.setMultiTouchControls(true);
-        mapView.getController().setZoom(18);
+        mapView.getController().setZoom(12);
         mapView.setClickable(true);
         mapView.setBuiltInZoomControls(true);
         mapView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
