@@ -98,7 +98,6 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
         distanceTextView = (TextView) findViewById(R.id.distance_text_view);
         distanceTextView.setVisibility(withDistance ? View.VISIBLE : View.GONE);
 
-        setNewDistance(10);
         distanceSeekBar.setProgress(9);
 
         distanceSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -188,15 +187,17 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
         mapView.getOverlays().add(mapEventsOverlay);
         mapView.invalidate();
 
+        setNewDistance(10);
+
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
     private void setNewDistance(int distanceInKm) {
         selectedDistanceInKm = distanceInKm;
         distanceTextView.setText(getText(R.string.kilometer_radius) + String.valueOf(distanceInKm));
+        setZoomAccordingToDistance();
 
         if (selectedGeoPoint != null) {
-            setZoomAccordingToDistance();
             refreshViewToNewSettings();
         }
     }
