@@ -19,6 +19,7 @@ import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 public class SendOfferHandler implements View.OnClickListener {
     private final FormOfferFragment formOfferFragment;
     private final BaseAsyncTask.SendMode sendMode;
+    private OffersModel offersModel;
 
     public SendOfferHandler(BaseAsyncTask.SendMode sendMode, FormOfferFragment formOfferFragment) {
         this.sendMode = sendMode;
@@ -33,8 +34,9 @@ public class SendOfferHandler implements View.OnClickListener {
             return;
         }
 
+        offersModel = OffersModel.getInstance();
         User currentUser = UserModel.getInstance().getUser();
-        Offer currentOffer = OffersModel.getInstance().getDraft();
+        Offer currentOffer = offersModel.getDraft();
 
         Offer offer = new Offer();
         offer.setTags(formOfferFragment.getOfferTags());
@@ -58,8 +60,10 @@ public class SendOfferHandler implements View.OnClickListener {
         Log.d("OFFER", offer.toString());
 
         try {
-            OffersModel.getInstance().setDraft(offer);
+
+            offersModel.setDraft(offer);
             BaseAsyncTask asyncTask = new PostCreateUpdateOfferAsyncTask(sendMode);
+            offersModel.setNewCreatedState(true);
             asyncTask.execute();
         } catch (Exception e) {
             e.printStackTrace();

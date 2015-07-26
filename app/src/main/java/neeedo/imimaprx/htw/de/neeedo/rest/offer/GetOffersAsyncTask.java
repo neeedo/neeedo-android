@@ -89,7 +89,15 @@ public class GetOffersAsyncTask extends BaseAsyncTask {
             ResponseEntity<Offers> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, Offers.class);
             final Offers offers = responseEntity.getBody();
 
-            OffersModel.getInstance().appendOffers(offers.getOffers());
+            OffersModel offersModel = OffersModel.getInstance();
+
+            if (offersModel.isNewCreatedState()) {
+                offersModel.appendOffers(offers.getOffers());
+                offersModel.setNewCreatedState(false);
+            } else {
+                offersModel.setOffers(offers);
+            }
+
 
             return new RestResult(RestResult.ReturnType.SUCCESS);
         } catch (Exception e) {

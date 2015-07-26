@@ -15,6 +15,8 @@ public class OffersModel {
 
     private String lastDeletedEntityId = "";
 
+    private boolean newCreatedState = false;
+
     public static OffersModel getInstance() {
         if (offersModel == null)
             offersModel = new OffersModel();
@@ -94,5 +96,13 @@ public class OffersModel {
 
     public Offer getOfferByID(String id) {
         return offers.getOfferByID(id);
+    }
+
+    public boolean isNewCreatedState() {
+        return newCreatedState;
+    }
+
+    public void setNewCreatedState(boolean newCreatedState) {
+        this.newCreatedState = newCreatedState;
     }
 }
