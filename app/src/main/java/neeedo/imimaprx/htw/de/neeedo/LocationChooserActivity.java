@@ -304,8 +304,6 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
 
     @Override
     public boolean longPressHelper(GeoPoint geoPoint) {
-        Toast toast = Toast.makeText(getApplicationContext(), "Longitude: " + geoPoint.getLongitude() + " Latitude: " + geoPoint.getLatitude(), Toast.LENGTH_LONG);
-        toast.show();
         setLocationSelected(geoPoint);
         return true;
     }
