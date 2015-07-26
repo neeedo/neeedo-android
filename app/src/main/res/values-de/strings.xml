@@ -69,75 +69,73 @@
 
     <string name="new_message_text">Neue Nachricht von: </string>
     <string name="message_text">Von: </string>
-    <string name="new_match_text">
-        Du hast ein neues Match. Klicke hier und schau's dir gleich an!
-        </string>
+    <string name="new_match_text">Du hast ein neues Match. Klicke hier und schau's dir gleich an!</string>
 
     <string name="dialog_yes">Ja</string>
     <string name="dialog_no">Nein</string>
 
-    <string name="dialog_delete_demand">Are you sure you want to delete this Demand?</string>
-    <string name="dialog_delete_offer">Are you sure you want to delete this Offer?</string>
-    <string name="dialog_remove_favorite">Are you sure you want to remove this favorite?</string>
-    <string name="dialog_logout">Are you sure you want to logout?</string>
-    <string name="title_activity_location_chooser">LocationChooser</string>
-    <string name="new_offer_set_location">Add location</string>
+    <string name="dialog_delete_demand">Willst du dieses Gesuch wirklich löschen?</string>
+    <string name="dialog_delete_offer">Willst du dieses Angebot wirklich löschen?</string>
+    <string name="dialog_remove_favorite">Willst du diesen Favoriten wirklich löschen?</string>
+    <string name="dialog_logout">Willst du dich wirklich abmelden?</string>
+    <string name="title_activity_location_chooser">Standortbestimmung</string>
+    <string name="new_offer_set_location">Standort hinzufügen</string>
 
-    <string name="item_distance">Distance</string>
-    <string name="item_price">Price</string>
-    <string name="empty_offers_message">You have no Offers at the moment</string>
-    <string name="empty_demands_message">You have no Demands at the moment</string>
+    <string name="item_distance">Distanz</string>
+    <string name="item_price">Preis</string>
+    <string name="empty_offers_message">Du hast aktuell keine Angebot angelegt.</string>
+    <string name="empty_demands_message">Du hast aktuell keine Gesuche angelegt.</string>
 
     <string name="format_price">#0.00 €</string>
     <string name="format_distance">#0.00 km</string>
-    <string name="camera_uploading_progress">Uploading image...</string>
-    <string name="location_chooser_search_hint">Searching...</string>
-    <string name="message_view_no_conversations_found">No conversations have been found.</string>
-    <string name="favorites_view_no_favorites_found">No favorites have been found.</string>
+    <string name="camera_uploading_progress">Bild wird hochgeladen...</string>
+    <string name="location_chooser_search_hint">Suche...</string>
+    <string name="message_view_no_conversations_found">Keine Konversationen vorhanden.</string>
+    <string name="favorites_view_no_favorites_found">Keine Favoriten vorhanden.</string>
 
-    <string name="single_offer_fragment_toast_message">Your message was sent.</string>
-    <string name="single_offer_message_edit_text_hint">Write your message here.</string>
-    <string name="done">done</string>
-    <string name="messages_view_send">Send</string>
+    <string name="single_offer_fragment_toast_message">Deine Nachricht wurde gesendet.</string>
+    <string name="single_offer_message_edit_text_hint">Schreibe deine Nachricht hier rein.</string>
+    <string name="done">fertig</string>
+    <string name="messages_view_send">senden</string>
 
-    <string name="swiper_no_more_offers_to_show">No more Offers to show. :-(</string>
-    <string name="image_upload_failed_title">Image upload failed.</string>
-    <string name="image_upload_failed_message">Please try again.</string>
+    <string name="swiper_no_more_offers_to_show">Keine weiteren Matches vorhanden. :-(</string>
+    <string name="image_upload_failed_title">Bilder-Upload gescheitert.</string>
+    <string name="image_upload_failed_message">Bitte versuch es nochmal.</string>
     <string name="image_upload_failed_accept">OK</string>
     <string name="outpan_failed_accept">OK</string>
-    <string name="outpan_failed_message">No products found for Barcode</string>
-    <string name="outpan_failed_title">Barcode scan failed</string>
+    <string name="outpan_failed_message">Keine Produkte für diesen Barcode gefunden.</string>
+    <string name="outpan_failed_title">Barcode-Scan ist gescheitert</string>
     <string name="single_offer_view_add_to_favorites_text">Fav</string>
     <string name="single_offer_view_remove_from_favorites_text">Unfav</string>
     <string name="kilometer_radius">Radius in km:</string>
 
-    <string name="title_activity_image">Display image</string>
-    <string name="button_previous">Previous</string>
-    <string name="button_next">Next</string>
+    <string name="title_activity_image">Display Bild</string>
+    <string name="button_previous">Zurück</string>
+    <string name="button_next">Vor</string>
 
-    <string name="validation_empty_field">This field is obligatory</string>
-    <string name="validation_no_tag">Please define at least one tag</string>
-    <string name="validation_value_negative">This value can\'t be negative</string>
-    <string name="validation_price_max_low">Maximal price is lower than minimal price</string>
-    <string name="validation_price_min_high">Minimal price is higher than maximal price</string>
-    <string name="validation_price_number_format">Please use a proper price number format</string>
-    <string name="validation_no_location">Please set a location</string>
-    <string name="offers">Offers</string>
-    <string name="create_new_offer">Create new Offer</string>
-    <string name="list_offers">List your Offers</string>
-    <string name="demands">Demands</string>
-    <string name="create_new_demand">Create new Demand</string>
-    <string name="list_demand">List your Demands</string>
-    <string name="action_register">register</string>
+    <string name="validation_empty_field">Dieses Feld ist obligatorisch.</string>
+    <string name="validation_no_tag">Bitte mindestens ein Tag definieren</string>
+    <string name="validation_value_negative">Dieser Wert darf nicht negativ sein</string>
+    <string name="validation_price_max_low">Maximaler Preis is geringer als minimaler Preis.</string>
+    <string name="validation_price_min_high">Minimaler Preis ist höher als maximaler Preis.</string>
+    <string name="validation_price_number_format">Bitte benutzt ein gängiges Preis-Format</string>
+    <string name="validation_no_location">Bitte setze einen Standort</string>
+    <string name="offers">Angebote</string>
+    <string name="create_new_offer">Angebot erstellen</string>
+    <string name="list_offers">Angebots-Liste</string>
+    <string name="demands">Gesuche</string>
+    <string name="create_new_demand">Gesuch erstellen</string>
+    <string name="list_demand">Gesuchs-Liste</string>
+    <string name="action_register">Registrieren</string>
     <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="offer">Offer</string>
-    <string name="demand">Demand</string>
+    <string name="prompt_password">Passwort</string>
+    <string name="offer">Angebot</string>
+    <string name="demand">Gesuch</string>
 
-    <string name="action_sign_in">Sign in</string>
-    <string name="title_activity_login">Sign in</string>
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_field_required">This field is required</string>
+    <string name="action_sign_in">Anmelden</string>
+    <string name="title_activity_login">Anmelden</string>
+    <string name="error_invalid_email">Diese Email-Adresse ist ungültig</string>
+    <string name="error_field_required">Dieses Feld ist ein Pflichtfeld.</string>
 
-    <string name="badge_new">new</string>
+    <string name="badge_new">neu</string>
 </resources>
