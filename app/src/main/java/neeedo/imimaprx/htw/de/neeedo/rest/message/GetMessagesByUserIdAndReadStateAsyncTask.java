@@ -72,7 +72,7 @@ public class GetMessagesByUserIdAndReadStateAsyncTask extends BaseAsyncTask {
             return new RestResult(RestResult.ReturnType.SUCCESS);
         } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
-            if (statusRequest) {
+            if (!statusRequest) {
                 String message = getErrorMessage(e.getMessage());
                 showToast(message);
             }

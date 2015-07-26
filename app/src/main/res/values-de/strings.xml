@@ -69,7 +69,7 @@
 
     <string name="new_message_text">Neue Nachricht von: </string>
     <string name="message_text">Von: </string>
-    <string name="new_match_text">Du hast ein neues Match. Klicke hier und schau's dir gleich an!</string>
+    <string name="new_match_text">Du hast ein neues Match. Klicke hier und schau es dir gleich an!</string>
 
     <string name="dialog_yes">Ja</string>
     <string name="dialog_no">Nein</string>
