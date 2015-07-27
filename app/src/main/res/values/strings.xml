@@ -138,4 +138,5 @@
 
     <string name="favorite_add">Added to favorites</string>
     <string name="favorite_remove">Removed from favorites</string>
+    <string name="searching_location">Getting current location...</string>
 </resources>

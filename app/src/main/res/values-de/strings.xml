@@ -141,4 +141,7 @@
 
     <string name="favorite_add">Zu Favoriten hizugefügt</string>
     <string name="favorite_remove">Von Favoriten entfernt</string>
+
+    <string name="searching_location">Suche aktuelle Standort-Daten</string>
+
 </resources>

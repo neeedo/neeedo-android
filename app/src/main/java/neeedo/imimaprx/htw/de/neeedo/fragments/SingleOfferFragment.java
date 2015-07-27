@@ -113,7 +113,6 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
 
         offerId = getArguments().getString("id");
         fillText(null);
-
     }
 
     private Offer findSingleOffer(String offerId) {
