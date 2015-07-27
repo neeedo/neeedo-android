@@ -1,15 +1,10 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.squareup.otto.Subscribe;
@@ -19,38 +14,14 @@ import java.util.ArrayList;
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demand;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offer;
-import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offers;
 import neeedo.imimaprx.htw.de.neeedo.events.GetOfferFinishedEvent;
 import neeedo.imimaprx.htw.de.neeedo.fragments.adapters.ListProductsArrayAdapter;
-import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.offer.GetOffersAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 
-public class ListOffersFragment extends SuperFragment {
-
-    private final ActiveUser activeUser = ActiveUser.getInstance();
-    private ListView listView;
-    private View view;
-    private ProgressBar progressBar;
-    private OffersModel offersModel;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-
-        view = inflater.inflate(R.layout.list_products_view, container, false);
-
-        listView = (ListView) view.findViewById(R.id.listview);
-        progressBar = (ProgressBar) view.findViewById(R.id.list_offers_progessbar);
-
-        return view;
-    }
+public class ListOffersFragment extends ListFragment {
+    protected OffersModel offersModel;
 
     @Override
     public void onViewStateRestored(Bundle savedInstanceState) {
