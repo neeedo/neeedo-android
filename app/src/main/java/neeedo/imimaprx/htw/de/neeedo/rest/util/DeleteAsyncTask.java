@@ -13,6 +13,7 @@ import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offer;
 import neeedo.imimaprx.htw.de.neeedo.entities.user.User;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.BaseEntity;
 import neeedo.imimaprx.htw.de.neeedo.events.DeleteFinishedEvent;
+import neeedo.imimaprx.htw.de.neeedo.events.FavoriteRemoveFinishedEvent;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
@@ -34,13 +35,17 @@ public class DeleteAsyncTask extends BaseAsyncTask {
 
     @Override
     protected void onPostExecute(Object result) {
-        if (result instanceof RestResult)
-
+        if (result instanceof RestResult) {
+            if (entityType == EntityType.FAVORITE) {
+                eventService.post(new FavoriteRemoveFinishedEvent());
+                return;
+            }
             if (((RestResult) result).getResultBoolean()) {
                 eventService.post(new DeleteFinishedEvent(true));
             } else {
                 eventService.post(new DeleteFinishedEvent(false));
             }
+        }
     }
 
     @Override
@@ -107,8 +112,6 @@ public class DeleteAsyncTask extends BaseAsyncTask {
             RestTemplate restTemplate = new RestTemplate(HttpRequestFactoryProviderImpl.getClientHttpRequestFactorySSLSupport(9000));
 
             restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, Void.class);
-
-
             return new RestResult(RestResult.ReturnType.SUCCESS);
         } catch (Exception e) {
 
