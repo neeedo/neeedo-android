@@ -53,6 +53,8 @@ public class ImageActivity extends Activity {
 
         progressBar.setVisibility(View.VISIBLE);
 
+        imageView.setMaxScale(10);
+
         if(imageList != null) {
             String imageUrl = ServerConstantsUtils.getActiveServer() + "images/" + imageList.get(position);
 
