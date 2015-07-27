@@ -76,8 +76,10 @@ public class PostCreateUpdateUserAsyncTask extends AsyncTask {
             ResponseEntity<SingleUser> response = restTemplate.exchange(url, httpMethod, requestEntity, SingleUser.class);
 
             SingleUser singleUser = response.getBody();
-            userModel.putCurrentLoginInformationInActiveUser();
-            userModel.setUser(singleUser.getUser());
+            User u = singleUser.getUser();
+            u.setPassword(user.getPassword());
+            userModel.setUser(u);
+            userModel.putCurrentLoginInformationInActiveUser(u);
 
             loginActivity.finish();
             return new RestResult(RestResult.ReturnType.SUCCESS);

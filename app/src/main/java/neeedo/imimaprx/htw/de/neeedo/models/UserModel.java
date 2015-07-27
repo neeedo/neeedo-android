@@ -37,7 +37,7 @@ public class UserModel {
         return user == null ? false : true;
     }
 
-    public void putCurrentLoginInformationInActiveUser() {
+    public void putCurrentLoginInformationInActiveUser(User user) {
         ActiveUser activeUser = ActiveUser.getInstance();
         activeUser.setUserPassword(user.getPassword());
         activeUser.setUsername(user.getEmail());
