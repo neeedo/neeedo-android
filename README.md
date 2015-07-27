@@ -3,4 +3,4 @@
 NEEEDO Android App
 ==================
 
-https://play.google.com/store/apps/details?id=neeedo.imimaprx.htw.de.neeedo
+[![Google Play Store](http://www.neeedo.com/images/appStore.png)](https://play.google.com/store/apps/details?id=neeedo.imimaprx.htw.de.neeedo)
