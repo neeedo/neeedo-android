@@ -1,6 +1,7 @@
 package neeedo.imimaprx.htw.de.neeedo;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
@@ -61,11 +62,17 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
 
         setContentView(R.layout.activity_location_chooser);
 
-        ImageButton findOwnLocationButton = (ImageButton) findViewById(R.id.find_own_location);
+        final ImageButton findOwnLocationButton = (ImageButton) findViewById(R.id.find_own_location);
         final LocationManager mLocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         findOwnLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final ProgressDialog mProgressDialog = new ProgressDialog(findOwnLocationButton.getContext());
+                mProgressDialog.setMessage(getString(R.string.searching_location));
+                mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                mProgressDialog.setCancelable(true);
+                mProgressDialog.show();
+
                 final LocationListener mLocListener = new LocationListener() {
                     @Override
                     public void onLocationChanged(Location location) {
@@ -73,6 +80,7 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
                         if (accuracy < 15) {//if pretty sure to have found location in a radius of 15 meters
                             mLocManager.removeUpdates(this);
                             setLocationSelected(new GeoPoint(location.getLatitude(), location.getLongitude()));
+                            mProgressDialog.dismiss();
                         }
                     }
 
@@ -277,7 +285,7 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
 
         ViewGroup view = (ViewGroup) getWindow().getDecorView();
         view.removeAllViews();
-        
+
         finish();
     }
 
