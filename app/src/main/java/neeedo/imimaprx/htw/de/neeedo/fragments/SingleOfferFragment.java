@@ -143,10 +143,10 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
 
             for (int i = 0; i < images.size(); i++) {
                 FlowLayout.LayoutParams imageLayoutParams = new FlowLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                imageLayoutParams.setMargins(0, 0, 0,0);
+                imageLayoutParams.setMargins(0, 0, 0, 0);
                 ImageView imageView = new ImageView(context);
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                imageView.setPadding(20, 20, 0, 20);
+                imageView.setPadding(10, 10, 10, 10);
                 imageView.setAdjustViewBounds(true);
                 imageView.setLayoutParams(imageLayoutParams);
                 imageView.setMinimumHeight(300);

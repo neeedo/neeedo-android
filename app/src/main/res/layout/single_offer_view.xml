@@ -123,7 +123,7 @@
             <HorizontalScrollView
                 android:id="@+id/viewImages"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
                 android:layout_marginBottom="15dp"
                 android:background="#AAFF006D">
 
