@@ -34,6 +34,8 @@ public class SendOfferHandler implements View.OnClickListener {
             return;
         }
 
+        formOfferFragment.getBtnSubmit().setEnabled(false);
+
         offersModel = OffersModel.getInstance();
         User currentUser = UserModel.getInstance().getUser();
         Offer currentOffer = offersModel.getDraft();
@@ -66,6 +68,7 @@ public class SendOfferHandler implements View.OnClickListener {
             offersModel.setNewCreatedState(true);
             asyncTask.execute();
         } catch (Exception e) {
+            formOfferFragment.getBtnSubmit().setEnabled(true);
             e.printStackTrace();
         }
     }

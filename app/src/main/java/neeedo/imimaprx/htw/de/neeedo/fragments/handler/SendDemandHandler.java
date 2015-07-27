@@ -33,6 +33,8 @@ public class SendDemandHandler implements View.OnClickListener {
             return;
         }
 
+        formDemandFragment.getBtnSubmit().setEnabled(false);
+
         User currentUser = UserModel.getInstance().getUser();
         Demand currentDemand = DemandsModel.getInstance().getDraft();
 
@@ -62,6 +64,7 @@ public class SendDemandHandler implements View.OnClickListener {
             BaseAsyncTask asyncTask = new PostCreateUpdateDemandAsyncTask(sendMode);
             asyncTask.execute();
         } catch (Exception e) {
+            formDemandFragment.getBtnSubmit().setEnabled(true);
             e.printStackTrace();
         }
     }

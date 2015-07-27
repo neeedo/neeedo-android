@@ -307,4 +307,8 @@ public class FormOfferFragment extends FormFragment {
             return true;
         }
     }
+
+    public Button getBtnSubmit() {
+        return btnSubmit;
+    }
 }

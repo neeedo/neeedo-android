@@ -293,6 +293,10 @@ public class FormDemandFragment extends FormFragment {
         }
     }
 
+    public Button getBtnSubmit() {
+        return btnSubmit;
+    }
+
     public int getDistance() {
         return selectedDistance;
     }
