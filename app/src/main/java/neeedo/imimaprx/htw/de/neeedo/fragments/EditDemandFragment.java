@@ -41,6 +41,7 @@ public class EditDemandFragment extends FormDemandFragment {
 
             Location location = currentDemand.getLocation();
             selectedGeoPoint = new GeoPoint(location.getLat(), location.getLon());
+            selectedDistance = currentDemand.getDistance();
             setLocation(selectedGeoPoint);
         }
 

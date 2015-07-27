@@ -52,8 +52,7 @@ public class FormDemandFragment extends FormFragment {
     protected RelativeLayout mapContainer;
 
     protected GeoPoint selectedGeoPoint;
-
-    private int selectedDistance;
+    protected int selectedDistance;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
