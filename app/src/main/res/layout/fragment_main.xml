@@ -46,7 +46,8 @@
                     android:background="#CCFF006D"
                     android:drawableTop="@drawable/demand"
                     android:padding="15dp"
-                    android:text="@string/button_new_demand" />
+                    android:text="@string/button_new_demand"
+                    android:singleLine="true" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -65,7 +66,8 @@
                     android:background="#CC88BEB1"
                     android:drawableTop="@drawable/offer"
                     android:padding="15dp"
-                    android:text="@string/button_new_offer" />
+                    android:text="@string/button_new_offer"
+                    android:singleLine="true"/>
             </RelativeLayout>
         </LinearLayout>
     </FrameLayout>
