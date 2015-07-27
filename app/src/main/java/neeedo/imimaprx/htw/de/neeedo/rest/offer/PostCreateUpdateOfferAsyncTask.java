@@ -22,6 +22,8 @@ import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 public class PostCreateUpdateOfferAsyncTask extends BaseAsyncTask {
 
     private SendMode sendMode;
+    private Offer backupOffer;
+    private OffersModel offersModel = OffersModel.getInstance();
 
     public PostCreateUpdateOfferAsyncTask(SendMode sendMode) {
         if (sendMode == null) {
@@ -34,9 +36,14 @@ public class PostCreateUpdateOfferAsyncTask extends BaseAsyncTask {
     protected Object doInBackground(Object[] params) {
         try {
             String url = ServerConstantsUtils.getActiveServer();
-            OffersModel offersModel = OffersModel.getInstance();
-            HttpMethod httpMethod = HttpMethod.POST;
             Offer postOffer = offersModel.getDraft();
+
+            if (sendMode == SendMode.UPDATE) {
+                backupOffer = offersModel.getOfferByID(postOffer.getId());
+                offersModel.removeOfferByID(postOffer.getId());
+            }
+
+            HttpMethod httpMethod = HttpMethod.POST;
 
             switch (sendMode) {
                 case CREATE: {
@@ -63,16 +70,16 @@ public class PostCreateUpdateOfferAsyncTask extends BaseAsyncTask {
             ResponseEntity<SingleOffer> response = restTemplate.exchange(url, httpMethod, requestEntity, SingleOffer.class);
             SingleOffer singleOffer = response.getBody();
 
-            if (sendMode == SendMode.UPDATE) {
-                offersModel.removeOfferByID(postOffer.getId());
-                offersModel.addOffer(singleOffer.getOffer());
-            } else {
-                offersModel.addOffer(singleOffer.getOffer());
-            }
+
+            offersModel.addOffer(singleOffer.getOffer());
+
             offersModel.setDraft(null);
 
             return new RestResult(RestResult.ReturnType.SUCCESS);
         } catch (Exception e) {
+            if (sendMode == SendMode.UPDATE) {
+                offersModel.addOffer(backupOffer);
+            }
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
             String message = getErrorMessage(e.getMessage());
             showToast(message);

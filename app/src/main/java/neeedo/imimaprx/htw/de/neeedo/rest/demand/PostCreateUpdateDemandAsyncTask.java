@@ -22,6 +22,8 @@ import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 public class PostCreateUpdateDemandAsyncTask extends BaseAsyncTask {
 
     private SendMode sendMode;
+    private Demand backupDemand;
+    private DemandsModel demandsModel = DemandsModel.getInstance();
 
     public PostCreateUpdateDemandAsyncTask(SendMode sendMode) {
         if (sendMode == null) {
@@ -33,10 +35,16 @@ public class PostCreateUpdateDemandAsyncTask extends BaseAsyncTask {
     @Override
     protected Object doInBackground(Object[] params) {
         try {
+
+            Demand postDemand = demandsModel.getDraft();
+            if (sendMode == SendMode.UPDATE) {
+                backupDemand = demandsModel.getDemandById(postDemand.getId());
+                demandsModel.removeDemandByID(postDemand.getId());
+            }
             String url = ServerConstantsUtils.getActiveServer();
             HttpMethod httpMethod = HttpMethod.POST;
-            DemandsModel demandsModel = DemandsModel.getInstance();
-            Demand postDemand = demandsModel.getDraft();
+
+
             switch (sendMode) {
                 case CREATE: {
                     url += "demands";
@@ -62,20 +70,15 @@ public class PostCreateUpdateDemandAsyncTask extends BaseAsyncTask {
             ResponseEntity<SingleDemand> response = restTemplate.exchange(url, httpMethod, requestEntity, SingleDemand.class);
             SingleDemand singleDemand = response.getBody();
 
-            if (sendMode == SendMode.UPDATE) {
-                demandsModel.removeDemandByID(postDemand.getId());
-                demandsModel.replaceDemand(singleDemand.getDemand());
-            } else {
-                demandsModel.addDemand(singleDemand.getDemand());
-            }
+            demandsModel.addDemand(singleDemand.getDemand());
+
             demandsModel.setDraft(null);
 
             return new RestResult(RestResult.ReturnType.SUCCESS);
-        } catch (
-                Exception e
-                )
-
-        {
+        } catch (Exception e) {
+            if (sendMode == SendMode.UPDATE) {
+                demandsModel.addDemand(backupDemand);
+            }
             Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
             String message = getErrorMessage(e.getMessage());
             showToast(message);
