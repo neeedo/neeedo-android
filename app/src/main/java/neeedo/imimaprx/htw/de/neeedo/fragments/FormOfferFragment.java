@@ -115,15 +115,28 @@ public class FormOfferFragment extends FormFragment {
         super.onViewStateRestored(savedInstanceState);
         if (savedInstanceState != null) {
             newCameraOutputFile = (File) savedInstanceState.getSerializable("newCameraOutputFile");
-            selectedGeoPoint = (GeoPoint) savedInstanceState.getSerializable("selectedGeoPoint");
+
             ArrayList<OfferImage> imagesRestored = (ArrayList<OfferImage>) savedInstanceState.getSerializable("images");
 
-            for (OfferImage offerImage : imagesRestored) {
-                addImage(offerImage);
+            if (imagesRestored != null) {
+                for (OfferImage offerImage : imagesRestored) {
+                    addImage(offerImage);
+                }
             }
 
+            selectedGeoPoint = (GeoPoint) savedInstanceState.getSerializable("selectedGeoPoint");
             if (selectedGeoPoint != null) {
                 setLocation(selectedGeoPoint);
+            }
+
+            String tags = savedInstanceState.getString("tags");
+            if (tags != null) {
+                etTags.setText(tags);
+            }
+
+            String price = savedInstanceState.getString("price");
+            if (price != null) {
+                etPrice.setText(price);
             }
         }
     }
@@ -133,6 +146,8 @@ public class FormOfferFragment extends FormFragment {
         savedInstanceState.putSerializable("newCameraOutputFile", newCameraOutputFile);
         savedInstanceState.putSerializable("selectedGeoPoint", selectedGeoPoint);
         savedInstanceState.putSerializable("images", images);
+        savedInstanceState.putString("tags", etTags.getText().toString());
+        savedInstanceState.putString("price", etPrice.getText().toString());
 
         super.onSaveInstanceState(savedInstanceState);
     }

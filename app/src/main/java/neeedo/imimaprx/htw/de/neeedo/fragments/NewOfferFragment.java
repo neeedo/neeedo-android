@@ -21,7 +21,6 @@ public class NewOfferFragment extends FormOfferFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
-
         btnSubmit.setOnClickListener(new SendOfferHandler(BaseAsyncTask.SendMode.CREATE, this));
 
         return view;

@@ -206,8 +206,7 @@ public class LoginActivity extends Activity {
 
 
     private boolean isEmailValid(String email) {
-        //TODO remove "true" for release
-        return true || email.contains("@");
+        return email.contains("@");
     }
 
     private boolean isPasswordValid(String password) {
