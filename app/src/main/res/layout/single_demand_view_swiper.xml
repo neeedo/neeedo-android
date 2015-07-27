@@ -87,10 +87,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:background="#FF006D"
                     android:padding="10dp"
                     android:text="@string/swiper_no_more_offers_to_show"
-                    android:textColor="#fff"
+                    android:textColor="#88BEB1"
                     android:textSize="18dp"
                     android:visibility="gone" />
 
