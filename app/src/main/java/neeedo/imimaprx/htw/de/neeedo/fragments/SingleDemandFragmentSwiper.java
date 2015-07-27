@@ -1,6 +1,8 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -148,7 +150,21 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
         flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
             @Override
             public void onItemClicked(int itemPosition, Object dataObject) {
-                Toast.makeText(getActivity(), "Clicked!", Toast.LENGTH_LONG);
+                SwipeCardViewItem swipeCardViewItem = (SwipeCardViewItem) dataObject;
+                Offer offer = swipeCardViewItem.getOffer();
+
+                                FragmentManager fragmentManager = getFragmentManager();
+                Fragment fragment = new SingleOfferFragment();
+
+                Bundle args = new Bundle();
+                args.putString("id", offer.getId()); // pass current item id
+                fragment.setArguments(args);
+
+                fragmentManager.beginTransaction()
+                        .addToBackStack(null)
+                        .replace(R.id.container, fragment)
+                        .commit();
+
             }
         });
 
