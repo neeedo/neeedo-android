@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,7 +63,7 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
     private TextView tvTags;
     private TextView tvPrice;
     private TextView tvUser;
-    private FlowLayout layoutImages;
+    private LinearLayout layoutImages;
     private HorizontalScrollView viewImages;
     private Offer currentOffer;
     private String offerId = "";
@@ -80,7 +81,7 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
         tvTags = (TextView) view.findViewById(R.id.tvTags);
         tvPrice = (TextView) view.findViewById(R.id.tvPrice);
         tvUser = (TextView) view.findViewById(R.id.tvUser);
-        layoutImages = (FlowLayout) view.findViewById(R.id.layoutImages);
+        layoutImages = (LinearLayout) view.findViewById(R.id.layoutImages);
         viewImages = (HorizontalScrollView) view.findViewById(R.id.viewImages);
         mapContainer = (RelativeLayout) view.findViewById(R.id.offer_view_map);
 
@@ -143,21 +144,22 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
         if (images != null && images.size() > 0) {
 
             for (int i = 0; i < images.size(); i++) {
-                FlowLayout.LayoutParams imageLayoutParams = new FlowLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                imageLayoutParams.setMargins(0, 0, 0, 0);
-                ImageView imageView = new ImageView(context);
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                imageView.setPadding(10, 10, 10, 10);
-                imageView.setAdjustViewBounds(true);
-                imageView.setLayoutParams(imageLayoutParams);
-                imageView.setMinimumHeight(300);
-                imageView.setMinimumWidth(300);
-                imageView.setMaxHeight(300);
-                imageView.setMaxWidth(300);
 
-                String imageUrl = ServerConstantsUtils.getActiveServer() + "images/" + images.get(i);
-                Picasso.with(context).load(imageUrl).fit().centerInside().into(imageView);
-                layoutImages.addView(imageView);
+                String currentImageURL = ServerConstantsUtils.getActiveServer() + "images/" + images.get(i);
+
+                LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                final RelativeLayout relativeLayout = (RelativeLayout) inflater.inflate(R.layout.new_offer_image_wrapper, null);
+
+                ImageView imageView = (ImageView) relativeLayout.findViewById(R.id.new_offer_image);
+
+                Picasso.with(getActivity()).load(currentImageURL).into(imageView);
+
+                ImageButton deleteButton = (ImageButton) relativeLayout.findViewById(R.id.new_offer_image_delete);
+                deleteButton.setVisibility(View.GONE);
+
+//                imagesContainer.addView(relativeLayout, 1);
+
+                layoutImages.addView(relativeLayout);
 
                 final int position = i;
 

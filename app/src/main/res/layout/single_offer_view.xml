@@ -121,18 +121,22 @@
                 android:textStyle="italic" />
 
             <HorizontalScrollView
-                android:id="@+id/viewImages"
                 android:layout_width="fill_parent"
-                android:layout_height="100dp"
+                android:layout_height="120dp"
                 android:layout_marginBottom="15dp"
-                android:background="#88BEB1">
+                android:background="#88BEB1"
+                android:orientation="horizontal">
 
-                <org.apmem.tools.layouts.FlowLayout
+                <LinearLayout
                     android:id="@+id/layoutImages"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="fill_parent"
+                    android:orientation="horizontal"
+                    android:paddingBottom="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="5dp">
 
-                </org.apmem.tools.layouts.FlowLayout>
+                </LinearLayout>
 
             </HorizontalScrollView>
 
