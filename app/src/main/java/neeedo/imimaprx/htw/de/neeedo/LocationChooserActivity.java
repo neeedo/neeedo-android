@@ -275,6 +275,9 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
             setResult(RESULT_CANCELED);
         }
 
+        ViewGroup view = (ViewGroup) getWindow().getDecorView();
+        view.removeAllViews();
+        
         finish();
     }
 
