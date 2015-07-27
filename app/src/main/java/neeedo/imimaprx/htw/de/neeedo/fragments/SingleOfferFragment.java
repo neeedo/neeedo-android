@@ -39,6 +39,7 @@ import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.favorites.Favorite;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offer;
 import neeedo.imimaprx.htw.de.neeedo.events.DeleteFinishedEvent;
+import neeedo.imimaprx.htw.de.neeedo.events.FavoriteRemoveFinishedEvent;
 import neeedo.imimaprx.htw.de.neeedo.events.FavoritesActionEvent;
 import neeedo.imimaprx.htw.de.neeedo.events.GetOfferFinishedEvent;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
@@ -284,14 +285,7 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
                 break;
 
             case R.id.single_offer_view_remove_from_favorites_button:
-                BaseAsyncTask removeFavoriteTask = new DeleteAsyncTask(getCurrentFavorite());
-                ConfirmDialogFragment confirmRemoveFavorite = ConfirmDialogFragment.newInstance(
-                        removeFavoriteTask,
-                        null,
-                        getResources().getString(R.string.dialog_remove_favorite)
-                );
-                confirmRemoveFavorite.show(getFragmentManager(), getString(R.string.confirm));
-
+                new DeleteAsyncTask(getCurrentFavorite()).execute();
                 break;
         }
     }
@@ -304,22 +298,19 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
     }
 
     @Subscribe
-    public void favoriteActionDone(FavoritesActionEvent e) {
-        Toast.makeText(getActivity(), getActivity().getString(R.string.done), Toast.LENGTH_SHORT).show();
+    public void favoriteAdded(FavoritesActionEvent e) {
+        Toast.makeText(getActivity(), getActivity().getString(R.string.favorite_add), Toast.LENGTH_SHORT).show();
 
-        // TODO add a field to the event which describes if it removed or added the favorite
+        btnAddToFavorites.setVisibility(View.GONE);
+        btnRemoveFromFavorites.setVisibility(View.VISIBLE);
+    }
 
-        if (btnAddToFavorites.getVisibility() == View.VISIBLE) {
-            btnAddToFavorites.setVisibility(View.GONE);
-        } else {
-            btnAddToFavorites.setVisibility(View.VISIBLE);
-        }
+    @Subscribe
+    public void favoriteRemoved(FavoriteRemoveFinishedEvent e) {
+        Toast.makeText(getActivity(), getActivity().getString(R.string.favorite_remove), Toast.LENGTH_SHORT).show();
 
-        if (btnRemoveFromFavorites.getVisibility() == View.VISIBLE) {
-            btnRemoveFromFavorites.setVisibility(View.GONE);
-        } else {
-            btnRemoveFromFavorites.setVisibility(View.VISIBLE);
-        }
+        btnAddToFavorites.setVisibility(View.VISIBLE);
+        btnRemoveFromFavorites.setVisibility(View.GONE);
     }
 
     @Subscribe

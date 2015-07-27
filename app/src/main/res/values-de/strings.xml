@@ -138,4 +138,7 @@
     <string name="error_field_required">Dieses Feld ist ein Pflichtfeld.</string>
 
     <string name="badge_new">neu</string>
+
+    <string name="favorite_add">Zu Favoriten hizugefügt</string>
+    <string name="favorite_remove">Von Favoriten entfernt</string>
 </resources>

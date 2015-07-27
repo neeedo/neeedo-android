@@ -135,4 +135,7 @@
     <string name="error_field_required">This field is required</string>
 
     <string name="badge_new">new</string>
+
+    <string name="favorite_add">Added to favorites</string>
+    <string name="favorite_remove">Removed from favorites</string>
 </resources>
