@@ -63,6 +63,7 @@ public class PostCreateUpdateDemandAsyncTask extends BaseAsyncTask {
             SingleDemand singleDemand = response.getBody();
 
             if (sendMode == SendMode.UPDATE) {
+                demandsModel.removeDemandByID(postDemand.getId());
                 demandsModel.replaceDemand(singleDemand.getDemand());
             } else {
                 demandsModel.addDemand(singleDemand.getDemand());

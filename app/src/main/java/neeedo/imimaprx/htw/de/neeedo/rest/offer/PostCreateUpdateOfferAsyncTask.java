@@ -64,7 +64,8 @@ public class PostCreateUpdateOfferAsyncTask extends BaseAsyncTask {
             SingleOffer singleOffer = response.getBody();
 
             if (sendMode == SendMode.UPDATE) {
-                offersModel.replaceOffer(singleOffer.getOffer());
+                offersModel.removeOfferByID(postOffer.getId());
+                offersModel.addOffer(singleOffer.getOffer());
             } else {
                 offersModel.addOffer(singleOffer.getOffer());
             }
