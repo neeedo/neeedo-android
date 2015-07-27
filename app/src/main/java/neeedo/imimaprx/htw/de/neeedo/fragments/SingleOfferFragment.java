@@ -139,6 +139,7 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
             return;
         }
 
+        setVisibility();
         images = currentOffer.getImages();
         if (images != null && images.size() > 0) {
 
@@ -174,7 +175,7 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
             }
         }
 
-        setVisibility();
+
         Context context = getActivity();
 
         DecimalFormat priceFormat = new DecimalFormat(context.getString(R.string.format_price));
