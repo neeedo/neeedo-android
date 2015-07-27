@@ -71,7 +71,7 @@
                 android:background="#66000000"
                 android:padding="5dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/btn_star_on"
+                android:src="@drawable/btn_star_off"
                 android:text="@string/single_offer_view_add_to_favorites_text" />
 
             <ImageButton
@@ -86,7 +86,7 @@
                 android:background="#66000000"
                 android:padding="5dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/btn_star_off"
+                android:src="@drawable/btn_star_on"
                 android:text="@string/single_offer_view_remove_from_favorites_text" />
 
         </LinearLayout>
