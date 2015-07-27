@@ -42,7 +42,8 @@
                 android:padding="5dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/btn_edit"
-                android:text="@string/button_edit" />
+                android:text="@string/button_edit"
+                android:visibility="gone" />
 
             <ImageButton
                 android:id="@+id/btnDelete"
@@ -57,7 +58,8 @@
                 android:padding="5dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/btn_trash"
-                android:text="@string/button_delete" />
+                android:text="@string/button_delete"
+                android:visibility="gone"/>
 
             <ImageButton
                 android:id="@+id/single_offer_view_add_to_favorites_button"
@@ -72,7 +74,8 @@
                 android:padding="5dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/btn_star_off"
-                android:text="@string/single_offer_view_add_to_favorites_text" />
+                android:text="@string/single_offer_view_add_to_favorites_text"
+                android:visibility="gone" />
 
             <ImageButton
                 android:id="@+id/single_offer_view_remove_from_favorites_button"
@@ -87,7 +90,8 @@
                 android:padding="5dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/btn_star_on"
-                android:text="@string/single_offer_view_remove_from_favorites_text" />
+                android:text="@string/single_offer_view_remove_from_favorites_text"
+                android:visibility="gone" />
 
         </LinearLayout>
 

@@ -230,6 +230,9 @@ public class SingleOfferFragment extends SuperFragment implements View.OnClickLi
             if (isOwn) {
                 btnDeleteOffer.setVisibility(View.VISIBLE);
                 btnEditOffer.setVisibility(View.VISIBLE);
+                btnAddToFavorites.setVisibility(View.GONE);
+                btnRemoveFromFavorites.setVisibility(View.GONE);
+                btnMessage.setVisibility(View.GONE);
             } else {
                 if (isFavorite) {
                     btnAddToFavorites.setVisibility(View.GONE);
