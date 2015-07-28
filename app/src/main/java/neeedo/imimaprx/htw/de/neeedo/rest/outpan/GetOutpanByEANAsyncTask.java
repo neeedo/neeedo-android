@@ -83,9 +83,13 @@ public class GetOutpanByEANAsyncTask extends BaseAsyncTask {
 
     private String getTagsFromArticle(Article article) {
         String tagsString = "";
+        String regex = "[!\"§$%^&/()=?´`|<>;,:.-_]+";
         if (!(article.getName() == null)) {
-            String[] tempTags = article.getName().split("[ ]+");
+            String[] tempTags = article.getName().split("[ :,;/]+");
             for (String currentTag : tempTags) {
+                if (currentTag.matches(regex) | currentTag.equals("") | currentTag.equals("-") | currentTag.equals("_")) {
+                    continue;
+                }
                 tagsString += currentTag + ", ";
             }
             tagsString = tagsString.substring(0, tagsString.length() - 2);
