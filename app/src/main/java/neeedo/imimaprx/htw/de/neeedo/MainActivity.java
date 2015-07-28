@@ -58,6 +58,8 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
+
+
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
@@ -105,9 +107,11 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void changeFragment(Fragment fragment) {
-        mFragmentManager.beginTransaction()
-                .addToBackStack(null)
-                .replace(R.id.container, fragment)
-                .commit();
+        if(mFragmentManager != null && fragment != null) {
+            mFragmentManager.beginTransaction()
+                    .addToBackStack(null)
+                    .replace(R.id.container, fragment)
+                    .commit();
+        }
     }
 }
