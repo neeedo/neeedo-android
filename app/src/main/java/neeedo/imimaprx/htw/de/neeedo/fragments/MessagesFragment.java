@@ -149,7 +149,6 @@ public class MessagesFragment extends SuperFragment implements View.OnClickListe
 
     @Subscribe
     public void messageSend(UserMessageSendEvent userMessageSendEvent) {
-        // Toast.makeText(getActivity(), getActivity().getString(R.string.single_offer_fragment_toast_message), Toast.LENGTH_SHORT).show();
         getMessages(null);
     }
 }

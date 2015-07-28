@@ -64,11 +64,7 @@ public class GetMessagesAsyncTask extends BaseAsyncTask {
             ResponseEntity<Messages> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, Messages.class);
             final Messages messages = responseEntity.getBody();
 
-            if (statusRequest) {
-                checkMessageSenderState(messages);
-            } else {
-                MessagesModel.getInstance().setMessages(messages);
-            }
+            MessagesModel.getInstance().setMessages(messages);
 
             return new RestResult(RestResult.ReturnType.SUCCESS);
         } catch (Exception e) {
@@ -79,20 +75,5 @@ public class GetMessagesAsyncTask extends BaseAsyncTask {
         }
     }
 
-    private void checkMessageSenderState(Messages messages) {
-
-        ArrayList<Message> list = messages.getMessages();
-
-        int counter = 0;
-        for (Message m : list) {
-            if (m.getRecipient().getId().equals(userId1) && !m.isRead()) {
-                counter++;
-            }
-        }
-        if (counter > 0) {
-            MessagesModel.getInstance().increaseMessageCounter(counter);
-        }
-
-    }
 
 }
