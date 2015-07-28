@@ -119,7 +119,7 @@ public class FormDemandFragment extends FormFragment {
     }
 
     public Location getLocation() {
-     return new Location(selectedGeoPoint);
+        return new Location(selectedGeoPoint);
     }
 
     public Price getPrice() {
@@ -225,8 +225,7 @@ public class FormDemandFragment extends FormFragment {
                         etPriceMin.setError(getResources().getString(R.string.validation_price_number_format));
                     }
                     if (priceMin.length() == 0) {
-                        // TODO if not set, it should be 0
-                        etPriceMin.setError(getResources().getString(R.string.validation_empty_field));
+                        etPriceMin.setText("0");
                     }
                     if (etPriceMin.getError() == null) {
                         validViews.put(etPriceMin, true);
@@ -283,7 +282,7 @@ public class FormDemandFragment extends FormFragment {
         btnSetLocation.requestFocusFromTouch();
         btnSubmit.requestFocusFromTouch();
 
-        if(validViews.containsValue(false)) {
+        if (validViews.containsValue(false)) {
             Log.d("Validation", "Invalid");
             return false;
         } else {
