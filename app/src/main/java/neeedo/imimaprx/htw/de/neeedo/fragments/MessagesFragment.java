@@ -77,6 +77,7 @@ public class MessagesFragment extends SuperFragment implements View.OnClickListe
             if (!m.isRead() && m.getRecipient().getId().equals(user1Id))
                 new PutMessageReadStateAsyncTask(m.getId()).execute();
         }
+        MessagesModel.getInstance().reduceMessageCounter();
     }
 
     @Override
@@ -148,7 +149,7 @@ public class MessagesFragment extends SuperFragment implements View.OnClickListe
 
     @Subscribe
     public void messageSend(UserMessageSendEvent userMessageSendEvent) {
-        Toast.makeText(getActivity(), getActivity().getString(R.string.single_offer_fragment_toast_message), Toast.LENGTH_SHORT).show();
+        // Toast.makeText(getActivity(), getActivity().getString(R.string.single_offer_fragment_toast_message), Toast.LENGTH_SHORT).show();
         getMessages(null);
     }
 }

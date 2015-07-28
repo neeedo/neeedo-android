@@ -45,7 +45,7 @@ public class PutMessageReadStateAsyncTask extends BaseAsyncTask {
             ResponseEntity<Message> responseEntity = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, Message.class);
             final Message message = responseEntity.getBody();
 
-            MessagesModel.getInstance().reduceMessageCounter();
+            //MessagesModel.getInstance().reduceMessageCounter();
 
             return new RestResult(RestResult.ReturnType.SUCCESS);
         } catch (Exception e) {

@@ -63,7 +63,8 @@ public class GetMessagesByUserIdAndReadStateAsyncTask extends BaseAsyncTask {
                 }
             }
             if (statusRequest) {
-                checkForNewMessages(users);
+                //checkForNewMessages(users);
+                changeMessageCounter(users);
             }
 
             MessagesModel messagesModel = MessagesModel.getInstance();
@@ -78,6 +79,10 @@ public class GetMessagesByUserIdAndReadStateAsyncTask extends BaseAsyncTask {
             }
             return new RestResult(RestResult.ReturnType.FAILED);
         }
+    }
+
+    private void changeMessageCounter(Users users) {
+        MessagesModel.getInstance().increaseMessageCounter(users.getUsers().size());
     }
 
     private void checkForNewMessages(Users users) {
