@@ -42,6 +42,7 @@ public class ListFavoritesFragment extends ListFragment {
             listView.setVisibility(View.GONE);
             tvEmpty.setText(getActivity().getString(R.string.favorites_view_no_favorites_found));
             tvEmpty.setVisibility(View.VISIBLE);
+            tvHeader.setVisibility(View.GONE);
             return;
         } else {
             ListProductsArrayAdapter<Favorite> favoritArrayAdapter = new ListProductsArrayAdapter<>(getActivity(), R.layout.list_products_item, favoriteList);
@@ -67,6 +68,9 @@ public class ListFavoritesFragment extends ListFragment {
             });
 
             listView.setVisibility(View.VISIBLE);
+
+            tvHeader.setText(getResources().getString(R.string.title_section_favorites));
+
             tvEmpty.setVisibility(View.GONE);
         }
         progressBar.setVisibility(View.GONE);

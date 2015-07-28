@@ -30,12 +30,24 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"></TableLayout>
 
+        <TextView
+            android:id="@+id/tvHeader"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:textAllCaps="true"
+            style="@style/Base.TextAppearance.AppCompat.Headline"
+            android:layout_marginBottom="10dp"
+            android:textColor="#88BEB1" />
+
         <ListView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/listview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:divider="@android:color/transparent"
-            android:dividerHeight="10dp" />
+            android:dividerHeight="10dp"
+            android:layout_marginTop="40dp"/>
 
         <RelativeLayout
             android:layout_width="match_parent"

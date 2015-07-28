@@ -59,7 +59,6 @@ public class ListDemandsFragment extends ListFragment {
 
             listView.setAdapter(adapter);
 
-
             listView.setClickable(true);
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -81,10 +80,13 @@ public class ListDemandsFragment extends ListFragment {
                 }
             });
 
+            tvHeader.setText(getResources().getString(R.string.demands));
+
             tvEmpty.setVisibility(View.GONE);
         } else {
             tvEmpty.setText(getActivity().getString(R.string.empty_demands_message));
             tvEmpty.setVisibility(View.VISIBLE);
+            tvHeader.setVisibility(View.GONE);
         }
         progressBar.setVisibility(View.GONE);
     }
