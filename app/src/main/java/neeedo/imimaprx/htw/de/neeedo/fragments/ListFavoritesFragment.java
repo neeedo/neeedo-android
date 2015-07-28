@@ -26,6 +26,8 @@ public class ListFavoritesFragment extends ListFragment {
 
         if (activeUser.hasActiveUser()) {
             new GetFavoritesByIDAsyncTask(activeUser.getUserId()).execute();
+        } else {
+            fillList(null);
         }
     }
 

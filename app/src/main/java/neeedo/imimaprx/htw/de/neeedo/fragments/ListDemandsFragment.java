@@ -27,16 +27,17 @@ public class ListDemandsFragment extends ListFragment {
         super.onViewStateRestored(savedInstanceState);
 
         demandsModel = DemandsModel.getInstance();
-        BaseAsyncTask.GetEntitiesMode listMode = BaseAsyncTask.GetEntitiesMode.GET_RANDOM;
         if (activeUser.hasActiveUser()) {
-            listMode = BaseAsyncTask.GetEntitiesMode.GET_BY_USER;
+            BaseAsyncTask.GetEntitiesMode listMode = BaseAsyncTask.GetEntitiesMode.GET_BY_USER;
             if (demandsModel.isUseLocalList()) {
                 demandsModel.setUseLocalList(false);
                 fillList(null);
                 return;
             }
+            new GetDemandsAsyncTask(listMode, 100, 0).execute();
+        } else {
+            fillList(null);
         }
-        new GetDemandsAsyncTask(listMode, 100, 0).execute();
     }
 
     @Subscribe

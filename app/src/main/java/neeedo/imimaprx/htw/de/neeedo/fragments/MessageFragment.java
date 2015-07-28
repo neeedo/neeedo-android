@@ -95,6 +95,7 @@ public class MessageFragment extends SuperFragment {
             messageView.setVisibility(View.INVISIBLE);
             Context context = ApplicationContextModel.getInstance().getApplicationContext();
             Toast.makeText(context, context.getString(R.string.exception_message_login), Toast.LENGTH_LONG).show();
+            getUsers(null);
         }
 
         return view;
@@ -103,13 +104,17 @@ public class MessageFragment extends SuperFragment {
     @Subscribe
     public void getUsers(UserMessageContactsLoadedEvent userMessageContactsLoadedEvent) {
 
+        if (userMessageContactsLoadedEvent == null) {
+            return;
+        }
+
         users = MessagesModel.getInstance().getUsers();
 
         if (users.size() > 0) {
             tvEmpty.setVisibility(View.GONE);
             messageView.setVisibility(View.VISIBLE);
         } else {
-            if(userMessageContactsLoadedEvent.isReadState()) {
+            if (userMessageContactsLoadedEvent.isReadState()) {
                 tvEmpty.setVisibility(View.VISIBLE);
                 messageView.setVisibility(View.GONE);
                 progressBar.setVisibility(View.GONE);

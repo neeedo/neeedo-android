@@ -28,17 +28,20 @@ public class ListOffersFragment extends ListFragment {
         super.onViewStateRestored(savedInstanceState);
 
         offersModel = OffersModel.getInstance();
-        BaseAsyncTask.GetEntitiesMode listMode = BaseAsyncTask.GetEntitiesMode.GET_RANDOM;
+
         if (activeUser.hasActiveUser()) {
-            listMode = BaseAsyncTask.GetEntitiesMode.GET_BY_USER;
+            BaseAsyncTask.GetEntitiesMode listMode = BaseAsyncTask.GetEntitiesMode.GET_BY_USER;
 
             if (offersModel.isUseLocalList()) {
                 offersModel.setUseLocalList(false);
                 fillList(null);
                 return;
             }
+            new GetOffersAsyncTask(listMode, 100, 0).execute();
+        } else {
+            fillList(null);
         }
-        new GetOffersAsyncTask(listMode, 100, 0).execute();
+
     }
 
     @Subscribe
