@@ -20,6 +20,8 @@ import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
 public class ImageActivity extends Activity {
     public final static String IMAGES_LIST_EXTRA = "images-list-intent-data";
     public final static String IMAGES_LIST_POSITION_EXTRA = "images-list-position-intent-data";
+    public final static String IMAGES_LIST_STATE = "images-list-state";
+    public final static String IMAGES_LIST_POSITION_STATE = "images-list-position-state";
     private View view;
     private Intent intent;
     private TouchImageView imageView;
@@ -43,6 +45,26 @@ public class ImageActivity extends Activity {
             loadImageView();
         }
 
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+
+        savedInstanceState.putStringArrayList(IMAGES_LIST_STATE, imageList);
+        savedInstanceState.putInt(IMAGES_LIST_POSITION_STATE, position);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        if(savedInstanceState != null) {
+            imageList = savedInstanceState.getStringArrayList(IMAGES_LIST_STATE);
+            position = savedInstanceState.getInt(IMAGES_LIST_POSITION_STATE);
+
+            loadImageView();
+        }
     }
 
     private void loadImageView() {
