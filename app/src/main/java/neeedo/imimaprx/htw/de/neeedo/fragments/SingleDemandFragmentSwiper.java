@@ -1,5 +1,7 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -33,6 +35,8 @@ import neeedo.imimaprx.htw.de.neeedo.fragments.adapters.OfferSwipeArrayListAdapt
 import neeedo.imimaprx.htw.de.neeedo.fragments.adapters.SwipeCardViewItem;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
+import neeedo.imimaprx.htw.de.neeedo.models.FavoritesModel;
+import neeedo.imimaprx.htw.de.neeedo.rest.favorites.GetFavoritesByIDAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.favorites.PostCreateFavoriteAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.matching.GetOffersToDemandAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
@@ -53,6 +57,9 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
     private ArrayAdapter<String> arrayAdapter;
 
     private DemandsModel demandsModel = DemandsModel.getInstance();
+    private FavoritesModel favouritesModel = FavoritesModel.getInstance();
+    private ActiveUser activeUser = ActiveUser.getInstance();
+
     private String demandId;
     private LinearLayout diolorButtonsContainer;
     private TextView textViewEmpty;
@@ -85,6 +92,7 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
         currentDemand = demandsModel.getDemandById(demandId);
 
         new GetOffersToDemandAsyncTask(currentDemand).execute();
+        new GetFavoritesByIDAsyncTask(activeUser.getUserId()).execute();
     }
 
     @Subscribe
@@ -93,6 +101,26 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
 
         swipeCardViewItems = new ArrayList<SwipeCardViewItem>();
         List<Offer> offerArrayList = DemandsModel.getInstance().getOfferlistToDemandById(demandId);
+
+        final String sharedPrefsKey = "dismissedOffers" + demandId + activeUser.getUserId();
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        String dismissedOffersString = sharedPref.getString(sharedPrefsKey, "");
+
+        for (int i = offerArrayList.size() - 1; i >= 0; i--) {
+            Offer currentOfferSearch = offerArrayList.get(i);
+            if (dismissedOffersString.contains(currentOfferSearch.getId())) {
+                offerArrayList.remove(currentOfferSearch);
+                continue;
+            }
+
+            ArrayList<Favorite> favorites = favouritesModel.getFavorites();
+            for (Favorite currentFav : favorites) {
+                if (currentFav.getId().equals(currentOfferSearch.getId())) {
+                    offerArrayList.remove(currentOfferSearch);
+                    continue;
+                }
+            }
+        }
 
         for (Offer currentOffer : offerArrayList) {
             swipeCardViewItems.add(new SwipeCardViewItem(currentOffer));
@@ -116,7 +144,13 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
             public void onLeftCardExit(Object dataObject) {
                 SwipeCardViewItem swipeCardViewItem = (SwipeCardViewItem) dataObject;
                 Offer offer = swipeCardViewItem.getOffer();
-                //TODO dismiss
+
+                SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+                String dismissedOffersString = sharedPref.getString(sharedPrefsKey, "");
+
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString(sharedPrefsKey, dismissedOffersString + "," + offer.getId());
+                editor.commit();
             }
 
             @Override
@@ -134,7 +168,7 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
                 if (itemsInAdapter == 0) {
-                     textViewEmpty.setVisibility(View.VISIBLE);
+                    textViewEmpty.setVisibility(View.VISIBLE);
                     diolorButtonsContainer.setVisibility(View.GONE);
                 }
             }
@@ -153,7 +187,7 @@ public class SingleDemandFragmentSwiper extends SuperFragment implements View.On
                 SwipeCardViewItem swipeCardViewItem = (SwipeCardViewItem) dataObject;
                 Offer offer = swipeCardViewItem.getOffer();
 
-                                FragmentManager fragmentManager = getFragmentManager();
+                FragmentManager fragmentManager = getFragmentManager();
                 Fragment fragment = new SingleOfferFragment();
 
                 Bundle args = new Bundle();

@@ -17,6 +17,7 @@ import neeedo.imimaprx.htw.de.neeedo.events.GetDemandListFinishedEvent;
 import neeedo.imimaprx.htw.de.neeedo.fragments.adapters.ListProductsArrayAdapter;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.demand.GetDemandsAsyncTask;
+import neeedo.imimaprx.htw.de.neeedo.rest.favorites.GetFavoritesByIDAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 
 public class ListDemandsFragment extends ListFragment {
@@ -35,6 +36,7 @@ public class ListDemandsFragment extends ListFragment {
                 return;
             }
             new GetDemandsAsyncTask(listMode, 100, 0).execute();
+            new GetFavoritesByIDAsyncTask(activeUser.getUserId()).execute();
         } else {
             fillList(null);
         }
