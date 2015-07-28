@@ -1,5 +1,6 @@
 package neeedo.imimaprx.htw.de.neeedo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,6 +16,7 @@ import neeedo.imimaprx.htw.de.neeedo.models.MessagesModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.message.GetMessagesByUserIdAndReadStateAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.user.GetUserByEmailAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.utils.CertificateTrustService;
+import neeedo.imimaprx.htw.de.neeedo.vo.RequestCodes;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -53,6 +55,7 @@ public class MainActivity extends ActionBarActivity {
             }
         }, 3000, 30000);
 
+
     }
 
     @Override
@@ -79,6 +82,9 @@ public class MainActivity extends ActionBarActivity {
         if (activeUser.userCredentialsAvailable()) {
             new GetUserByEmailAsyncTask().execute();
             activeUser.setAlreadyStarted(true);
+        } else {
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivityForResult(intent, RequestCodes.LOGIN_REQUEST_CODE);
         }
     }
 
