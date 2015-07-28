@@ -33,19 +33,24 @@ public class Offers implements Serializable, BaseEntity {
     public void replaceOffer(Offer offer) {
 
         String id = offer.getId();
+        boolean notfound = true;
 
         for (int i = 0; i < offers.size(); i++) {
             if (offers.get(i).getId().equals(id)) {
                 offers.set(i, offer);
+                notfound = false;
             }
+        }
+        if (notfound) {
+            offers.add(offer);
         }
 
     }
 
-    public Offer getOfferByID(String id){
+    public Offer getOfferByID(String id) {
         Offer offer = null;
-        for(Offer o: offers){
-            if(o.getId().equals(id))
+        for (Offer o : offers) {
+            if (o.getId().equals(id))
                 offer = o;
         }
         return offer;
