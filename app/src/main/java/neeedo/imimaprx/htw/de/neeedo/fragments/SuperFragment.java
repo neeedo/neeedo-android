@@ -135,7 +135,8 @@ public class SuperFragment extends Fragment {
 
                                             Toast.makeText(getActivity(), getString(R.string.logout_finished), Toast.LENGTH_SHORT).show();
                                             setLoginButtonState();
-                                            redirectToFragment(MainFragment.class);
+                                            Intent intent = new Intent(getActivity(), LoginActivity.class);
+                                            startActivityForResult(intent, RequestCodes.LOGIN_REQUEST_CODE);
                                         }
                                     }).
                             setNegativeButton(R.string.dialog_no,
