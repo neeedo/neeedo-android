@@ -35,17 +35,20 @@ public class TestCase extends ActivityInstrumentationTestCase2<MainActivity> {
 
     @MediumTest
     public void testNewDemand() {
+        solo.goBack();
         solo.waitForActivity(MainActivity.class, shortDelay);
         solo.clickOnActionBarHomeButton();
         solo.waitForView(R.layout.activity_main, 0, shortDelay, true);
 
-        clickOnScreen(3, 6);
+        //clickOnScreen(3, 9);
+        solo.clickLongOnScreen(300, 994);
 
         solo.waitForDialogToOpen(longDelay);
     }
 
     @MediumTest
     public void testButtonNewDemand() {
+        solo.goBack();
         solo.waitForActivity(MainActivity.class, shortDelay);
         solo.waitForView(R.layout.activity_main, 0, shortDelay, true);
         solo.clickOnView(solo.getView(R.id.btnNewDemand));
@@ -54,6 +57,7 @@ public class TestCase extends ActivityInstrumentationTestCase2<MainActivity> {
 
     @MediumTest
     public void testButtonNewOffer() {
+        solo.goBack();
         solo.waitForActivity(MainActivity.class, shortDelay);
         solo.waitForView(R.layout.activity_main, 0, shortDelay, true);
         solo.clickOnView(solo.getView(R.id.btnNewOffer));
@@ -62,77 +66,54 @@ public class TestCase extends ActivityInstrumentationTestCase2<MainActivity> {
 
     @MediumTest
     public void testListDemands() {
+        solo.goBack();
         solo.waitForActivity(MainActivity.class, shortDelay);
         solo.clickOnActionBarHomeButton();
         solo.waitForView(R.layout.activity_main, 0, shortDelay, true);
 
-        clickOnScreen(3, 10);
+        //clickOnScreen(3, 10);
+        solo.clickLongOnScreen(300, 1079);
 
         solo.waitForDialogToOpen(longDelay);
     }
 
     @MediumTest
     public void testHome() {
+        solo.goBack();
         solo.waitForActivity(MainActivity.class, shortDelay);
         solo.clickOnActionBarHomeButton();
         solo.waitForView(R.layout.activity_main, 0, shortDelay, true);
 
-        clickOnScreen(3, 3);
+        //clickOnScreen(3, 3);
+        solo.clickLongOnScreen(300, 300);
 
         solo.waitForDialogToOpen(longDelay);
     }
 
     @MediumTest
     public void testNewOffer() {
+        solo.goBack();
         solo.waitForActivity(MainActivity.class, shortDelay);
         solo.clickOnActionBarHomeButton();
         solo.waitForView(R.layout.activity_main, 0, shortDelay, true);
 
-        clickOnScreen(3, 5);
+        //clickOnScreen(3, 5);
+        solo.clickLongOnScreen(300, 677);
 
         solo.waitForDialogToOpen(longDelay);
     }
 
     @MediumTest
     public void testListOffers() {
+        solo.goBack();
         solo.waitForActivity(MainActivity.class, shortDelay);
         solo.clickOnActionBarHomeButton();
         solo.waitForView(R.layout.activity_main, 0, shortDelay, true);
 
-        clickOnScreen(3, 8);
+        //clickOnScreen(3, 8);
+        solo.clickLongOnScreen(300, 772);
 
         solo.waitForDialogToOpen(longDelay);
-    }
-
-    @MediumTest
-    public void testSwiper() {
-        solo.waitForActivity(MainActivity.class, shortDelay);
-        solo.clickOnActionBarHomeButton();
-        solo.waitForView(R.layout.activity_main, 0, shortDelay, true);
-
-        clickOnScreen(3, 12);
-
-        solo.waitForDialogToOpen(longDelay);
-        swipe();
-        solo.waitForDialogToOpen(shortDelay);
-        swipe();
-        solo.waitForDialogToOpen(shortDelay);
-        swipe();
-        solo.waitForDialogToOpen(shortDelay);
-    }
-
-    public void swipe() {
-        Point deviceSize = new Point();
-        solo.getCurrentActivity().getWindowManager().getDefaultDisplay().getSize(deviceSize);
-
-        int screenWidth = deviceSize.x;
-        int screenHeight = deviceSize.y;
-        int fromX = deviceSize.x / 4;
-        int toX = screenWidth;
-        int fromY = deviceSize.y / 2;
-        int toY = fromY;
-
-        solo.drag(fromX, toX, fromY, toY, 50);
     }
 
     private void clickOnScreen(int xFac, int yFac) {
