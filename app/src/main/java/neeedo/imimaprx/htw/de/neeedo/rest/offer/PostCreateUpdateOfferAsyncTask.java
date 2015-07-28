@@ -39,8 +39,7 @@ public class PostCreateUpdateOfferAsyncTask extends BaseAsyncTask {
             Offer postOffer = offersModel.getDraft();
 
             if (sendMode == SendMode.UPDATE) {
-                backupOffer = offersModel.getOfferByID(postOffer.getId());
-                offersModel.removeOfferByID(postOffer.getId());
+                backupOffer = postOffer;
             }
 
             HttpMethod httpMethod = HttpMethod.POST;

@@ -51,12 +51,14 @@ public class SendOfferHandler implements View.OnClickListener {
             Toast.makeText(context, context.getString(R.string.exception_message_login), Toast.LENGTH_LONG).show();
             return;
         }
+
         offer.setUserId(currentUser.getId());
         offer.setName(currentUser.getName());
 
         if (sendMode == BaseAsyncTask.SendMode.UPDATE && currentOffer != null) {
             offer.setId(currentOffer.getId());
             offer.setVersion(currentOffer.getVersion());
+            offersModel.removeOfferByID(currentOffer.getId());
         }
 
         Log.d("OFFER", offer.toString());
