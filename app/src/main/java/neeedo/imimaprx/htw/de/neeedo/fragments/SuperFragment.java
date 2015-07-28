@@ -63,6 +63,7 @@ public class SuperFragment extends Fragment {
         if (requestCode == RequestCodes.LOGIN_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
 //            Toast.makeText(getActivity(), getString(R.string.login_finished), Toast.LENGTH_SHORT).show();
         }
+        redirectToFragment(MainFragment.class);
     }
 
     @Override
