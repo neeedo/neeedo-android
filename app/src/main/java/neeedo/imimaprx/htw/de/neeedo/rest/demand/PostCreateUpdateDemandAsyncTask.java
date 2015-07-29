@@ -39,7 +39,7 @@ public class PostCreateUpdateDemandAsyncTask extends BaseAsyncTask {
             Demand postDemand = demandsModel.getDraft();
             if (sendMode == SendMode.UPDATE) {
                 backupDemand = demandsModel.getDemandById(postDemand.getId());
-                demandsModel.removeDemandByID(postDemand.getId());
+                //  demandsModel.removeDemandByID(postDemand.getId());
             }
             String url = ServerConstantsUtils.getActiveServer();
             HttpMethod httpMethod = HttpMethod.POST;
@@ -70,7 +70,13 @@ public class PostCreateUpdateDemandAsyncTask extends BaseAsyncTask {
             ResponseEntity<SingleDemand> response = restTemplate.exchange(url, httpMethod, requestEntity, SingleDemand.class);
             SingleDemand singleDemand = response.getBody();
 
-            demandsModel.addDemand(singleDemand.getDemand());
+
+            if (sendMode == SendMode.UPDATE) {
+                demandsModel.replaceDemand(singleDemand.getDemand());
+                demandsModel.setUseLocalList(true);
+            } else {
+                demandsModel.addDemand(singleDemand.getDemand());
+            }
 
             demandsModel.setDraft(null);
 
