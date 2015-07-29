@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
+import android.widget.Toast;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -23,6 +24,7 @@ public class MainActivity extends ActionBarActivity {
     private Fragment mFragment;
     private FragmentManager mFragmentManager;
     private static Timer timer = new Timer();
+    private boolean lastScreenReached = false;
 
     private final ActiveUser activeUser = ActiveUser.getInstance();
 
@@ -111,6 +113,20 @@ public class MainActivity extends ActionBarActivity {
             mFragmentManager.beginTransaction()
                     .replace(R.id.container, fragment)
                     .commit();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(mFragmentManager.getBackStackEntryCount() > 0) {
+            mFragmentManager.popBackStack();
+        } else {
+            if(!lastScreenReached) {
+                lastScreenReached = true;
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.push_back_close_app), Toast.LENGTH_LONG).show();
+            } else {
+                super.onBackPressed();
+            }
         }
     }
 }

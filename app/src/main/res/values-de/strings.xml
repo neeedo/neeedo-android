@@ -144,4 +144,6 @@
 
     <string name="searching_location">Suche aktuelle Standort-Daten</string>
 
+    <string name="push_back_close_app">Ein weiteres mal zurück drücken um die App zu schließen</string>
+
 </resources>
