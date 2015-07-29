@@ -109,7 +109,6 @@ public class MainActivity extends ActionBarActivity {
     private void changeFragment(Fragment fragment) {
         if(mFragmentManager != null && fragment != null) {
             mFragmentManager.beginTransaction()
-                    .addToBackStack(null)
                     .replace(R.id.container, fragment)
                     .commit();
         }
