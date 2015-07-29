@@ -26,13 +26,16 @@ import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.osmdroid.DefaultResourceProxyImpl;
 import org.osmdroid.bonuspack.overlays.MapEventsOverlay;
 import org.osmdroid.bonuspack.overlays.MapEventsReceiver;
 import org.osmdroid.bonuspack.overlays.Polygon;
+import org.osmdroid.events.MapListener;
+import org.osmdroid.events.ScrollEvent;
+import org.osmdroid.events.ZoomEvent;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.BoundingBoxE6;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.ItemizedIconOverlay;
@@ -206,6 +209,7 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
         setZoomAccordingToDistance();
 
         if (selectedGeoPoint != null) {
+            mapView.getController().animateTo(selectedGeoPoint);
             refreshViewToNewSettings();
         }
     }
@@ -233,20 +237,49 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
 
     private void setLocationSelected(GeoPoint geoPoint) {
         selectedGeoPoint = geoPoint;
+        mapView.getController().animateTo(selectedGeoPoint);
         refreshViewToNewSettings();
+
+        mapView.setMapListener(new MapListener() {
+            @Override
+            public boolean onScroll(ScrollEvent event) {
+                refreshViewToNewSettings();
+                return false;
+            }
+
+            @Override
+            public boolean onZoom(ZoomEvent event) {
+                refreshViewToNewSettings();
+                return false;
+            }
+        });
     }
 
     private void refreshViewToNewSettings() {
-        mapView.getController().animateTo(selectedGeoPoint);
+        //mapView.getController().animateTo(selectedGeoPoint);
 
         deleteAllUiOverlays();
 
         if (withDistance) {
             Polygon circle = new Polygon(this);
-            circle.setPoints(Polygon.pointsAsCircle(selectedGeoPoint, selectedDistanceInKm * 1000));
+            BoundingBoxE6 mapBoundingBox = mapView.getBoundingBox();
+            List<GeoPoint> polygon = Polygon.pointsAsCircle(selectedGeoPoint, selectedDistanceInKm * 1000);
+            List<GeoPoint> newPolygon = new ArrayList<>();
+            int polygonGap = 0; // TODO define gap for blank stripes
+            for(GeoPoint point : polygon) {
+                if(
+                        (point.getLatitudeE6() < mapBoundingBox.getLatNorthE6()+polygonGap && point.getLatitudeE6() > mapBoundingBox.getLatSouthE6()-polygonGap) ||
+                                (point.getLongitudeE6() < mapBoundingBox.getLonWestE6()+polygonGap && point.getLongitudeE6() > mapBoundingBox.getLonEastE6()-polygonGap)
+                        ) {
+                    newPolygon.add(point);
+                }
+            }
+            //circle.setPoints(Polygon.pointsAsCircle(selectedGeoPoint, selectedDistanceInKm * 1000));
+            circle.setPoints(newPolygon);
             circle.setFillColor(0xaa88BEB1);
             circle.setStrokeColor(0x88BEB1);
             circle.setStrokeWidth(2);
+
             mapView.getOverlays().add(circle);
         }
 
