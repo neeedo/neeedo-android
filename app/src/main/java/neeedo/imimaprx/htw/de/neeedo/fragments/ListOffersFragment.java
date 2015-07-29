@@ -54,7 +54,7 @@ public class ListOffersFragment extends ListFragment {
 
         TextView tvEmpty = (TextView) view.findViewById(R.id.tvEmpty);
 
-     
+
         ListProductsArrayAdapter<Offer> adapter = new ListProductsArrayAdapter(getActivity(),
                 R.layout.list_products_item, offerList, Offer.class);
 
