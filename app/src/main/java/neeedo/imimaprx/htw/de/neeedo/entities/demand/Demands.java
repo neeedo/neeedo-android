@@ -34,16 +34,21 @@ public class Demands implements Serializable, BaseEntity {
     }
 
     public void addDemand(Demand demand) {
-        demands.add(0,demand);
+        demands.add(0, demand);
     }
 
     public void replaceDemand(Demand demand) {
 
+        boolean notfound = true;
         String id = demand.getId();
         for (int i = 0; i < demands.size(); i++) {
             if (demands.get(i).getId().equals(id)) {
                 demands.set(i, demand);
+                notfound = false;
             }
+        }
+        if (notfound) {
+            demands.add(demand);
         }
     }
 

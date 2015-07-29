@@ -73,6 +73,7 @@ public class PostCreateUpdateDemandAsyncTask extends BaseAsyncTask {
 
             if (sendMode == SendMode.UPDATE) {
                 demandsModel.replaceDemand(singleDemand.getDemand());
+                demandsModel.setUseLocalList(true);
             } else {
                 demandsModel.addDemand(singleDemand.getDemand());
             }
