@@ -64,7 +64,9 @@ public class GetOffersToDemandAsyncTask extends BaseAsyncTask {
 
     @Override
     protected void onPostExecute(Object o) {
-        eventService.post(new FoundMatchesEvent());
+        if(((RestResult) o).getResult() == RestResult.ReturnType.SUCCESS) {
+            eventService.post(new FoundMatchesEvent());
+        }
     }
 
 }
