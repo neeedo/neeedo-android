@@ -39,7 +39,7 @@ public class PostCreateUpdateDemandAsyncTask extends BaseAsyncTask {
             Demand postDemand = demandsModel.getDraft();
             if (sendMode == SendMode.UPDATE) {
                 backupDemand = demandsModel.getDemandById(postDemand.getId());
-                //  demandsModel.removeDemandByID(postDemand.getId());
+                demandsModel.removeDemandByID(postDemand.getId());
             }
             String url = ServerConstantsUtils.getActiveServer();
             HttpMethod httpMethod = HttpMethod.POST;

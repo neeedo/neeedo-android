@@ -46,7 +46,7 @@ public class ListOffersFragment extends ListFragment {
 
     @Subscribe
     public void fillList(GetOfferFinishedEvent e) {
-        ArrayList<Offer> offerList = offersModel.getOffers();
+        ArrayList<Offer> offerList = new ArrayList<>();
 
         if (e == null) {
             offersModel.setLastDeletedEntityId("");
@@ -54,41 +54,52 @@ public class ListOffersFragment extends ListFragment {
 
         TextView tvEmpty = (TextView) view.findViewById(R.id.tvEmpty);
 
-        if (!offerList.isEmpty()) {
-            ListProductsArrayAdapter<Demand> adapter = new ListProductsArrayAdapter(getActivity(),
-                    R.layout.list_products_item, offerList);
-            adapter.notifyDataSetChanged();
-            listView.setAdapter(adapter);
+     
+        ListProductsArrayAdapter<Offer> adapter = new ListProductsArrayAdapter(getActivity(),
+                R.layout.list_products_item, offerList, Offer.class);
 
-            listView.setClickable(true);
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        ArrayList<Offer> tempList = offersModel.getOffers();
 
-                @Override
-                public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                    Offer offer = (Offer) listView.getItemAtPosition(position);
-
-                    FragmentManager fragmentManager = getFragmentManager();
-                    Fragment fragment = new SingleOfferFragment();
-
-                    Bundle args = new Bundle();
-                    args.putString("id", offer.getId()); // pass current item id
-                    fragment.setArguments(args);
-
-                    fragmentManager.beginTransaction()
-                            .addToBackStack(null)
-                            .replace(R.id.container, fragment)
-                            .commit();
-                }
-            });
-
-            tvHeader.setText(getResources().getString(R.string.offers));
-
-            tvEmpty.setVisibility(View.GONE);
-        } else {
+        if (tempList.isEmpty()) {
             tvEmpty.setText(getActivity().getString(R.string.empty_offers_message));
             tvEmpty.setVisibility(View.VISIBLE);
             tvHeader.setVisibility(View.GONE);
+            return;
         }
+
+
+        for (Offer offer : tempList) {
+            adapter.add(offer);
+        }
+
+        adapter.notifyDataSetChanged();
+        listView.setAdapter(adapter);
+
+        listView.setClickable(true);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                Offer offer = (Offer) listView.getItemAtPosition(position);
+
+                FragmentManager fragmentManager = getFragmentManager();
+                Fragment fragment = new SingleOfferFragment();
+
+                Bundle args = new Bundle();
+                args.putString("id", offer.getId()); // pass current item id
+                fragment.setArguments(args);
+
+                fragmentManager.beginTransaction()
+                        .addToBackStack(null)
+                        .replace(R.id.container, fragment)
+                        .commit();
+            }
+        });
+
+        tvHeader.setText(getResources().getString(R.string.offers));
+
+        tvEmpty.setVisibility(View.GONE);
+
         progressBar.setVisibility(View.GONE);
     }
 }

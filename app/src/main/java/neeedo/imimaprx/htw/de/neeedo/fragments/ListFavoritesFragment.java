@@ -45,7 +45,7 @@ public class ListFavoritesFragment extends ListFragment {
             tvHeader.setVisibility(View.GONE);
             return;
         } else {
-            ListProductsArrayAdapter<Favorite> favoritArrayAdapter = new ListProductsArrayAdapter<>(getActivity(), R.layout.list_products_item, favoriteList);
+            ListProductsArrayAdapter<Favorite> favoritArrayAdapter = new ListProductsArrayAdapter<>(getActivity(), R.layout.list_products_item, favoriteList, Favorite.class);
             listView.setAdapter(favoritArrayAdapter);
 
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

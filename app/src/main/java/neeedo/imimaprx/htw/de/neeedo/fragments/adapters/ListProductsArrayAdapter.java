@@ -39,18 +39,14 @@ public class ListProductsArrayAdapter<Object> extends ArrayAdapter<Object> {
     private TextView tvPrice;
     private TextView tvUser;
 
-    public ListProductsArrayAdapter(Context context, int layoutResourceId, List<Object> products) {
+    public ListProductsArrayAdapter(Context context, int layoutResourceId, List<Object> products, Class productType) {
         super(context, layoutResourceId, products);
 
         this.context = context;
         this.layoutResourceId = layoutResourceId;
         this.products = products;
+        this.productType = productType;
 
-        try {
-            productType = products.get(0).getClass(); // TODO is there a better way to determine the class?
-        } catch (NullPointerException e) {
-            productType = null;
-        }
 
     }
 
@@ -58,7 +54,7 @@ public class ListProductsArrayAdapter<Object> extends ArrayAdapter<Object> {
     public View getView(int position, View row, ViewGroup parent) {
         row = LayoutInflater.from(context).inflate(layoutResourceId, parent, false);
 
-        if(position % 2 == 0) {
+        if (position % 2 == 0) {
             row.setBackgroundColor(0xFF4F9181);
         }
 
@@ -98,7 +94,7 @@ public class ListProductsArrayAdapter<Object> extends ArrayAdapter<Object> {
             secondaryTagsText = demand.getShouldTagsString();
             distanceText = context.getString(
                     R.string.item_distance) + ": " + distanceFormat.format(demand.getDistance());
-            if(price.getMin() == price.getMax()) {
+            if (price.getMin() == price.getMax()) {
                 priceText = priceFormat.format(price.getMin());
             } else {
                 priceText = priceFormat.format(price.getMin()) + " - " + priceFormat.format(price.getMax());
@@ -117,7 +113,7 @@ public class ListProductsArrayAdapter<Object> extends ArrayAdapter<Object> {
 
             primaryTagsText = offer.getTagsString();
             priceText = priceFormat.format(offer.getPrice()
-                    );
+            );
             userText = offer.getUser().getName();
 
             tvSecondaryTags.setVisibility(View.GONE);
@@ -137,7 +133,7 @@ public class ListProductsArrayAdapter<Object> extends ArrayAdapter<Object> {
 
             primaryTagsText = favorite.getTagsString();
             priceText = priceFormat.format(favorite.getPrice()
-                    );
+            );
             userText = favorite.getUser().getName();
 
             tvSecondaryTags.setVisibility(View.GONE);

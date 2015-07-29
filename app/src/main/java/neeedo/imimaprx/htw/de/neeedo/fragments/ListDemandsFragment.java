@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.squareup.otto.Subscribe;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
@@ -45,7 +46,8 @@ public class ListDemandsFragment extends ListFragment {
     @Subscribe
     public void fillList(GetDemandListFinishedEvent e) {
 
-        List<Demand> demandList = demandsModel.getDemands();
+        List<Demand> demandList = new ArrayList<>();
+
 
         if (e == null) {
             demandsModel.setLastDeletedEntityId("");
@@ -53,41 +55,51 @@ public class ListDemandsFragment extends ListFragment {
 
         TextView tvEmpty = (TextView) view.findViewById(R.id.tvEmpty);
 
-        if (!demandList.isEmpty()) {
-            ListProductsArrayAdapter<Demand> adapter = new ListProductsArrayAdapter(getActivity(),
-                    R.layout.list_products_item, demandList);
-            adapter.notifyDataSetChanged();
-            listView.setAdapter(adapter);
 
-            listView.setClickable(true);
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        ListProductsArrayAdapter<Demand> adapter = new ListProductsArrayAdapter(getActivity(),
+                R.layout.list_products_item, demandList, Demand.class);
 
-                @Override
-                public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                    Demand demand = (Demand) listView.getItemAtPosition(position);
+        ArrayList<Demand> tempList = demandsModel.getDemands();
 
-                    FragmentManager fragmentManager = getFragmentManager();
-                    Fragment fragment = new SingleDemandFragmentSwiper();
-
-                    Bundle args = new Bundle();
-                    args.putString("id", demand.getId());
-                    fragment.setArguments(args);
-
-                    fragmentManager.beginTransaction()
-                            .addToBackStack(null)
-                            .replace(R.id.container, fragment)
-                            .commit();
-                }
-            });
-
-            tvHeader.setText(getResources().getString(R.string.demands));
-
-            tvEmpty.setVisibility(View.GONE);
-        } else {
+        if (tempList.isEmpty()) {
             tvEmpty.setText(getActivity().getString(R.string.empty_demands_message));
             tvEmpty.setVisibility(View.VISIBLE);
             tvHeader.setVisibility(View.GONE);
+            return;
         }
+
+        for (Demand demand : tempList) {
+            adapter.add(demand);
+        }
+        adapter.notifyDataSetChanged();
+
+        listView.setAdapter(adapter);
+
+        listView.setClickable(true);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                Demand demand = (Demand) listView.getItemAtPosition(position);
+
+                FragmentManager fragmentManager = getFragmentManager();
+                Fragment fragment = new SingleDemandFragmentSwiper();
+
+                Bundle args = new Bundle();
+                args.putString("id", demand.getId());
+                fragment.setArguments(args);
+
+                fragmentManager.beginTransaction()
+                        .addToBackStack(null)
+                        .replace(R.id.container, fragment)
+                        .commit();
+            }
+        });
+
+        tvHeader.setText(getResources().getString(R.string.demands));
+
+        tvEmpty.setVisibility(View.GONE);
+
         progressBar.setVisibility(View.GONE);
     }
 }

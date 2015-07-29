@@ -61,7 +61,7 @@ public class SendDemandHandler implements View.OnClickListener {
 
         try {
             DemandsModel.getInstance().setDraft(demand);
-            DemandsModel.getInstance().removeDemandByID(demand.getId());
+            //DemandsModel.getInstance().removeDemandByID(demand.getId());
             BaseAsyncTask asyncTask = new PostCreateUpdateDemandAsyncTask(sendMode);
             asyncTask.execute();
         } catch (Exception e) {
