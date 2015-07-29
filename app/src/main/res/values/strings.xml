@@ -91,7 +91,7 @@
     <string name="favorites_view_no_favorites_found">No favorites have been found.</string>
 
     <string name="single_offer_fragment_toast_message">Your message was sent.</string>
-    <string name="single_offer_message_edit_text_hint">Write your message here.</string>
+    <string name="single_offer_message_edit_text_hint">Write here</string>
     <string name="done">done</string>
     <string name="messages_view_send">Send</string>
 

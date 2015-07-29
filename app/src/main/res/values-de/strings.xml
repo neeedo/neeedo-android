@@ -94,7 +94,7 @@
     <string name="favorites_view_no_favorites_found">Keine Favoriten vorhanden.</string>
 
     <string name="single_offer_fragment_toast_message">Deine Nachricht wurde gesendet.</string>
-    <string name="single_offer_message_edit_text_hint">Schreibe hier deine Nachricht.</string>
+    <string name="single_offer_message_edit_text_hint">Hier schreiben</string>
     <string name="done">fertig</string>
     <string name="messages_view_send">senden</string>
 
