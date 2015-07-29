@@ -57,7 +57,7 @@ public class ListOffersFragment extends ListFragment {
         if (!offerList.isEmpty()) {
             ListProductsArrayAdapter<Demand> adapter = new ListProductsArrayAdapter(getActivity(),
                     R.layout.list_products_item, offerList);
-
+            adapter.notifyDataSetChanged();
             listView.setAdapter(adapter);
 
             listView.setClickable(true);

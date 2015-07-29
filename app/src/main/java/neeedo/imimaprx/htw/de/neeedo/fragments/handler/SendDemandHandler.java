@@ -29,7 +29,7 @@ public class SendDemandHandler implements View.OnClickListener {
     public void onClick(View view) {
         view.requestFocusFromTouch(); // workaround for checking last field by focus change listener
 
-        if(!formDemandFragment.checkValidation()) {
+        if (!formDemandFragment.checkValidation()) {
             return;
         }
 
@@ -61,6 +61,7 @@ public class SendDemandHandler implements View.OnClickListener {
 
         try {
             DemandsModel.getInstance().setDraft(demand);
+            DemandsModel.getInstance().removeDemandByID(demand.getId());
             BaseAsyncTask asyncTask = new PostCreateUpdateDemandAsyncTask(sendMode);
             asyncTask.execute();
         } catch (Exception e) {
