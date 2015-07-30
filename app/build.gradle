@@ -11,8 +11,8 @@ android {
         applicationId "neeedo.imimaprx.htw.de.neeedo"
         minSdkVersion 16
         targetSdkVersion 21
-        versionCode 8
-        versionName "1.6"
+        versionCode 9
+        versionName "1.7"
         multiDexEnabled false
     }
     buildTypes {
