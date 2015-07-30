@@ -32,7 +32,11 @@ import org.osmdroid.DefaultResourceProxyImpl;
 import org.osmdroid.bonuspack.overlays.MapEventsOverlay;
 import org.osmdroid.bonuspack.overlays.MapEventsReceiver;
 import org.osmdroid.bonuspack.overlays.Polygon;
+import org.osmdroid.events.MapListener;
+import org.osmdroid.events.ScrollEvent;
+import org.osmdroid.events.ZoomEvent;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.BoundingBoxE6;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.ItemizedIconOverlay;
@@ -49,9 +53,10 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
     private DefaultResourceProxyImpl resourceProxy;
     private Activity that = this;
     private GeoPoint selectedGeoPoint = null;
-    private int selectedDistanceInKm;
+    private int selectedDistanceInKm = 0;
     private TextView distanceTextView;
     private boolean withDistance;
+    private boolean drawRadius = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +112,6 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
         distanceTextView.setVisibility(withDistance ? View.VISIBLE : View.GONE);
 
         distanceSeekBar.setProgress(9);
-
         distanceSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             @Override
@@ -138,6 +142,38 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
         mapView.setBuiltInZoomControls(true);
         mapView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         mapView.setClickable(true);
+        mapView.setMapListener(new MapListener() {
+            @Override
+            public boolean onScroll(ScrollEvent event) {
+                return false;
+            }
+
+            @Override
+            public boolean onZoom(ZoomEvent event) {
+//                refreshViewToNewSettings();
+                if (selectedGeoPoint == null || selectedDistanceInKm <= 0 || withDistance == false) {
+                    return false;
+                }
+
+                int diagonalBoundingBoxInMeters = mapView.getBoundingBox().getDiagonalLengthInMeters();
+                int selectedDistanceDiameterInMeters = selectedDistanceInKm * 1000 * 2;
+
+                boolean shouldRadiusBeDrawn;
+
+                if (diagonalBoundingBoxInMeters < selectedDistanceDiameterInMeters) {
+                    shouldRadiusBeDrawn = false;
+                } else {
+                    shouldRadiusBeDrawn = true;
+                }
+
+                if (drawRadius != shouldRadiusBeDrawn) {
+                    drawRadius = shouldRadiusBeDrawn;
+                    refreshViewToNewSettings();
+                }
+
+                return false;
+            }
+        });
 
         RelativeLayout mapContainer = (RelativeLayout) findViewById(R.id.locationChooserMapContainer);
         mapContainer.addView(mapView);
@@ -206,6 +242,7 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
         setZoomAccordingToDistance();
 
         if (selectedGeoPoint != null) {
+            mapView.getController().animateTo(selectedGeoPoint);
             refreshViewToNewSettings();
         }
     }
@@ -233,15 +270,16 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
 
     private void setLocationSelected(GeoPoint geoPoint) {
         selectedGeoPoint = geoPoint;
+        mapView.getController().animateTo(selectedGeoPoint);
         refreshViewToNewSettings();
     }
 
     private void refreshViewToNewSettings() {
-        mapView.getController().animateTo(selectedGeoPoint);
+        //mapView.getController().animateTo(selectedGeoPoint);
 
         deleteAllUiOverlays();
 
-        if (withDistance) {
+        if (withDistance && drawRadius) {
             Polygon circle = new Polygon(this);
             circle.setPoints(Polygon.pointsAsCircle(selectedGeoPoint, selectedDistanceInKm * 1000));
             circle.setFillColor(0xaa88BEB1);
