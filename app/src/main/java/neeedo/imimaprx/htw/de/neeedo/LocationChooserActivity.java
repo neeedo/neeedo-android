@@ -26,6 +26,7 @@ import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.osmdroid.DefaultResourceProxyImpl;
 import org.osmdroid.bonuspack.overlays.MapEventsOverlay;
@@ -52,9 +53,10 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
     private DefaultResourceProxyImpl resourceProxy;
     private Activity that = this;
     private GeoPoint selectedGeoPoint = null;
-    private int selectedDistanceInKm;
+    private int selectedDistanceInKm = 0;
     private TextView distanceTextView;
     private boolean withDistance;
+    private boolean drawRadius = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +112,6 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
         distanceTextView.setVisibility(withDistance ? View.VISIBLE : View.GONE);
 
         distanceSeekBar.setProgress(9);
-
         distanceSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             @Override
@@ -141,6 +142,38 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
         mapView.setBuiltInZoomControls(true);
         mapView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         mapView.setClickable(true);
+        mapView.setMapListener(new MapListener() {
+            @Override
+            public boolean onScroll(ScrollEvent event) {
+                return false;
+            }
+
+            @Override
+            public boolean onZoom(ZoomEvent event) {
+//                refreshViewToNewSettings();
+                if (selectedGeoPoint == null || selectedDistanceInKm <= 0 || withDistance == false) {
+                    return false;
+                }
+
+                int diagonalBoundingBoxInMeters = mapView.getBoundingBox().getDiagonalLengthInMeters();
+                int selectedDistanceDiameterInMeters = selectedDistanceInKm * 1000 * 2;
+
+                boolean shouldRadiusBeDrawn;
+
+                if (diagonalBoundingBoxInMeters < selectedDistanceDiameterInMeters) {
+                    shouldRadiusBeDrawn = false;
+                } else {
+                    shouldRadiusBeDrawn = true;
+                }
+
+                if (drawRadius != shouldRadiusBeDrawn) {
+                    drawRadius = shouldRadiusBeDrawn;
+                    refreshViewToNewSettings();
+                }
+
+                return false;
+            }
+        });
 
         RelativeLayout mapContainer = (RelativeLayout) findViewById(R.id.locationChooserMapContainer);
         mapContainer.addView(mapView);
@@ -239,20 +272,6 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
         selectedGeoPoint = geoPoint;
         mapView.getController().animateTo(selectedGeoPoint);
         refreshViewToNewSettings();
-
-        mapView.setMapListener(new MapListener() {
-            @Override
-            public boolean onScroll(ScrollEvent event) {
-                refreshViewToNewSettings();
-                return false;
-            }
-
-            @Override
-            public boolean onZoom(ZoomEvent event) {
-                refreshViewToNewSettings();
-                return false;
-            }
-        });
     }
 
     private void refreshViewToNewSettings() {
@@ -260,26 +279,12 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
 
         deleteAllUiOverlays();
 
-        if (withDistance) {
+        if (withDistance && drawRadius) {
             Polygon circle = new Polygon(this);
-            BoundingBoxE6 mapBoundingBox = mapView.getBoundingBox();
-            List<GeoPoint> polygon = Polygon.pointsAsCircle(selectedGeoPoint, selectedDistanceInKm * 1000);
-            List<GeoPoint> newPolygon = new ArrayList<>();
-            int polygonGap = 0; // TODO define gap for blank stripes
-            for(GeoPoint point : polygon) {
-                if(
-                        (point.getLatitudeE6() < mapBoundingBox.getLatNorthE6()+polygonGap && point.getLatitudeE6() > mapBoundingBox.getLatSouthE6()-polygonGap) ||
-                                (point.getLongitudeE6() < mapBoundingBox.getLonWestE6()+polygonGap && point.getLongitudeE6() > mapBoundingBox.getLonEastE6()-polygonGap)
-                        ) {
-                    newPolygon.add(point);
-                }
-            }
-            //circle.setPoints(Polygon.pointsAsCircle(selectedGeoPoint, selectedDistanceInKm * 1000));
-            circle.setPoints(newPolygon);
+            circle.setPoints(Polygon.pointsAsCircle(selectedGeoPoint, selectedDistanceInKm * 1000));
             circle.setFillColor(0xaa88BEB1);
             circle.setStrokeColor(0x88BEB1);
             circle.setStrokeWidth(2);
-
             mapView.getOverlays().add(circle);
         }
 
