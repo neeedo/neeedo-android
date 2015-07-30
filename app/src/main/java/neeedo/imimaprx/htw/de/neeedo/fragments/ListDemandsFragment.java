@@ -65,6 +65,7 @@ public class ListDemandsFragment extends ListFragment {
             tvEmpty.setText(getActivity().getString(R.string.empty_demands_message));
             tvEmpty.setVisibility(View.VISIBLE);
             tvHeader.setVisibility(View.GONE);
+            progressBar.setVisibility(View.GONE);
             return;
         }
 
