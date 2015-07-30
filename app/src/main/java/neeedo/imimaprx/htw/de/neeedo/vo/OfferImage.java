@@ -1,8 +1,5 @@
 package neeedo.imimaprx.htw.de.neeedo.vo;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.io.Serializable;
 
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;

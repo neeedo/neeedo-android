@@ -41,7 +41,7 @@ public class EditOfferFragment extends FormOfferFragment {
             }
 
             Location location = currentOffer.getLocation();
-            if(location != null) {
+            if (location != null) {
                 selectedGeoPoint = new GeoPoint(location.getLat(), location.getLon());
                 setLocation(selectedGeoPoint);
             }

@@ -38,7 +38,7 @@ public class ImageActivity extends Activity {
         view = getLayoutInflater().inflate(R.layout.activity_image, null);
         intent = getIntent();
 
-        if(intent != null) {
+        if (intent != null) {
             imageList = intent.getStringArrayListExtra(IMAGES_LIST_EXTRA);
             position = intent.getIntExtra(IMAGES_LIST_POSITION_EXTRA, 0);
 
@@ -59,7 +59,7 @@ public class ImageActivity extends Activity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        if(savedInstanceState != null) {
+        if (savedInstanceState != null) {
             imageList = savedInstanceState.getStringArrayList(IMAGES_LIST_STATE);
             position = savedInstanceState.getInt(IMAGES_LIST_POSITION_STATE);
 
@@ -77,7 +77,7 @@ public class ImageActivity extends Activity {
 
         imageView.setMaxScale(10);
 
-        if(imageList != null) {
+        if (imageList != null) {
             String imageUrl = ServerConstantsUtils.getActiveServer() + "images/" + imageList.get(position);
 
             Log.d("Image", imageUrl);
@@ -97,7 +97,7 @@ public class ImageActivity extends Activity {
                         }
                     });
 
-            if(imageList.size() <= 1) {
+            if (imageList.size() <= 1) {
                 btnNext.setVisibility(View.INVISIBLE);
                 btnPrev.setVisibility(View.INVISIBLE);
             } else {
@@ -108,7 +108,7 @@ public class ImageActivity extends Activity {
             btnNext.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (position < imageList.size()-1) {
+                    if (position < imageList.size() - 1) {
                         position++;
                     } else {
                         position = 0;
@@ -120,7 +120,7 @@ public class ImageActivity extends Activity {
                 @Override
                 public void onClick(View view) {
                     if (position <= 0) {
-                        position = imageList.size()-1;
+                        position = imageList.size() - 1;
                     } else {
                         position--;
                     }

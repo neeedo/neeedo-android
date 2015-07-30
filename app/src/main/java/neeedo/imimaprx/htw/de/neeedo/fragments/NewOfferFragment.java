@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 
 import com.squareup.otto.Subscribe;
 
-import neeedo.imimaprx.htw.de.neeedo.MainActivity;
 import neeedo.imimaprx.htw.de.neeedo.events.GetSuggestionEvent;
 import neeedo.imimaprx.htw.de.neeedo.events.NewEanTagsReceivedEvent;
 import neeedo.imimaprx.htw.de.neeedo.events.NewImageReceivedFromServer;

@@ -10,9 +10,6 @@ import com.squareup.otto.Subscribe;
 
 import org.osmdroid.util.GeoPoint;
 
-import java.text.DecimalFormatSymbols;
-
-import neeedo.imimaprx.htw.de.neeedo.MainActivity;
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demand;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.Location;

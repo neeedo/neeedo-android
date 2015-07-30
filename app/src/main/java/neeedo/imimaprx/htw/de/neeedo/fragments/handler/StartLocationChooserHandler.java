@@ -1,7 +1,6 @@
 package neeedo.imimaprx.htw.de.neeedo.fragments.handler;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 

@@ -12,7 +12,6 @@ import com.squareup.otto.Subscribe;
 import java.util.ArrayList;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
-import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demand;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offer;
 import neeedo.imimaprx.htw.de.neeedo.events.GetOfferFinishedEvent;
 import neeedo.imimaprx.htw.de.neeedo.fragments.adapters.ListProductsArrayAdapter;

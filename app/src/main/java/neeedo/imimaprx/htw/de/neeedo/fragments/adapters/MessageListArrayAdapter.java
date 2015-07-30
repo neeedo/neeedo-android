@@ -49,12 +49,12 @@ public class MessageListArrayAdapter<Object> extends ArrayAdapter<Object> {
         Date date = new Date(message.getTimestamp());
 
         String messageSender = message.getSender().getId();
-        if(messageSender.equals(currentUserId)) {
+        if (messageSender.equals(currentUserId)) {
             layoutMessageItem.setGravity(Gravity.RIGHT);
             layoutMessageItem.setPadding(50, 0, 0, 0);
             tvMessage.setBackground(context.getResources().getDrawable(R.drawable.shape_message_item_own));
         } else {
-            if(!message.isRead()) {
+            if (!message.isRead()) {
                 tvMessage.setBackground(context.getResources().getDrawable(R.drawable.shape_message_item_partner_unread));
             }
         }
@@ -62,7 +62,7 @@ public class MessageListArrayAdapter<Object> extends ArrayAdapter<Object> {
         String messageText = message.getBody();
         String messageTime = formatter.format(date);
 
-        if(messageSender.equals("Neeedo")) {
+        if (messageSender.equals("Neeedo")) {
             messageText = context.getResources().getString(R.string.new_match_text);
         }
 

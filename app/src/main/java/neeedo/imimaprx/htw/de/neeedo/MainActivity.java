@@ -61,7 +61,6 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
@@ -109,7 +108,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void changeFragment(Fragment fragment) {
-        if(mFragmentManager != null && fragment != null) {
+        if (mFragmentManager != null && fragment != null) {
             mFragmentManager.beginTransaction()
                     .replace(R.id.container, fragment)
                     .commit();
@@ -118,10 +117,10 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
-        if(mFragmentManager.getBackStackEntryCount() > 0) {
+        if (mFragmentManager.getBackStackEntryCount() > 0) {
             mFragmentManager.popBackStack();
         } else {
-            if(!lastScreenReached) {
+            if (!lastScreenReached) {
                 lastScreenReached = true;
                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.push_back_close_app), Toast.LENGTH_LONG).show();
             } else {

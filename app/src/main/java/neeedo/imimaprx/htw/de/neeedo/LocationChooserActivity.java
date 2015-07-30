@@ -26,7 +26,6 @@ import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.osmdroid.DefaultResourceProxyImpl;
 import org.osmdroid.bonuspack.overlays.MapEventsOverlay;
@@ -36,7 +35,6 @@ import org.osmdroid.events.MapListener;
 import org.osmdroid.events.ScrollEvent;
 import org.osmdroid.events.ZoomEvent;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
-import org.osmdroid.util.BoundingBoxE6;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.ItemizedIconOverlay;
@@ -178,7 +176,6 @@ public class LocationChooserActivity extends ActionBarActivity implements MapEve
         RelativeLayout mapContainer = (RelativeLayout) findViewById(R.id.locationChooserMapContainer);
         mapContainer.addView(mapView);
 
-        //TODO make last known location
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

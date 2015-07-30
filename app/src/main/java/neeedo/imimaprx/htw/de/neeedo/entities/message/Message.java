@@ -14,7 +14,6 @@ import java.util.Date;
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.user.User;
 import neeedo.imimaprx.htw.de.neeedo.entities.util.BaseEntity;
-import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.ApplicationContextModel;
 
 

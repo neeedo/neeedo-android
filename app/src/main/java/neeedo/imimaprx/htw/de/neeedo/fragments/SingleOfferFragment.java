@@ -22,7 +22,6 @@ import android.widget.Toast;
 import com.squareup.otto.Subscribe;
 import com.squareup.picasso.Picasso;
 
-import org.apmem.tools.layouts.FlowLayout;
 import org.osmdroid.DefaultResourceProxyImpl;
 import org.osmdroid.ResourceProxy;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;

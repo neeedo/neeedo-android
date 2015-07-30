@@ -8,7 +8,7 @@ public class ProductUtils {
         String returnString = "";
         int counter = 0;
 
-        if(tags != null && tags.size() > 0) {
+        if (tags != null && tags.size() > 0) {
             for (String tag : tags) {
                 if (counter == 0) {
                     returnString = tag;

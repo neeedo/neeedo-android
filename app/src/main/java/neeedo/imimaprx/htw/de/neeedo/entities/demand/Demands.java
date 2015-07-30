@@ -5,7 +5,6 @@ import org.simpleframework.xml.Root;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.util.BaseEntity;
 

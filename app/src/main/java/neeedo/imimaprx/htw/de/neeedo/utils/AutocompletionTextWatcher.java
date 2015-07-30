@@ -29,7 +29,7 @@ public class AutocompletionTextWatcher implements TextWatcher {
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
         String otherTagsField = "";
-        if(etInputOther != null) {
+        if (etInputOther != null) {
             otherTagsField = etInputOther.getText().toString();
         }
 

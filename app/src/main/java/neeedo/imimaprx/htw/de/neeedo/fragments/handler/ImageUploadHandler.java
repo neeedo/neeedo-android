@@ -23,13 +23,13 @@ import javax.net.ssl.HttpsURLConnection;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.events.NewImageReceivedFromServer;
-import neeedo.imimaprx.htw.de.neeedo.vo.OfferImage;
 import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.RestResult;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.UploadImageResult;
 import neeedo.imimaprx.htw.de.neeedo.service.EventService;
 import neeedo.imimaprx.htw.de.neeedo.utils.ImageUtils;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;
+import neeedo.imimaprx.htw.de.neeedo.vo.OfferImage;
 
 public class ImageUploadHandler extends AsyncTask<Void, Integer, UploadImageResult> {
     private final Activity activity;

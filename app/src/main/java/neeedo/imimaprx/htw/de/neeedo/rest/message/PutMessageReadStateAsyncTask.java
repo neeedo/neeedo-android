@@ -15,7 +15,6 @@ import java.util.List;
 
 import neeedo.imimaprx.htw.de.neeedo.entities.message.Message;
 import neeedo.imimaprx.htw.de.neeedo.factory.HttpRequestFactoryProviderImpl;
-import neeedo.imimaprx.htw.de.neeedo.models.MessagesModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.returntype.RestResult;
 import neeedo.imimaprx.htw.de.neeedo.utils.ServerConstantsUtils;

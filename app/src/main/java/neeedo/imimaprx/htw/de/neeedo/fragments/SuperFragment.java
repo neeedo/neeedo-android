@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.Menu;
@@ -28,8 +29,6 @@ import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
 import neeedo.imimaprx.htw.de.neeedo.rest.util.BaseAsyncTask;
 import neeedo.imimaprx.htw.de.neeedo.service.EventService;
 import neeedo.imimaprx.htw.de.neeedo.vo.RequestCodes;
-
-import android.support.v4.app.DialogFragment;
 
 public class SuperFragment extends Fragment {
 
@@ -63,7 +62,7 @@ public class SuperFragment extends Fragment {
         if (requestCode == RequestCodes.LOGIN_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
 //            Toast.makeText(getActivity(), getString(R.string.login_finished), Toast.LENGTH_SHORT).show();
         }
-       
+
     }
 
     @Override

@@ -53,7 +53,7 @@ public class DemandsModel {
     public ArrayList<Offer> getOfferlistToDemandById(String demandId) {
         Demand demand = getDemandById(demandId);
         ArrayList<Offer> offerList = new ArrayList<>();
-        if(demand.getMatchingOfferList() != null) {
+        if (demand.getMatchingOfferList() != null) {
             offerList = demand.getMatchingOfferList();
         }
         return offerList;

@@ -9,7 +9,6 @@ import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demand;
 import neeedo.imimaprx.htw.de.neeedo.entities.user.User;
 import neeedo.imimaprx.htw.de.neeedo.fragments.FormDemandFragment;
-import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.ApplicationContextModel;
 import neeedo.imimaprx.htw.de.neeedo.models.DemandsModel;
 import neeedo.imimaprx.htw.de.neeedo.models.UserModel;

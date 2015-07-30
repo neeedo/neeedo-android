@@ -9,7 +9,6 @@ import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offer;
 import neeedo.imimaprx.htw.de.neeedo.entities.user.User;
 import neeedo.imimaprx.htw.de.neeedo.fragments.FormOfferFragment;
-import neeedo.imimaprx.htw.de.neeedo.models.ActiveUser;
 import neeedo.imimaprx.htw.de.neeedo.models.ApplicationContextModel;
 import neeedo.imimaprx.htw.de.neeedo.models.OffersModel;
 import neeedo.imimaprx.htw.de.neeedo.models.UserModel;

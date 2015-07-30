@@ -44,7 +44,7 @@ public class MessageUserArrayAdapter<Object> extends ArrayAdapter<Object> {
         String userLetter = String.valueOf(userName.charAt(0)).toUpperCase();
         boolean hasNewMessages = user.isHasNewMessages();
 
-        if(hasNewMessages) {
+        if (hasNewMessages) {
             tvNew.setVisibility(View.VISIBLE);
             tvUser.setTypeface(null, Typeface.BOLD);
         } else {

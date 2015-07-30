@@ -11,11 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 import com.squareup.otto.Subscribe;
@@ -25,10 +23,8 @@ import java.util.List;
 
 import neeedo.imimaprx.htw.de.neeedo.R;
 import neeedo.imimaprx.htw.de.neeedo.entities.demand.Demand;
-
 import neeedo.imimaprx.htw.de.neeedo.entities.favorites.Favorite;
 import neeedo.imimaprx.htw.de.neeedo.entities.offer.Offer;
-
 import neeedo.imimaprx.htw.de.neeedo.events.DeleteFinishedEvent;
 import neeedo.imimaprx.htw.de.neeedo.events.FoundMatchesEvent;
 import neeedo.imimaprx.htw.de.neeedo.fragments.adapters.OfferSwipeArrayListAdapter;

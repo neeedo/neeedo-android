@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import neeedo.imimaprx.htw.de.neeedo.MainActivity;
 import neeedo.imimaprx.htw.de.neeedo.R;
 
 
