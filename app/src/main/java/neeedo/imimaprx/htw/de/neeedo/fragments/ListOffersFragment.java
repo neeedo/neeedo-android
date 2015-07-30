@@ -64,6 +64,7 @@ public class ListOffersFragment extends ListFragment {
             tvEmpty.setText(getActivity().getString(R.string.empty_offers_message));
             tvEmpty.setVisibility(View.VISIBLE);
             tvHeader.setVisibility(View.GONE);
+            progressBar.setVisibility(View.GONE);
             return;
         }
 

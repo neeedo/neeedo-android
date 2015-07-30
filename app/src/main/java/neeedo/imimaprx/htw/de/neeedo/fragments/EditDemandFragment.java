@@ -53,7 +53,6 @@ public class EditDemandFragment extends FormDemandFragment {
 
     @Subscribe
     public void handleServerResponse(ServerResponseEvent e) {
-        // TODO redirect to detail view
         redirectToFragment(ListDemandsFragment.class);
     }
 
