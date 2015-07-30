@@ -12,7 +12,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,7 +83,17 @@ public class GetOutpanByEANAsyncTask extends BaseAsyncTask {
     private String getTagsFromArticle(Article article) {
         String tagsString = "";
         if (!(article.getName() == null)) {
-            String[] tempTags = article.getName().split("[ :,;/]+");
+            String s = article.getName();
+
+            try {
+                byte ptext[] = s.getBytes("UTF-8");
+                s = new String(ptext, "UTF-8");
+
+            } catch (Exception e) {
+                s = article.getName();
+            }
+
+            String[] tempTags = s.split("[ :,;/]+");
             for (String currentTag : tempTags) {
                 if (currentTag.equals("") | currentTag.equals("-") | currentTag.equals("_")) {
                     continue;
